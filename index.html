@@ -7,8 +7,8 @@
    Name That Yankee Archives
   </title>
   <link href="style.css" rel="stylesheet"/>
- <style>
-     /* Additional styles for the search bar */
+  <style>
+   /* Additional styles for the search bar */
      .search-container {
          margin-bottom: 2rem;
          max-width: 600px;
@@ -39,7 +39,7 @@
          color: #555;
          display: none; /* Hidden by default */
      }
- </style> 
+  </style>
  </head>
  <body>
   <header>
@@ -51,10 +51,10 @@
    </p>
   </header>
   <main>
-	  <!-- Search Bar Section -->
-	  <div class="search-container">
-		  <input type="search" id="search-bar" placeholder="Search by date (e.g., July, 2025, July 9)...">
-	  </div>	  
+   <!-- Search Bar Section -->
+   <div class="search-container">
+    <input id="search-bar" placeholder="Search by date (e.g., July, 2025, July 9)..." type="search"/>
+   </div>
    <div class="gallery" id="gallery-grid">
     <div class="gallery-container">
      <a class="gallery-item" href="2025-07-11.html">
@@ -70,6 +70,19 @@
      </p>
     </div>
     <div class="gallery-container">
+     <a class="gallery-item" href="2025-07-10.html">
+      <img alt="Name that Yankee trivia card from 2025-07-10" src="images/clue-2025-07-10.jpg"/>
+      <div class="gallery-item-overlay">
+       <span>
+        Click to Reveal
+       </span>
+      </div>
+     </a>
+     <p class="gallery-date">
+      Trivia Date: July 10, 2025
+     </p>
+    </div>
+    <div class="gallery-container">
      <a class="gallery-item" href="2025-07-09.html">
       <img alt="Name that Yankee trivia card from 2025-07-09" src="images/clue-2025-07-09.jpg"/>
       <div class="gallery-item-overlay">
@@ -79,7 +92,7 @@
       </div>
      </a>
      <p class="gallery-date">
-      Trivia Date: July 9, 2025
+      Trivia Date: July 09, 2025
      </p>
     </div>
     <div class="gallery-container">
@@ -92,7 +105,7 @@
       </div>
      </a>
      <p class="gallery-date">
-      Trivia Date: July 8, 2025
+      Trivia Date: July 08, 2025
      </p>
     </div>
     <div class="gallery-container">
@@ -118,7 +131,7 @@
       </div>
      </a>
      <p class="gallery-date">
-      Trivia Date: July 5, 2025
+      Trivia Date: July 05, 2025
      </p>
     </div>
     <div class="gallery-container">
@@ -157,7 +170,7 @@
       </div>
      </a>
      <p class="gallery-date">
-      Trivia Date: July 1, 2025
+      Trivia Date: July 01, 2025
      </p>
     </div>
     <div class="gallery-container">
@@ -213,17 +226,19 @@
      </p>
     </div>
    </div>
-  <div id="no-results">
-      <p>No trivia cards match your search.</p>
-  </div>
+   <div id="no-results">
+    <p>
+     No trivia cards match your search.
+    </p>
+   </div>
   </main>
   <footer>
    <p>
     Last Updated: July 12, 2025
    </p>
   </footer>
-   <script>
-        // --- Live Search Functionality ---
+  <script>
+   // --- Live Search Functionality ---
         document.addEventListener('DOMContentLoaded', () => {
             const searchBar = document.getElementById('search-bar');
             const galleryGrid = document.getElementById('gallery-grid');
@@ -262,6 +277,6 @@
                 }
             });
         });
-    </script>
+  </script>
  </body>
 </html>
