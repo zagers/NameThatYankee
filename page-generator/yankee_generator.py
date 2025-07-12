@@ -5,6 +5,7 @@ from pathlib import Path
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime
+import re
 
 # --- Configuration ---
 CONFIG_FILE_NAME = ".yankee_generator_config.json"
@@ -39,7 +40,7 @@ def get_player_data_from_image(image_path: Path, api_key: str):
     """
     Analyzes the clue image using the Gemini API to identify the player and facts.
     """
-    print("🤖 Analyzing clue image with Gemini 2.5 Flash...")
+    print(f"🤖 Analyzing clue image: {image_path.name}...")
     try:
         genai.configure(api_key=api_key)
         
@@ -47,15 +48,19 @@ def get_player_data_from_image(image_path: Path, api_key: str):
         
         clue_image = Image.open(image_path)
         
+        # Final, zero-tolerance prompt to maximize accuracy.
         prompt = """
-        You are a hyper-literal baseball data analyst. Your task is to analyze the provided image of a "Name That Yankee" trivia card.
+        You are a hyper-literal baseball data analyst with a zero-tolerance policy for errors. Your task is to analyze the provided image of a "Name That Yankee" trivia card.
 
-        1.  **Data Extraction (Internal Step):** Mentally extract every single statistic (AVG, HITS, HR, etc.) and the complete list of teams with their exact corresponding years.
-        2.  **Strict Verification (Internal Step):** Cross-reference this complete and exact data against your knowledge base. The player's career stats must match *exactly*. The player's team history, including the *specific years* for each team, must also match *exactly*. There is no room for "close" or "similar". A mismatch in a single year or a single stat point means the player is incorrect.
-        3.  **Identify Player:** Based on this strict, exact match, identify the single player.
-        4.  **Provide Facts:** Once the player is correctly identified, provide four interesting career facts.
+        **Primary Directive: 100% Accuracy is Mandatory.**
 
-        Your response must be a valid JSON object with the following structure, and nothing else.
+        1.  **Data Extraction:** Meticulously extract every single statistic and the complete list of teams with their exact corresponding years from the image.
+        2.  **Zero-Tolerance Verification:** Cross-reference the extracted data against your knowledge base. The player's career stats must match perfectly. The player's team history, including the specific years for each team, must also match perfectly.
+        3.  **Crucial Rule:** If a player's data is merely "close" or "similar" but not a 100% perfect match to all data points on the card, you must discard that player and continue searching. Do not guess based on prominence or fame. The data is the only truth.
+        4.  **Identify Player:** Based on this strict, exact match, identify the single correct player.
+        5.  **Provide Facts:** Once the player is correctly identified, provide four interesting career facts.
+
+        Your response must be a valid JSON object with the following structure, and nothing else:
         {
           "name": "Player's Full Name",
           "nickname": "Player's common nickname, or an empty string if they don't have one",
@@ -73,16 +78,16 @@ def get_player_data_from_image(image_path: Path, api_key: str):
         json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
         player_data = json.loads(json_text)
 
-        print(f"\n✅ Player identified: {player_data['name']}")
+        print(f"  ✅ Player identified: {player_data['name']}")
         return player_data
 
     except Exception as e:
-        print(f"❌ Error communicating with Gemini API: {e}")
+        print(f"  ❌ Error communicating with Gemini API: {e}")
         return None
 
-def generate_detail_page(player_data: dict, date_str: str, project_dir: Path):
+def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir: Path):
     """Generates and saves the new HTML detail page."""
-    print("📄 Generating new detail page...")
+    print(f"  📄 Generating detail page for {date_str}...")
     name = player_data['name']
     nickname = player_data['nickname']
     facts = player_data['facts']
@@ -100,7 +105,7 @@ def generate_detail_page(player_data: dict, date_str: str, project_dir: Path):
 </head>
 <body>
     <header>
-        <h1>The Answer Is...</h1>
+        <h1>The answer for {formatted_date} is...</h1>
     </header>
 
     <main>
@@ -136,22 +141,39 @@ def generate_detail_page(player_data: dict, date_str: str, project_dir: Path):
     file_path = project_dir / f"{date_str}.html"
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(template)
-    print(f"✅ Detail page saved successfully to: {file_path}")
+    print(f"  ✅ Detail page saved successfully.")
 
-def update_index_page(date_str: str, formatted_date: str, project_dir: Path):
+def rebuild_index_page(project_dir: Path):
     """
-    Adds the new trivia card to the index.html file, re-sorts all cards,
-    and updates the footer with the current timestamp.
+    Scans the images directory, finds all clues, and rebuilds the entire
+    index.html gallery from scratch, sorted by date.
     """
-    print("✍️ Updating and re-sorting index.html...")
+    print("\n✍️ Rebuilding and re-sorting index.html from all available clues...")
     index_path = project_dir / "index.html"
+    images_dir = project_dir / "images"
     
     if not index_path.exists():
         print(f"❌ Error: index.html not found at {index_path}. Cannot update.")
         return
-        
-    new_snippet = f"""            <!-- Trivia from {formatted_date} -->
-            <div class="gallery-container">
+
+    all_clue_files = sorted(images_dir.glob("clue-*.jpg"), reverse=True)
+    
+    if not all_clue_files:
+        print("🤷 No clue images found in the 'images' directory.")
+        return
+
+    gallery_tiles = []
+    date_pattern = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.jpg")
+
+    for clue_file in all_clue_files:
+        match = date_pattern.search(clue_file.name)
+        if match:
+            date_str = match.group(1)
+            try:
+                dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                formatted_date = dt_obj.strftime("%B %d, %Y")
+                
+                snippet = f"""<div class="gallery-container">
                 <a href="{date_str}.html" class="gallery-item">
                     <img src="images/clue-{date_str}.jpg" alt="Name that Yankee trivia card from {date_str}">
                     <div class="gallery-item-overlay">
@@ -160,7 +182,10 @@ def update_index_page(date_str: str, formatted_date: str, project_dir: Path):
                 </a>
                 <p class="gallery-date">Trivia Date: {formatted_date}</p>
             </div>"""
-            
+                gallery_tiles.append(snippet)
+            except ValueError:
+                print(f"⚠️  Warning: Skipping file with invalid date format in name: {clue_file.name}")
+
     with open(index_path, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'html.parser')
 
@@ -169,46 +194,27 @@ def update_index_page(date_str: str, formatted_date: str, project_dir: Path):
         print(f"❌ Could not find insertion point '<div class=\"gallery\">' in index.html.")
         return
 
-    # Find all existing tiles and remove any that match the new date to avoid duplicates
-    existing_tiles = []
-    for tile in gallery_div.select('.gallery-container'):
-        href = tile.find('a')['href']
-        if f"{date_str}.html" not in href:
-            existing_tiles.append(tile)
-        else:
-            print(f"ℹ️ Found and removed existing entry for {date_str} to prevent duplication.")
-
-    # Add the new tile
-    new_tile_soup = BeautifulSoup(new_snippet, 'html.parser')
-    existing_tiles.append(new_tile_soup.div)
-    
-    # Sort tiles by date (descending) based on the href attribute
-    def sort_key(tag):
-        # Extracts 'YYYY-MM-DD' from 'YYYY-MM-DD.html'
-        return tag.find('a')['href']
-
-    sorted_tiles = sorted(existing_tiles, key=sort_key, reverse=True)
-    
-    # Clear the gallery and append the sorted tiles
+    # Clear the gallery completely
     gallery_div.clear()
-    for tile in sorted_tiles:
-        gallery_div.append(tile)
+    
+    # Loop through the HTML snippets, parse each one, and append it as a proper tag
+    for tile_html in gallery_tiles:
+        tile_soup = BeautifulSoup(tile_html, 'html.parser')
+        gallery_div.append(tile_soup)
         gallery_div.append('\n') # Add a newline for readability in the source
-
+    
     # Update the footer timestamp
     footer_p = soup.select_one('footer p')
     if footer_p:
         now = datetime.now()
         footer_p.string = f"Last Updated: {now.strftime('%B %d, %Y')}"
         print("✅ Footer timestamp updated.")
-    else:
-        print("⚠️  Warning: Could not find footer paragraph tag to update.")
 
     # Write the updated and sorted content back to the file
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
         
-    print("✅ index.html updated and sorted successfully.")
+    print("✅ index.html rebuilt successfully.")
 
 
 # --- Main Execution ---
@@ -253,36 +259,63 @@ if __name__ == "__main__":
 
     # Save the updated config now
     save_config(config)
-
-    # 3. Get date and format it
-    date_str = input("Enter the trivia date (YYYY-MM-DD): ")
-    try:
-        dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
-        formatted_date = dt_obj.strftime("%B %d, %Y")
-    except ValueError:
-        print("❌ Invalid date format. Please use YYYY-MM-DD.")
-        exit()
-        
-    # 4. Construct and verify the required clue image path
+    
     images_dir = project_dir / "images"
-    images_dir.mkdir(exist_ok=True) # Ensure images directory exists
-    
-    clue_image_path = images_dir / f"clue-{date_str}.jpg"
-    
-    if not clue_image_path.is_file():
-        print(f"❌ Error: Clue image not found.")
-        print(f"    Please make sure the file exists at this exact path: {clue_image_path}")
-        exit()
+    images_dir.mkdir(exist_ok=True)
 
-    # 5. Process
-    player_data = get_player_data_from_image(clue_image_path, api_key)
-    if player_data:
-        # Remind the user to get the answer image
-        print(f"\nℹ️  ACTION REQUIRED: Please find an image for this player and save it as:")
-        print(f"    images/answer-{date_str}.jpg\n")
+    # 3. Choose mode: Single Date or ALL
+    mode = input("Enter a specific date (YYYY-MM-DD) or type 'ALL' to process all clue images: ").strip()
 
-        # Generate HTML files
-        generate_detail_page(player_data, date_str, project_dir)
-        update_index_page(date_str, formatted_date, project_dir)
+    if mode.upper() == 'ALL':
+        clue_files_to_process = sorted(images_dir.glob("clue-*.jpg"), reverse=True)
+        if not clue_files_to_process:
+            print("🤷 No 'clue-*.jpg' files found in the images directory.")
+            exit()
+        print(f"Found {len(clue_files_to_process)} clue images to process.")
+
+        for clue_path in clue_files_to_process:
+            date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.jpg", clue_path.name)
+            if not date_match:
+                continue
+            
+            date_str = date_match.group(1)
+            
+            dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            formatted_date = dt_obj.strftime("%B %d, %Y")
+            
+            player_data = get_player_data_from_image(clue_path, api_key)
+            if player_data:
+                # Remind user to get answer image if it doesn't exist
+                answer_path = images_dir / f"answer-{date_str}.jpg"
+                if not answer_path.is_file():
+                    print(f"  ℹ️  ACTION REQUIRED: Please find an image for {player_data['name']} and save it as:")
+                    print(f"      images/answer-{date_str}.jpg\n")
+                
+                generate_detail_page(player_data, date_str, formatted_date, project_dir)
         
-        print("\n🎉 All tasks completed successfully! 🎉")
+        rebuild_index_page(project_dir)
+
+    else: # Single Date Mode
+        date_str = mode
+        try:
+            dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            formatted_date = dt_obj.strftime("%B %d, %Y")
+        except ValueError:
+            print("❌ Invalid date format. Please use YYYY-MM-DD.")
+            exit()
+            
+        clue_image_path = images_dir / f"clue-{date_str}.jpg"
+        
+        if not clue_image_path.is_file():
+            print(f"❌ Error: Clue image not found at {clue_image_path}")
+            exit()
+
+        player_data = get_player_data_from_image(clue_image_path, api_key)
+        if player_data:
+            print(f"\nℹ️  ACTION REQUIRED: Please find an image for this player and save it as:")
+            print(f"    images/answer-{date_str}.jpg\n")
+
+            generate_detail_page(player_data, date_str, formatted_date, project_dir)
+            rebuild_index_page(project_dir) # Rebuild index even for single to ensure sorting
+            
+    print("\n🎉 All tasks completed successfully! 🎉")
