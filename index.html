@@ -7,6 +7,39 @@
    Name That Yankee Archives
   </title>
   <link href="style.css" rel="stylesheet"/>
+ <style>
+     /* Additional styles for the search bar */
+     .search-container {
+         margin-bottom: 2rem;
+         max-width: 600px;
+         margin-left: auto;
+         margin-right: auto;
+     }
+
+     #search-bar {
+         width: 100%;
+         padding: 0.75rem 1.25rem;
+         font-size: 1rem;
+         border-radius: 9999px; /* pill shape */
+         border: 1px solid #ccc;
+         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+         transition: border-color 0.3s ease, box-shadow 0.3s ease;
+     }
+
+     #search-bar:focus {
+         outline: none;
+         border-color: #0C2340; /* Yankees Navy */
+         box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.2);
+     }
+
+     #no-results {
+         text-align: center;
+         padding: 2rem;
+         font-size: 1.2rem;
+         color: #555;
+         display: none; /* Hidden by default */
+     }
+ </style> 
  </head>
  <body>
   <header>
@@ -18,7 +51,11 @@
    </p>
   </header>
   <main>
-   <div class="gallery">
+	  <!-- Search Bar Section -->
+	  <div class="search-container">
+		  <input type="search" id="search-bar" placeholder="Search by date (e.g., July, 2025, July 9)...">
+	  </div>	  
+   <div class="gallery" id="gallery-grid">
     <div class="gallery-container">
      <a class="gallery-item" href="2025-07-11.html">
       <img alt="Name that Yankee trivia card from 2025-07-11" src="images/clue-2025-07-11.jpg"/>
@@ -176,11 +213,55 @@
      </p>
     </div>
    </div>
+  <div id="no-results">
+      <p>No trivia cards match your search.</p>
+  </div>
   </main>
   <footer>
    <p>
     Last Updated: July 12, 2025
    </p>
   </footer>
+   <script>
+        // --- Live Search Functionality ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBar = document.getElementById('search-bar');
+            const galleryGrid = document.getElementById('gallery-grid');
+            const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
+            const noResultsMessage = document.getElementById('no-results');
+
+            searchBar.addEventListener('keyup', (e) => {
+                const searchQuery = e.target.value.toLowerCase().trim();
+                const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+                
+                let visibleCount = 0;
+
+                galleryItems.forEach(item => {
+                    const dateElement = item.querySelector('.gallery-date');
+                    
+                    // Normalize the date text to just words and numbers for better matching
+					const dateText = dateElement ? dateElement.textContent.toLowerCase().replace('trivia date:', '').replace(/,/g, '').trim() : '';
+                    const dateTokens = dateText.split(' ').filter(token => token.length > 0); // e.g., ['july', '5', '2025']
+
+                    // Check if every search token is included in the date's list of tokens
+                    const isMatch = searchTokens.every(searchToken => dateTokens.includes(searchToken));
+
+                    if (isMatch) {
+                        item.style.display = '';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Show or hide the "no results" message
+                if (visibleCount === 0 && searchQuery) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            });
+        });
+    </script>
  </body>
 </html>
