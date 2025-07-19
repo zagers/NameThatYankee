@@ -188,8 +188,11 @@ def get_player_info_from_image(image_path: Path, api_key: str):
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-pro')
         clue_image = Image.open(image_path)
+        
+        # Define generation config for higher accuracy
+        generation_config = genai.types.GenerationConfig(temperature=0.2)
         
         prompt = """
         You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card. 
@@ -202,7 +205,7 @@ def get_player_info_from_image(image_path: Path, api_key: str):
         }
         """
         
-        response = model.generate_content([prompt, clue_image])
+        response = model.generate_content([prompt, clue_image], generation_config=generation_config)
         json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
         player_data = json.loads(json_text)
 
@@ -222,24 +225,30 @@ def get_facts_from_gemini(player_name: str, api_key: str):
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel('gemini-2.5-flash')
         
+        # Define generation config for higher accuracy
+        generation_config = genai.types.GenerationConfig(temperature=0.2)
+        
+        # Updated prompt with new directives for 3 concise, factual highlights.
         prompt = f"""
-        Provide four interesting and unique career facts about the baseball player {player_name}.
-        
-        Keep each fact to a short sentence and have the facts focus on career highlights (e.g. won 3 batting titles, holds Yankee record for hits, etc.) and on unique facts (e.g. was the only player to win a batting title for 3 differen tteams)
+        Provide three interesting and unique career facts about the baseball player {player_name}.
 
-        Don't include flowerly language in the facts.  So instead of saying "He holds the distinction of being the first..." just say "He was the first".  Don't add phrases like "marking a highlight of his playing career" that don't add additional information.
-        
+        **Directives:**
+        - Keep each fact to a single, short sentence.
+        - Do not use embellishing or subjective language (e.g., "remarkable," "renowned").
+        - Focus only on career highlights (e.g., "Was a 3-time batting champion") or unique statistical achievements (e.g., "He is the only player to win a batting title in both the AL & NL").
+        - Also include facts about family relationships ("Father pitched for the Red Sox from 1992-2000")
+        - In the output do not use the players name or the pronoun "he".  Just state the fact (e.g. "Was a five time all-star" not "He was a five time all star")
+
         Your response must be a valid JSON object with the following structure, and nothing else:
         {{
           "facts": [
             "Fact 1.",
             "Fact 2.",
-            "Fact 3.",
-            "Fact 4."
+            "Fact 3."
           ]
         }}
         """
-        response = model.generate_content(prompt)
+        response = model.generate_content(prompt, generation_config=generation_config)
         json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
         fact_data = json.loads(json_text)
         print("  ✅ Facts retrieved.")
@@ -301,7 +310,7 @@ def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
                 temp_file_path.unlink()
 
 def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir: Path):
-    # ... (This function remains the same as the previous version)
+    # ... (This function is updated with citation and disclaimer)
     print(f"  📄 Generating detail page for {date_str}...")
     name = player_data.get('name', 'N/A')
     nickname = player_data.get('nickname', '')
@@ -329,6 +338,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                     </tbody>
                 </table>
             </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
         </div>
         """
 
@@ -355,7 +365,10 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                 </div>
                 <div class="player-info">
                     <h2>{display_name}</h2>
-                    <h3>Career Highlights & Facts</h3>
+                    <div class="facts-header">
+                        <h3>Career Highlights & Facts</h3>
+                        <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                    </div>
                     <ul>
 {facts_html}
                     </ul>
@@ -483,9 +496,34 @@ if __name__ == "__main__":
     mode = input("Enter a specific date (YYYY-MM-DD) or type 'ALL' to process all clue images: ").strip()
 
     if mode.upper() == 'ALL':
-        # ... (Batch mode logic would go here)
-        print("Batch mode processing is a complex feature for a future update.")
-        exit()
+        clue_files_to_process = sorted(images_dir.glob("clue-*.jpg"), reverse=True)
+        if not clue_files_to_process:
+            print("🤷 No 'clue-*.jpg' files found in the images directory.")
+            exit()
+        print(f"\nFound {len(clue_files_to_process)} clue images to process.")
+
+        for clue_path in clue_files_to_process:
+            print("\n" + "-"*50)
+            date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.jpg", clue_path.name)
+            if not date_match:
+                continue
+            
+            date_str = date_match.group(1)
+            dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            formatted_date = dt_obj.strftime("%B %d, %Y")
+            
+            player_info = get_player_info_from_image(clue_path, api_key)
+            if player_info:
+                career_stats = search_and_scrape_player(player_info['name'])
+                facts = get_facts_from_gemini(player_info['name'], api_key)
+                
+                player_info['career_totals'] = career_stats
+                player_info['facts'] = facts
+
+                verified_data = review_and_edit_data(player_info, project_dir)
+                generate_detail_page(verified_data, date_str, formatted_date, project_dir)
+        
+        rebuild_index_page(project_dir)
 
     else: # Single Date Mode
         date_str = mode
