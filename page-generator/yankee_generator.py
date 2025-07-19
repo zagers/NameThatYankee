@@ -8,11 +8,20 @@ from datetime import datetime
 import re
 import subprocess
 import sys
+import time
+import urllib.parse
+
+# Imports for the new custom scraper
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 # --- Configuration ---
 CONFIG_FILE_NAME = ".yankee_generator_config.json"
 
-# --- Helper Functions ---
+# --- Helper Functions (Restored) ---
 
 def get_config_path():
     """Gets the full path to the configuration file in the user's home directory."""
@@ -38,72 +47,222 @@ def save_config(config_data: dict):
     except IOError as e:
         print(f"⚠️  Warning: Could not save config file to {config_path}. Error: {e}")
 
-def get_player_data_from_image(image_path: Path, api_key: str):
+
+# --- Scraper Functions (Provided by you) ---
+
+def parse_stats_from_html(page_source):
     """
-    Analyzes the clue image using the Gemini API to identify the player, facts, and career totals.
+    Parses the HTML source of a player page to find the 'stats_pullout' div
+    and extracts only the career stats.
     """
-    print(f"🤖 Analyzing clue image: {image_path.name}...")
+    stats_dict = {}
+    soup = BeautifulSoup(page_source, 'html.parser')
+
+    stats_pullout = soup.find('div', class_='stats_pullout')
+    if not stats_pullout:
+        print("Could not find the 'stats_pullout' div.")
+        return None
+
+    header_div = stats_pullout.find('div')
+    if not header_div:
+        print("Could not find header div in stats_pullout.")
+        return None
+
+    labels = [p.get_text(strip=True) for p in header_div.find_all('p')]
+    try:
+        career_stats_index = labels.index('Career')
+    except ValueError:
+        print("Could not find 'Career' label in the stats summary.")
+        return None
+
+    stat_divs = stats_pullout.find_all('div', class_=['p1', 'p2', 'p3'])
+    if not stat_divs:
+        print("Could not find stat divs (p1, p2, p3) inside the pullout.")
+        return None
+
+    for group in stat_divs:
+        for stat_container in group.find_all('div'):
+            stat_name_tag = stat_container.find('span')
+            stat_value_tags = stat_container.find_all('p')
+
+            if stat_name_tag and len(stat_value_tags) > career_stats_index:
+                stat_name = stat_name_tag.get_text(strip=True)
+                stat_value = stat_value_tags[career_stats_index].get_text(strip=True)
+                stats_dict[stat_name] = stat_value
+    
+    return stats_dict
+
+def search_and_scrape_player(player_name):
+    """
+    Opens a single browser session to find a player's page, handles choices,
+    navigates to the correct page, and scrapes the stats.
+    """
+    print(f"⚾ Scraping career stats for {player_name} from Baseball-Reference...")
+    
+    options = webdriver.ChromeOptions()
+    # To run Chrome in the background, uncomment the next line
+    # options.add_argument("--headless=new")
+    options.page_load_strategy = 'eager'
+    
+    # Use webdriver_manager to handle the driver automatically
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+
+    try:
+        search_query = urllib.parse.quote_plus(player_name)
+        search_url = f"https://www.baseball-reference.com/search/search.fcgi?search={search_query}"
+        
+        print(f"  Navigating to search results for '{player_name}'...")
+        driver.get(search_url)
+        time.sleep(2)
+
+        player_url_to_scrape = None
+
+        if "/players/" in driver.current_url:
+            print("  Direct match found!")
+            player_url_to_scrape = driver.current_url
+        else:
+            page_source = driver.page_source
+            soup = BeautifulSoup(page_source, 'html.parser')
+            
+            major_leagues_header = soup.find('h3', string=lambda text: text and "major leagues" in text.lower())
+            
+            major_league_players = []
+            if major_leagues_header:
+                for sibling in major_leagues_header.find_next_siblings():
+                    if sibling.name == 'div' and 'search-item' in sibling.get('class', []):
+                        major_league_players.append(sibling)
+                    if sibling.name == 'h3':
+                        break
+            else:
+                major_league_players = soup.find_all('div', class_='search-item')
+
+            if not major_league_players:
+                print("  No matching player links found on the search page.")
+                return None
+
+            if len(major_league_players) == 1:
+                print("  Found a single Major League player match.")
+                link = major_league_players[0].find('a')
+                player_url_to_scrape = f"https://www.baseball-reference.com{link['href']}"
+            else:
+                print("\n  Multiple players found. Please choose one:")
+                player_options = []
+                for i, item in enumerate(major_league_players):
+                    link = item.find('a')
+                    description = item.find('div', class_='search-item-name').get_text(strip=True)
+                    player_options.append({"url": link['href']})
+                    print(f"    {i + 1}: {description}")
+
+                while True:
+                    try:
+                        choice = int(input("  Enter the number of the correct player: "))
+                        if 1 <= choice <= len(player_options):
+                            selected_player = player_options[choice - 1]
+                            player_url_to_scrape = f"https://www.baseball-reference.com{selected_player['url']}"
+                            break
+                        else:
+                            print("  Invalid number. Please try again.")
+                    except ValueError:
+                        print("  Invalid input. Please enter a number.")
+        
+        if driver.current_url != player_url_to_scrape:
+            print(f"  Navigating to player page: {player_url_to_scrape}")
+            driver.get(player_url_to_scrape)
+            time.sleep(2)
+        
+        print("  Scraping stats from page...")
+        page_source = driver.page_source
+        stats = parse_stats_from_html(page_source)
+        print("  ✅ Stats scraped successfully.")
+        return stats
+
+    finally:
+        driver.quit()
+
+# --- Gemini API Functions ---
+
+def get_player_info_from_image(image_path: Path, api_key: str):
+    """
+    Uses Gemini to get the player's name and nickname from the clue.
+    """
+    print(f"🤖 Analyzing clue image with Gemini to identify player...")
     try:
         genai.configure(api_key=api_key)
-        
         model = genai.GenerativeModel('gemini-2.5-pro')
-        
         clue_image = Image.open(image_path)
         
+        # Define generation config for higher accuracy
+        generation_config = genai.types.GenerationConfig(temperature=0.2)
+        
         prompt = """
-        You are a hyper-literal baseball data analyst with a zero-tolerance policy for errors. Your task is to analyze the provided image of a "Name That Yankee" trivia card and provide results of your analysis.
-        
-        For ALL retreival and verifiction of WAR as a statistic ONLY use WAR from Baseball Reference (www.baseball-reference.com).  There are other versions of WAR which should not be included in the verification or output.
-        
-        When you are looking for carreer statistic totals use ALL the following for each player type:
-            - for hitters use WAR, G, AB, R, H, 2B, 3B, HR, RBI, SB, BB, SO, AVG, OBP, SLG, OPS, OPS+
-            - for pitchers use WAR, W, L, ERA, G, GS, CG, SHO, SV, IP, H, R, ER, BB, SO
-
-        **Primary Directive: 100% Accuracy of facts and statistics is mandatory.**
-
-        1.  **Data Extraction:** Extract the complete list of teams from the provided trivia image with their exact corresponding years. Also, extract every single career statistic shown on the trivia card and its value (e.g., `AVG: .267`, `HITS: 1254`, `W-L: 87-108`, `STARTS: 254`).
-        2.  **Initial Player Identification:** Use ALL information extracted in step 1 to find a candidate player. Then, retrieve that candidate player's career statistic totals.  When retrieving the candidate player's carreer statistic totals only use authoritative sources such as Baseball Reference (https://www.baseball-reference.com/) or MLB (https://mlb.com) for these statistics.  Do not use low quality sources such as blogs, social media, or e-commerce web sites
-        3.  **Final Verification:** Verify that ALL statistics you extracted from the card in Step 1 equals the official career statistic totals you retrieved.  When doing this verification you should only use authoritative sources such as Baseball Reference (https://www.baseball-reference.com/) or MLB (https://mlb.com) for these statistics.  Do not use low quality sources such as blogs, social media, or e-commerce web sites
-            * If any statistic does not match the official record perfectly, the candidate is incorrect. You must discard them and find a new candidate whose data is a perfect match.
-        4.  **Identify Player:** Based on the verification you performed in step 3, identify the single correct player.
-        5.  **Fact retrieval:** Retrieve exactly 4 facts (no more and no less) relating to the player you identified in step 4 and verified in step 3.  Also retrieve the player's nickname if you can find it.  When retreiving player facts and player nickname only use authoritative sources such as Baseball Reference (https://www.baseball-reference.com/) or MLB (https://mlb.com) for these statistics.  Do not use low quality sources such as blogs, social media, or e-commerce web sites
-        6.  **Provide Facts:** Provide four interesting career facts retreived in step 5
-        7.  **Provide Career Statistics:** Provide ALL career statistics that were retrieved and verified in steps 2 & 3.  Before providing the statistics, verify that each career statistic is equal to what is noted in the official career stastic total that is recorded in an authoritative source such as Baseball Reference (https://www.baseball-reference.com/) or MLB (https://mlb.com) for these statistics.  Do not use low quality sources such as blogs, social media, or e-commerce web sites to perform this verification.  If you can not verify an individual career statistic, do not estimate it - leave it blank in the output.
+        You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card. 
+        Your only task is to identify the player's name.
 
         Your response must be a valid JSON object with the following structure, and nothing else:
         {
           "name": "Player's Full Name",
-          "nickname": "Player's common nickname, or an empty string",
-          "facts": [
-            "A fascinating career fact.",
-            "Another interesting career fact.",
-            "A third unique career fact.",
-            "A fourth interesting career fact."
-          ],
-          "career_totals": {
-            // For hitters, include WAR, G, AB, R, H, 2B, 3B, HR, RBI, SB, BB, SO, AVG, OBP, SLG, OPS, OPS+
-            // For pitchers, include WAR, W, L, ERA, G, GS, CG, SHO, SV, IP, H, R, ER, BB, SO
-            "WAR": "111.1", "AB": "2931", "...": "..."
-          }
+          "nickname": "Player's common nickname, or an empty string"
         }
         """
         
-        response = model.generate_content([prompt, clue_image])
-        
+        response = model.generate_content([prompt, clue_image], generation_config=generation_config)
         json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
         player_data = json.loads(json_text)
 
-        print(f"  ✅ AI analysis complete.")
+        print(f"  ✅ Player identified as: {player_data['name']}")
         return player_data
 
     except Exception as e:
         print(f"  ❌ Error communicating with Gemini API: {e}")
         return None
 
+def get_facts_from_gemini(player_name: str, api_key: str):
+    """
+    Gets interesting facts for a confirmed player name.
+    """
+    print(f"🤖 Asking Gemini for interesting facts about {player_name}...")
+    try:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-2.5-flash')
+        
+        # Define generation config for higher accuracy
+        generation_config = genai.types.GenerationConfig(temperature=0.2)
+        
+        # Updated prompt with new directives for 3 concise, factual highlights.
+        prompt = f"""
+        Provide three interesting and unique career facts about the baseball player {player_name}.
+
+        **Directives:**
+        - Keep each fact to a single, short sentence.
+        - Do not use embellishing or subjective language (e.g., "remarkable," "renowned").
+        - Focus only on career highlights (e.g., "Was a 3-time batting champion") or unique statistical achievements (e.g., "He is the only player to win a batting title in both the AL & NL").
+        - Also include facts about family relationships ("Father pitched for the Red Sox from 1992-2000")
+        - In the output do not use the players name or the pronoun "he".  Just state the fact (e.g. "Was a five time all-star" not "He was a five time all star")
+
+        Your response must be a valid JSON object with the following structure, and nothing else:
+        {{
+          "facts": [
+            "Fact 1.",
+            "Fact 2.",
+            "Fact 3."
+          ]
+        }}
+        """
+        response = model.generate_content(prompt, generation_config=generation_config)
+        json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+        fact_data = json.loads(json_text)
+        print("  ✅ Facts retrieved.")
+        return fact_data.get('facts', [])
+
+    except Exception as e:
+        print(f"  ❌ Error getting facts from Gemini API: {e}")
+        return []
+
+
+# --- File Generation and Review Functions ---
+
 def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
-    """
-    Displays the AI-generated data to the user for review and allows for manual correction.
-    """
+    # ... (This function remains the same as the previous version)
     print("\n" + "="*40)
     print("--- Please Review the Following Data ---")
     print(f"Player Name: {player_data.get('name', 'N/A')}")
@@ -111,7 +270,7 @@ def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
     print("Facts:")
     for i, fact in enumerate(player_data.get('facts', []), 1):
         print(f"  {i}. {fact}")
-    print("Career Totals:")
+    print("Career Totals (from Baseball-Reference):")
     print(json.dumps(player_data.get('career_totals', {}), indent=2))
     print("="*40)
 
@@ -130,7 +289,6 @@ def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
             with open(temp_file_path, 'w') as f:
                 json.dump(player_data, f, indent=4)
             
-            # Updated instructions for the user
             print(f"\n📝 A temporary file has been created with the data.")
             print(f"   Please open this file in your preferred text editor:")
             print(f"   {temp_file_path}")
@@ -146,15 +304,13 @@ def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
         
         except Exception as e:
             print(f"❌ An error occurred during the editing process: {e}")
-            return player_data # Return original data on error
+            return player_data
         finally:
-            # Clean up the temporary file
             if temp_file_path.exists():
                 temp_file_path.unlink()
 
-
 def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir: Path):
-    """Generates and saves the new HTML detail page, now with a career totals table."""
+    # ... (This function is updated with citation and disclaimer)
     print(f"  📄 Generating detail page for {date_str}...")
     name = player_data.get('name', 'N/A')
     nickname = player_data.get('nickname', '')
@@ -165,7 +321,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
     
     stats_table_html = ""
-    if career_totals_data:
+    if career_totals_data and any(career_totals_data.values()):
         headers = career_totals_data.keys()
         header_html = "".join([f"<th>{h}</th>" for h in headers])
         row_html = "".join([f"<td>{career_totals_data.get(h, '')}</td>" for h in headers])
@@ -182,6 +338,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                     </tbody>
                 </table>
             </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
         </div>
         """
 
@@ -208,7 +365,10 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                 </div>
                 <div class="player-info">
                     <h2>{display_name}</h2>
-                    <h3>Career Highlights & Facts</h3>
+                    <div class="facts-header">
+                        <h3>Career Highlights & Facts</h3>
+                        <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                    </div>
                     <ul>
 {facts_html}
                     </ul>
@@ -230,10 +390,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     print(f"  ✅ Detail page saved successfully.")
 
 def rebuild_index_page(project_dir: Path):
-    """
-    Scans the images directory, finds all clues, and rebuilds the entire
-    index.html gallery from scratch, sorted by date.
-    """
+    # ... (This function remains the same as the previous version)
     print("\n✍️ Rebuilding and re-sorting index.html from all available clues...")
     index_path = project_dir / "index.html"
     images_dir = project_dir / "images"
@@ -325,26 +482,17 @@ if __name__ == "__main__":
     config["last_project_path"] = str(project_dir)
 
     # 2. Get API Key
-    api_key = config.get("api_key")
+    api_key = config.get("gemini_api_key")
     if not api_key:
-        print("Gemini API key not found.")
-        try:
-            import getpass
-            api_key = getpass.getpass("Please enter your Google AI Studio API key (will be saved for future use): ")
-        except ImportError:
-            api_key = input("Please enter your Google AI Studio API key (will be saved for future use): ")
+        api_key = input("Please enter your Google Gemini API key (will be saved): ").strip()
+    config["gemini_api_key"] = api_key
     
-    if not api_key:
-        print("❌ API Key is required to proceed.")
-        exit()
-    config["api_key"] = api_key
-
     save_config(config)
     
     images_dir = project_dir / "images"
     images_dir.mkdir(exist_ok=True)
 
-    # 3. Choose mode: Single Date or ALL
+    # 3. Choose mode
     mode = input("Enter a specific date (YYYY-MM-DD) or type 'ALL' to process all clue images: ").strip()
 
     if mode.upper() == 'ALL':
@@ -355,6 +503,7 @@ if __name__ == "__main__":
         print(f"\nFound {len(clue_files_to_process)} clue images to process.")
 
         for clue_path in clue_files_to_process:
+            print("\n" + "-"*50)
             date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.jpg", clue_path.name)
             if not date_match:
                 continue
@@ -363,9 +512,15 @@ if __name__ == "__main__":
             dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
             formatted_date = dt_obj.strftime("%B %d, %Y")
             
-            player_data = get_player_data_from_image(clue_path, api_key)
-            if player_data:
-                verified_data = review_and_edit_data(player_data, project_dir)
+            player_info = get_player_info_from_image(clue_path, api_key)
+            if player_info:
+                career_stats = search_and_scrape_player(player_info['name'])
+                facts = get_facts_from_gemini(player_info['name'], api_key)
+                
+                player_info['career_totals'] = career_stats
+                player_info['facts'] = facts
+
+                verified_data = review_and_edit_data(player_info, project_dir)
                 generate_detail_page(verified_data, date_str, formatted_date, project_dir)
         
         rebuild_index_page(project_dir)
@@ -385,9 +540,15 @@ if __name__ == "__main__":
             print(f"❌ Error: Clue image not found at {clue_image_path}")
             exit()
 
-        player_data = get_player_data_from_image(clue_image_path, api_key)
-        if player_data:
-            verified_data = review_and_edit_data(player_data, project_dir)
+        player_info = get_player_info_from_image(clue_image_path, api_key)
+        if player_info:
+            career_stats = search_and_scrape_player(player_info['name'])
+            facts = get_facts_from_gemini(player_info['name'], api_key)
+            
+            player_info['career_totals'] = career_stats
+            player_info['facts'] = facts
+
+            verified_data = review_and_edit_data(player_info, project_dir)
             generate_detail_page(verified_data, date_str, formatted_date, project_dir)
             rebuild_index_page(project_dir)
             
