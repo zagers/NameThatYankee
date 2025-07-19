@@ -303,45 +303,55 @@
    </p>
   </footer>
   <script>
-   // --- Live Search Functionality ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchBar = document.getElementById('search-bar');
-            const galleryGrid = document.getElementById('gallery-grid');
-            const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
-            const noResultsMessage = document.getElementById('no-results');
+    // --- Live Search Functionality ---
+      document.addEventListener('DOMContentLoaded', () => {
+          const searchBar = document.getElementById('search-bar');
+          const galleryGrid = document.getElementById('gallery-grid');
+          const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
+          const noResultsMessage = document.getElementById('no-results');
 
-            searchBar.addEventListener('keyup', (e) => {
-                const searchQuery = e.target.value.toLowerCase().trim();
-                const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
-                
-                let visibleCount = 0;
+          searchBar.addEventListener('keyup', (e) => {
+              const searchQuery = e.target.value.toLowerCase().trim();
+              const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+              
+              let visibleCount = 0;
 
-                galleryItems.forEach(item => {
-                    const dateElement = item.querySelector('.gallery-date');
-                    
-                    // Normalize the date text to just words and numbers for better matching
-					const dateText = dateElement ? dateElement.textContent.toLowerCase().replace('trivia date:', '').replace(/,/g, '').trim() : '';
-                    const dateTokens = dateText.split(' ').filter(token => token.length > 0); // e.g., ['july', '5', '2025']
+              galleryItems.forEach(item => {
+                  const dateElement = item.querySelector('.gallery-date');
+                  
+                  const dateText = dateElement ? dateElement.textContent.toLowerCase().replace('trivia date:', '').replace(/,/g, '').trim() : '';
+                  let dateTokens = dateText.split(' ').filter(token => token.length > 0); // e.g., ['july', '09', '2025']
 
-                    // Check if every search token is included in the date's list of tokens
-                    const isMatch = searchTokens.every(searchToken => dateTokens.includes(searchToken));
+                  // THE FIX: Check for single-digit days with leading zeros
+                  const newTokens = [];
+                  dateTokens.forEach(token => {
+                      // Check if the token is a number and has a leading zero
+                      if (!isNaN(token) && token.startsWith('0')) {
+                          // Add the version without the leading zero
+                          newTokens.push(parseInt(token).toString()); 
+                      }
+                  });
+                  dateTokens = dateTokens.concat(newTokens); // Add the new single-digit tokens to the list
 
-                    if (isMatch) {
-                        item.style.display = '';
-                        visibleCount++;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+                  // Check if every search token is included in the date's list of tokens
+                  const isMatch = searchTokens.every(searchToken => dateTokens.includes(searchToken));
 
-                // Show or hide the "no results" message
-                if (visibleCount === 0 && searchQuery) {
-                    noResultsMessage.style.display = 'block';
-                } else {
-                    noResultsMessage.style.display = 'none';
-                }
-            });
-        });
+                  if (isMatch) {
+                      item.style.display = '';
+                      visibleCount++;
+                  } else {
+                      item.style.display = 'none';
+                  }
+              });
+
+              // Show or hide the "no results" message
+              if (visibleCount === 0 && searchQuery) {
+                  noResultsMessage.style.display = 'block';
+              } else {
+                  noResultsMessage.style.display = 'none';
+              }
+          });
+      });
   </script>
  </body>
 </html>

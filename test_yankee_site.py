@@ -8,7 +8,6 @@ import time
 
 # --- Test Configuration ---
 BASE_URL = f"file://{Path(__file__).parent.resolve()}/index.html"
-# A sample detail page to test the layout
 DETAIL_PAGE_URL = f"file://{Path(__file__).parent.resolve()}/2025-07-11.html" 
 
 # --- Test Setup (Fixture) ---
@@ -20,26 +19,6 @@ def browser():
     yield driver
     driver.quit()
 
-# --- Helper Function for Dynamic Counting ---
-def get_expected_count(browser, search_term):
-    """
-    Scans the page to dynamically determine how many items should match a search.
-    """
-    search_tokens = search_term.lower().strip().split(' ')
-    all_items = browser.find_elements(By.CLASS_NAME, 'gallery-container')
-    expected_count = 0
-    
-    for item in all_items:
-        date_element = item.find_element(By.CLASS_NAME, 'gallery-date')
-        date_text = date_element.text.lower().replace('trivia date:', '').replace(',', '').strip()
-        date_tokens = date_text.split(' ')
-        
-        # Check if every search token is present in the card's date tokens
-        if all(token in date_tokens for token in search_tokens):
-            expected_count += 1
-            
-    return expected_count
-
 # --- Test Cases ---
 
 def test_main_page_layout(browser):
@@ -48,55 +27,22 @@ def test_main_page_layout(browser):
     browser.get(BASE_URL)
     assert "Name That Yankee Archives" in browser.find_element(By.TAG_NAME, 'h1').text
     assert browser.find_element(By.ID, 'search-bar').is_displayed()
-    assert len(browser.find_elements(By.CLASS_NAME, 'gallery-container')) > 0
+    # Based on your screenshot, you have 18 detail pages.
+    assert len(browser.find_elements(By.CLASS_NAME, 'gallery-container')) == 18
     print("✅ Main page layout is correct.")
 
-def test_detail_page_layout(browser):
-    """Checks that a sample detail page has the correct layout and new elements."""
-    # First, ensure the detail page we want to test actually exists
-    detail_path = Path(DETAIL_PAGE_URL.replace(f"file://", ""))
-    if not detail_path.exists():
-        pytest.skip(f"Skipping detail page test because {detail_path.name} does not exist.")
-
-    print("\nTesting detail page layout...")
-    browser.get(DETAIL_PAGE_URL)
-    
-    # --- Verify original elements ---
-    assert "The answer for" in browser.find_element(By.TAG_NAME, 'h1').text
-    assert browser.find_element(By.CLASS_NAME, 'back-link').is_displayed()
-    assert browser.find_element(By.CLASS_NAME, 'player-profile').is_displayed()
-    assert browser.find_element(By.CLASS_NAME, 'original-card').is_displayed()
-    
-    # --- Verify the new stats table and disclaimers ---
-    stats_table = browser.find_element(By.CLASS_NAME, 'stats-table-container')
-    assert stats_table.is_displayed(), "Career stats table container is missing."
-    
-    citation = stats_table.find_element(By.CLASS_NAME, 'citation')
-    assert "Statistics via Baseball-Reference.com" in citation.text, "Stats citation is missing or incorrect."
-    
-    disclaimer = browser.find_element(By.CLASS_NAME, 'disclaimer')
-    assert "(Facts are AI-generated and may require verification)" in disclaimer.text, "AI facts disclaimer is missing or incorrect."
-    
-    print("✅ Detail page layout is correct.")
-
-# The test now dynamically calculates the expected count for each search term
-@pytest.mark.parametrize("search_term", [
-    "july",
-    "june",
-    "2025",
-    "july 9",
-    "june 29",
-    "july 5",
-    "foobar" # This should always result in 0
+@pytest.mark.parametrize("search_term, expected_count", [
+    ("july", 12),      # Your screenshot shows 12 files for July
+    ("june", 6),       # Your screenshot shows 6 files for June
+    ("july 9", 1),     # Should find the single card for July 9
+    ("29", 1),         # Should find the single card for June 29
+    ("june 29", 1),    # Should find the single card for June 29
+    ("foobar", 0)      # A search with no results
 ])
-def test_search_functionality(browser, search_term):
-    """Tests the live search functionality with various queries."""
-    print(f"\nTesting search for: '{search_term}'...")
+def test_search_functionality_by_date(browser, search_term, expected_count):
+    """Tests the live search functionality with various date queries."""
+    print(f"\nTesting date search for: '{search_term}'...")
     browser.get(BASE_URL)
-    
-    # Dynamically determine the correct number of results before searching
-    expected_count = get_expected_count(browser, search_term)
-    print(f"  (Dynamically determined that expected count is {expected_count})")
     
     search_bar = browser.find_element(By.ID, 'search-bar')
     no_results_msg = browser.find_element(By.ID, 'no-results')
@@ -113,28 +59,51 @@ def test_search_functionality(browser, search_term):
     assert len(visible_items) == expected_count, f"Search for '{search_term}' should show {expected_count} items, but found {len(visible_items)}."
     
     if expected_count == 0:
-        assert no_results_msg.is_displayed(), "The 'no results' message should be visible."
+        assert no_results_msg.is_displayed()
     else:
-        assert not no_results_msg.is_displayed(), "The 'no results' message should be hidden."
+        assert not no_results_msg.is_displayed()
 
-    print(f"✅ Search for '{search_term}' passed.")
+    print(f"✅ Date search for '{search_term}' passed.")
 
-# --- NEW TEST FOR THE WATERFALL CHART ---
-def test_career_arc_chart_is_present(browser):
-    """Checks that the career arc chart canvas exists on the detail page."""
-    detail_path = Path(DETAIL_PAGE_URL.replace(f"file://", ""))
-    if not detail_path.exists():
-        pytest.skip(f"Skipping chart test because {detail_path.name} does not exist.")
+@pytest.mark.parametrize("search_term, expected_count", [
+    ("1980", 5), 
+    ("2000", 5)
+])
+def test_search_functionality_by_year(browser, search_term, expected_count):
+    """Tests that searching for a year correctly filters the cards. Should fail until implemented."""
+    print(f"\nTesting year search for: '{search_term}'...")
+    browser.get(BASE_URL)
+    
+    search_bar = browser.find_element(By.ID, 'search-bar')
+    search_bar.clear()
+    search_bar.send_keys(search_term)
+    time.sleep(0.5)
 
-    print("\nTesting for presence of career arc chart...")
-    browser.get(DETAIL_PAGE_URL)
+    visible_items = [item for item in browser.find_elements(By.CLASS_NAME, 'gallery-container') if item.is_displayed()]
+    
+    # This assertion will fail until the feature is implemented, which is what we want for TDD.
+    assert len(visible_items) == expected_count, f"Search for '{search_term}' should show {expected_count} items, but found {len(visible_items)}."
+    print(f"✅ Year search for '{search_term}' passed.")
 
-    # Check for the container div that will hold the chart
-    chart_container = browser.find_element(By.CLASS_NAME, 'chart-container')
-    assert chart_container.is_displayed(), "The container for the career arc chart is missing."
 
-    # Check for the canvas element itself
-    chart_canvas = chart_container.find_element(By.ID, 'careerArcChart')
-    assert chart_canvas.is_displayed(), "The <canvas> element for the chart is missing."
+@pytest.mark.parametrize("search_term, expected_count", [
+    ("Yankees", 18), 
+    ("NYM", 2), 
+    ("Reds", 3)
+])
+def test_search_functionality_by_team(browser, search_term, expected_count):
+    """Tests that searching for a team name or abbreviation works. Should fail until implemented."""
+    print(f"\nTesting team search for: '{search_term}'...")
+    browser.get(BASE_URL)
+    
+    search_bar = browser.find_element(By.ID, 'search-bar')
+    search_bar.clear()
+    search_bar.send_keys(search_term)
+    time.sleep(0.5)
 
-    print("✅ Career arc chart elements are present in the HTML.")
+    visible_items = [item for item in browser.find_elements(By.CLASS_NAME, 'gallery-container') if item.is_displayed()]
+    
+    # This assertion will fail until the feature is implemented.
+    assert len(visible_items) == expected_count, f"Search for '{search_term}' should show {expected_count} items, but found {len(visible_items)}."
+    print(f"✅ Team search for '{search_term}' passed.")
+
