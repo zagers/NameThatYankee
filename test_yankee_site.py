@@ -8,7 +8,7 @@ import time
 
 # --- Test Configuration ---
 BASE_URL = f"file://{Path(__file__).parent.resolve()}/index.html"
-# We still need a specific page to test the detail layout
+# A sample detail page to test the layout
 DETAIL_PAGE_URL = f"file://{Path(__file__).parent.resolve()}/2025-07-11.html" 
 
 # --- Test Setup (Fixture) ---
@@ -52,7 +52,7 @@ def test_main_page_layout(browser):
     print("✅ Main page layout is correct.")
 
 def test_detail_page_layout(browser):
-    """Checks that a sample detail page has the correct layout."""
+    """Checks that a sample detail page has the correct layout and new elements."""
     # First, ensure the detail page we want to test actually exists
     detail_path = Path(DETAIL_PAGE_URL.replace(f"file://", ""))
     if not detail_path.exists():
@@ -60,10 +60,23 @@ def test_detail_page_layout(browser):
 
     print("\nTesting detail page layout...")
     browser.get(DETAIL_PAGE_URL)
+    
+    # --- Verify original elements ---
     assert "The answer for" in browser.find_element(By.TAG_NAME, 'h1').text
     assert browser.find_element(By.CLASS_NAME, 'back-link').is_displayed()
     assert browser.find_element(By.CLASS_NAME, 'player-profile').is_displayed()
     assert browser.find_element(By.CLASS_NAME, 'original-card').is_displayed()
+    
+    # --- Verify the new stats table and disclaimers ---
+    stats_table = browser.find_element(By.CLASS_NAME, 'stats-table-container')
+    assert stats_table.is_displayed(), "Career stats table container is missing."
+    
+    citation = stats_table.find_element(By.CLASS_NAME, 'citation')
+    assert "Statistics via Baseball-Reference.com" in citation.text, "Stats citation is missing or incorrect."
+    
+    disclaimer = browser.find_element(By.CLASS_NAME, 'disclaimer')
+    assert "(Facts are AI-generated and may require verification)" in disclaimer.text, "AI facts disclaimer is missing or incorrect."
+    
     print("✅ Detail page layout is correct.")
 
 # The test now dynamically calculates the expected count for each search term
@@ -106,3 +119,22 @@ def test_search_functionality(browser, search_term):
 
     print(f"✅ Search for '{search_term}' passed.")
 
+# --- NEW TEST FOR THE WATERFALL CHART ---
+def test_career_arc_chart_is_present(browser):
+    """Checks that the career arc chart canvas exists on the detail page."""
+    detail_path = Path(DETAIL_PAGE_URL.replace(f"file://", ""))
+    if not detail_path.exists():
+        pytest.skip(f"Skipping chart test because {detail_path.name} does not exist.")
+
+    print("\nTesting for presence of career arc chart...")
+    browser.get(DETAIL_PAGE_URL)
+
+    # Check for the container div that will hold the chart
+    chart_container = browser.find_element(By.CLASS_NAME, 'chart-container')
+    assert chart_container.is_displayed(), "The container for the career arc chart is missing."
+
+    # Check for the canvas element itself
+    chart_canvas = chart_container.find_element(By.ID, 'careerArcChart')
+    assert chart_canvas.is_displayed(), "The <canvas> element for the chart is missing."
+
+    print("✅ Career arc chart elements are present in the HTML.")

@@ -15,44 +15,175 @@
         <a href="index.html" class="back-link">← Back to All Questions</a>
 
         <div class="detail-layout">
-            <div class="player-profile">
-                <div class="player-photo">
-                    <img src="images/answer-2025-06-20.jpg" alt="Photo of Eddie Lopat">
-                </div>
-                <div class="player-info">
-                    <h2>Eddie Lopat "The Junk Man"</h2>
-                    <div class="facts-header">
-                        <h3>Career Highlights & Facts</h3>
-                        <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+            <div class="left-column">
+                <div class="player-profile">
+                    <div class="player-photo">
+                        <img src="images/answer-2025-06-20.jpg" alt="Photo of Eddie Lopat">
                     </div>
-                    <ul>
-                        <li>He led the American League in earned run average in 1951.</li>
-                        <li>He won four World Series games for the New York Yankees.</li>
-                        <li>He later managed the Kansas City Athletics in Major League Baseball.</li>
-                    </ul>
+                    <div class="player-info">
+                        <h2>Eddie Lopat "The Junkman"</h2>
+                        <div class="facts-header">
+                            <h3>Career Highlights & Facts</h3>
+                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                        </div>
+                        <ul>
+                        <li>Was a starting pitcher on five consecutive World Series winning teams from 1949-1953.</li>
+                        <li>Made a major league debut at age 26 after serving in the military during World War II.</li>
+                        <li>Led the American League in both wins and ERA during the 1953 season.</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="original-card">
-                <h3>The Original Clue</h3>
-                <img src="images/clue-2025-06-20.jpg" alt="Original trivia card">
-            </div>
-        </div>
-        
+                
         <div class="stats-table-container">
             <h3>Career Totals</h3>
             <div class="table-wrapper">
                 <table>
-                    <thead>
-                        <tr><th>WAR</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th><th>SV</th><th>IP</th><th>SO</th><th>WHIP</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>32.1</td><td>166</td><td>112</td><td>3.21</td><td>340</td><td>318</td><td>3</td><td>2439.1</td><td>859</td><td>1.277</td></tr>
-                    </tbody>
+                    <thead><tr><th>WAR</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th><th>SV</th><th>IP</th><th>SO</th><th>WHIP</th></tr></thead>
+                    <tbody><tr><td>32.1</td><td>166</td><td>112</td><td>3.21</td><td>340</td><td>318</td><td>3</td><td>2439.1</td><td>859</td><td>1.277</td></tr></tbody>
                 </table>
             </div>
             <p class="citation">Statistics via Baseball-Reference.com</p>
         </div>
         
+            </div>
+            <div class="right-column">
+                <div class="original-card">
+                    <h3>The Original Clue</h3>
+                    <img src="images/clue-2025-06-20.jpg" alt="Original trivia card">
+                </div>
+                
+        <div class="chart-container">
+            <h3>Career Arc by WAR</h3>
+            <div class="chart-wrapper">
+                <canvas id="careerArcChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const years = ["1944", "1945", "1946", "1947", "1948", "1949", "1950", "1951", "1952", "1953", "1954", "1955"];
+            const warData = [1.3, -0.2, 4.0, 5.5, 2.2, 2.6, 3.1, 3.6, 2.2, 3.1, 1.0, -0.2];
+            const teamsByYear = ["CHW", "CHW", "CHW", "CHW", "NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "2TM"];
+
+            const teamColors = {
+                'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
+                'ATL': { bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' },
+                'BAL': { bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' },
+                'BOS': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' },
+                'CHC': { bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' },
+                'CHW': { bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' },
+                'CIN': { bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' },
+                'CLE': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' },
+                'COL': { bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' },
+                'DET': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' },
+                'HOU': { bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' },
+                'KCR': { bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' },
+                'LAA': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
+                'LAD': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
+                'MIA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
+                'MIL': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' },
+                'MIN': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' },
+                'NYM': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' },
+                'NYY': { bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' },
+                'OAK': { bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' },
+                'PHI': { bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' },
+                'PIT': { bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' },
+                'SDP': { bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' },
+                'SFG': { bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' },
+                'SEA': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' },
+                'STL': { bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' },
+                'TBR': { bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' },
+                'TEX': { bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' },
+                'TOR': { bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' },
+                'WSN': { bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' },
+                'MON': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' },
+                'CAL': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
+                'FLA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
+                'BRO': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
+                'SLB': { bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' },
+                '2TM': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' },
+                'Total': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' },
+                'Default': { bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }
+            };
+
+            const waterfallData = [];
+            let cumulativeTotal = 0;
+            for (const war of warData) {
+                waterfallData.push([cumulativeTotal, cumulativeTotal + war]);
+                cumulativeTotal += war;
+            }
+            waterfallData.push([0, cumulativeTotal]);
+
+            const labels = [...years, 'Career Total'];
+            const backgroundColors = teamsByYear.map(team => (teamColors[team] || teamColors['Default']).bg);
+            backgroundColors.push(teamColors['Total'].bg);
+
+            const borderColors = teamsByYear.map(team => (teamColors[team] || teamColors['Default']).border);
+            borderColors.push(teamColors['Total'].border);
+
+            const ctx = document.getElementById('careerArcChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'WAR',
+                        data: waterfallData,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 2,
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const i = context.dataIndex;
+                                    if (i < warData.length) {
+                                        return `WAR Added in ${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
+                                    } else {
+                                        return `Total Career WAR: ${cumulativeTotal.toFixed(1)}`;
+                                    }
+                                }
+                            }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: { size: 10 }, // Smaller font size for legend
+                                generateLabels: function(chart) {
+                                    const uniqueTeams = [...new Set(teamsByYear)];
+                                    const legendItems = uniqueTeams.map(teamAbbr => {
+                                        const teamInfo = teamColors[teamAbbr] || teamColors['Default'];
+                                        return { text: teamInfo.name, fillStyle: teamInfo.bg, strokeStyle: teamInfo.border, lineWidth: 2 };
+                                    });
+                                    legendItems.push({ text: teamColors['Total'].name, fillStyle: teamColors['Total'].bg, strokeStyle: teamColors['Total'].border, lineWidth: 2 });
+                                    return legendItems;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { title: { display: false } },
+                        x: { 
+                            title: { display: false }, 
+                            grid: { display: false },
+                            ticks: { maxTicksLimit: 15 }
+                        }
+                    }
+                }
+            });
+        </script>
+        
+            </div>
+        </div>
     </main>
 </body>
 </html>
