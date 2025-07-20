@@ -27,9 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Won five World Series championships with two different teams.</li>
-                        <li>Drove in the series-clinching run of the 2000 World Series.</li>
-                        <li>Managed the Venezuelan national team in three World Baseball Classics.</li>
+                        <li>Won four World Series championships as a player.</li>
+                        <li>Delivered the game-winning hit in Game 5 of the 2000 World Series.</li>
+                        <li>Managed the Venezuelan national team in the World Baseball Classic.</li>
                         </ul>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                                 label: function(context) {
                                     const i = context.dataIndex;
                                     if (i < warData.length) {
-                                        return `WAR Added in ${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
+                                        return `${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
                                     } else {
                                         return `Total Career WAR: ${cumulativeTotal.toFixed(1)}`;
                                     }
@@ -184,6 +184,7 @@
         
             </div>
         </div>
+        <div id="search-data" style="display:none;">{"teams": ["2TM", "TOR", "SEA", "CAL", "NYY"], "years": ["1991", "1993", "1992", "1997", "1990", "1998", "1995", "1999", "2000", "2003", "2001", "1994", "1996"]}</div>
     </main>
 </body>
 </html>
