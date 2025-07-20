@@ -27,9 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Father, Kevin, and brother, Andrew, both played in Major League Baseball.</li>
-                        <li>Pitched a scoreless inning of relief for the New York Yankees in 2017.</li>
-                        <li>Was a teammate of brother, Andrew, on the 2021 Chicago Cubs.</li>
+                        <li>Father and brother both played in Major League Baseball.</li>
+                        <li>Was involved in a notable on-field brawl with the Boston Red Sox.</li>
+                        <li>Spent nine Major League seasons with the New York Yankees.</li>
                         </ul>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                                 label: function(context) {
                                     const i = context.dataIndex;
                                     if (i < warData.length) {
-                                        return `WAR Added in ${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
+                                        return `${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
                                     } else {
                                         return `Total Career WAR: ${cumulativeTotal.toFixed(1)}`;
                                     }
@@ -184,6 +184,7 @@
         
             </div>
         </div>
+        <div id="search-data" style="display:none;">{"teams": ["CIN", "NYY", "STL", "DET", "2TM", "LAA", "CHC"], "years": ["2021", "2020", "2013", "2018", "2011", "2015", "2017", "2022", "2014", "2019", "2016"]}</div>
     </main>
 </body>
 </html>

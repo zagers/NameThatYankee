@@ -21,15 +21,15 @@
                         <img src="images/answer-2025-07-13.jpg" alt="Photo of Joe Pepitone">
                     </div>
                     <div class="player-info">
-                        <h2>Joe Pepitone "Pepi"</h2>
+                        <h2>Joe Pepitone</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was the first New York Yankees first baseman to win a Gold Glove Award.</li>
-                        <li>Hit two home runs in Game 6 of the 1963 World Series.</li>
-                        <li>Played professionally in both Major League Baseball and Japan's Nippon Professional Baseball.</li>
+                        <li>Was a two-time American League All-Star.</li>
+                        <li>Won a Gold Glove Award at first base.</li>
+                        <li>Played for five different Major League Baseball teams.</li>
                         </ul>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                                 label: function(context) {
                                     const i = context.dataIndex;
                                     if (i < warData.length) {
-                                        return `WAR Added in ${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
+                                        return `${years[i]} (${teamsByYear[i]}): ${warData[i].toFixed(1)}`;
                                     } else {
                                         return `Total Career WAR: ${cumulativeTotal.toFixed(1)}`;
                                     }
@@ -184,6 +184,7 @@
         
             </div>
         </div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "HOU", "ATL", "CHC"], "years": ["1971", "1965", "1969", "1964", "1970", "1962", "1963", "1968", "1973", "1972", "1966", "1967"]}</div>
     </main>
 </body>
 </html>

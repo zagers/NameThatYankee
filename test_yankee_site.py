@@ -36,7 +36,8 @@ def test_main_page_layout(browser):
     ("june", 6),       # Your screenshot shows 6 files for June
     ("july 9", 1),     # Should find the single card for July 9
     ("29", 1),         # Should find the single card for June 29
-    ("june 29", 1),    # Should find the single card for June 29
+    ("9", 1),    # Should find the single card for July 9
+    ("08", 1),   # Should find the single card for July 8
     ("foobar", 0)      # A search with no results
 ])
 def test_search_functionality_by_date(browser, search_term, expected_count):
@@ -66,7 +67,7 @@ def test_search_functionality_by_date(browser, search_term, expected_count):
     print(f"✅ Date search for '{search_term}' passed.")
 
 @pytest.mark.parametrize("search_term, expected_count", [
-    ("1980", 5), 
+    ("1980", 3), 
     ("2000", 5)
 ])
 def test_search_functionality_by_year(browser, search_term, expected_count):

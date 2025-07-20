@@ -81,37 +81,33 @@ def parse_career_totals(soup):
 def parse_yearly_war(soup):
     """
     Parses the main stats table for year-by-year WAR and team data.
-    This version is updated to be more robust against site changes.
+    This version is rewritten to correctly handle multi-team seasons.
     """
     table = None
     war_stat_id = None
     
-    player_type = 'hitter' # Default to hitter
+    player_type = 'hitter'
     info_div = soup.find('div', id='info')
     if info_div:
         p_tags = info_div.find_all('p')
         for p_tag in p_tags:
             full_text = p_tag.get_text()
-            if "Position:" in full_text:
-                if "Pitcher" in full_text:
-                    player_type = 'pitcher'
+            if "Position:" in full_text and "Pitcher" in full_text:
+                player_type = 'pitcher'
                 break
-    else:
-        print("  Could not find info div to determine player position. Defaulting to hitter.")
-
+    
     if player_type == 'hitter':
         table_id = 'players_standard_batting'
         war_stat_id = 'b_war'
-    else: # pitcher
+    else:
         table_id = 'players_standard_pitching'
         war_stat_id = 'p_war' 
 
-    # THE FIX: First, try to find the table directly.
-    table = soup.find('table', id=table_id)
+    container = soup.find('div', id=f'switcher_{table_id}')
+    if container:
+        table = container.find('table', id=table_id)
 
-    # If the direct method fails, fall back to searching inside HTML comments.
     if not table:
-        print("  Table not found directly, searching in comments (fallback)...")
         comments = soup.find_all(string=lambda text: isinstance(text, Comment))
         table_html = ""
         for comment in comments:
@@ -126,33 +122,51 @@ def parse_yearly_war(soup):
         print(f"  Could not find stats table with id '{table_id}'.")
         return []
 
-    rows = table.find('tbody').find_all('tr', class_=lambda x: x != 'thead')
+    rows = table.find('tbody').find_all('tr')
     
-    war_by_year = {}
-
+    yearly_data = []
+    
+    # First pass: Get all teams for each year
+    teams_per_year = {}
     for row in rows:
-        if 'partial_table' in row.get('class', []) or 'thead' in row.get('class', []):
+        if 'partial_table' in row.get('class', []):
+            year_cell = row.find('th', {'data-stat': 'year_id'})
+            team_cell = row.find('td', {'data-stat': 'team_name_abbr'})
+            if year_cell and team_cell:
+                year = year_cell.text.strip()
+                if year not in teams_per_year:
+                    teams_per_year[year] = []
+                teams_per_year[year].append(team_cell.text.strip())
+
+    # Second pass: Get the main season data and combine
+    for row in rows:
+        if 'partial_table' in row.get('class', []) or 'thead' in row.get('class', []) or not row.get('id'):
             continue
 
         year_cell = row.find('th', {'data-stat': 'year_id'})
-        team_cell = row.find('td', {'data-stat': 'team_name_abbr'}) 
+        team_cell = row.find('td', {'data-stat': 'team_name_abbr'})
         war_cell = row.find('td', {'data-stat': war_stat_id})
 
         if year_cell and team_cell and war_cell and year_cell.text.strip():
             year = year_cell.text.strip()
-            team = team_cell.text.strip()
+            display_team = team_cell.text.strip()
+            
             try:
                 war = float(war_cell.text.strip())
-                if year in war_by_year:
-                    war_by_year[year]['war'] += war
-                    if not war_by_year[year]['team'].endswith('TM'):
-                        war_by_year[year]['team'] = '2TM' 
-                else:
-                    war_by_year[year] = {'year': year, 'team': team, 'war': war}
+                
+                # Get the full list of teams for this year
+                all_teams_for_year = teams_per_year.get(year, [display_team])
+                
+                yearly_data.append({
+                    'year': year,
+                    'teams': all_teams_for_year,
+                    'display_team': display_team,
+                    'war': war
+                })
             except (ValueError, TypeError):
                 continue
 
-    return list(war_by_year.values())
+    return sorted(yearly_data, key=lambda x: x['year'])
 
 
 def search_and_scrape_player(player_name):
@@ -246,7 +260,7 @@ def get_player_info_from_image(image_path: Path, api_key: str):
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         clue_image = Image.open(image_path)
         
         generation_config = genai.types.GenerationConfig(temperature=0.2)
@@ -277,7 +291,7 @@ def get_facts_from_gemini(player_name: str, api_key: str):
     print(f"🤖 Asking Gemini for interesting facts about {player_name}...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         generation_config = genai.types.GenerationConfig(temperature=0.2)
         
@@ -385,7 +399,16 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     if yearly_war_data:
         years = json.dumps([item['year'] for item in yearly_war_data])
         war_data = json.dumps([item['war'] for item in yearly_war_data])
-        teams_by_year = json.dumps([item['team'] for item in yearly_war_data])
+        teams_by_year = json.dumps([item['display_team'] for item in yearly_war_data])
+        
+        all_teams = set()
+        for item in yearly_war_data:
+            for team in item['teams']:
+                all_teams.add(team)
+        all_years = {item['year'] for item in yearly_war_data}
+        search_data = {'teams': list(all_teams), 'years': list(all_years)}
+        search_data_html = f'<div id="search-data" style="display:none;">{json.dumps(search_data)}</div>'
+
 
         chart_html = f"""
         <div class="chart-container">
@@ -481,7 +504,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                                 label: function(context) {{
                                     const i = context.dataIndex;
                                     if (i < warData.length) {{
-                                        return `WAR Added in ${{years[i]}} (${{teamsByYear[i]}}): ${{warData[i].toFixed(1)}}`;
+                                        return `${{years[i]}} (${{teamsByYear[i]}}): ${{warData[i].toFixed(1)}}`;
                                     }} else {{
                                         return `Total Career WAR: ${{cumulativeTotal.toFixed(1)}}`;
                                     }}
@@ -562,6 +585,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                 {chart_html}
             </div>
         </div>
+        {search_data_html}
     </main>
 </body>
 </html>"""
@@ -575,15 +599,34 @@ def rebuild_index_page(project_dir: Path):
     print("\n✍️ Rebuilding and re-sorting index.html from all available clues...")
     index_path = project_dir / "index.html"
     images_dir = project_dir / "images"
+    
     if not index_path.exists():
         print(f"❌ Error: index.html not found at {index_path}.")
         return
+
     all_clue_files = sorted(images_dir.glob("clue-*.jpg"), reverse=True)
+    
     if not all_clue_files:
         print("🤷 No clue images found in the 'images' directory.")
         return
+
     gallery_tiles = []
     date_pattern = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.jpg")
+    
+    team_name_map = {
+        'NYY': 'new york yankees', 'BOS': 'boston red sox', 'CAL': 'california angels',
+        'CHW': 'chicago white sox', 'OAK': 'oakland athletics', 'PHI': 'philadelphia phillies',
+        'SDP': 'san diego padres', 'LAD': 'los angeles dodgers', 'CHC': 'chicago cubs',
+        'NYM': 'new york mets', 'CIN': 'cincinnati reds', 'ATL': 'atlanta braves',
+        'CLE': 'cleveland indians guardians', 'SEA': 'seattle mariners', 'TOR': 'toronto blue jays',
+        'TEX': 'texas rangers', 'KCR': 'kansas city royals', 'MIN': 'minnesota twins',
+        'DET': 'detroit tigers', 'BAL': 'baltimore orioles', 'TBR': 'tampa bay rays devil',
+        'HOU': 'houston astros', 'LAA': 'los angeles angels', 'SFG': 'san francisco giants',
+        'ARI': 'arizona diamondbacks', 'COL': 'colorado rockies', 'MIL': 'milwaukee brewers',
+        'STL': 'st louis cardinals', 'PIT': 'pittsburgh pirates', 'MIA': 'miami florida marlins',
+        'WSN': 'washington nationals', 'MON': 'montreal expos'
+    }
+
     for clue_file in all_clue_files:
         match = date_pattern.search(clue_file.name)
         if match:
@@ -591,7 +634,28 @@ def rebuild_index_page(project_dir: Path):
             try:
                 dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
                 formatted_date = dt_obj.strftime("%B %d, %Y")
-                snippet = f"""<div class="gallery-container">
+                
+                detail_page_path = project_dir / f"{date_str}.html"
+                search_terms = formatted_date.lower().replace(',', '') 
+
+                if detail_page_path.exists():
+                    with open(detail_page_path, 'r', encoding='utf-8') as detail_f:
+                        detail_soup = BeautifulSoup(detail_f, 'html.parser')
+                    
+                    search_data_div = detail_soup.find('div', id='search-data')
+                    if search_data_div:
+                        search_data = json.loads(search_data_div.string)
+                        teams = search_data.get('teams', [])
+                        years = search_data.get('years', [])
+                        
+                        search_terms += " " + " ".join(teams).lower()
+                        search_terms += " " + " ".join(years)
+                        
+                        for team_abbr in teams:
+                            if team_abbr in team_name_map:
+                                search_terms += " " + team_name_map[team_abbr]
+
+                snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
                 <a href="{date_str}.html" class="gallery-item">
                     <img src="images/clue-{date_str}.jpg" alt="Name that Yankee trivia card from {date_str}">
                     <div class="gallery-item-overlay"><span>Click to Reveal</span></div>
@@ -601,6 +665,7 @@ def rebuild_index_page(project_dir: Path):
                 gallery_tiles.append(snippet)
             except ValueError:
                 print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
+    
     with open(index_path, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'html.parser')
     gallery_div = soup.select_one('.gallery')
@@ -619,6 +684,7 @@ def rebuild_index_page(project_dir: Path):
         print("✅ Footer timestamp updated.")
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
+        
     print("✅ index.html rebuilt successfully.")
 
 

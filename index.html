@@ -7,39 +7,6 @@
    Name That Yankee Archives
   </title>
   <link href="style.css" rel="stylesheet"/>
-  <style>
-   /* Additional styles for the search bar */
-     .search-container {
-         margin-bottom: 2rem;
-         max-width: 600px;
-         margin-left: auto;
-         margin-right: auto;
-     }
-
-     #search-bar {
-         width: 100%;
-         padding: 0.75rem 1.25rem;
-         font-size: 1rem;
-         border-radius: 9999px; /* pill shape */
-         border: 1px solid #ccc;
-         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-         transition: border-color 0.3s ease, box-shadow 0.3s ease;
-     }
-
-     #search-bar:focus {
-         outline: none;
-         border-color: #0C2340; /* Yankees Navy */
-         box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.2);
-     }
-
-     #no-results {
-         text-align: center;
-         padding: 2rem;
-         font-size: 1.2rem;
-         color: #555;
-         display: none; /* Hidden by default */
-     }
-  </style>
  </head>
  <body>
   <header>
@@ -50,13 +17,15 @@
     Click on a trivia card below to reveal the player and their career highlights.
    </p>
   </header>
+  <div class="sticky-search-wrapper">
+      <!-- Search Bar Section -->
+      <div class="search-container">
+       <input id="search-bar" placeholder="Search by trivia date (e.g., July, 2025, July 9), player year (e.g. 2000), or player team (Cubs, ATL, Cleveland)..." type="search"/>
+      </div>
+  </div>
   <main>
-   <!-- Search Bar Section -->
-   <div class="search-container">
-    <input id="search-bar" placeholder="Search by date (e.g., July, 2025, July 9)..." type="search"/>
-   </div>
    <div class="gallery" id="gallery-grid">
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 18 2025 atl nyy cle cin 1996 1999 1997 1998 1991 2000 2001 1994 1992 2002 1993 1995 atlanta braves new york yankees cleveland indians guardians cincinnati reds">
      <a class="gallery-item" href="2025-07-18.html">
       <img alt="Name that Yankee trivia card from 2025-07-18" src="images/clue-2025-07-18.jpg"/>
       <div class="gallery-item-overlay">
@@ -69,7 +38,7 @@
       Trivia Date: July 18, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 13 2025 nyy hou atl chc 1971 1965 1969 1964 1970 1962 1963 1968 1973 1972 1966 1967 new york yankees houston astros atlanta braves chicago cubs">
      <a class="gallery-item" href="2025-07-13.html">
       <img alt="Name that Yankee trivia card from 2025-07-13" src="images/clue-2025-07-13.jpg"/>
       <div class="gallery-item-overlay">
@@ -82,7 +51,7 @@
       Trivia Date: July 13, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 12 2025">
      <a class="gallery-item" href="2025-07-12.html">
       <img alt="Name that Yankee trivia card from 2025-07-12" src="images/clue-2025-07-12.jpg"/>
       <div class="gallery-item-overlay">
@@ -95,7 +64,7 @@
       Trivia Date: July 12, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 11 2025">
      <a class="gallery-item" href="2025-07-11.html">
       <img alt="Name that Yankee trivia card from 2025-07-11" src="images/clue-2025-07-11.jpg"/>
       <div class="gallery-item-overlay">
@@ -108,7 +77,7 @@
       Trivia Date: July 11, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 10 2025">
      <a class="gallery-item" href="2025-07-10.html">
       <img alt="Name that Yankee trivia card from 2025-07-10" src="images/clue-2025-07-10.jpg"/>
       <div class="gallery-item-overlay">
@@ -121,7 +90,7 @@
       Trivia Date: July 10, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 09 2025">
      <a class="gallery-item" href="2025-07-09.html">
       <img alt="Name that Yankee trivia card from 2025-07-09" src="images/clue-2025-07-09.jpg"/>
       <div class="gallery-item-overlay">
@@ -134,7 +103,7 @@
       Trivia Date: July 09, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 08 2025">
      <a class="gallery-item" href="2025-07-08.html">
       <img alt="Name that Yankee trivia card from 2025-07-08" src="images/clue-2025-07-08.jpg"/>
       <div class="gallery-item-overlay">
@@ -147,7 +116,7 @@
       Trivia Date: July 08, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 06 2025">
      <a class="gallery-item" href="2025-07-06.html">
       <img alt="Name that Yankee trivia card from 2025-07-06" src="images/clue-2025-07-06.jpg"/>
       <div class="gallery-item-overlay">
@@ -160,7 +129,7 @@
       Trivia Date: July 06, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 05 2025">
      <a class="gallery-item" href="2025-07-05.html">
       <img alt="Name that Yankee trivia card from 2025-07-05" src="images/clue-2025-07-05.jpg"/>
       <div class="gallery-item-overlay">
@@ -173,7 +142,7 @@
       Trivia Date: July 05, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 03 2025">
      <a class="gallery-item" href="2025-07-03.html">
       <img alt="Name that Yankee trivia card from 2025-07-03" src="images/clue-2025-07-03.jpg"/>
       <div class="gallery-item-overlay">
@@ -186,7 +155,7 @@
       Trivia Date: July 03, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 02 2025">
      <a class="gallery-item" href="2025-07-02.html">
       <img alt="Name that Yankee trivia card from 2025-07-02" src="images/clue-2025-07-02.jpg"/>
       <div class="gallery-item-overlay">
@@ -199,7 +168,7 @@
       Trivia Date: July 02, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="july 01 2025">
      <a class="gallery-item" href="2025-07-01.html">
       <img alt="Name that Yankee trivia card from 2025-07-01" src="images/clue-2025-07-01.jpg"/>
       <div class="gallery-item-overlay">
@@ -212,7 +181,7 @@
       Trivia Date: July 01, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="june 29 2025">
      <a class="gallery-item" href="2025-06-29.html">
       <img alt="Name that Yankee trivia card from 2025-06-29" src="images/clue-2025-06-29.jpg"/>
       <div class="gallery-item-overlay">
@@ -225,7 +194,7 @@
       Trivia Date: June 29, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="june 23 2025">
      <a class="gallery-item" href="2025-06-23.html">
       <img alt="Name that Yankee trivia card from 2025-06-23" src="images/clue-2025-06-23.jpg"/>
       <div class="gallery-item-overlay">
@@ -238,7 +207,7 @@
       Trivia Date: June 23, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="june 21 2025">
      <a class="gallery-item" href="2025-06-21.html">
       <img alt="Name that Yankee trivia card from 2025-06-21" src="images/clue-2025-06-21.jpg"/>
       <div class="gallery-item-overlay">
@@ -251,7 +220,7 @@
       Trivia Date: June 21, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="june 20 2025">
      <a class="gallery-item" href="2025-06-20.html">
       <img alt="Name that Yankee trivia card from 2025-06-20" src="images/clue-2025-06-20.jpg"/>
       <div class="gallery-item-overlay">
@@ -264,7 +233,7 @@
       Trivia Date: June 20, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="june 19 2025">
      <a class="gallery-item" href="2025-06-19.html">
       <img alt="Name that Yankee trivia card from 2025-06-19" src="images/clue-2025-06-19.jpg"/>
       <div class="gallery-item-overlay">
@@ -277,7 +246,7 @@
       Trivia Date: June 19, 2025
      </p>
     </div>
-    <div class="gallery-container">
+    <div class="gallery-container" data-search-terms="june 16 2025 cin nyy stl det 2tm laa chc 2021 2020 2013 2018 2011 2015 2017 2022 2014 2019 2016 cincinnati reds new york yankees st louis cardinals detroit tigers los angeles angels chicago cubs">
      <a class="gallery-item" href="2025-06-16.html">
       <img alt="Name that Yankee trivia card from 2025-06-16" src="images/clue-2025-06-16.jpg"/>
       <div class="gallery-item-overlay">
@@ -303,55 +272,53 @@
    </p>
   </footer>
   <script>
-    // --- Live Search Functionality ---
-      document.addEventListener('DOMContentLoaded', () => {
-          const searchBar = document.getElementById('search-bar');
-          const galleryGrid = document.getElementById('gallery-grid');
-          const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
-          const noResultsMessage = document.getElementById('no-results');
+   // --- Live Search Functionality (Corrected) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBar = document.getElementById('search-bar');
+            const galleryGrid = document.getElementById('gallery-grid');
+            const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
+            const noResultsMessage = document.getElementById('no-results');
 
-          searchBar.addEventListener('keyup', (e) => {
-              const searchQuery = e.target.value.toLowerCase().trim();
-              const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
-              
-              let visibleCount = 0;
+            searchBar.addEventListener('keyup', (e) => {
+                const searchQuery = e.target.value.toLowerCase().trim();
+                const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+                
+                let visibleCount = 0;
 
-              galleryItems.forEach(item => {
-                  const dateElement = item.querySelector('.gallery-date');
-                  
-                  const dateText = dateElement ? dateElement.textContent.toLowerCase().replace('trivia date:', '').replace(/,/g, '').trim() : '';
-                  let dateTokens = dateText.split(' ').filter(token => token.length > 0); // e.g., ['july', '09', '2025']
+                galleryItems.forEach(item => {
+                    const searchableData = item.dataset.searchTerms || '';
+                    let dataTokens = searchableData.replace(/,/g, '').split(' '); 
 
-                  // THE FIX: Check for single-digit days with leading zeros
-                  const newTokens = [];
-                  dateTokens.forEach(token => {
-                      // Check if the token is a number and has a leading zero
-                      if (!isNaN(token) && token.startsWith('0')) {
-                          // Add the version without the leading zero
-                          newTokens.push(parseInt(token).toString()); 
-                      }
-                  });
-                  dateTokens = dateTokens.concat(newTokens); // Add the new single-digit tokens to the list
+                    // THE FIX: Augment the data tokens to handle single-digit days
+                    const augmentedTokens = [];
+                    dataTokens.forEach(token => {
+                        // Check if the token is a number like "09" or "07"
+                        if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
+                            // Add the version without the leading zero (e.g., "9" or "7")
+                            augmentedTokens.push(parseInt(token, 10).toString()); 
+                        }
+                    });
+                    // Add the new single-digit tokens to the list of searchable words
+                    dataTokens = dataTokens.concat(augmentedTokens);
 
-                  // Check if every search token is included in the date's list of tokens
-                  const isMatch = searchTokens.every(searchToken => dateTokens.includes(searchToken));
+                    // Check if EVERY token from the search query exists in the card's data tokens.
+                    const isMatch = searchTokens.every(token => dataTokens.includes(token));
 
-                  if (isMatch) {
-                      item.style.display = '';
-                      visibleCount++;
-                  } else {
-                      item.style.display = 'none';
-                  }
-              });
+                    if (isMatch) {
+                        item.style.display = '';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
 
-              // Show or hide the "no results" message
-              if (visibleCount === 0 && searchQuery) {
-                  noResultsMessage.style.display = 'block';
-              } else {
-                  noResultsMessage.style.display = 'none';
-              }
-          });
-      });
+                if (visibleCount === 0 && searchQuery) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            });
+        });
   </script>
  </body>
 </html>
