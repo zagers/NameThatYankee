@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+import re
 
 def parse_career_totals(soup):
     """Parses the 'stats_pullout' div for career totals."""
@@ -37,6 +38,7 @@ def parse_career_totals(soup):
 def parse_yearly_war(soup):
     """
     Parses the main stats table for year-by-year WAR and team data.
+    This version is updated to handle multiple possible page layouts.
     """
     table = None
     war_stat_id = None
@@ -58,11 +60,22 @@ def parse_yearly_war(soup):
         table_id = 'players_standard_pitching'
         war_stat_id = 'p_war' 
 
-    container = soup.find('div', id=f'switcher_{table_id}')
-    if container:
-        table = container.find('table', id=table_id)
+    # THE FIX: Check for multiple possible container IDs and the table ID directly.
+    possible_container_ids = [f'switcher_{table_id}', f'all_{table_id}']
+    
+    for cid in possible_container_ids:
+        container = soup.find('div', id=cid)
+        if container:
+            table = container.find('table', id=table_id)
+            if table: break # Found it
 
+    # If the container method fails, try to find the table by its ID directly
     if not table:
+        table = soup.find('table', id=table_id)
+
+    # Fallback to searching comments if still not found
+    if not table:
+        print("  Table not found directly, searching in comments (fallback)...")
         comments = soup.find_all(string=lambda text: isinstance(text, Comment))
         table_html = ""
         for comment in comments:
@@ -79,8 +92,18 @@ def parse_yearly_war(soup):
 
     rows = table.find('tbody').find_all('tr')
     
-    war_by_year = {}
+    teams_per_year = {}
+    for row in rows:
+        if 'partial_table' in row.get('class', []):
+            year_cell = row.find('th', {'data-stat': 'year_id'})
+            team_cell = row.find('td', {'data-stat': 'team_name_abbr'})
+            if year_cell and team_cell:
+                year = year_cell.text.strip()
+                if year not in teams_per_year:
+                    teams_per_year[year] = []
+                teams_per_year[year].append(team_cell.text.strip())
 
+    yearly_data = []
     for row in rows:
         if 'partial_table' in row.get('class', []) or 'thead' in row.get('class', []) or not row.get('id'):
             continue
@@ -91,26 +114,22 @@ def parse_yearly_war(soup):
 
         if year_cell and team_cell and war_cell and year_cell.text.strip():
             year = year_cell.text.strip()
-            team = team_cell.text.strip()
+            display_team = team_cell.text.strip()
+            
             try:
                 war = float(war_cell.text.strip())
-                if year in war_by_year:
-                    war_by_year[year]['war'] += war
-                    war_by_year[year]['teams'].append(team)
-                else:
-                    war_by_year[year] = {'year': year, 'teams': [team], 'war': war}
+                all_teams_for_year = teams_per_year.get(year, [display_team])
+                
+                yearly_data.append({
+                    'year': year,
+                    'teams': all_teams_for_year,
+                    'display_team': display_team,
+                    'war': war
+                })
             except (ValueError, TypeError):
                 continue
-    
-    final_data = []
-    for year, data in war_by_year.items():
-        if len(data['teams']) > 1:
-            data['display_team'] = f"{len(data['teams'])}TM"
-        else:
-            data['display_team'] = data['teams'][0]
-        final_data.append(data)
 
-    return sorted(final_data, key=lambda x: x['year'])
+    return sorted(yearly_data, key=lambda x: x['year'])
 
 
 def search_and_scrape_player(player_name):
