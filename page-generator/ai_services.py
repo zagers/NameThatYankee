@@ -9,7 +9,7 @@ def get_player_info_from_image(image_path, api_key: str):
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-pro')
         clue_image = Image.open(image_path)
         
         generation_config = genai.types.GenerationConfig(temperature=0.2)
@@ -43,7 +43,7 @@ def get_facts_from_gemini(player_name: str, api_key: str):
     print(f"🤖 Asking Gemini for interesting facts about {player_name}...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-pro')
         
         generation_config = genai.types.GenerationConfig(temperature=0.2)
         

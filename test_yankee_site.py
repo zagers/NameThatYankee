@@ -7,8 +7,9 @@ from pathlib import Path
 import time
 
 # --- Test Configuration ---
-BASE_URL = f"file://{Path(__file__).parent.resolve()}/index.html"
-DETAIL_PAGE_URL = f"file://{Path(__file__).parent.resolve()}/2025-07-11.html" 
+TEST_DATA_DIR = Path(__file__).parent.resolve() / "test-data"
+BASE_URL = f"file://{TEST_DATA_DIR}/index.html"
+DETAIL_PAGE_URL = f"file://{TEST_DATA_DIR}/2025-07-11.html" 
 
 # --- Test Setup (Fixture) ---
 @pytest.fixture(scope="session")
@@ -28,11 +29,11 @@ def test_main_page_layout(browser):
     assert "Name That Yankee Archives" in browser.find_element(By.TAG_NAME, 'h1').text
     assert browser.find_element(By.ID, 'search-bar').is_displayed()
     # Based on your screenshot, you have 18 detail pages.
-    assert len(browser.find_elements(By.CLASS_NAME, 'gallery-container')) == 18
+    assert len(browser.find_elements(By.CLASS_NAME, 'gallery-container')) == 19
     print("✅ Main page layout is correct.")
 
 @pytest.mark.parametrize("search_term, expected_count", [
-    ("july", 12),      # Your screenshot shows 12 files for July
+    ("july", 13),      # Your screenshot shows 12 files for July
     ("june", 6),       # Your screenshot shows 6 files for June
     ("july 9", 1),     # Should find the single card for July 9
     ("29", 1),         # Should find the single card for June 29
@@ -88,7 +89,7 @@ def test_search_functionality_by_year(browser, search_term, expected_count):
 
 
 @pytest.mark.parametrize("search_term, expected_count", [
-    ("Yankees", 18), 
+    ("Yankees", 19), 
     ("NYM", 2), 
     ("Reds", 3)
 ])
