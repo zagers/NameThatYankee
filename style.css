@@ -22,9 +22,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
 }
 
-/* THE FIX: Ensure the container for the title and subtitle aligns its text to the left */
 header .header-content {
     text-align: left;
 }
@@ -69,9 +69,13 @@ footer {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 #search-bar {
+    flex-grow: 1;
     width: 100%;
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
@@ -79,6 +83,27 @@ footer {
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.filter-container label {
+    margin-left: 0.5rem;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.filter-container input[type="checkbox"] {
+    cursor: pointer;
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
 
 #no-results {
     text-align: center;
@@ -353,8 +378,6 @@ tbody tr:hover { background-color: #e9ecef; }
 #hints-container h3 { text-align: center; margin-bottom: 0.5rem; color: var(--primary-color); }
 #hints-list { list-style-type: '⚾'; padding-left: 1.5rem; }
 #hints-list li { padding-left: 0.5rem; margin-bottom: 0.5rem; }
-
-/* THE FIX: Update score bubble colors */
 #score-display {
     background-color: var(--secondary-color);
     color: var(--primary-color);
@@ -376,5 +399,5 @@ tbody tr:hover { background-color: #e9ecef; }
 @media (max-width: 992px) {
     .detail-layout { flex-direction: column; }
     .player-profile { flex-wrap: wrap; }
-    header { flex-direction: column; gap: 0.5rem; text-align: center; }
+    header { flex-direction: column; gap: 0.5rem; }
 }

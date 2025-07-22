@@ -29,6 +29,13 @@
   <div class="sticky-search-wrapper">
    <div class="search-container">
     <input id="search-bar" placeholder="Search by trivia date, year, or team..." type="search"/>
+    <!-- NEW: Checkbox for filtering unsolved puzzles -->
+    <div class="filter-container">
+     <input id="unsolved-filter" type="checkbox"/>
+     <label for="unsolved-filter">
+      Show Unsolved Only
+     </label>
+    </div>
    </div>
   </div>
   <main>
@@ -169,7 +176,7 @@
       </div>
      </div>
     </div>
-    <div class="gallery-container" data-search-terms="july 13 2025 atl nyy chc hou 1972 1967 1963 1966 1965 1970 1971 1973 1968 1969 1964 1962 atlanta braves new york yankees chicago cubs houston astros">
+    <div class="gallery-container" data-search-terms="july 13 2025 hou chc atl nyy 1970 1973 1965 1967 1969 1964 1962 1963 1971 1972 1968 1966 houston astros chicago cubs atlanta braves new york yankees">
      <a class="gallery-item" href="2025-07-13.html">
       <img alt="Name that Yankee trivia card from 2025-07-13" src="images/clue-2025-07-13.jpg"/>
      </a>
@@ -1068,19 +1075,17 @@
   <script>
    document.addEventListener('DOMContentLoaded', () => {
             const searchBar = document.getElementById('search-bar');
+            const unsolvedFilter = document.getElementById('unsolved-filter');
             const galleryGrid = document.getElementById('gallery-grid');
             const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
             const noResultsMessage = document.getElementById('no-results');
             const totalScoreEl = document.getElementById('total-score');
 
-            // --- Load and display score on page load ---
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
             totalScoreEl.textContent = totalScore;
             
-            // --- Mark completed puzzles and disable quiz links ---
             const completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
             galleryItems.forEach(item => {
-                // Find the reveal link to get the date
                 const revealLink = item.querySelector('.reveal-link');
                 if (revealLink) {
                     const date = revealLink.getAttribute('href').replace('.html', '');
@@ -1088,24 +1093,29 @@
                         item.classList.add('completed');
                         const quizLink = item.querySelector('.quiz-link');
                         if(quizLink) {
-                            // THE FIX: Add the 'disabled' class. The style.css file will handle the visuals.
                             quizLink.classList.add('disabled');
                         }
                     }
                 }
             });
 
-            // --- Live Search Functionality ---
-            searchBar.addEventListener('keyup', (e) => {
-                const searchQuery = e.target.value.toLowerCase().trim();
+            // --- NEW: Combined Filtering Function ---
+            function filterGallery() {
+                const searchQuery = searchBar.value.toLowerCase().trim();
                 const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+                const showUnsolvedOnly = unsolvedFilter.checked;
                 
                 let visibleCount = 0;
 
                 galleryItems.forEach(item => {
+                    const isCompleted = item.classList.contains('completed');
+                    
+                    // Condition 1: Check the "Show Unsolved Only" filter
+                    const unsolvedFilterMatch = !showUnsolvedOnly || (showUnsolvedOnly && !isCompleted);
+
+                    // Condition 2: Check the text search query
                     const searchableData = item.dataset.searchTerms || '';
                     let dataTokens = searchableData.replace(/,/g, '').split(' '); 
-
                     const augmentedTokens = [];
                     dataTokens.forEach(token => {
                         if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
@@ -1113,10 +1123,10 @@
                         }
                     });
                     dataTokens = dataTokens.concat(augmentedTokens);
+                    const textSearchMatch = searchTokens.every(token => dataTokens.includes(token));
 
-                    const isMatch = searchTokens.every(token => dataTokens.includes(token));
-
-                    if (isMatch) {
+                    // An item is visible if it matches BOTH filters
+                    if (unsolvedFilterMatch && textSearchMatch) {
                         item.style.display = '';
                         visibleCount++;
                     } else {
@@ -1124,12 +1134,16 @@
                     }
                 });
 
-                if (visibleCount === 0 && searchQuery) {
+                if (visibleCount === 0) {
                     noResultsMessage.style.display = 'block';
                 } else {
                     noResultsMessage.style.display = 'none';
                 }
-            });
+            }
+
+            // Add event listeners to both the search bar and the checkbox
+            searchBar.addEventListener('keyup', filterGallery);
+            unsolvedFilter.addEventListener('change', filterGallery);
         });
   </script>
  </body>
