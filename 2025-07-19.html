@@ -21,14 +21,15 @@
                         <img src="images/answer-2025-07-19.jpg" alt="Photo of Paul Zuvella">
                     </div>
                     <div class="player-info">
-                        <h2>Paul Zuvella "Zuke"</h2>
+                        <h2>Paul Zuvella</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Never had a season with a positive WAR</li>
-                        <li>Hit two home runs over a nine-season major league career spanning 209 games.</li>
+                        <li>A rainout prevented a scheduled start that would have ended Cal Ripken Jr.'s consecutive games streak.</li>
+                        <li>Hit two home runs and had 26 RBIs in a 209-game MLB career.</li>
+                        <li>Managed in the minor leagues for 11 seasons after a nine-season MLB playing career.</li>
                         </ul>
                     </div>
                 </div>
@@ -156,7 +157,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -183,7 +184,20 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["CLE", "ATL", "NYY", "KCR"], "years": ["1982", "1989", "1985", "1984", "1988", "1983", "1991", "1987", "1986"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["ATL", "NYY", "CLE", "KCR"], "years": ["1987", "1982", "1991", "1984", "1983", "1986", "1985", "1988", "1989"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Paul Zuvella", "hints": ["A rainout prevented a scheduled start that would have ended Cal Ripken Jr.'s consecutive games streak.", "Hit two home runs and had 26 RBIs in a 209-game MLB career.", "Managed in the minor leagues for 11 seasons after a nine-season MLB playing career."]}</div>
     </main>
+
+    <!-- NEW: Script to mark this puzzle as completed -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+            const thisPuzzleDate = '2025-07-19';
+            if (!completedPuzzles.includes(thisPuzzleDate)) {
+                completedPuzzles.push(thisPuzzleDate);
+                localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
+            }
+        });
+    </script>
 </body>
 </html>

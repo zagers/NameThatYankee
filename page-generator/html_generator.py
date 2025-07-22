@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir):
-    """Generates and saves the new HTML detail page, now with a stats table and chart."""
+    """Generates and saves the new HTML detail page, now with quiz and search data."""
     print(f"  📄 Generating detail page for {date_str}...")
     name = player_data.get('name', 'N/A')
     nickname = player_data.get('nickname', '')
@@ -35,6 +35,8 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
         """
 
     chart_html = ""
+    search_data_html = ""
+    quiz_data_html = ""
     if yearly_war_data:
         years = json.dumps([item['year'] for item in yearly_war_data])
         war_data = json.dumps([item['war'] for item in yearly_war_data])
@@ -48,6 +50,8 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
         search_data = {'teams': list(all_teams), 'years': list(all_years)}
         search_data_html = f'<div id="search-data" style="display:none;">{json.dumps(search_data)}</div>'
 
+        quiz_data = {"answer": name, "hints": facts}
+        quiz_data_html = f'<div id="quiz-data" style="display:none;">{json.dumps(quiz_data)}</div>'
 
         chart_html = f"""
         <div class="chart-container">
@@ -155,7 +159,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                             position: 'bottom',
                             labels: {{
                                 padding: 20,
-                                font: {{ size: 10 }}, // Smaller font size for legend
+                                font: {{ size: 10 }},
                                 generateLabels: function(chart) {{
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {{
@@ -225,6 +229,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
             </div>
         </div>
         {search_data_html}
+        {quiz_data_html}
     </main>
 </body>
 </html>"""
@@ -294,12 +299,24 @@ def rebuild_index_page(project_dir: Path):
                             if team_abbr in team_name_map:
                                 search_terms += " " + team_name_map[team_abbr]
 
+                # THE FIX: Add specific classes to the links
                 snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
                 <a href="{date_str}.html" class="gallery-item">
                     <img src="images/clue-{date_str}.jpg" alt="Name that Yankee trivia card from {date_str}">
-                    <div class="gallery-item-overlay"><span>Click to Reveal</span></div>
                 </a>
-                <p class="gallery-date">Trivia Date: {formatted_date}</p>
+                <div class="p-4">
+                    <p class="gallery-date">Trivia Date: {formatted_date}</p>
+                    <div class="action-links">
+                        <a href="{date_str}.html" class="action-link reveal-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <span>Reveal</span>
+                        </a>
+                        <a href="quiz.html?date={date_str}" class="action-link quiz-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                            <span>Quiz</span>
+                        </a>
+                    </div>
+                </div>
             </div>"""
                 gallery_tiles.append(snippet)
             except ValueError:

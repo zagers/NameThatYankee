@@ -10,397 +10,1048 @@
  </head>
  <body>
   <header>
-   <h1>
-    Name That Yankee Archives
-   </h1>
-   <p>
-    Click on a trivia card below to reveal the player and their career highlights.
-   </p>
+   <div class="header-content">
+    <h1>
+     Name That Yankee Archives
+    </h1>
+    <p>
+     Click on a trivia card below to reveal the player and their career highlights.
+    </p>
+   </div>
+   <!-- NEW: Score display is now inside the header for better alignment -->
+   <div id="score-display">
+    Your Score:
+    <span id="total-score">
+     0
+    </span>
+   </div>
   </header>
   <div class="sticky-search-wrapper">
-   <!-- Search Bar Section -->
    <div class="search-container">
-    <input id="search-bar" placeholder="Search by trivia date (e.g., July, 2025, July 9), player year (e.g. 2000), or player team (Cubs, ATL, Cleveland)..." type="search"/>
+    <input id="search-bar" placeholder="Search by trivia date, year, or team..." type="search"/>
    </div>
   </div>
   <main>
    <div class="gallery" id="gallery-grid">
-    <div class="gallery-container" data-search-terms="july 20 2025 atl kca nyy 1959 1961 1964 1971 1963 1966 1967 1968 1970 1956 1957 1965 1969 1955 1962 1960 atlanta braves new york yankees">
+    <div class="gallery-container" data-search-terms="july 21 2025 laa tor nyy 2010 2004 1999 2012 2000 2002 2007 2013 2001 2008 2003 2009 2006 2011 2005 los angeles angels toronto blue jays new york yankees">
+     <a class="gallery-item" href="2025-07-21.html">
+      <img alt="Name that Yankee trivia card from 2025-07-21" src="images/clue-2025-07-21.jpg"/>
+     </a>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 21, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-21.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-21">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
+    </div>
+    <div class="gallery-container" data-search-terms="july 20 2025 atl kca nyy 1959 1956 1955 1967 1964 1968 1970 1960 1961 1965 1966 1957 1971 1963 1962 1969 atlanta braves new york yankees">
      <a class="gallery-item" href="2025-07-20.html">
       <img alt="Name that Yankee trivia card from 2025-07-20" src="images/clue-2025-07-20.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 20, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 20, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-20.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-20">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
-    <div class="gallery-container" data-search-terms="july 19 2025 cle atl nyy kcr 1982 1989 1985 1984 1988 1983 1991 1987 1986 cleveland indians guardians atlanta braves new york yankees kansas city royals">
+    <div class="gallery-container" data-search-terms="july 19 2025 atl nyy cle kcr 1987 1982 1991 1984 1983 1986 1985 1988 1989 atlanta braves new york yankees cleveland indians guardians kansas city royals">
      <a class="gallery-item" href="2025-07-19.html">
       <img alt="Name that Yankee trivia card from 2025-07-19" src="images/clue-2025-07-19.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 19, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 19, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-19.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-19">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
-    <div class="gallery-container" data-search-terms="july 18 2025 cle atl nyy cin 1998 1994 2000 1997 1991 1995 1999 2001 1993 1992 2002 1996 cleveland indians guardians atlanta braves new york yankees cincinnati reds">
+    <div class="gallery-container" data-search-terms="july 18 2025 cle atl cin nyy 1991 1999 1993 1992 1998 2000 2002 2001 1997 1996 1994 1995 cleveland indians guardians atlanta braves cincinnati reds new york yankees">
      <a class="gallery-item" href="2025-07-18.html">
       <img alt="Name that Yankee trivia card from 2025-07-18" src="images/clue-2025-07-18.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 18, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 18, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-18.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-18">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 13 2025 atl nyy chc hou 1972 1967 1963 1966 1965 1970 1971 1973 1968 1969 1964 1962 atlanta braves new york yankees chicago cubs houston astros">
      <a class="gallery-item" href="2025-07-13.html">
       <img alt="Name that Yankee trivia card from 2025-07-13" src="images/clue-2025-07-13.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 13, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 13, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-13.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-13">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 12 2025 phi nyy lad oak chw sdp cal chc 1974 1977 1970 1973 1968 1978 1969 1975 1979 1967 1966 1971 1980 1982 1972 1983 1976 1984 1981 philadelphia phillies new york yankees los angeles dodgers oakland athletics chicago white sox san diego padres california angels chicago cubs">
      <a class="gallery-item" href="2025-07-12.html">
       <img alt="Name that Yankee trivia card from 2025-07-12" src="images/clue-2025-07-12.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 12, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 12, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-12.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-12">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 11 2025 pit nyy sfg chc 1974 1977 1991 1973 1978 1989 1990 1988 1975 1979 1985 1980 1972 1983 1987 1976 1984 1986 1981 pittsburgh pirates new york yankees san francisco giants chicago cubs">
      <a class="gallery-item" href="2025-07-11.html">
       <img alt="Name that Yankee trivia card from 2025-07-11" src="images/clue-2025-07-11.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 11, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 11, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-11.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-11">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 10 2025 nyy sea pit tor cal 1990 1998 1994 2000 1997 1991 1995 1999 2001 2003 1993 1992 1996 new york yankees seattle mariners pittsburgh pirates toronto blue jays california angels">
      <a class="gallery-item" href="2025-07-10.html">
       <img alt="Name that Yankee trivia card from 2025-07-10" src="images/clue-2025-07-10.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 10, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 10, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-10.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-10">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 09 2025 sea nyy 1979 1983 1985 1984 1986 1981 1978 1980 1982 seattle mariners new york yankees">
      <a class="gallery-item" href="2025-07-09.html">
       <img alt="Name that Yankee trivia card from 2025-07-09" src="images/clue-2025-07-09.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 09, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 09, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-09.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-09">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 08 2025 sea nyy 1990 1988 1998 1994 1987 2000 1997 1991 1995 1999 2001 1993 1992 1989 1996 seattle mariners new york yankees">
      <a class="gallery-item" href="2025-07-08.html">
       <img alt="Name that Yankee trivia card from 2025-07-08" src="images/clue-2025-07-08.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 08, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 08, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-08.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-08">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 06 2025 nyy sfg nym lad 1990 1988 1998 1983 1994 1985 1987 1984 1997 1991 1986 1995 1999 1993 1992 1989 1996 new york yankees san francisco giants new york mets los angeles dodgers">
      <a class="gallery-item" href="2025-07-06.html">
       <img alt="Name that Yankee trivia card from 2025-07-06" src="images/clue-2025-07-06.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 06, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 06, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-06.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-06">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 05 2025 nyy chw nym col 1990 1988 1994 1985 1987 1984 1991 1986 1993 1992 1989 new york yankees chicago white sox new york mets colorado rockies">
      <a class="gallery-item" href="2025-07-05.html">
       <img alt="Name that Yankee trivia card from 2025-07-05" src="images/clue-2025-07-05.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 05, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 05, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-05.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-05">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 03 2025 nyy ari pit atl tor mil 2013 2009 2005 2010 2007 2004 2003 2014 2012 2006 2008 2011 new york yankees arizona diamondbacks pittsburgh pirates atlanta braves toronto blue jays milwaukee brewers">
      <a class="gallery-item" href="2025-07-03.html">
       <img alt="Name that Yankee trivia card from 2025-07-03" src="images/clue-2025-07-03.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 03, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 03, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-03.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-03">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 02 2025 nyy tor 1990 1988 1983 1985 1987 1984 1991 1986 1981 1992 1989 1982 new york yankees toronto blue jays">
      <a class="gallery-item" href="2025-07-02.html">
       <img alt="Name that Yankee trivia card from 2025-07-02" src="images/clue-2025-07-02.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 02, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 02, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-02.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-02">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="july 01 2025 bos fla nyy lad 2tm tor sdp phi 1998 2005 1994 2000 1997 2004 1995 1999 2001 2003 1993 1992 2002 1996 boston red sox new york yankees los angeles dodgers toronto blue jays san diego padres philadelphia phillies">
      <a class="gallery-item" href="2025-07-01.html">
       <img alt="Name that Yankee trivia card from 2025-07-01" src="images/clue-2025-07-01.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: July 01, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 01, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-01.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-01">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 30 2025 nyy hou tor bos 1998 2002 2006 1999 2004 2007 2003 1990 1994 1997 2005 1986 2001 1992 1985 1988 1989 1987 1995 1996 1991 1984 2000 1993 new york yankees houston astros toronto blue jays boston red sox">
      <a class="gallery-item" href="2025-06-30.html">
       <img alt="Name that Yankee trivia card from 2025-06-30" src="images/clue-2025-06-30.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 30, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 30, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-30.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-30">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 29 2025 oak nyy chw lad 1990 1988 1983 1994 1985 1987 1984 1991 1986 1993 1981 1992 1989 1982 oakland athletics new york yankees chicago white sox los angeles dodgers">
      <a class="gallery-item" href="2025-06-29.html">
       <img alt="Name that Yankee trivia card from 2025-06-29" src="images/clue-2025-06-29.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 29, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 29, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-29.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-29">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 27 2025 ana 2tm oak nyy 1989 1988 1992 1998 1990 1993 1997 1994 1987 1991 oakland athletics new york yankees">
      <a class="gallery-item" href="2025-06-27.html">
       <img alt="Name that Yankee trivia card from 2025-06-27" src="images/clue-2025-06-27.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 27, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 27, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-27.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-27">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 25 2025 atl 2tm sea cin nyy 1974 1977 1984 1991 1980 1985 1981 1990 1982 1978 1976 1986 1987 1989 1975 1983 1973 1988 1979 atlanta braves seattle mariners cincinnati reds new york yankees">
      <a class="gallery-item" href="2025-06-25.html">
       <img alt="Name that Yankee trivia card from 2025-06-25" src="images/clue-2025-06-25.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 25, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 25, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-25.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-25">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 23 2025 nyy cin 1990 1988 1998 1994 1985 1987 2000 1997 1991 1995 1999 2001 1993 1992 1989 1996 new york yankees cincinnati reds">
      <a class="gallery-item" href="2025-06-23.html">
       <img alt="Name that Yankee trivia card from 2025-06-23" src="images/clue-2025-06-23.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 23, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 23, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-23.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-23">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 21 2025 slb cle nyy 1943 1946 1950 1945 1944 1951 1947 1952 1949 1948 cleveland indians guardians new york yankees">
      <a class="gallery-item" href="2025-06-21.html">
       <img alt="Name that Yankee trivia card from 2025-06-21" src="images/clue-2025-06-21.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 21, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 21, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-21.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-21">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 20 2025 nyy chw bal 1946 1950 1945 1944 1951 1947 1952 1955 1949 1954 1953 1948 new york yankees chicago white sox baltimore orioles">
      <a class="gallery-item" href="2025-06-20.html">
       <img alt="Name that Yankee trivia card from 2025-06-20" src="images/clue-2025-06-20.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 20, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 20, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-20.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-20">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 19 2025 mil cal chw nyy 1990 1998 1994 1991 1995 1999 1993 1992 1989 1996 milwaukee brewers california angels chicago white sox new york yankees">
      <a class="gallery-item" href="2025-06-19.html">
       <img alt="Name that Yankee trivia card from 2025-06-19" src="images/clue-2025-06-19.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 19, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 19, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-19.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-19">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 18 2025 laa 2tm mia pit tex lad 2017 2020 2022 2021 2024 2015 2023 2016 2019 2025 2018 2014 los angeles angels miami florida marlins pittsburgh pirates texas rangers los angeles dodgers">
      <a class="gallery-item" href="2025-06-18.html">
       <img alt="Name that Yankee trivia card from 2025-06-18" src="images/clue-2025-06-18.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 18, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 18, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-18.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-18">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 16 2025 stl det nyy laa 2tm cin chc 2013 2019 2016 2022 2020 2021 2014 2017 2015 2018 2011 st louis cardinals detroit tigers new york yankees los angeles angels cincinnati reds chicago cubs">
      <a class="gallery-item" href="2025-06-16.html">
       <img alt="Name that Yankee trivia card from 2025-06-16" src="images/clue-2025-06-16.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 16, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 16, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-16.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-16">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 12 2025 nyy sdp 2tm tex pit kcr 1987 1994 1989 1984 1990 1991 1982 1985 1983 1992 1993 1996 1997 1986 1995 1988 new york yankees san diego padres texas rangers pittsburgh pirates kansas city royals">
      <a class="gallery-item" href="2025-06-12.html">
       <img alt="Name that Yankee trivia card from 2025-06-12" src="images/clue-2025-06-12.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 12, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 12, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-12.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-12">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="june 10 2025 tbr kcr bos cle oak det nyy 1997 2004 2005 2012 2001 2007 2000 2008 2003 2011 2006 1995 1996 2009 1998 2002 2010 1999 tampa bay rays devil kansas city royals boston red sox cleveland indians guardians oakland athletics detroit tigers new york yankees">
      <a class="gallery-item" href="2025-06-10.html">
       <img alt="Name that Yankee trivia card from 2025-06-10" src="images/clue-2025-06-10.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: June 10, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: June 10, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-06-10.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-06-10">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="may 28 2025 lad 2tm nyy pit cal 1980 1975 1987 1988 1992 1979 1989 1976 1986 1977 1978 1991 1983 1985 1982 1981 1993 1984 1990 los angeles dodgers new york yankees pittsburgh pirates california angels">
      <a class="gallery-item" href="2025-05-28.html">
       <img alt="Name that Yankee trivia card from 2025-05-28" src="images/clue-2025-05-28.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: May 28, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: May 28, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-05-28.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-05-28">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="may 25 2025 nyy 1949 1952 1942 1953 1955 1954 1956 1950 1948 1941 1947 1946 1951 new york yankees">
      <a class="gallery-item" href="2025-05-25.html">
       <img alt="Name that Yankee trivia card from 2025-05-25" src="images/clue-2025-05-25.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: May 25, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: May 25, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-05-25.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-05-25">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
     <div class="gallery-container" data-search-terms="may 24 2025 nyy 1951 1948 1949 1953 1950 1947 1952 new york yankees">
      <a class="gallery-item" href="2025-05-24.html">
       <img alt="Name that Yankee trivia card from 2025-05-24" src="images/clue-2025-05-24.jpg"/>
-      <div class="gallery-item-overlay">
-       <span>
-        Click to Reveal
-       </span>
-      </div>
      </a>
-     <p class="gallery-date">
-      Trivia Date: May 24, 2025
-     </p>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: May 24, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-05-24.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-05-24">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
     </div>
    </div>
    <div id="no-results">
@@ -411,17 +1062,40 @@
   </main>
   <footer>
    <p>
-    Last Updated: July 20, 2025
+    Last Updated: July 21, 2025
    </p>
   </footer>
   <script>
-   // --- Live Search Functionality (Corrected) ---
-        document.addEventListener('DOMContentLoaded', () => {
+   document.addEventListener('DOMContentLoaded', () => {
             const searchBar = document.getElementById('search-bar');
             const galleryGrid = document.getElementById('gallery-grid');
             const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
             const noResultsMessage = document.getElementById('no-results');
+            const totalScoreEl = document.getElementById('total-score');
 
+            // --- Load and display score on page load ---
+            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+            totalScoreEl.textContent = totalScore;
+            
+            // --- Mark completed puzzles and disable quiz links ---
+            const completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+            galleryItems.forEach(item => {
+                // Find the reveal link to get the date
+                const revealLink = item.querySelector('.reveal-link');
+                if (revealLink) {
+                    const date = revealLink.getAttribute('href').replace('.html', '');
+                    if (completedPuzzles.includes(date)) {
+                        item.classList.add('completed');
+                        const quizLink = item.querySelector('.quiz-link');
+                        if(quizLink) {
+                            // THE FIX: Add the 'disabled' class. The style.css file will handle the visuals.
+                            quizLink.classList.add('disabled');
+                        }
+                    }
+                }
+            });
+
+            // --- Live Search Functionality ---
             searchBar.addEventListener('keyup', (e) => {
                 const searchQuery = e.target.value.toLowerCase().trim();
                 const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
@@ -432,19 +1106,14 @@
                     const searchableData = item.dataset.searchTerms || '';
                     let dataTokens = searchableData.replace(/,/g, '').split(' '); 
 
-                    // THE FIX: Augment the data tokens to handle single-digit days
                     const augmentedTokens = [];
                     dataTokens.forEach(token => {
-                        // Check if the token is a number like "09" or "07"
                         if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
-                            // Add the version without the leading zero (e.g., "9" or "7")
                             augmentedTokens.push(parseInt(token, 10).toString()); 
                         }
                     });
-                    // Add the new single-digit tokens to the list of searchable words
                     dataTokens = dataTokens.concat(augmentedTokens);
 
-                    // Check if EVERY token from the search query exists in the card's data tokens.
                     const isMatch = searchTokens.every(token => dataTokens.includes(token));
 
                     if (isMatch) {
