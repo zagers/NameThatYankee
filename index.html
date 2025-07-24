@@ -40,6 +40,74 @@
   </div>
   <main>
    <div class="gallery" id="gallery-grid">
+    <div class="gallery-container" data-search-terms="july 23 2025 tex nym tor cin nyy mon 1981 1980 1976 1977 1984 1985 1978 1974 1975 1979 1982 1983 texas rangers new york mets toronto blue jays cincinnati reds new york yankees montreal expos">
+     <a class="gallery-item" href="2025-07-23.html">
+      <img alt="Name that Yankee trivia card from 2025-07-23" src="images/clue-2025-07-23.jpg"/>
+     </a>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 23, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-23.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-23">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
+    </div>
+    <div class="gallery-container" data-search-terms="july 22 2025 nyy laa cin sdp ari tor nym 2024 2020 2015 2017 2019 2018 2016 2022 2023 2021 new york yankees los angeles angels cincinnati reds san diego padres arizona diamondbacks toronto blue jays new york mets">
+     <a class="gallery-item" href="2025-07-22.html">
+      <img alt="Name that Yankee trivia card from 2025-07-22" src="images/clue-2025-07-22.jpg"/>
+     </a>
+     <div class="p-4">
+      <p class="gallery-date">
+       Trivia Date: July 22, 2025
+      </p>
+      <div class="action-links">
+       <a class="action-link reveal-link" href="2025-07-22.html">
+        <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+         <circle cx="11" cy="11" r="8">
+         </circle>
+         <path d="m21 21-4.3-4.3">
+         </path>
+        </svg>
+        <span>
+         Reveal
+        </span>
+       </a>
+       <a class="action-link quiz-link" href="quiz.html?date=2025-07-22">
+        <svg fill="none" height="28" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="28" xmlns="http://www.w3.org/2000/svg">
+         <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3">
+         </path>
+         <path d="M12 17h.01">
+         </path>
+        </svg>
+        <span>
+         Quiz
+        </span>
+       </a>
+      </div>
+     </div>
+    </div>
     <div class="gallery-container" data-search-terms="july 21 2025 laa tor nyy 2010 2004 1999 2012 2000 2002 2007 2013 2001 2008 2003 2009 2006 2011 2005 los angeles angels toronto blue jays new york yankees">
      <a class="gallery-item" href="2025-07-21.html">
       <img alt="Name that Yankee trivia card from 2025-07-21" src="images/clue-2025-07-21.jpg"/>
@@ -1069,82 +1137,100 @@
   </main>
   <footer>
    <p>
-    Last Updated: July 21, 2025
+    Last Updated: July 24, 2025
    </p>
   </footer>
-  <script>
-   document.addEventListener('DOMContentLoaded', () => {
-            const searchBar = document.getElementById('search-bar');
-            const unsolvedFilter = document.getElementById('unsolved-filter');
-            const galleryGrid = document.getElementById('gallery-grid');
-            const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
-            const noResultsMessage = document.getElementById('no-results');
-            const totalScoreEl = document.getElementById('total-score');
+ <script>
+     document.addEventListener('DOMContentLoaded', () => {
+         const searchBar = document.getElementById('search-bar');
+         const unsolvedFilter = document.getElementById('unsolved-filter');
+         const galleryGrid = document.getElementById('gallery-grid');
+         const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
+         const noResultsMessage = document.getElementById('no-results');
+         const totalScoreEl = document.getElementById('total-score');
 
-            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
-            totalScoreEl.textContent = totalScore;
-            
-            const completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
-            galleryItems.forEach(item => {
-                const revealLink = item.querySelector('.reveal-link');
-                if (revealLink) {
-                    const date = revealLink.getAttribute('href').replace('.html', '');
-                    if (completedPuzzles.includes(date)) {
-                        item.classList.add('completed');
-                        const quizLink = item.querySelector('.quiz-link');
-                        if(quizLink) {
-                            quizLink.classList.add('disabled');
-                        }
-                    }
-                }
-            });
+         let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+         totalScoreEl.textContent = totalScore;
+         
+         let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
 
-            // --- NEW: Combined Filtering Function ---
-            function filterGallery() {
-                const searchQuery = searchBar.value.toLowerCase().trim();
-                const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
-                const showUnsolvedOnly = unsolvedFilter.checked;
-                
-                let visibleCount = 0;
+         // --- Function to update the UI for completed puzzles ---
+         function updateCompletedUI() {
+             galleryItems.forEach(item => {
+                 const revealLink = item.querySelector('.reveal-link');
+                 if (revealLink) {
+                     const date = revealLink.getAttribute('href').replace('.html', '');
+                     if (completedPuzzles.includes(date)) {
+                         item.classList.add('completed');
+                         const quizLink = item.querySelector('.quiz-link');
+                         if(quizLink) {
+                             quizLink.classList.add('disabled');
+                         }
+                     }
+                 }
+             });
+         }
 
-                galleryItems.forEach(item => {
-                    const isCompleted = item.classList.contains('completed');
-                    
-                    // Condition 1: Check the "Show Unsolved Only" filter
-                    const unsolvedFilterMatch = !showUnsolvedOnly || (showUnsolvedOnly && !isCompleted);
+         // --- Add click listeners to Reveal links ---
+         const revealLinks = document.querySelectorAll('.reveal-link');
+         revealLinks.forEach(link => {
+             link.addEventListener('click', (e) => {
+                 const date = link.getAttribute('href').replace('.html', '');
+                 if (!completedPuzzles.includes(date)) {
+                     completedPuzzles.push(date);
+                     localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
+                     // THE FIX: Call the UI update function immediately after a click
+                     updateCompletedUI();
+                 }
+             });
+         });
 
-                    // Condition 2: Check the text search query
-                    const searchableData = item.dataset.searchTerms || '';
-                    let dataTokens = searchableData.replace(/,/g, '').split(' '); 
-                    const augmentedTokens = [];
-                    dataTokens.forEach(token => {
-                        if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
-                            augmentedTokens.push(parseInt(token, 10).toString()); 
-                        }
-                    });
-                    dataTokens = dataTokens.concat(augmentedTokens);
-                    const textSearchMatch = searchTokens.every(token => dataTokens.includes(token));
+         // Initial UI update on page load
+         updateCompletedUI();
 
-                    // An item is visible if it matches BOTH filters
-                    if (unsolvedFilterMatch && textSearchMatch) {
-                        item.style.display = '';
-                        visibleCount++;
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+         // --- Combined Filtering Function ---
+         function filterGallery() {
+             const searchQuery = searchBar.value.toLowerCase().trim();
+             const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+             const showUnsolvedOnly = unsolvedFilter.checked;
+             
+             let visibleCount = 0;
 
-                if (visibleCount === 0) {
-                    noResultsMessage.style.display = 'block';
-                } else {
-                    noResultsMessage.style.display = 'none';
-                }
-            }
+             galleryItems.forEach(item => {
+                 const isCompleted = item.classList.contains('completed');
+                 
+                 const unsolvedFilterMatch = !showUnsolvedOnly || (showUnsolvedOnly && !isCompleted);
 
-            // Add event listeners to both the search bar and the checkbox
-            searchBar.addEventListener('keyup', filterGallery);
-            unsolvedFilter.addEventListener('change', filterGallery);
-        });
-  </script>
+                 const searchableData = item.dataset.searchTerms || '';
+                 let dataTokens = searchableData.replace(/,/g, '').split(' '); 
+                 const augmentedTokens = [];
+                 dataTokens.forEach(token => {
+                     if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
+                         augmentedTokens.push(parseInt(token, 10).toString()); 
+                     }
+                 });
+                 dataTokens = dataTokens.concat(augmentedTokens);
+                 const textSearchMatch = searchTokens.every(token => dataTokens.includes(token));
+
+                 if (unsolvedFilterMatch && textSearchMatch) {
+                     item.style.display = '';
+                     visibleCount++;
+                 } else {
+                     item.style.display = 'none';
+                 }
+             });
+
+             if (visibleCount === 0) {
+                 noResultsMessage.style.display = 'block';
+             } else {
+                 noResultsMessage.style.display = 'none';
+             }
+         }
+
+         // Add event listeners to both the search bar and the checkbox
+         searchBar.addEventListener('keyup', filterGallery);
+         unsolvedFilter.addEventListener('change', filterGallery);
+     });
+ </script>
  </body>
 </html>
