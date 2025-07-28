@@ -1208,97 +1208,102 @@
     Last Updated: July 28, 2025
    </p>
   </footer>
-  <script>
-   document.addEventListener('DOMContentLoaded', () => {
-         const searchBar = document.getElementById('search-bar');
-         const unsolvedFilter = document.getElementById('unsolved-filter');
-         const galleryGrid = document.getElementById('gallery-grid');
-         const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
-         const noResultsMessage = document.getElementById('no-results');
-         const totalScoreEl = document.getElementById('total-score');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBar = document.getElementById('search-bar');
+            const unsolvedFilter = document.getElementById('unsolved-filter');
+            const galleryGrid = document.getElementById('gallery-grid');
+            const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
+            const noResultsMessage = document.getElementById('no-results');
+            const totalScoreEl = document.getElementById('total-score');
 
-         let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
-         totalScoreEl.textContent = totalScore;
-         
-         let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+            totalScoreEl.textContent = totalScore;
+            
+            let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
 
-         // --- Function to update the UI for completed puzzles ---
-         function updateCompletedUI() {
-             galleryItems.forEach(item => {
-                 const revealLink = item.querySelector('.reveal-link');
-                 if (revealLink) {
-                     const date = revealLink.getAttribute('href').replace('.html', '');
-                     if (completedPuzzles.includes(date)) {
-                         item.classList.add('completed');
-                         const quizLink = item.querySelector('.quiz-link');
-                         if(quizLink) {
-                             quizLink.classList.add('disabled');
-                         }
-                     }
-                 }
-             });
-         }
+            function updateCompletedUI() {
+                galleryItems.forEach(item => {
+                    const revealLink = item.querySelector('.reveal-link');
+                    if (revealLink) {
+                        const date = revealLink.getAttribute('href').replace('.html', '');
+                        if (completedPuzzles.includes(date)) {
+                            item.classList.add('completed');
+                            const quizLink = item.querySelector('.quiz-link');
+                            if(quizLink) {
+                                quizLink.classList.add('disabled');
+                            }
+                        }
+                    }
+                });
+            }
 
-         // --- Add click listeners to Reveal links ---
-         const revealLinks = document.querySelectorAll('.reveal-link');
-         revealLinks.forEach(link => {
-             link.addEventListener('click', (e) => {
-                 const date = link.getAttribute('href').replace('.html', '');
-                 if (!completedPuzzles.includes(date)) {
-                     completedPuzzles.push(date);
-                     localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
-                     // THE FIX: Call the UI update function immediately after a click
-                     updateCompletedUI();
-                 }
-             });
-         });
+            function markAsCompleted(linkElement) {
+                const date = linkElement.getAttribute('href').replace('.html', '');
+                if (!completedPuzzles.includes(date)) {
+                    completedPuzzles.push(date);
+                    localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
+                    updateCompletedUI();
+                }
+            }
 
-         // Initial UI update on page load
-         updateCompletedUI();
+            // Add click listeners to Reveal text links
+            const revealLinks = document.querySelectorAll('.reveal-link');
+            revealLinks.forEach(link => {
+                link.addEventListener('click', () => markAsCompleted(link));
+            });
 
-         // --- Combined Filtering Function ---
-         function filterGallery() {
-             const searchQuery = searchBar.value.toLowerCase().trim();
-             const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
-             const showUnsolvedOnly = unsolvedFilter.checked;
-             
-             let visibleCount = 0;
+            // THE FIX: Add click listeners to the main image links as well
+            const galleryImageLinks = document.querySelectorAll('.gallery-item');
+            galleryImageLinks.forEach(link => {
+                link.addEventListener('click', () => markAsCompleted(link));
+            });
 
-             galleryItems.forEach(item => {
-                 const isCompleted = item.classList.contains('completed');
-                 
-                 const unsolvedFilterMatch = !showUnsolvedOnly || (showUnsolvedOnly && !isCompleted);
+            // Initial UI update on page load
+            updateCompletedUI();
 
-                 const searchableData = item.dataset.searchTerms || '';
-                 let dataTokens = searchableData.replace(/,/g, '').split(' '); 
-                 const augmentedTokens = [];
-                 dataTokens.forEach(token => {
-                     if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
-                         augmentedTokens.push(parseInt(token, 10).toString()); 
-                     }
-                 });
-                 dataTokens = dataTokens.concat(augmentedTokens);
-                 const textSearchMatch = searchTokens.every(token => dataTokens.includes(token));
+            // --- Combined Filtering Function ---
+            function filterGallery() {
+                const searchQuery = searchBar.value.toLowerCase().trim();
+                const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+                const showUnsolvedOnly = unsolvedFilter.checked;
+                
+                let visibleCount = 0;
 
-                 if (unsolvedFilterMatch && textSearchMatch) {
-                     item.style.display = '';
-                     visibleCount++;
-                 } else {
-                     item.style.display = 'none';
-                 }
-             });
+                galleryItems.forEach(item => {
+                    const isCompleted = item.classList.contains('completed');
+                    const unsolvedFilterMatch = !showUnsolvedOnly || (showUnsolvedOnly && !isCompleted);
 
-             if (visibleCount === 0) {
-                 noResultsMessage.style.display = 'block';
-             } else {
-                 noResultsMessage.style.display = 'none';
-             }
-         }
+                    const searchableData = item.dataset.searchTerms || '';
+                    let dataTokens = searchableData.replace(/,/g, '').split(' '); 
+                    const augmentedTokens = [];
+                    dataTokens.forEach(token => {
+                        if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
+                            augmentedTokens.push(parseInt(token, 10).toString()); 
+                        }
+                    });
+                    dataTokens = dataTokens.concat(augmentedTokens);
+                    const textSearchMatch = searchTokens.every(token => dataTokens.includes(token));
 
-         // Add event listeners to both the search bar and the checkbox
-         searchBar.addEventListener('keyup', filterGallery);
-         unsolvedFilter.addEventListener('change', filterGallery);
-     });
-  </script>
+                    if (unsolvedFilterMatch && textSearchMatch) {
+                        item.style.display = '';
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount === 0 && searchQuery) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            }
+
+            // Add event listeners to both the search bar and the checkbox
+            searchBar.addEventListener('keyup', filterGallery);
+            unsolvedFilter.addEventListener('change', filterGallery);
+        });
+    </script>
  </body>
 </html>

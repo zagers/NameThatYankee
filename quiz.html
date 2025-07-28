@@ -9,7 +9,8 @@
 <body>
     <header>
         <div class="header-content">
-            <h1>Name That Yankee Quiz</h1>
+            <!-- This h1 will be updated by the script -->
+            <h1 id="quiz-title">Name That Yankee Quiz</h1>
         </div>
         <div id="score-display">
             Your Score: <span id="total-score">0</span>
@@ -17,9 +18,7 @@
     </header>
 
     <main>
-        <!-- NEW: Back to All Questions button -->
         <a href="index.html" class="back-link">← Back to All Questions</a>
-
         <div class="quiz-container" id="quiz-area">
             <img id="clue-image" src="" alt="Trivia Clue">
             <input type="text" id="guess-input" placeholder="Enter player's name...">
@@ -32,7 +31,6 @@
         </div>
 
         <div class="quiz-container" id="success-area" style="display: none;">
-            <!-- NEW: Answer image placeholder -->
             <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
             <h2 id="success-header" class="text-2xl font-bold correct"></h2>
             <p id="success-points" class="text-lg"></p>
@@ -45,7 +43,6 @@
             const params = new URLSearchParams(window.location.search);
             const date = params.get('date');
             
-            // NEW: Backdoor to reset score
             if (params.get('reset') === 'true') {
                 localStorage.removeItem('nameThatYankeeTotalScore');
                 localStorage.removeItem('nameThatYankeeCompletedPuzzles');
@@ -58,6 +55,18 @@
                 document.getElementById('quiz-area').innerHTML = '<h2>Error: No date provided for the quiz.</h2>';
                 return;
             }
+
+            // --- NEW: Update the page title with the date ---
+            const quizTitle = document.getElementById('quiz-title');
+            try {
+                const dateObj = new Date(date + 'T00:00:00'); // Add time to avoid timezone issues
+                const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                quizTitle.textContent = `Quiz for ${formattedDate}`;
+            } catch (e) {
+                // Fallback if date is invalid
+                quizTitle.textContent = 'Name That Yankee Quiz';
+            }
+
 
             const clueImageEl = document.getElementById('clue-image');
             const guessInputEl = document.getElementById('guess-input');
@@ -77,7 +86,6 @@
             let hintsRevealed = 0;
             const points = [10, 7, 4, 1];
 
-            // --- Local Storage for Score and Completed Puzzles ---
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
             let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
             totalScoreEl.textContent = totalScore;
@@ -95,11 +103,9 @@
                 }
             }
 
-            // --- Fetch and Parse Data ---
             async function loadQuizData() {
                 clueImageEl.src = `images/clue-${date}.jpg`;
 
-                // --- NEW: Check if puzzle is already completed ---
                 if (completedPuzzles.includes(date)) {
                     feedbackMsg.textContent = "You have already completed this puzzle.";
                     submitBtn.disabled = true;
@@ -127,14 +133,13 @@
                 }
             }
 
-            // --- Game Logic ---
             function checkGuess() {
                 const userGuess = guessInputEl.value.trim().toLowerCase();
                 if (!userGuess) return;
 
                 if (userGuess === correctAnswer) {
                     const pointsEarned = points[hintsRevealed];
-                    answerImageEl.src = `images/answer-${date}.jpg`; // NEW: Show answer image
+                    answerImageEl.src = `images/answer-${date}.jpg`;
                     successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
                     successPoints.textContent = `You earned ${pointsEarned} points!`;
                     updateTotalScore(pointsEarned);
@@ -160,7 +165,7 @@
                     feedbackMsg.textContent = `Sorry, the correct answer was ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
                     submitBtn.disabled = true;
                     guessInputEl.disabled = true;
-                    markPuzzleAsComplete(); // Mark as complete even if they fail
+                    markPuzzleAsComplete();
                 }
             }
 
