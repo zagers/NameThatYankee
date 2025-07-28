@@ -27,9 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Father, Kevin, and brother, Andrew, also played in Major League Baseball.</li>
-                        <li>Appeared as a pitcher in 11 major league games.</li>
-                        <li>Was a teammate of brother, Andrew, on the 2021 Chicago Cubs.</li>
+                        <li>Father Kevin and brother Andrew also played in Major League Baseball.</li>
+                        <li>Pitched in nine different major league games as a position player.</li>
+                        <li>Hit two grand slams during the 2019 season.</li>
                         </ul>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -184,7 +184,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["STL", "DET", "NYY", "LAA", "2TM", "CIN", "CHC"], "years": ["2013", "2019", "2016", "2022", "2020", "2021", "2014", "2017", "2015", "2018", "2011"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["LAA", "CHC", "2TM", "DET", "STL", "NYY", "CIN"], "years": ["2015", "2013", "2014", "2017", "2020", "2022", "2018", "2011", "2019", "2016", "2021"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Austin Romine", "hints": ["Father Kevin and brother Andrew also played in Major League Baseball.", "Pitched in nine different major league games as a position player.", "Hit two grand slams during the 2019 season."]}</div>
     </main>
 </body>
 </html>

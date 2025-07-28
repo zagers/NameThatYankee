@@ -27,9 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Had a fastball officially clocked at 103 mph in 1995.</li>
-                        <li>Was a National League All-Star in 1996.</li>
-                        <li>Won a World Series championship with the Atlanta Braves in 1995.</li>
+                        <li>Was officially clocked throwing a 103 mph fastball in 1995.</li>
+                        <li>Recorded the final out of the 1995 World Series.</li>
+                        <li>Was selected to the National League All-Star team in 1996.</li>
                         </ul>
                     </div>
                 </div>
@@ -184,20 +184,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["CLE", "ATL", "CIN", "NYY"], "years": ["1991", "1999", "1993", "1992", "1998", "2000", "2002", "2001", "1997", "1996", "1994", "1995"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Mark Wohlers", "hints": ["Had a fastball officially clocked at 103 mph in 1995.", "Was a National League All-Star in 1996.", "Won a World Series championship with the Atlanta Braves in 1995."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "ATL", "CLE", "CIN"], "years": ["1991", "1992", "1996", "1995", "1997", "1999", "2002", "1998", "1994", "2000", "1993", "2001"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Mark Wohlers", "hints": ["Was officially clocked throwing a 103 mph fastball in 1995.", "Recorded the final out of the 1995 World Series.", "Was selected to the National League All-Star team in 1996."]}</div>
     </main>
-
-    <!-- NEW: Script to mark this puzzle as completed -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
-            const thisPuzzleDate = '2025-07-18';
-            if (!completedPuzzles.includes(thisPuzzleDate)) {
-                completedPuzzles.push(thisPuzzleDate);
-                localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
-            }
-        });
-    </script>
 </body>
 </html>

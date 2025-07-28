@@ -21,15 +21,15 @@
                         <img src="images/answer-2025-07-20.jpg" alt="Photo of Clete Boyer">
                     </div>
                     <div class="player-info">
-                        <h2>Clete Boyer "Clete"</h2>
+                        <h2>Clete Boyer "The Hawk"</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
                         <li>Was one of three brothers, along with Ken and Cloyd, to play in Major League Baseball.</li>
-                        <li>Hit a game-winning home run in Game 1 of the 1962 World Series.</li>
-                        <li>Played four seasons in Japan for the Taiyo Whales, hitting 100 home runs.</li>
+                        <li>Played in five consecutive World Series with the New York Yankees from 1960 to 1964.</li>
+                        <li>Finished a 16-year MLB career by playing four seasons in Japan for the Taiyo Whales.</li>
                         </ul>
                     </div>
                 </div>
@@ -184,20 +184,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["ATL", "KCA", "NYY"], "years": ["1959", "1956", "1955", "1967", "1964", "1968", "1970", "1960", "1961", "1965", "1966", "1957", "1971", "1963", "1962", "1969"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Clete Boyer", "hints": ["Was one of three brothers, along with Ken and Cloyd, to play in Major League Baseball.", "Hit a game-winning home run in Game 1 of the 1962 World Series.", "Played four seasons in Japan for the Taiyo Whales, hitting 100 home runs."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["KCA", "ATL", "NYY"], "years": ["1968", "1967", "1966", "1969", "1957", "1960", "1970", "1956", "1964", "1965", "1971", "1959", "1961", "1962", "1963", "1955"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Clete Boyer", "hints": ["Was one of three brothers, along with Ken and Cloyd, to play in Major League Baseball.", "Played in five consecutive World Series with the New York Yankees from 1960 to 1964.", "Finished a 16-year MLB career by playing four seasons in Japan for the Taiyo Whales."]}</div>
     </main>
-
-    <!-- NEW: Script to mark this puzzle as completed -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
-            const thisPuzzleDate = '2025-07-20';
-            if (!completedPuzzles.includes(thisPuzzleDate)) {
-                completedPuzzles.push(thisPuzzleDate);
-                localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
-            }
-        });
-    </script>
 </body>
 </html>

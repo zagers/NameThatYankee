@@ -27,9 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was traded by the New York Yankees to the Seattle Mariners for Ken Phelps.</li>
-                        <li>Hit 40 or more home runs in three consecutive seasons from 1995-1997.</li>
-                        <li>Was the first player in Seattle Mariners history to hit for the cycle.</li>
+                        <li>Was traded from the New York Yankees to the Seattle Mariners for Ken Phelps in 1988.</li>
+                        <li>Hit 40 or more home runs in three consecutive seasons from 1995 to 1997.</li>
+                        <li>Son, Gunnar, was selected by the Texas Rangers in the 2014 Major League Baseball draft.</li>
                         </ul>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -184,7 +184,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["SEA", "NYY"], "years": ["1990", "1988", "1998", "1994", "1987", "2000", "1997", "1991", "1995", "1999", "2001", "1993", "1992", "1989", "1996"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "SEA"], "years": ["1987", "1990", "1989", "1988", "1992", "1996", "1995", "1997", "1999", "1998", "1994", "1991", "2000", "1993", "2001"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Jay Buhner", "hints": ["Was traded from the New York Yankees to the Seattle Mariners for Ken Phelps in 1988.", "Hit 40 or more home runs in three consecutive seasons from 1995 to 1997.", "Son, Gunnar, was selected by the Texas Rangers in the 2014 Major League Baseball draft."]}</div>
     </main>
 </body>
 </html>
