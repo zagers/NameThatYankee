@@ -1,54 +1,11 @@
-import os
-from PIL import Image
-import google.generativeai as genai
-from pathlib import Path
-import json
 from bs4 import BeautifulSoup, Comment
-from datetime import datetime
-import re
-import subprocess
-import sys
 import time
 import urllib.parse
-
-# Imports for the new custom scraper
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
-
-
-# --- Configuration ---
-CONFIG_FILE_NAME = ".yankee_generator_config.json"
-
-# --- Helper Functions ---
-
-def get_config_path():
-    """Gets the full path to the configuration file in the user's home directory."""
-    return Path.home() / CONFIG_FILE_NAME
-
-def load_config():
-    """Loads the config file and returns its data, or an empty dict if not found."""
-    config_path = get_config_path()
-    if config_path.exists():
-        try:
-            with open(config_path, 'r') as f:
-                return json.load(f)
-        except (json.JSONDecodeError, IOError):
-            return {}
-    return {}
-
-def save_config(config_data: dict):
-    """Saves the given config data to the file."""
-    config_path = get_config_path()
-    try:
-        with open(config_path, 'w') as f:
-            json.dump(config_data, f, indent=2)
-    except IOError as e:
-        print(f"⚠️  Warning: Could not save config file to {config_path}. Error: {e}")
-
-
-# --- Scraper Functions ---
+import re
 
 def parse_career_totals(soup):
     """Parses the 'stats_pullout' div for career totals."""
@@ -81,7 +38,6 @@ def parse_career_totals(soup):
 def parse_yearly_war(soup):
     """
     Parses the main stats table for year-by-year WAR and team data.
-    This version is updated to handle multiple possible page layouts.
     """
     table = None
     war_stat_id = None
@@ -103,20 +59,11 @@ def parse_yearly_war(soup):
         table_id = 'players_standard_pitching'
         war_stat_id = 'p_war' 
 
-    # Check for multiple possible container IDs and the table ID directly.
-    possible_container_ids = [f'switcher_{table_id}', f'all_{table_id}']
-    
-    for cid in possible_container_ids:
-        container = soup.find('div', id=cid)
-        if container:
-            table = container.find('table', id=table_id)
-            if table: break
+    container = soup.find('div', id=f'switcher_{table_id}')
+    if container:
+        table = container.find('table', id=table_id)
 
     if not table:
-        table = soup.find('table', id=table_id)
-
-    if not table:
-        print("  Table not found directly, searching in comments (fallback)...")
         comments = soup.find_all(string=lambda text: isinstance(text, Comment))
         table_html = ""
         for comment in comments:
@@ -173,7 +120,7 @@ def parse_yearly_war(soup):
     return sorted(yearly_data, key=lambda x: x['year'])
 
 
-def search_and_scrape_player(player_name):
+def search_and_scrape_player(player_name, automated=False):
     """
     Opens a browser, finds a player's page, and scrapes both career totals and yearly WAR.
     """
@@ -216,7 +163,13 @@ def search_and_scrape_player(player_name):
             if not major_league_players:
                 print("  No matching player links found.")
                 return None
-            if len(major_league_players) == 1:
+            
+            if len(major_league_players) == 1 or automated:
+                if len(major_league_players) > 1 and automated:
+                    print("  ⚠️ Multiple players found. Automatically selecting the first result.")
+                else:
+                    print("  Found a single Major League player match.")
+                
                 link = major_league_players[0].find('a')
                 player_url_to_scrape = f"https://www.baseball-reference.com{link['href']}"
             else:

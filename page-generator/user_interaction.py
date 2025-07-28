@@ -4,10 +4,15 @@ import subprocess
 import sys
 import os
 
-def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
+def review_and_edit_data(player_data: dict, project_dir: Path, automated=False):
     """
     Displays the AI-generated data to the user for review and allows for manual correction.
+    Skips the review process if running in automated mode.
     """
+    if automated:
+        print("  Skipping manual review in automated mode.")
+        return player_data
+
     print("\n" + "="*40)
     print("--- Please Review the Following Data ---")
     print(f"Player Name: {player_data.get('name', 'N/A')}")
@@ -36,8 +41,7 @@ def review_and_edit_data(player_data: dict, project_dir: Path) -> dict:
             with open(temp_file_path, 'w') as f:
                 json.dump(player_data, f, indent=4)
             
-            print(f"\n📝 A temporary file has been created with the data.")
-            print(f"   Please open this file in your preferred text editor:")
+            print(f"\n📝 A temporary file has been created. Please open this file in your text editor:")
             print(f"   {temp_file_path}")
             print(f"   Correct any errors, SAVE the file, and then return to this terminal.")
 
