@@ -341,7 +341,7 @@ tbody tr:hover { background-color: #e9ecef; }
 /* --- Quiz Page Styles --- */
 .quiz-container {
     max-width: 600px;
-    margin: 2rem auto;
+    margin: 0.5rem auto;
     background-color: #fff;
     padding: 2rem;
     border-radius: 8px;
@@ -349,7 +349,7 @@ tbody tr:hover { background-color: #e9ecef; }
     text-align: center;
 }
 #clue-image { 
-    max-width: 80%;
+    max-width: 70%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px; 
@@ -365,19 +365,37 @@ tbody tr:hover { background-color: #e9ecef; }
     margin-bottom: 1rem;
     box-sizing: border-box;
 }
-#submit-guess {
-    width: 100%;
+.quiz-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+#submit-guess, #request-hint {
+    flex: 1;
     padding: 0.75rem;
     font-size: 1.1rem;
     font-weight: 600;
     color: white;
-    background-color: var(--primary-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+#submit-guess {
+    background-color: var(--primary-color);
+}
+#request-hint {
+    background-color: #ffc107; /* Yellow */
+    color: #212529;
+}
 #submit-guess:hover { background-color: #1a3a63; }
+#request-hint:hover { background-color: #e0a800; }
+
+#submit-guess:disabled, #request-hint:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+}
+
 #feedback-message { margin-top: 1rem; font-weight: 600; min-height: 24px; }
 .correct { color: #16a34a; }
 .incorrect { color: #dc2626; }

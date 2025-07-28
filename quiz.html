@@ -9,7 +9,6 @@
 <body>
     <header>
         <div class="header-content">
-            <!-- This h1 will be updated by the script -->
             <h1 id="quiz-title">Name That Yankee Quiz</h1>
         </div>
         <div id="score-display">
@@ -22,7 +21,12 @@
         <div class="quiz-container" id="quiz-area">
             <img id="clue-image" src="" alt="Trivia Clue">
             <input type="text" id="guess-input" placeholder="Enter player's name...">
-            <button id="submit-guess">Submit Guess</button>
+            
+            <div class="quiz-actions">
+                <button id="submit-guess">Submit Guess</button>
+                <button id="request-hint">Request Hint</button>
+            </div>
+
             <p id="feedback-message"></p>
             <div id="hints-container" style="display: none;">
                 <h3>Hints</h3>
@@ -56,21 +60,19 @@
                 return;
             }
 
-            // --- NEW: Update the page title with the date ---
             const quizTitle = document.getElementById('quiz-title');
             try {
-                const dateObj = new Date(date + 'T00:00:00'); // Add time to avoid timezone issues
+                const dateObj = new Date(date + 'T00:00:00');
                 const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
                 quizTitle.textContent = `Quiz for ${formattedDate}`;
             } catch (e) {
-                // Fallback if date is invalid
                 quizTitle.textContent = 'Name That Yankee Quiz';
             }
-
 
             const clueImageEl = document.getElementById('clue-image');
             const guessInputEl = document.getElementById('guess-input');
             const submitBtn = document.getElementById('submit-guess');
+            const hintBtn = document.getElementById('request-hint');
             const feedbackMsg = document.getElementById('feedback-message');
             const hintsContainer = document.getElementById('hints-container');
             const hintsList = document.getElementById('hints-list');
@@ -84,7 +86,7 @@
             let correctAnswer = '';
             let hints = [];
             let hintsRevealed = 0;
-            const points = [10, 7, 4, 1];
+            const points = [10, 7, 4, 1, 0]; // 0 points for the final guess
 
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
             let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
@@ -109,6 +111,7 @@
                 if (completedPuzzles.includes(date)) {
                     feedbackMsg.textContent = "You have already completed this puzzle.";
                     submitBtn.disabled = true;
+                    hintBtn.disabled = true;
                     guessInputEl.disabled = true;
                     return;
                 }
@@ -147,10 +150,21 @@
                     quizArea.style.display = 'none';
                     successArea.style.display = 'block';
                 } else {
-                    feedbackMsg.textContent = "Incorrect. Try again!";
-                    feedbackMsg.className = 'incorrect';
-                    guessInputEl.value = '';
-                    revealHint();
+                    // THE FIX: Check if this was the final guess
+                    if (hintsRevealed >= hints.length) {
+                        // They've already seen all hints and still got it wrong. End the game.
+                        feedbackMsg.textContent = `Sorry, the correct answer was ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
+                        submitBtn.disabled = true;
+                        hintBtn.disabled = true;
+                        guessInputEl.disabled = true;
+                        markPuzzleAsComplete();
+                    } else {
+                        // They still have hints left. Reveal the next one.
+                        feedbackMsg.textContent = "Incorrect. Try again!";
+                        feedbackMsg.className = 'incorrect';
+                        guessInputEl.value = '';
+                        revealHint();
+                    }
                 }
             }
 
@@ -161,15 +175,17 @@
                     newHint.textContent = hints[hintsRevealed];
                     hintsList.appendChild(newHint);
                     hintsRevealed++;
-                } else {
-                    feedbackMsg.textContent = `Sorry, the correct answer was ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
-                    submitBtn.disabled = true;
-                    guessInputEl.disabled = true;
-                    markPuzzleAsComplete();
+                } 
+                
+                if (hintsRevealed >= hints.length) {
+                    hintBtn.disabled = true; 
+                    feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
+                    feedbackMsg.className = ''; // Remove 'incorrect' styling
                 }
             }
 
             submitBtn.addEventListener('click', checkGuess);
+            hintBtn.addEventListener('click', revealHint);
             guessInputEl.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
                     checkGuess();
