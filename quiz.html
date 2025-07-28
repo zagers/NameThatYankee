@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name That Yankee - Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Name That Yankee Quiz</h1>
+        </div>
+        <div id="score-display">
+            Your Score: <span id="total-score">0</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- NEW: Back to All Questions button -->
+        <a href="index.html" class="back-link">← Back to All Questions</a>
+
+        <div class="quiz-container" id="quiz-area">
+            <img id="clue-image" src="" alt="Trivia Clue">
+            <input type="text" id="guess-input" placeholder="Enter player's name...">
+            <button id="submit-guess">Submit Guess</button>
+            <p id="feedback-message"></p>
+            <div id="hints-container" style="display: none;">
+                <h3>Hints</h3>
+                <ul id="hints-list"></ul>
+            </div>
+        </div>
+
+        <div class="quiz-container" id="success-area" style="display: none;">
+            <!-- NEW: Answer image placeholder -->
+            <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
+            <h2 id="success-header" class="text-2xl font-bold correct"></h2>
+            <p id="success-points" class="text-lg"></p>
+            <a href="index.html" class="back-link" style="margin-top: 1.5rem;">Back to All Puzzles</a>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const date = params.get('date');
+            
+            // NEW: Backdoor to reset score
+            if (params.get('reset') === 'true') {
+                localStorage.removeItem('nameThatYankeeTotalScore');
+                localStorage.removeItem('nameThatYankeeCompletedPuzzles');
+                alert('Your score and quiz history have been reset.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            if (!date) {
+                document.getElementById('quiz-area').innerHTML = '<h2>Error: No date provided for the quiz.</h2>';
+                return;
+            }
+
+            const clueImageEl = document.getElementById('clue-image');
+            const guessInputEl = document.getElementById('guess-input');
+            const submitBtn = document.getElementById('submit-guess');
+            const feedbackMsg = document.getElementById('feedback-message');
+            const hintsContainer = document.getElementById('hints-container');
+            const hintsList = document.getElementById('hints-list');
+            const quizArea = document.getElementById('quiz-area');
+            const successArea = document.getElementById('success-area');
+            const answerImageEl = document.getElementById('answer-image');
+            const successHeader = document.getElementById('success-header');
+            const successPoints = document.getElementById('success-points');
+            const totalScoreEl = document.getElementById('total-score');
+
+            let correctAnswer = '';
+            let hints = [];
+            let hintsRevealed = 0;
+            const points = [10, 7, 4, 1];
+
+            // --- Local Storage for Score and Completed Puzzles ---
+            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+            let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+            totalScoreEl.textContent = totalScore;
+
+            function updateTotalScore(pointsToAdd) {
+                totalScore += pointsToAdd;
+                localStorage.setItem('nameThatYankeeTotalScore', totalScore);
+                totalScoreEl.textContent = totalScore;
+            }
+            
+            function markPuzzleAsComplete() {
+                if (!completedPuzzles.includes(date)) {
+                    completedPuzzles.push(date);
+                    localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
+                }
+            }
+
+            // --- Fetch and Parse Data ---
+            async function loadQuizData() {
+                clueImageEl.src = `images/clue-${date}.jpg`;
+
+                // --- NEW: Check if puzzle is already completed ---
+                if (completedPuzzles.includes(date)) {
+                    feedbackMsg.textContent = "You have already completed this puzzle.";
+                    submitBtn.disabled = true;
+                    guessInputEl.disabled = true;
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${date}.html`);
+                    const htmlText = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlText, 'text/html');
+                    
+                    const quizDataEl = doc.getElementById('quiz-data');
+                    if (quizDataEl) {
+                        const data = JSON.parse(quizDataEl.textContent);
+                        correctAnswer = data.answer.toLowerCase();
+                        hints = data.hints;
+                    } else {
+                        throw new Error('Quiz data not found on detail page.');
+                    }
+                } catch (error) {
+                    console.error("Failed to load quiz data:", error);
+                    quizArea.innerHTML = '<h2>Error: Could not load quiz data.</h2>';
+                }
+            }
+
+            // --- Game Logic ---
+            function checkGuess() {
+                const userGuess = guessInputEl.value.trim().toLowerCase();
+                if (!userGuess) return;
+
+                if (userGuess === correctAnswer) {
+                    const pointsEarned = points[hintsRevealed];
+                    answerImageEl.src = `images/answer-${date}.jpg`; // NEW: Show answer image
+                    successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
+                    successPoints.textContent = `You earned ${pointsEarned} points!`;
+                    updateTotalScore(pointsEarned);
+                    markPuzzleAsComplete();
+                    quizArea.style.display = 'none';
+                    successArea.style.display = 'block';
+                } else {
+                    feedbackMsg.textContent = "Incorrect. Try again!";
+                    feedbackMsg.className = 'incorrect';
+                    guessInputEl.value = '';
+                    revealHint();
+                }
+            }
+
+            function revealHint() {
+                if (hintsRevealed < hints.length) {
+                    hintsContainer.style.display = 'block';
+                    const newHint = document.createElement('li');
+                    newHint.textContent = hints[hintsRevealed];
+                    hintsList.appendChild(newHint);
+                    hintsRevealed++;
+                } else {
+                    feedbackMsg.textContent = `Sorry, the correct answer was ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
+                    submitBtn.disabled = true;
+                    guessInputEl.disabled = true;
+                    markPuzzleAsComplete(); // Mark as complete even if they fail
+                }
+            }
+
+            submitBtn.addEventListener('click', checkGuess);
+            guessInputEl.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    checkGuess();
+                }
+            });
+
+            loadQuizData();
+        });
+    </script>
+</body>
+</html>

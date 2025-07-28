@@ -27,8 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Never had a season with a positive WAR</li>
-                        <li>Hit two home runs over a nine-season major league career spanning 209 games.</li>
+                        <li>Was the scheduled starting shortstop for a game that, if not rained out, would have ended Cal Ripken Jr.'s consecutive games streak.</li>
+                        <li>Was traded to the New York Yankees in a 1986 deal that sent Ken Griffey Sr. to the Atlanta Braves.</li>
+                        <li>Hit two home runs and had 43 RBIs across a nine-year Major League Baseball career.</li>
                         </ul>
                     </div>
                 </div>
@@ -156,7 +157,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -183,7 +184,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["CLE", "ATL", "NYY", "KCR"], "years": ["1982", "1989", "1985", "1984", "1988", "1983", "1991", "1987", "1986"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["ATL", "KCR", "CLE", "NYY"], "years": ["1984", "1987", "1986", "1982", "1988", "1989", "1983", "1991", "1985"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Paul Zuvella", "hints": ["Was the scheduled starting shortstop for a game that, if not rained out, would have ended Cal Ripken Jr.'s consecutive games streak.", "Was traded to the New York Yankees in a 1986 deal that sent Ken Griffey Sr. to the Atlanta Braves.", "Hit two home runs and had 43 RBIs across a nine-year Major League Baseball career."]}</div>
     </main>
 </body>
 </html>

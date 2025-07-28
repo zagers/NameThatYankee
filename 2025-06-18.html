@@ -27,9 +27,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was traded from the Miami Marlins to the Los Angeles Dodgers and then to the Los Angeles Angels on the same day.</li>
-                        <li>Won a World Series with the Texas Rangers in 2023.</li>
-                        <li>Led the American League in home runs allowed with 30 in 2021.</li>
+                        <li>Was traded twice on the same day in December 2014.</li>
+                        <li>Won the College Baseball Foundation's National Pitcher of the Year Award in 2012.</li>
+                        <li>Started and won Game 4 of the 2023 World Series.</li>
                         </ul>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
             <div class="table-wrapper">
                 <table>
                     <thead><tr><th>WAR</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th><th>SV</th><th>IP</th><th>SO</th><th>WHIP</th></tr></thead>
-                    <tbody><tr><td>8.8</td><td>55</td><td>70</td><td>4.47</td><td>222</td><td>203</td><td>0</td><td>1112.1</td><td>1143</td><td>1.264</td></tr></tbody>
+                    <tbody><tr><td>8.5</td><td>56</td><td>71</td><td>4.49</td><td>224</td><td>205</td><td>0</td><td>1121.1</td><td>1148</td><td>1.265</td></tr></tbody>
                 </table>
             </div>
             <p class="citation">Statistics via Baseball-Reference.com</p>
@@ -62,7 +62,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const years = ["2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025"];
-            const warData = [-0.2, 1.9, 0.0, -0.4, 2.0, 1.3, 1.2, 0.3, 0.5, 1.0, 0.7, 0.8];
+            const warData = [-0.2, 1.9, 0.0, -0.4, 2.0, 1.3, 1.2, 0.3, 0.5, 1.0, 0.7, 0.5];
             const teamsByYear = ["MIA", "LAA", "LAA", "LAA", "LAA", "LAA", "LAA", "2TM", "LAD", "TEX", "TEX", "PIT"];
 
             const teamColors = {
@@ -157,7 +157,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -184,7 +184,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["LAA", "2TM", "MIA", "PIT", "TEX", "LAD"], "years": ["2017", "2020", "2022", "2021", "2024", "2015", "2023", "2016", "2019", "2025", "2018", "2014"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["LAD", "LAA", "PIT", "NYY", "MIA", "TEX"], "years": ["2015", "2014", "2023", "2025", "2024", "2017", "2020", "2022", "2018", "2019", "2016", "2021"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Andrew Heaney", "hints": ["Was traded twice on the same day in December 2014.", "Won the College Baseball Foundation's National Pitcher of the Year Award in 2012.", "Started and won Game 4 of the 2023 World Series."]}</div>
     </main>
 </body>
 </html>
