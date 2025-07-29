@@ -18,31 +18,57 @@
 
     <main>
         <a href="index.html" class="back-link">← Back to All Questions</a>
-        <div class="quiz-container" id="quiz-area">
-            <img id="clue-image" src="" alt="Trivia Clue">
-            <input type="text" id="guess-input" placeholder="Enter player's name...">
-            
-            <div class="quiz-actions">
-                <button id="submit-guess">Submit Guess</button>
-                <button id="request-hint">Request Hint</button>
+        
+        <div class="quiz-layout">
+            <!-- Left Column: The main quiz -->
+            <div class="left-column">
+                <div class="quiz-container" id="quiz-area">
+                    <img id="clue-image" src="" alt="Trivia Clue">
+                    <input type="text" id="guess-input" placeholder="Enter player's name...">
+                    <div class="quiz-actions">
+                        <button id="submit-guess">Submit Guess</button>
+                        <button id="request-hint">Request Hint</button>
+                    </div>
+                    <p id="feedback-message"></p>
+                    <div id="hints-container" style="display: none;">
+                        <h3>Hints</h3>
+                        <ul id="hints-list"></ul>
+                    </div>
+                </div>
+
+                <div class="quiz-container" id="success-area" style="display: none;">
+                    <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
+                    <h2 id="success-header" class="text-2xl font-bold correct"></h2>
+                    <p id="success-points" class="text-lg"></p>
+                    <a href="index.html" class="back-link" style="margin-top: 1.5rem;">Back to All Puzzles</a>
+                </div>
             </div>
 
-            <p id="feedback-message"></p>
-            <div id="hints-container" style="display: none;">
-                <h3>Hints</h3>
-                <ul id="hints-list"></ul>
+            <!-- Right Column: Incorrect guesses feature -->
+            <div class="right-column">
+                <div class="guesses-container">
+                    <button id="show-guesses-btn">See Common Incorrect Guesses</button>
+                    <div id="guesses-chart-container" style="display: none;">
+                        <div class="chart-wrapper">
+                            <canvas id="guessesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="quiz-container" id="success-area" style="display: none;">
-            <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
-            <h2 id="success-header" class="text-2xl font-bold correct"></h2>
-            <p id="success-points" class="text-lg"></p>
-            <a href="index.html" class="back-link" style="margin-top: 1.5rem;">Back to All Puzzles</a>
         </div>
     </main>
 
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="firebase-config.js"></script>
+
     <script>
+        // --- Initialize Firebase ---
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
         document.addEventListener('DOMContentLoaded', () => {
             const params = new URLSearchParams(window.location.search);
             const date = params.get('date');
@@ -82,11 +108,14 @@
             const successHeader = document.getElementById('success-header');
             const successPoints = document.getElementById('success-points');
             const totalScoreEl = document.getElementById('total-score');
+            const showGuessesBtn = document.getElementById('show-guesses-btn');
+            const guessesChartContainer = document.getElementById('guesses-chart-container');
+            const guessesChartCanvas = document.getElementById('guessesChart');
 
             let correctAnswer = '';
             let hints = [];
             let hintsRevealed = 0;
-            const points = [10, 7, 4, 1, 0]; // 0 points for the final guess
+            const points = [10, 7, 4, 1, 0];
 
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
             let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
@@ -113,7 +142,6 @@
                     submitBtn.disabled = true;
                     hintBtn.disabled = true;
                     guessInputEl.disabled = true;
-                    return;
                 }
 
                 try {
@@ -136,6 +164,87 @@
                 }
             }
 
+            function saveIncorrectGuess(guess) {
+                db.collection('guesses').add({
+                    puzzleDate: date,
+                    guessText: guess,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).catch(error => {
+                    console.error("Error writing document: ", error);
+                });
+            }
+
+            async function showIncorrectGuesses() {
+                showGuessesBtn.disabled = true;
+                showGuessesBtn.textContent = "Loading...";
+
+                try {
+                    const snapshot = await db.collection('guesses').where('puzzleDate', '==', date).get();
+                    const guesses = snapshot.docs.map(doc => doc.data().guessText.toLowerCase());
+
+                    // THE FIX: Reset button text after loading
+                    showGuessesBtn.textContent = "See Common Incorrect Guesses";
+
+                    if (guesses.length === 0) {
+                        guessesChartContainer.innerHTML = '<p>No incorrect guesses have been submitted yet.</p>';
+                        guessesChartContainer.style.display = 'block';
+                        return;
+                    }
+
+                    const guessCounts = guesses.reduce((acc, guess) => {
+                        acc[guess] = (acc[guess] || 0) + 1;
+                        return acc;
+                    }, {});
+
+                    const sortedGuesses = Object.entries(guessCounts)
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 5);
+
+                    const labels = sortedGuesses.map(entry => entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '));
+                    const data = sortedGuesses.map(entry => entry[1]);
+
+                    guessesChartContainer.style.display = 'block';
+                    
+                    new Chart(guessesChartCanvas, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Number of Guesses',
+                                data: data,
+                                backgroundColor: 'rgba(12, 35, 64, 0.8)',
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            plugins: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Most Common Incorrect Guesses'
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: { beginAtZero: true, stepSize: 1 }
+                                }
+                            },
+                            // THE FIX: Add padding to prevent labels from being cut off
+                            layout: {
+                                padding: {
+                                    left: 25 
+                                }
+                            }
+                        }
+                    });
+
+                } catch (error) {
+                    console.error("Error getting guesses: ", error);
+                    guessesChartContainer.innerHTML = '<p>Could not load guess data.</p>';
+                    guessesChartContainer.style.display = 'block';
+                }
+            }
+
             function checkGuess() {
                 const userGuess = guessInputEl.value.trim().toLowerCase();
                 if (!userGuess) return;
@@ -150,16 +259,14 @@
                     quizArea.style.display = 'none';
                     successArea.style.display = 'block';
                 } else {
-                    // THE FIX: Check if this was the final guess
+                    saveIncorrectGuess(userGuess);
                     if (hintsRevealed >= hints.length) {
-                        // They've already seen all hints and still got it wrong. End the game.
                         feedbackMsg.textContent = `Sorry, the correct answer was ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
                         submitBtn.disabled = true;
                         hintBtn.disabled = true;
                         guessInputEl.disabled = true;
                         markPuzzleAsComplete();
                     } else {
-                        // They still have hints left. Reveal the next one.
                         feedbackMsg.textContent = "Incorrect. Try again!";
                         feedbackMsg.className = 'incorrect';
                         guessInputEl.value = '';
@@ -179,13 +286,16 @@
                 
                 if (hintsRevealed >= hints.length) {
                     hintBtn.disabled = true; 
-                    feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
-                    feedbackMsg.className = ''; // Remove 'incorrect' styling
+                    if (!submitBtn.disabled) {
+                        feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
+                        feedbackMsg.className = '';
+                    }
                 }
             }
 
             submitBtn.addEventListener('click', checkGuess);
             hintBtn.addEventListener('click', revealHint);
+            showGuessesBtn.addEventListener('click', showIncorrectGuesses);
             guessInputEl.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
                     checkGuess();
