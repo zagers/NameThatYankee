@@ -6,6 +6,9 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 import re
+import json
+from pathlib import Path
+import string
 
 def parse_career_totals(soup):
     """Parses the 'stats_pullout' div for career totals."""
@@ -59,9 +62,16 @@ def parse_yearly_war(soup):
         table_id = 'players_standard_pitching'
         war_stat_id = 'p_war' 
 
-    container = soup.find('div', id=f'switcher_{table_id}')
-    if container:
-        table = container.find('table', id=table_id)
+    possible_container_ids = [f'switcher_{table_id}', f'all_{table_id}']
+    
+    for cid in possible_container_ids:
+        container = soup.find('div', id=cid)
+        if container:
+            table = container.find('table', id=table_id)
+            if table: break
+
+    if not table:
+        table = soup.find('table', id=table_id)
 
     if not table:
         comments = soup.find_all(string=lambda text: isinstance(text, Comment))
@@ -210,6 +220,55 @@ def search_and_scrape_player(player_name, automated=False):
         else:
             print("  ❌ Failed to scrape all required data.")
             return None
+
+    finally:
+        driver.quit()
+
+def generate_master_player_list(project_dir: Path):
+    """
+    Scrapes all player names from Baseball-Reference and saves them to a JSON file.
+    """
+    print(" scraping all player names from Baseball-Reference...")
+    all_players = []
+    base_url = "https://www.baseball-reference.com/players/"
+    
+    options = webdriver.ChromeOptions()
+    # options.add_argument("--headless=new")
+    options.page_load_strategy = 'eager'
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+
+    try:
+        total_players_found = 0
+        for letter in string.ascii_lowercase:
+            page_url = f"{base_url}{letter}/"
+            print(f"  Scraping page for letter: {letter.upper()}...")
+            driver.get(page_url)
+            time.sleep(2) 
+
+            page_source = driver.page_source
+            soup = BeautifulSoup(page_source, 'html.parser')
+            
+            content_div = soup.find('div', id='div_players_')
+            
+            players_on_page = 0
+            if content_div:
+                player_paragraphs = content_div.find_all('p')
+                for p in player_paragraphs:
+                    link = p.find('a')
+                    if link:
+                        all_players.append(link.text)
+                        players_on_page += 1
+            
+            total_players_found += players_on_page
+            print(f"    Found {players_on_page} players for '{letter.upper()}'. Total so far: {total_players_found}")
+
+        
+        output_path = project_dir / "all_players.json"
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(all_players, f, indent=2)
+        
+        print(f"\n✅ Successfully scraped {len(all_players)} player names.")
+        print(f"   Master player list saved to: {output_path}")
 
     finally:
         driver.quit()

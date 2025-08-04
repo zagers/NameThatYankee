@@ -210,7 +210,7 @@ footer {
 }
 
 
-/* --- Detail Page Styles --- */
+/* --- Detail Page & Quiz Page Layout Styles --- */
 .back-link {
     display: inline-block;
     margin-bottom: 1rem;
@@ -226,10 +226,17 @@ footer {
     background-color: #1a3a63;
 }
 
-.detail-layout {
+.detail-layout, .quiz-layout {
     display: flex;
-    gap: 2rem;
     align-items: flex-start;
+}
+
+/* THE FIX: Specific gap and flex properties for each layout */
+.detail-layout {
+    gap: 2rem;
+}
+.quiz-layout {
+    gap: 1.5rem;
 }
 
 .left-column, .right-column {
@@ -238,8 +245,13 @@ footer {
     gap: 1rem;
     min-width: 0; 
 }
-.left-column { flex: 3; }
-.right-column { flex: 1; }
+
+.detail-layout .left-column { flex: 3; }
+.detail-layout .right-column { flex: 1; }
+
+.quiz-layout .left-column { flex: 1; }
+.quiz-layout .right-column { flex: 1; }
+
 
 .player-profile {
     display: flex;
@@ -341,7 +353,7 @@ tbody tr:hover { background-color: #e9ecef; }
 /* --- Quiz Page Styles --- */
 .quiz-container {
     max-width: 600px;
-    margin: 0.5rem auto;
+    margin: 0 auto;
     background-color: #fff;
     padding: 2rem;
     border-radius: 8px;
@@ -349,7 +361,7 @@ tbody tr:hover { background-color: #e9ecef; }
     text-align: center;
 }
 #clue-image { 
-    max-width: 70%;
+    max-width: 80%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px; 
@@ -419,10 +431,35 @@ tbody tr:hover { background-color: #e9ecef; }
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+.guesses-container {
+    background-color: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+#show-guesses-btn {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#show-guesses-btn:hover {
+    background-color: #1a3a63;
+}
+#show-guesses-btn:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
 
 
 @media (max-width: 992px) {
-    .detail-layout { flex-direction: column; }
+    .detail-layout, .quiz-layout { flex-direction: column; }
     .player-profile { flex-wrap: wrap; }
     header { flex-direction: column; gap: 0.5rem; }
 }

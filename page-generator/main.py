@@ -22,15 +22,38 @@ import user_interaction
 if __name__ == "__main__":
     print("--- Name That Yankee Page Generator (Python Version) ---")
     
-    # NEW: Check for the --automated flag
     is_automated = "--automated" in sys.argv
     if is_automated:
         print("🤖 Running in AUTOMATED mode. User prompts will be skipped.")
 
     config = config_manager.load_config()
+    last_path = config.get("last_project_path")
+
+    # NEW: Check for the --generate-player-list flag
+    if "--generate-player-list" in sys.argv:
+        prompt_message = "Enter the path to your website project folder to save the player list"
+        if last_path:
+            prompt_message += f" [Default: {last_path}]: "
+        else:
+            prompt_message += ": "
+        project_dir_str = input(prompt_message).strip().strip("'\"")
+        if not project_dir_str and last_path:
+            project_dir_str = last_path
+            print(f"Using default path: {project_dir_str}")
+        
+        project_dir = Path(project_dir_str).resolve()
+        if not project_dir.is_dir():
+            print(f"❌ Error: Directory not found at '{project_dir}'")
+            exit()
+        
+        # Save the path for next time
+        config["last_project_path"] = str(project_dir)
+        config_manager.save_config(config)
+
+        scraper.generate_master_player_list(project_dir)
+        exit() # Exit after generating the list
 
     # 1. Get project directory
-    last_path = config.get("last_project_path")
     prompt_message = "Enter the path to your website project folder"
     if last_path:
         prompt_message += f" [Default: {last_path}]: "
@@ -111,7 +134,6 @@ if __name__ == "__main__":
         
         player_info = ai_services.get_player_info_from_image(clue_path, api_key)
         if player_info:
-            # Pass the automated flag to the scraper
             scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated)
             if scraped_data:
                 player_info['career_totals'] = scraped_data['career_totals']
@@ -120,11 +142,9 @@ if __name__ == "__main__":
             facts = ai_services.get_facts_from_gemini(player_info['name'], api_key)
             player_info['facts'] = facts
             
-            # Pass the automated flag to the review step
             verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
             html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)
     
-    # Rebuild the index once after all pages in the batch are processed
     html_generator.rebuild_index_page(project_dir)
             
     print("\n🎉 All tasks completed successfully! 🎉")
