@@ -192,6 +192,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer for {date_str} | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
     <header>
