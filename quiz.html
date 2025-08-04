@@ -56,16 +56,25 @@
         </div>
     </main>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="firebase-config.js"></script>
 
-    <script>
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        document.addEventListener('DOMContentLoaded', () => {
+    <script type=module>
+	    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+	    import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
+		import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+		
+        document.addEventListener('DOMContentLoaded', () => {    
+			//self.FIREBASE_APPCHECK_DEBUG_TOKEN = true
+			
+	        const app = initializeApp(firebaseConfig);
+			const appCheck = initializeAppCheck(app, {
+				provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
+				isTokenAutoRefreshEnabled: true
+			});
+	        const db = getFirestore(app);
+			const guessesCollection = collection(db, 'guesses')
+			
             const params = new URLSearchParams(window.location.search);
             const date = params.get('date');
             
@@ -164,25 +173,31 @@
                 }
             }
 
-            function saveIncorrectGuess(guess) {
-                if (allPlayers.includes(guess)) {
-                    db.collection('guesses').add({
-                        puzzleDate: date,
-                        guessText: guess,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    }).catch(error => {
-                        console.error("Error writing document: ", error);
-                    });
-                }
-            }
+	        async function saveIncorrectGuess(guess) {
+	            try {
+	                await addDoc(guessesCollection, {
+	                    puzzleDate: date,
+	                    guessText: guess,
+	                    timestamp: serverTimestamp() // Use the imported function
+	                });
+	            } catch (error) {
+	                console.error("Error writing document: ", error);
+	            }
+	        }
 
             async function showIncorrectGuesses() {
                 showGuessesBtn.disabled = true;
                 showGuessesBtn.textContent = "Loading...";
 
                 try {
-                    const snapshot = await db.collection('guesses').where('puzzleDate', '==', date).get();
-                    const guesses = snapshot.docs.map(doc => doc.data().guessText.toLowerCase());
+					// Create a query against the collection
+					const q = query(guessesCollection, where("puzzleDate", "==", date));
+					
+					// Execute the query
+					const querySnapshot = await getDocs(q);
+					const guesses = querySnapshot.docs.map(doc => doc.data().guessText.toLowerCase());
+                    //const snapshot = await db.collection('guesses').where('puzzleDate', '==', date).get();
+                    //const guesses = snapshot.docs.map(doc => doc.data().guessText.toLowerCase());
 
                     showGuessesBtn.textContent = "See Common Incorrect Guesses";
 
@@ -262,7 +277,6 @@
                     if (allPlayers.includes(userGuess)) {
                         saveIncorrectGuess(userGuess);
                         if (hintsRevealed >= hints.length) {
-                            // THE FIX: Update the feedback message to include a link
                             const formattedAnswer = correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
                             feedbackMsg.innerHTML = `Sorry, the correct answer was ${formattedAnswer}. <a href="${date}.html">Click Here</a> for more information.`;
                             submitBtn.disabled = true;
