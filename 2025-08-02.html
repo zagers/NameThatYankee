@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer for 2025-08-02 | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
     <header>
@@ -18,18 +19,18 @@
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-2025-08-02.jpg" alt="Photo of Erick Almonte">
+                        <img src="images/answer-2025-08-02.jpg" alt="Photo of Randy Choate">
                     </div>
                     <div class="player-info">
-                        <h2>Erick Almonte</h2>
+                        <h2>Randy Choate</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was the Opening Day starting shortstop for the 2003 New York Yankees, replacing an injured Derek Jeter.</li>
-                        <li>Returned to the major leagues in 2011 after a seven-season absence.</li>
-                        <li>Cousin of former major league pitcher Héctor Almonte.</li>
+                        <li>Won a World Series in consecutive seasons with two different teams (2000 Yankees, 2001 Diamondbacks).</li>
+                        <li>Led the American League with 85 games pitched in 2010 while recording only 31.2 innings.</li>
+                        <li>Appeared in 831 career games, ranking in the top 70 all-time for pitchers.</li>
                         </ul>
                     </div>
                 </div>
@@ -38,8 +39,8 @@
             <h3>Career Totals</h3>
             <div class="table-wrapper">
                 <table>
-                    <thead><tr><th>WAR</th><th>AB</th><th>H</th><th>HR</th><th>BA</th><th>R</th><th>RBI</th><th>SB</th><th>OBP</th><th>SLG</th><th>OPS</th><th>OPS+</th></tr></thead>
-                    <tbody><tr><td>-1.0</td><td>133</td><td>31</td><td>2</td><td>.233</td><td>18</td><td>14</td><td>3</td><td>.282</td><td>.331</td><td>.613</td><td>64</td></tr></tbody>
+                    <thead><tr><th>WAR</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th><th>SV</th><th>IP</th><th>SO</th><th>WHIP</th></tr></thead>
+                    <tbody><tr><td>4.5</td><td>16</td><td>14</td><td>3.90</td><td>672</td><td>0</td><td>7</td><td>408.0</td><td>348</td><td>1.287</td></tr></tbody>
                 </table>
             </div>
             <p class="citation">Statistics via Baseball-Reference.com</p>
@@ -61,9 +62,9 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const years = ["2001", "2003", "2011"];
-            const warData = [0.1, -0.4, -0.7];
-            const teamsByYear = ["NYY", "NYY", "MIL"];
+            const years = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2009", "2010", "2011", "2012", "2013", "2014", "2015"];
+            const warData = [0.1, 0.8, -0.2, 0.0, 0.5, -0.4, 0.1, 0.0, 0.7, -0.1, 1.0, 0.6, 1.2, -0.1, 0.2];
+            const teamsByYear = ["NYY", "NYY", "NYY", "NYY", "ARI", "ARI", "ARI", "ARI", "TBR", "TBR", "FLA", "2TM", "STL", "STL", "STL"];
 
             const teamColors = {
                 'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
@@ -184,8 +185,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "MIL"], "years": ["2001", "2011", "2003"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Erick Almonte", "hints": ["Was the Opening Day starting shortstop for the 2003 New York Yankees, replacing an injured Derek Jeter.", "Returned to the major leagues in 2011 after a seven-season absence.", "Cousin of former major league pitcher H\u00e9ctor Almonte."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["LAD", "FLA", "ARI", "STL", "NYY", "MIA", "TBR"], "years": ["2005", "2000", "2012", "2009", "2015", "2010", "2001", "2007", "2002", "2004", "2013", "2011", "2014", "2003", "2006"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Randy Choate", "hints": ["Won a World Series in consecutive seasons with two different teams (2000 Yankees, 2001 Diamondbacks).", "Led the American League with 85 games pitched in 2010 while recording only 31.2 innings.", "Appeared in 831 career games, ranking in the top 70 all-time for pitchers."]}</div>
     </main>
 </body>
 </html>

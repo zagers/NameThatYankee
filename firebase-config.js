@@ -1,5 +1,4 @@
-// This file contains your private Firebase credentials.
-// It is listed in .gitignore and will NOT be committed to GitHub.
+//Firebase credentials
 const firebaseConfig = {
   apiKey: "AIzaSyDCnTBnMVDbsZbgUHNn0og_NbSiW3HTOi8",
   authDomain: "name-that-yankee.firebaseapp.com",
