@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Play - Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>How to Play</h1>
+        </div>
+        <div id="score-display">
+            Your Score: <span id="total-score">0</span>
+        </div>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">← Back to All Puzzles</a>
+
+        <div class="instructions-container">
+            <h2>Welcome to Name That Yankee!</h2>
+            <p>This site acts as an archive of Name That Yankee quizzes and also an opporunity for you to test your knowledge by solving quizzes.</p>
+
+            <h3>How to Search the Archives</h3>
+            <p>Use the search bar on the homepage to find specific puzzles. You can search by:</p>
+            <ul>
+                <li><strong>Trivia Date:</strong> Type a month, day, or year (e.g., <code>July</code>, <code>9</code>, <code>july 9</code>).</li>
+                <li><strong>Player Career Year:</strong> Type a year a player was active to see all puzzles featuring players who played in that year (e.g., <code>1998</code>).</li>
+                <li><strong>Player Team:</strong> Type a team name or abbreviation to see all puzzles featuring players who played for that team (e.g., <code>Yankees</code>, <code>Red Sox</code>, <code>CIN</code>).</li>
+            </ul>
+
+			<h3>Do you just want to know the answer?</h3>
+			<p>If you would prefer to go right to the puzzle answer, click on the "Reveal" link on any card and you will be taken to a detail page showing career stats and (AI generated) facts about the player.</p>
+
+            <h3>How to Play the Quiz</h3>
+            <p>On the homepage, click the "Quiz" link on any card to try solving the quiz of the day.</p>
+            <ul>
+                <li>You start with a chance to earn <strong>10 points</strong>.</li>
+                <li>If you guess incorrectly, a hint will be revealed, and the potential points will decrease.</li>
+                <li>You can also click the "Request Hint" button at any time to see the next hint.</li>
+                <li>You have a total of four chances to guess the correct player.</li>
+            </ul>
+
+            <h3>Scoring</h3>
+            <ul>
+                <li>Guess with 0 hints revealed: <strong>10 points</strong></li>
+                <li>Guess with 1 hint revealed: <strong>7 points</strong></li>
+                <li>Guess with 2 hints revealed: <strong>4 points</strong></li>
+                <li>Guess with 3 hints revealed: <strong>1 point</strong></li>
+            </ul>
+            <p>Your total score is saved in your browser, so you can come back any time and continue building your score!</p>
+
+            <h3>Completed Puzzles</h3>
+            <p>Once you solve a puzzle or reveal the answer, it will be marked with a checkmark on the homepage. The "Quiz" link will be disabled, but you can still view the answer at any time.</p>
+			
+        </div>
+    </main>
+
+    <footer>
+        <p>Last Updated: 4-Aug-2025</p>
+    </footer>
+    <script>
+        // Script to display the user's current score in the header
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalScoreEl = document.getElementById('total-score');
+            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+            totalScoreEl.textContent = totalScore;
+        });
+    </script>
+</body>
+</html>

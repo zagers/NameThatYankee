@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name That Yankee - Quiz</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 id="quiz-title">Name That Yankee Quiz</h1>
+        </div>
+    <div class="header-controls">
+        <a href="instructions.html" class="instructions-link">How does this site work?</a>
+        <div id="score-display">
+            Your Score: <span id="total-score">0</span>
+        </div>
+    </div>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">← Back to All Questions</a>
+        
+        <div class="quiz-layout">
+            <div class="left-column">
+                <div class="quiz-container" id="quiz-area">
+                    <img id="clue-image" src="" alt="Trivia Clue">
+                    <input type="text" id="guess-input" placeholder="Enter player's name...">
+                    <div class="quiz-actions">
+                        <button id="submit-guess">Submit Guess</button>
+                        <button id="request-hint">Request Hint</button>
+                    </div>
+                    <p id="feedback-message"></p>
+                    <div id="hints-container" style="display: none;">
+                        <h3>Hints</h3>
+                        <ul id="hints-list"></ul>
+                    </div>
+					<p class="disclaimer">Facts are AI-generated and may require verification</p>
+                </div>
+
+                <div class="quiz-container" id="success-area" style="display: none;">
+                    <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
+                    <h2 id="success-header" class="text-2xl font-bold correct"></h2>
+                    <p id="success-points" class="text-lg"></p>
+                    <a href="index.html" class="back-link" style="margin-top: 1.5rem;">Back to All Puzzles</a>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="guesses-container">
+                    <button id="show-guesses-btn">See Common Incorrect Guesses</button>
+                    <div id="guesses-chart-container" style="display: none;">
+                        <div class="chart-wrapper">
+                            <canvas id="guessesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script type=module>
+	    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+	    import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
+		import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+		
+        document.addEventListener('DOMContentLoaded', () => {    
+	        const app = initializeApp(firebaseConfig);
+			const appCheck = initializeAppCheck(app, {
+				provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
+				isTokenAutoRefreshEnabled: true
+			});
+	        const db = getFirestore(app);
+			const guessesCollection = collection(db, 'guesses')
+			
+            const params = new URLSearchParams(window.location.search);
+            const date = params.get('date');
+            
+            if (params.get('reset') === 'true') {
+                localStorage.removeItem('nameThatYankeeTotalScore');
+                localStorage.removeItem('nameThatYankeeCompletedPuzzles');
+                alert('Your score and quiz history have been reset.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            if (!date) {
+                document.getElementById('quiz-area').innerHTML = '<h2>Error: No date provided for the quiz.</h2>';
+                return;
+            }
+
+            const quizTitle = document.getElementById('quiz-title');
+            try {
+                const dateObj = new Date(date + 'T00:00:00');
+                const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                quizTitle.textContent = `Quiz for ${formattedDate}`;
+            } catch (e) {
+                quizTitle.textContent = 'Name That Yankee Quiz';
+            }
+
+            const clueImageEl = document.getElementById('clue-image');
+            const guessInputEl = document.getElementById('guess-input');
+            const submitBtn = document.getElementById('submit-guess');
+            const hintBtn = document.getElementById('request-hint');
+            const feedbackMsg = document.getElementById('feedback-message');
+            const hintsContainer = document.getElementById('hints-container');
+            const hintsList = document.getElementById('hints-list');
+            const quizArea = document.getElementById('quiz-area');
+            const successArea = document.getElementById('success-area');
+            const answerImageEl = document.getElementById('answer-image');
+            const successHeader = document.getElementById('success-header');
+            const successPoints = document.getElementById('success-points');
+            const totalScoreEl = document.getElementById('total-score');
+            const showGuessesBtn = document.getElementById('show-guesses-btn');
+            const guessesChartContainer = document.getElementById('guesses-chart-container');
+            const guessesChartCanvas = document.getElementById('guessesChart');
+
+            let correctAnswer = '';
+            let hints = [];
+            let hintsRevealed = 0;
+            const points = [10, 7, 4, 1, 0];
+            let allPlayers = [];
+
+            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+            let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+            totalScoreEl.textContent = totalScore;
+
+            function updateTotalScore(pointsToAdd) {
+                totalScore += pointsToAdd;
+                localStorage.setItem('nameThatYankeeTotalScore', totalScore);
+                totalScoreEl.textContent = totalScore;
+            }
+            
+            function markPuzzleAsComplete() {
+                if (!completedPuzzles.includes(date)) {
+                    completedPuzzles.push(date);
+                    localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
+                }
+            }
+
+            async function loadQuizData() {
+                clueImageEl.src = `images/clue-${date}.jpg`;
+
+                if (completedPuzzles.includes(date)) {
+                    feedbackMsg.textContent = "You have already completed this puzzle.";
+                    submitBtn.disabled = true;
+                    hintBtn.disabled = true;
+                    guessInputEl.disabled = true;
+                }
+
+                try {
+                    const playerListResponse = await fetch('all_players.json');
+                    allPlayers = (await playerListResponse.json()).map(p => p.toLowerCase());
+
+                    const response = await fetch(`${date}.html`);
+                    const htmlText = await response.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(htmlText, 'text/html');
+                    
+                    const quizDataEl = doc.getElementById('quiz-data');
+                    if (quizDataEl) {
+                        const data = JSON.parse(quizDataEl.textContent);
+                        correctAnswer = data.answer.toLowerCase();
+                        hints = data.hints;
+                    } else {
+                        throw new Error('Quiz data not found on detail page.');
+                    }
+                } catch (error) {
+                    console.error("Failed to load quiz data:", error);
+                    quizArea.innerHTML = '<h2>Error: Could not load quiz data.</h2>';
+                }
+            }
+
+	        async function saveIncorrectGuess(guess) {
+	            try {
+	                await addDoc(guessesCollection, {
+	                    puzzleDate: date,
+	                    guessText: guess,
+	                    timestamp: serverTimestamp() // Use the imported function
+	                });
+	            } catch (error) {
+	                console.error("Error writing document: ", error);
+	            }
+	        }
+
+            async function showIncorrectGuesses() {
+                showGuessesBtn.disabled = true;
+                showGuessesBtn.textContent = "Loading...";
+
+                try {
+					// Create a query against the collection
+					const q = query(guessesCollection, where("puzzleDate", "==", date));
+					
+					// Execute the query
+					const querySnapshot = await getDocs(q);
+					const guesses = querySnapshot.docs.map(doc => doc.data().guessText.toLowerCase());
+                    //const snapshot = await db.collection('guesses').where('puzzleDate', '==', date).get();
+                    //const guesses = snapshot.docs.map(doc => doc.data().guessText.toLowerCase());
+
+                    showGuessesBtn.textContent = "See Common Incorrect Guesses";
+
+                    if (guesses.length === 0) {
+                        guessesChartContainer.innerHTML = '<p>No incorrect guesses have been submitted yet.</p>';
+                        guessesChartContainer.style.display = 'block';
+                        return;
+                    }
+
+                    const guessCounts = guesses.reduce((acc, guess) => {
+                        acc[guess] = (acc[guess] || 0) + 1;
+                        return acc;
+                    }, {});
+
+                    const sortedGuesses = Object.entries(guessCounts)
+                        .sort((a, b) => b[1] - a[1])
+                        .slice(0, 5);
+
+                    const labels = sortedGuesses.map(entry => entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '));
+                    const data = sortedGuesses.map(entry => entry[1]);
+
+                    guessesChartContainer.style.display = 'block';
+                    
+                    new Chart(guessesChartCanvas, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Number of Guesses',
+                                data: data,
+                                backgroundColor: 'rgba(12, 35, 64, 0.8)',
+                            }]
+                        },
+                        options: {
+                            indexAxis: 'y',
+                            plugins: {
+                                legend: { display: false },
+                                title: {
+                                    display: true,
+                                    text: 'Most Common Incorrect Guesses'
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    ticks: { beginAtZero: true, stepSize: 1 }
+                                }
+                            },
+                            layout: {
+                                padding: {
+                                    left: 25 
+                                }
+                            }
+                        }
+                    });
+
+                } catch (error) {
+                    console.error("Error getting guesses: ", error);
+                    guessesChartContainer.innerHTML = '<p>Could not load guess data.</p>';
+                    guessesChartContainer.style.display = 'block';
+                }
+            }
+
+            function checkGuess() {
+                const userGuess = guessInputEl.value.trim().toLowerCase();
+                if (!userGuess) return;
+
+                if (userGuess === correctAnswer) {
+                    const pointsEarned = points[hintsRevealed];
+                    answerImageEl.src = `images/answer-${date}.jpg`;
+                    successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
+                    successPoints.textContent = `You earned ${pointsEarned} points!`;
+                    updateTotalScore(pointsEarned);
+                    markPuzzleAsComplete();
+                    quizArea.style.display = 'none';
+                    successArea.style.display = 'block';
+                } else {
+                    if (allPlayers.includes(userGuess)) {
+                        saveIncorrectGuess(userGuess);
+                        if (hintsRevealed >= hints.length) {
+                            const formattedAnswer = correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
+                            feedbackMsg.innerHTML = `Sorry, the correct answer was ${formattedAnswer}. <a href="${date}.html">Click Here</a> for more information.`;
+                            submitBtn.disabled = true;
+                            hintBtn.disabled = true;
+                            guessInputEl.disabled = true;
+                            markPuzzleAsComplete();
+                        } else {
+                            feedbackMsg.textContent = "Incorrect. Try again!";
+                            feedbackMsg.className = 'incorrect';
+                            guessInputEl.value = '';
+                            revealHint();
+                        }
+                    } else {
+                        feedbackMsg.textContent = "That is not a valid MLB player, guess again";
+                        feedbackMsg.className = 'incorrect';
+                        guessInputEl.value = '';
+                    }
+                }
+            }
+
+            function revealHint() {
+                if (hintsRevealed < hints.length) {
+                    hintsContainer.style.display = 'block';
+                    const newHint = document.createElement('li');
+                    newHint.textContent = hints[hintsRevealed];
+                    hintsList.appendChild(newHint);
+                    hintsRevealed++;
+                } 
+                
+                if (hintsRevealed >= hints.length) {
+                    hintBtn.disabled = true; 
+                    if (!submitBtn.disabled) {
+                        feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
+                        feedbackMsg.className = '';
+                    }
+                }
+            }
+
+            submitBtn.addEventListener('click', checkGuess);
+            hintBtn.addEventListener('click', revealHint);
+            showGuessesBtn.addEventListener('click', showIncorrectGuesses);
+            guessInputEl.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    checkGuess();
+                }
+            });
+
+            loadQuizData();
+        });
+    </script>
+</body>
+</html>

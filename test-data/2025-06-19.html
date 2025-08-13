@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer for 2025-06-19 | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
     <header>
@@ -29,7 +30,7 @@
                         <ul>
                         <li>Pitched a no-hitter for the New York Yankees on September 4, 1993.</li>
                         <li>Finished third in the 1991 American League Cy Young Award voting.</li>
-                        <li>Collected two hits and three RBIs in 21 career at-bats as a pitcher.</li>
+                        <li>Collected two hits in 21 career at-bats while playing in the National League.</li>
                         </ul>
                     </div>
                 </div>
@@ -157,7 +158,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -184,7 +185,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["MIL", "CAL", "CHW", "NYY"], "years": ["1990", "1998", "1994", "1991", "1995", "1999", "1993", "1992", "1989", "1996"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["CAL", "CHW", "NYY", "MIL"], "years": ["1992", "1993", "1990", "1994", "1991", "1989", "1999", "1995", "1998", "1996"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Jim Abbott", "hints": ["Pitched a no-hitter for the New York Yankees on September 4, 1993.", "Finished third in the 1991 American League Cy Young Award voting.", "Collected two hits in 21 career at-bats while playing in the National League."]}</div>
     </main>
 </body>
 </html>

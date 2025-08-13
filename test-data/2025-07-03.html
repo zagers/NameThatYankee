@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer for 2025-07-03 | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
     <header>
@@ -27,9 +28,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Led all of Major League Baseball in doubles with 53 in 2004.</li>
-                        <li>Hit for the cycle on July 5, 2004.</li>
-                        <li>Led all American League first basemen in assists in both 2006 and 2011.</li>
+                        <li>Led the American League with 53 doubles in 2004.</li>
+                        <li>Hit for the cycle on July 5, 2009.</li>
+                        <li>Led all American League first basemen in assists in 2006 and 2008.</li>
                         </ul>
                     </div>
                 </div>
@@ -157,7 +158,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -184,7 +185,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "ARI", "PIT", "ATL", "TOR", "MIL"], "years": ["2013", "2009", "2005", "2010", "2007", "2004", "2003", "2014", "2012", "2006", "2008", "2011"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["ARI", "PIT", "NYY", "ATL", "MIL", "TOR"], "years": ["2005", "2012", "2009", "2010", "2008", "2007", "2013", "2004", "2011", "2014", "2003", "2006"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Lyle Overbay", "hints": ["Led the American League with 53 doubles in 2004.", "Hit for the cycle on July 5, 2009.", "Led all American League first basemen in assists in 2006 and 2008."]}</div>
     </main>
 </body>
 </html>

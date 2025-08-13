@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Analytics - Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .chart-card {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chart-card h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+        
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Site Analytics</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions.html" class="instructions-link">How to Play</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">← Back to All Puzzles</a>
+
+        <div id="loading-message" class="text-center p-8">
+            <p class="text-xl font-semibold">Loading analytics data...</p>
+            <p class="text-gray-600">This may take a moment.</p>
+        </div>
+
+        <div id="analytics-content" class="hidden">
+            <div class="chart-grid">
+                <!-- Player Answer Analytics -->
+                <div class="chart-card">
+                    <h2>Team Representation (Non-Yankees)</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="teamChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h2>Career Eras of Puzzle Players</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="decadeChart"></canvas>
+                    </div>
+                </div>
+                <!-- Quiz Taker Analytics -->
+                <div class="chart-card">
+                    <h2>Most Common Incorrect Guesses</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="guessesChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h2>Toughest Puzzles (Incorrect Guesses by Date)</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="toughestPuzzlesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Last Updated: August 08, 2025</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="firebase-config.js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // --- Initialize Firebase and App Check with modern API ---
+            console.log("Initializing Firebase with modern API...");
+            const app = initializeApp(firebaseConfig);
+            const appCheck = initializeAppCheck(app, {
+                provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
+                isTokenAutoRefreshEnabled: true
+            });
+            const db = getFirestore(app);
+            console.log("Firebase initialized successfully with modern API");
+
+            const loadingMessage = document.getElementById('loading-message');
+            const analyticsContent = document.getElementById('analytics-content');
+            const totalScoreEl = document.getElementById('total-score');
+
+            let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
+            totalScoreEl.textContent = totalScore;
+
+            try {
+                console.log("Fetching player data...");
+                const indexResponse = await fetch('index.html');
+                const indexHtml = await indexResponse.text();
+                const parser = new DOMParser();
+                const indexDoc = parser.parseFromString(indexHtml, 'text/html');
+                
+                const detailPageLinks = Array.from(indexDoc.querySelectorAll('.gallery-item')).map(a => a.getAttribute('href'));
+                
+                const allPlayerData = [];
+                for (const link of detailPageLinks) {
+                    const detailResponse = await fetch(link);
+                    const detailHtml = await detailResponse.text();
+                    const detailDoc = parser.parseFromString(detailHtml, 'text/html');
+                    const searchDataEl = detailDoc.getElementById('search-data');
+                    if (searchDataEl) {
+                        allPlayerData.push(JSON.parse(searchDataEl.textContent));
+                    }
+                }
+                console.log("Player data processed.");
+
+                console.log("Fetching guess data...");
+                const guessesSnapshot = await getDocs(collection(db, 'guesses'));
+                const allGuesses = guessesSnapshot.docs.map(doc => doc.data());
+                console.log("Guess data processed.");
+
+                generateTeamChart(allPlayerData);
+                generateDecadeChart(allPlayerData);
+                generateGuessesChart(allGuesses);
+                generateToughestPuzzlesChart(allGuesses);
+
+                loadingMessage.style.display = 'none';
+                analyticsContent.classList.remove('hidden');
+
+            } catch (error) {
+                console.error("Error loading analytics:", error);
+                loadingMessage.innerHTML = '<p class="text-xl font-semibold text-red-600">Could not load analytics data.</p>';
+            }
+        });
+
+        // --- Chart Generation Functions ---
+        function generateTeamChart(playerData) {
+            const teamCounts = {};
+            playerData.forEach(player => {
+                player.teams.forEach(team => {
+                    if (team !== 'NYY' && !team.endsWith('TM')) {
+                        teamCounts[team] = (teamCounts[team] || 0) + 1;
+                    }
+                });
+            });
+
+            const sortedTeams = Object.entries(teamCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            const labels = sortedTeams.map(entry => entry[0]);
+            const data = sortedTeams.map(entry => entry[1]);
+
+            new Chart(document.getElementById('teamChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Players',
+                        data: data,
+                        backgroundColor: 'rgba(20, 44, 86, 0.7)',
+                        borderColor: 'rgba(20, 44, 86, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function generateDecadeChart(playerData) {
+            const decadeCounts = {};
+            playerData.forEach(player => {
+                const years = player.years.map(y => parseInt(y));
+                if (years.length > 0) {
+                    const medianYear = years.sort()[Math.floor(years.length / 2)];
+                    const decade = Math.floor(medianYear / 10) * 10;
+                    decadeCounts[decade] = (decadeCounts[decade] || 0) + 1;
+                }
+            });
+
+            const sortedDecades = Object.entries(decadeCounts).sort((a, b) => a[0] - b[0]);
+            const labels = sortedDecades.map(entry => `${entry[0]}s`);
+            const data = sortedDecades.map(entry => entry[1]);
+            
+            new Chart(document.getElementById('decadeChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Players',
+                        data: data,
+                        backgroundColor: 'rgba(196, 30, 58, 0.7)',
+                    }]
+                },
+                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function generateGuessesChart(guessData) {
+            const guessCounts = guessData.reduce((acc, guess) => {
+                const name = guess.guessText.toLowerCase();
+                acc[name] = (acc[name] || 0) + 1;
+                return acc;
+            }, {});
+
+            const sortedGuesses = Object.entries(guessCounts).sort((a, b) => b[1] - a[1]).slice(0, 15);
+            const labels = sortedGuesses.map(([name, count]) => {
+                return name.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
+            });
+            const data = sortedGuesses.map(([name, count]) => count);
+
+            new Chart(document.getElementById('guessesChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Number of Guesses',
+                        data: data,
+                        backgroundColor: 'rgba(12, 35, 64, 0.7)',
+                        borderColor: 'rgba(12, 35, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Incorrect Guesses'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateToughestPuzzlesChart(guessData) {
+            const puzzleCounts = guessData.reduce((acc, guess) => {
+                acc[guess.puzzleDate] = (acc[guess.puzzleDate] || 0) + 1;
+                return acc;
+            }, {});
+
+            const sortedPuzzles = Object.entries(puzzleCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+            const labels = sortedPuzzles.map(entry => {
+                try {
+                    const dateObj = new Date(entry[0] + 'T00:00:00');
+                    return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                } catch (e) {
+                    return entry[0];
+                }
+            });
+            const data = sortedPuzzles.map(entry => entry[1]);
+
+            new Chart(document.getElementById('toughestPuzzlesChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Incorrect Guesses',
+                        data: data,
+                        backgroundColor: 'rgba(0, 90, 156, 0.7)',
+                    }]
+                },
+                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

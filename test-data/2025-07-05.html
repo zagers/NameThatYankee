@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer for 2025-07-05 | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body>
     <header>
@@ -27,9 +28,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was the seventh overall pick in the first round of the 1981 MLB draft.</li>
-                        <li>Played for the Colorado Rockies during their inaugural 1993 season.</li>
-                        <li>Served as the first base coach for the Chicago White Sox for eleven seasons.</li>
+                        <li>Was the seventh overall pick in the 1981 MLB draft.</li>
+                        <li>Hit the first pinch-hit home run in Colorado Rockies franchise history.</li>
+                        <li>Served as the Chicago White Sox first base coach for 11 seasons.</li>
                         </ul>
                     </div>
                 </div>
@@ -157,7 +158,7 @@
                             position: 'bottom',
                             labels: {
                                 padding: 20,
-                                font: { size: 10 }, // Smaller font size for legend
+                                font: { size: 10 },
                                 generateLabels: function(chart) {
                                     const uniqueTeams = [...new Set(teamsByYear)];
                                     const legendItems = uniqueTeams.map(teamAbbr => {
@@ -184,7 +185,8 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "CHW", "NYM", "COL"], "years": ["1990", "1988", "1994", "1985", "1987", "1984", "1991", "1986", "1993", "1992", "1989"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "CHW", "COL", "NYM"], "years": ["1992", "1986", "1993", "1990", "1985", "1994", "1987", "1991", "1989", "1984", "1988"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Daryl Boston", "hints": ["Was the seventh overall pick in the 1981 MLB draft.", "Hit the first pinch-hit home run in Colorado Rockies franchise history.", "Served as the Chicago White Sox first base coach for 11 seasons."]}</div>
     </main>
 </body>
 </html>
