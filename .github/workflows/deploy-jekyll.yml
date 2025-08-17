@@ -1,0 +1,28 @@
+name: Build and Deploy Jekyll Site to Pages
+
+on:
+  push:
+    branches:
+      - main # Or whichever branch you work on
+
+jobs:
+  jekyll:
+    runs-on: ubuntu-latest
+    steps:
+      - name:  checkout
+        uses: actions/checkout@v4
+
+      - name: ruby-setup
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1' # Version can be adjusted if needed
+          bundler-cache: true
+
+      - name: jekyll-build
+        run: bundle exec jekyll build
+
+      - name: pages-deploy
+	uses: peaceiris/actions-gh-pages@v3
+	with:
+	  github_token: ${{ secrets.GITHUB_TOKEN }}
+	  publish_dir: ./_site

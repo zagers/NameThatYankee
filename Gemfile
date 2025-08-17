@@ -1,4 +1,10 @@
 source "https://rubygems.org"
 
-gem "github-pages", group: jekyll_plugins
+# Core Jekyll gem
+gem "jekyll"
+
+# Your desired plugin
 gem "jekyll-minifier"
+
+# Optional, but recommended for running the site locally
+gem "webrick"
