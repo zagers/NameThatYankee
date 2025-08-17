@@ -1,0 +1,46 @@
+name: Build and Deploy Site
+
+on:
+  # Runs on pushes to your main branch
+  push:
+    branches:
+      - master # Or whichever branch you use
+
+jobs:
+  # The Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://namethatyankeequiz.com
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the entire repository for deployment
+          path: .
+
+  # The Deploy job
+  deploy:
+    # This job needs the build job to finish first
+    needs: build
+    
+    # Grant permissions to deploy to GitHub Pages
+    permissions:
+      pages: write
+      id-token: write
+      
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
