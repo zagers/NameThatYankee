@@ -87,7 +87,7 @@ if __name__ == "__main__":
     clue_files_to_process = []
 
     if mode.upper() == 'ALL':
-        clue_files_to_process = sorted(images_dir.glob("clue-*.jpg"), reverse=True)
+        clue_files_to_process = sorted(images_dir.glob("clue-*.webp"), reverse=True)
     elif " to " in mode:
         try:
             start_date_str, end_date_str = mode.split(" to ")
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             
             current_date = start_date
             while current_date <= end_date:
-                clue_path = images_dir / f"clue-{current_date.strftime('%Y-%m-%d')}.jpg"
+                clue_path = images_dir / f"clue-{current_date.strftime('%Y-%m-%d')}.webp"
                 if clue_path.exists():
                     clue_files_to_process.append(clue_path)
                 current_date += timedelta(days=1)
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     else: # Single Date Mode
         try:
             datetime.strptime(mode, "%Y-%m-%d") # Just to validate format
-            clue_path = images_dir / f"clue-{mode}.jpg"
+            clue_path = images_dir / f"clue-{mode}.webp"
             if clue_path.is_file():
                 clue_files_to_process.append(clue_path)
             else:
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     
     for clue_path in clue_files_to_process:
         print("\n" + "-"*50)
-        date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.jpg", clue_path.name)
+        date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.webp", clue_path.name)
         if not date_match: continue
         
         date_str = date_match.group(1)

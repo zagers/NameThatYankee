@@ -208,7 +208,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-{date_str}.jpg" alt="Photo of {name}">
+                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}">
                     </div>
                     <div class="player-info">
                         <h2>{display_name}</h2>
@@ -226,7 +226,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
             <div class="right-column">
                 <div class="original-card">
                     <h3>The Original Clue</h3>
-                    <img src="images/clue-{date_str}.jpg" alt="Original trivia card">
+                    <img src="images/clue-{date_str}.webp" alt="Original trivia card">
                 </div>
                 {chart_html}
             </div>
@@ -257,14 +257,14 @@ def rebuild_index_page(project_dir: Path):
         print(f"❌ Error: index.html not found at {index_path}.")
         return
 
-    all_clue_files = sorted(images_dir.glob("clue-*.jpg"), reverse=True)
+    all_clue_files = sorted(images_dir.glob("clue-*.webp"), reverse=True)
     
     if not all_clue_files:
         print("🤷 No clue images found in the 'images' directory.")
         return
 
     gallery_tiles = []
-    date_pattern = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.jpg")
+    date_pattern = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.webp")
     
     team_name_map = {
         'NYY': 'new york yankees', 'BOS': 'boston red sox', 'CAL': 'california angels',
@@ -311,7 +311,7 @@ def rebuild_index_page(project_dir: Path):
                 # THE FIX: Add specific classes to the links
                 snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
                 <a href="{date_str}.html" class="gallery-item">
-                    <img src="images/clue-{date_str}.jpg" alt="Name that Yankee trivia card from {date_str}">
+                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}">
                 </a>
                 <div class="p-4">
                     <p class="gallery-date">Trivia Date: {formatted_date}</p>

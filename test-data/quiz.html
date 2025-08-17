@@ -144,7 +144,7 @@
             }
 
             async function loadQuizData() {
-                clueImageEl.src = `images/clue-${date}.jpg`;
+                clueImageEl.src = `images/clue-${date}.webp`;
 
                 if (completedPuzzles.includes(date)) {
                     feedbackMsg.textContent = "You have already completed this puzzle.";
@@ -269,7 +269,7 @@
 
                 if (userGuess === correctAnswer) {
                     const pointsEarned = points[hintsRevealed];
-                    answerImageEl.src = `images/answer-${date}.jpg`;
+                    answerImageEl.src = `images/answer-${date}.webp`;
                     successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
                     successPoints.textContent = `You earned ${pointsEarned} points!`;
                     updateTotalScore(pointsEarned);
