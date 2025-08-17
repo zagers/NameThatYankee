@@ -19,6 +19,14 @@ jobs:
         with:
           base-url-path: https://namethatyankeequiz.com
 
+      - name: Commit and push sitemap
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'sitemap.xml'
+          message: 'Update sitemap.xml [Auto]'
+          author_name: GitHub Actions
+          author_email: actions@github.com
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
