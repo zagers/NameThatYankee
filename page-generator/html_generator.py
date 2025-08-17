@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import re
 from pathlib import Path
+from datetime import date
 
 def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir):
     """Generates and saves the new HTML detail page, now with quiz and search data."""
@@ -38,6 +39,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     search_data_html = ""
     quiz_data_html = ""
     if yearly_war_data:
+        script_run_date = date.today().strftime("%d-%b-%Y")
         years = json.dumps([item['year'] for item in yearly_war_data])
         war_data = json.dumps([item['war'] for item in yearly_war_data])
         teams_by_year = json.dumps([item['display_team'] for item in yearly_war_data])
@@ -232,6 +234,12 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
         {search_data_html}
         {quiz_data_html}
     </main>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+        <p>Last Updated: {script_run_date}</p>
+    </footer>    
 </body>
 </html>"""
     
@@ -334,11 +342,16 @@ def rebuild_index_page(project_dir: Path):
         tile_soup = BeautifulSoup(tile_html, 'html.parser')
         gallery_div.append(tile_soup)
         gallery_div.append('\n')
-    footer_p = soup.select_one('footer p')
-    if footer_p:
-        now = datetime.now()
-        footer_p.string = f"Last Updated: {now.strftime('%B %d, %Y')}"
+    
+    # Find the specific paragraph with the ID 'last-updated'
+    update_p = soup.select_one('footer #last-updated')
+    if update_p:
+        script_run_date = date.today().strftime("%d-%b-%Y")
+        update_p.string = f"Last Updated: {script_run_date}"
         print("✅ Footer timestamp updated.")
+    else:
+        print("⚠️ Warning: Could not find footer element with id='last-updated' to update.")
+
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
         
