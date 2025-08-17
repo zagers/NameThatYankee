@@ -1,10 +1,8 @@
 name: Generate Sitemap
-
 on:
   push:
     branches:
       - main # Or whichever branch you push to
-
 jobs:
   sitemap:
     runs-on: ubuntu-latest
@@ -13,13 +11,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Generate sitemap
         uses: cicirello/generate-sitemap@v1
         with:
           # Use your full website URL here
           base-url-path: https://namethatyankeequiz.com
-
       - name: Commit and push sitemap
         uses: EndBug/add-and-commit@v9
         with:
