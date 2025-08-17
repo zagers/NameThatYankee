@@ -2,7 +2,7 @@ name: Generate Sitemap
 on:
   push:
     branches:
-      - main # Or whichever branch you push to
+      - master # Or whichever branch you push to
 jobs:
   sitemap:
     runs-on: ubuntu-latest
