@@ -3,7 +3,7 @@ name: Build and Deploy Jekyll Site to Pages
 on:
   push:
     branches:
-	  - main # Or whichever branch you work on
+      - main # Or whichever branch you work on
 
 jobs:
   jekyll:
