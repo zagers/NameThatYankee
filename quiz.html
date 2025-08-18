@@ -143,6 +143,7 @@
             let hintsRevealed = 0;
             const points = [10, 7, 4, 1, 0];
             let allPlayers = [];
+			let highlightedIndex = -1; // For keyboard navigation
 
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
             let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
@@ -341,15 +342,19 @@
 			
             // --- NEW: Autocomplete Logic ---
             guessInputEl.addEventListener('input', () => {
-                const inputText = guessInputEl.value.toLowerCase();
+				const normalizeText = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const inputText = normalizeText(guessInputEl.value.toLowerCase());
                 suggestionsContainer.innerHTML = '';
                 if (inputText.length < 2) {
                     suggestionsContainer.style.display = 'none';
                     return;
                 }
 
-                const matches = allPlayers.filter(player => player.toLowerCase().startsWith(inputText)).slice(0, 7);
-
+                const matches = allPlayers.filter(player => {
+                    if (typeof player !== 'string') return false;
+                    return normalizeText(player.toLowerCase()).startsWith(inputText);
+                }).slice(0, 7);
+				
                 if (matches.length > 0) {
                     matches.forEach(match => {
                         const suggestionItem = document.createElement('div');
@@ -367,6 +372,51 @@
                     suggestionsContainer.style.display = 'none';
                 }
             });
+			
+            // --- NEW: Keyboard Navigation Logic ---
+            guessInputEl.addEventListener('keydown', (e) => {
+                const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+                if (suggestions.length === 0) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    highlightedIndex = (highlightedIndex + 1) % suggestions.length;
+                    updateHighlight(suggestions);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
+                    updateHighlight(suggestions);
+                } else if (e.key === 'Enter') {
+                    if (highlightedIndex > -1) {
+                        e.preventDefault(); // Prevent form submission
+                        guessInputEl.value = suggestions[highlightedIndex].textContent;
+                        suggestionsContainer.innerHTML = '';
+                        suggestionsContainer.style.display = 'none';
+                    }
+                }
+            });
+
+            function updateHighlight(suggestions) {
+                suggestions.forEach((item, index) => {
+                    if (index === highlightedIndex) {
+                        item.classList.add('highlighted');
+                        // THE FIX: Manually control the container's scroll position
+                        const container = suggestionsContainer;
+                        const itemTop = item.offsetTop;
+                        const itemBottom = itemTop + item.offsetHeight;
+                        const containerTop = container.scrollTop;
+                        const containerBottom = containerTop + container.clientHeight;
+
+                        if (itemBottom > containerBottom) {
+                            container.scrollTop = itemBottom - container.clientHeight;
+                        } else if (itemTop < containerTop) {
+                            container.scrollTop = itemTop;
+                        }
+                    } else {
+                        item.classList.remove('highlighted');
+                    }
+                });
+            }		
 
             submitBtn.addEventListener('click', checkGuess);
             hintBtn.addEventListener('click', revealHint);

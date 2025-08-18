@@ -527,6 +527,10 @@ tbody tr:hover { background-color: #e9ecef; }
     cursor: not-allowed;
 }
 
+.suggestion-item.highlighted {
+    background-color: var(--primary-color);
+    color: white;
+}
 
 @media (max-width: 992px) {
     .detail-layout, .quiz-layout { flex-direction: column; }
