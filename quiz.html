@@ -27,10 +27,15 @@
             <div class="left-column">
                 <div class="quiz-container" id="quiz-area">
                     <img id="clue-image" src="" alt="Trivia Clue">
-                    <input type="text" id="guess-input" placeholder="Enter player's name...">
+					<div class="autocomplete-container">
+                    	<input type="text" id="guess-input" placeholder="Enter player's name..." autofocus>
+						<div id="suggestions-container"></div>
+					</div>
                     <div class="quiz-actions">
                         <button id="submit-guess">Submit Guess</button>
                         <button id="request-hint">Request Hint</button>
+                        <!-- NEW: "I Give Up" button -->
+                        <button id="give-up-btn">I Give Up</button>
                     </div>
                     <p id="feedback-message"></p>
                     <div id="hints-container" style="display: none;">
@@ -44,7 +49,8 @@
                     <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
                     <h2 id="success-header" class="text-2xl font-bold correct"></h2>
                     <p id="success-points" class="text-lg"></p>
-                    <a href="index.html" class="back-link" style="margin-top: 1.5rem;">Back to All Puzzles</a>
+                    <!-- UPDATED: This link now goes to the detail page -->
+                    <a id="view-answer-link" href="" class="back-link" style="margin-top: 1.5rem;">View Player Details</a>
                 </div>
             </div>
 
@@ -115,6 +121,7 @@
             const guessInputEl = document.getElementById('guess-input');
             const submitBtn = document.getElementById('submit-guess');
             const hintBtn = document.getElementById('request-hint');
+            const giveUpBtn = document.getElementById('give-up-btn'); // New button
             const feedbackMsg = document.getElementById('feedback-message');
             const hintsContainer = document.getElementById('hints-container');
             const hintsList = document.getElementById('hints-list');
@@ -123,10 +130,12 @@
             const answerImageEl = document.getElementById('answer-image');
             const successHeader = document.getElementById('success-header');
             const successPoints = document.getElementById('success-points');
+            const viewAnswerLink = document.getElementById('view-answer-link'); // New link reference
             const totalScoreEl = document.getElementById('total-score');
             const showGuessesBtn = document.getElementById('show-guesses-btn');
             const guessesChartContainer = document.getElementById('guesses-chart-container');
             const guessesChartCanvas = document.getElementById('guessesChart');
+			const suggestionsContainer = document.getElementById('suggestions-container');
 
             let correctAnswer = '';
             let hints = [];
@@ -158,6 +167,7 @@
                     feedbackMsg.textContent = "You have already completed this puzzle.";
                     submitBtn.disabled = true;
                     hintBtn.disabled = true;
+                    giveUpBtn.disabled = true;
                     guessInputEl.disabled = true;
                 }
 
@@ -189,7 +199,7 @@
 	                await addDoc(guessesCollection, {
 	                    puzzleDate: date,
 	                    guessText: guess,
-	                    timestamp: serverTimestamp() // Use the imported function
+	                    timestamp: serverTimestamp()
 	                });
 	            } catch (error) {
 	                console.error("Error writing document: ", error);
@@ -201,14 +211,9 @@
                 showGuessesBtn.textContent = "Loading...";
 
                 try {
-					// Create a query against the collection
 					const q = query(guessesCollection, where("puzzleDate", "==", date));
-					
-					// Execute the query
 					const querySnapshot = await getDocs(q);
 					const guesses = querySnapshot.docs.map(doc => doc.data().guessText.toLowerCase());
-                    //const snapshot = await db.collection('guesses').where('puzzleDate', '==', date).get();
-                    //const guesses = snapshot.docs.map(doc => doc.data().guessText.toLowerCase());
 
                     showGuessesBtn.textContent = "See Common Incorrect Guesses";
 
@@ -280,6 +285,7 @@
                     answerImageEl.src = `images/answer-${date}.webp`;
                     successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
                     successPoints.textContent = `You earned ${pointsEarned} points!`;
+                    viewAnswerLink.href = `${date}.html`; // Set the link
                     updateTotalScore(pointsEarned);
                     markPuzzleAsComplete();
                     quizArea.style.display = 'none';
@@ -288,12 +294,7 @@
                     if (allPlayers.includes(userGuess)) {
                         saveIncorrectGuess(userGuess);
                         if (hintsRevealed >= hints.length) {
-                            const formattedAnswer = correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
-                            feedbackMsg.innerHTML = `Sorry, the correct answer was ${formattedAnswer}. <a href="${date}.html">Click Here</a> for more information.`;
-                            submitBtn.disabled = true;
-                            hintBtn.disabled = true;
-                            guessInputEl.disabled = true;
-                            markPuzzleAsComplete();
+                            endQuizAndShowAnswer();
                         } else {
                             feedbackMsg.textContent = "Incorrect. Try again!";
                             feedbackMsg.className = 'incorrect';
@@ -325,9 +326,50 @@
                     }
                 }
             }
+            
+            // NEW: Function to end the quiz and show the answer
+            function endQuizAndShowAnswer() {
+                const formattedAnswer = correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
+                feedbackMsg.innerHTML = `Sorry, the correct answer was ${formattedAnswer}.<p> <a href="${date}.html">Click here to learn more about ${formattedAnswer}</a>`;
+                submitBtn.disabled = true;
+                hintBtn.disabled = true;
+                giveUpBtn.disabled = true;
+                guessInputEl.disabled = true;
+                markPuzzleAsComplete();
+            }	
+			
+            // --- NEW: Autocomplete Logic ---
+            guessInputEl.addEventListener('input', () => {
+                const inputText = guessInputEl.value.toLowerCase();
+                suggestionsContainer.innerHTML = '';
+                if (inputText.length < 2) {
+                    suggestionsContainer.style.display = 'none';
+                    return;
+                }
+
+                const matches = allPlayers.filter(player => player.toLowerCase().startsWith(inputText)).slice(0, 7);
+
+                if (matches.length > 0) {
+                    matches.forEach(match => {
+                        const suggestionItem = document.createElement('div');
+                        suggestionItem.textContent = match;
+                        suggestionItem.classList.add('suggestion-item');
+                        suggestionItem.addEventListener('click', () => {
+                            guessInputEl.value = match;
+                            suggestionsContainer.innerHTML = '';
+                            suggestionsContainer.style.display = 'none';
+                        });
+                        suggestionsContainer.appendChild(suggestionItem);
+                    });
+                    suggestionsContainer.style.display = 'block';
+                } else {
+                    suggestionsContainer.style.display = 'none';
+                }
+            });
 
             submitBtn.addEventListener('click', checkGuess);
             hintBtn.addEventListener('click', revealHint);
+            giveUpBtn.addEventListener('click', endQuizAndShowAnswer); // New event listener
             showGuessesBtn.addEventListener('click', showIncorrectGuesses);
             guessInputEl.addEventListener('keyup', (e) => {
                 if (e.key === 'Enter') {
