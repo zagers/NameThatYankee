@@ -442,7 +442,6 @@ tbody tr:hover { background-color: #e9ecef; }
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 1rem;
     box-sizing: border-box;
 }
 .quiz-actions {
@@ -450,7 +449,7 @@ tbody tr:hover { background-color: #e9ecef; }
     gap: 1rem;
     margin-bottom: 1rem;
 }
-#submit-guess, #request-hint {
+#submit-guess, #request-hint, #give-up-btn {
     flex: 1;
     padding: 0.75rem;
     font-size: 1.1rem;
@@ -463,6 +462,9 @@ tbody tr:hover { background-color: #e9ecef; }
 }
 #submit-guess {
     background-color: var(--primary-color);
+}
+#give-up-btn{
+	background-color: gray;
 }
 #request-hint {
     background-color: #ffc107; /* Yellow */
@@ -597,4 +599,37 @@ tbody tr:hover { background-color: #e9ecef; }
     color: #888;
     max-width: 700px;
     margin: 0 auto 1rem auto; /* Center the text and add space below */
+}
+
+/* Autocomplete Styles */
+/* --- Autocomplete Styles --- */
+.autocomplete-container {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+#suggestions-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none; /* This makes it feel connected to the input box */
+    border-radius: 0 0 8px 8px; /* Rounds the bottom corners */
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+}
+
+.suggestion-item {
+    padding: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-color); /* Makes text darker on hover */
 }
