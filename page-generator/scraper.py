@@ -263,9 +263,11 @@ def generate_master_player_list(project_dir: Path):
             print(f"    Found {players_on_page} players for '{letter.upper()}'. Total so far: {total_players_found}")
 
         
-        output_path = project_dir / "all_players.json"
+        output_path = project_dir / "all_players.js"
         with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("const ALL_PLAYERS = ")
             json.dump(all_players, f, indent=2)
+            f.write(";")
         
         print(f"\n✅ Successfully scraped {len(all_players)} player names.")
         print(f"   Master player list saved to: {output_path}")

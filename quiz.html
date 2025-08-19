@@ -78,6 +78,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="firebase-config.js"></script>
+	<script src="all_players.js"></script>
 
     <script type=module>
 	    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -142,7 +143,9 @@
             let hints = [];
             let hintsRevealed = 0;
             const points = [10, 7, 4, 1, 0];
-            let allPlayers = [];
+            //let allPlayers = [];
+			//Initialize the local variable with the global one from all_players.js
+			let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
 			let highlightedIndex = -1; // For keyboard navigation
 
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
@@ -174,8 +177,8 @@
                 }
 
                 try {
-                    const playerListResponse = await fetch('all_players.json');
-                    allPlayers = (await playerListResponse.json()).map(p => p.toLowerCase());
+               //     const playerListResponse = await fetch('all_players.json');
+               //     allPlayers = (await playerListResponse.json()).map(p => p.toLowerCase());
 
                     const response = await fetch(`${date}.html`);
                     const htmlText = await response.text();
@@ -293,7 +296,7 @@
                     quizArea.style.display = 'none';
                     successArea.style.display = 'block';
                 } else {
-                    if (allPlayers.includes(userGuess)) {
+                    if (allPlayers.map(p => p.toLowerCase()).includes(userGuess)) {
                         saveIncorrectGuess(userGuess);
                         if (hintsRevealed >= hints.length) {
                             endQuizAndShowAnswer();
@@ -373,25 +376,33 @@
                 }
             });
 			
-            // --- NEW: Keyboard Navigation Logic ---
+            // --- UPDATED: Keyboard Navigation Logic ---
             guessInputEl.addEventListener('keydown', (e) => {
                 const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
-                if (suggestions.length === 0) return;
-
+                
                 if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    highlightedIndex = (highlightedIndex + 1) % suggestions.length;
-                    updateHighlight(suggestions);
+                    if (suggestions.length > 0) {
+                        highlightedIndex = (highlightedIndex + 1) % suggestions.length;
+                        updateHighlight(suggestions);
+                    }
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
-                    highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
-                    updateHighlight(suggestions);
+                    if (suggestions.length > 0) {
+                        highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
+                        updateHighlight(suggestions);
+                    }
                 } else if (e.key === 'Enter') {
-                    if (highlightedIndex > -1) {
-                        e.preventDefault(); // Prevent form submission
+                    e.preventDefault(); // Always prevent default on Enter
+                    if (highlightedIndex > -1 && suggestions[highlightedIndex]) {
+                        // A suggestion is highlighted, so select it and submit
                         guessInputEl.value = suggestions[highlightedIndex].textContent;
                         suggestionsContainer.innerHTML = '';
                         suggestionsContainer.style.display = 'none';
+                        checkGuess(); // Submit the guess
+                    } else {
+                        // No suggestion is highlighted, just submit the current text
+                        checkGuess();
                     }
                 }
             });
