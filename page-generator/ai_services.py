@@ -9,7 +9,7 @@ def get_player_info_from_image(image_path, api_key: str):
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         clue_image = Image.open(image_path)
         
         generation_config = genai.types.GenerationConfig(temperature=0.1)
@@ -34,6 +34,15 @@ def get_player_info_from_image(image_path, api_key: str):
 
         print(f"  ✅ Player identified as: {player_data['name']}")
         return player_data
+        
+    except ValueError:
+        # This new block will run if response.text fails
+        print("  ❌ Gemini's response was empty or blocked.")
+        if response:
+            # Print the crucial debugging information
+            print("     Finish Reason:", response.candidates[0].finish_reason if response.candidates else "N/A")
+            print("     Safety Ratings:", response.candidates[0].safety_ratings if response.candidates else "N/A")
+        return None
 
     except Exception as e:
         print(f"  ❌ Error communicating with Gemini API: {e}")
@@ -46,7 +55,7 @@ def get_facts_from_gemini(player_name: str, api_key: str):
     print(f"🤖 Asking Gemini for interesting facts about {player_name}...")
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         generation_config = genai.types.GenerationConfig(temperature=0.1)
         
@@ -75,6 +84,18 @@ def get_facts_from_gemini(player_name: str, api_key: str):
         fact_data = json.loads(json_text)
         print("  ✅ Facts retrieved.")
         return fact_data.get('facts', [])
+        
+    except ValueError:
+        # This block will run if response.text fails
+        print("🤖 Gemini's response was blocked.")
+    
+        # IMPORTANT: Print the feedback to see WHY it was blocked
+        print("Prompt Feedback:", response.prompt_feedback)
+    
+        # You can also inspect the safety ratings of the first candidate
+        if response.candidates:
+            print("Safety Ratings:", response.candidates[0].safety_ratings)
+        return []        
 
     except Exception as e:
         print(f"  ❌ Error getting facts from Gemini API: {e}")
