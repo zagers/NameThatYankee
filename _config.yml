@@ -1,0 +1,10 @@
+# _config.yml
+
+# Exclude these files and folders from the final site
+# They will still be in your repository but not on the live website.
+exclude:
+  - LICENSE
+  - TEST_README.md
+  - test_requirements.txt
+  - test_yankee.site.py
+  - test-data/
