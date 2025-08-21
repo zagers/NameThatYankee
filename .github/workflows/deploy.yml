@@ -1,10 +1,11 @@
+# deploy.yml
+
 name: Build and Deploy Site
 
 on:
-  # Runs on pushes to your main branch
   push:
     branches:
-      - master # Or whichever branch you use
+      - master
 
 jobs:
   # The Build job
@@ -14,39 +15,36 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # THIS IS THE NEW STEP THAT RUNS JEKYLL
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
       - name: Generate sitemap
         uses: cicirello/generate-sitemap@v1
         with:
+          # Important: Generate the sitemap inside the build output folder
+          sitemap-path: ./_site/sitemap.xml 
           base-url-path: https://namethatyankeequiz.com
 
-      - name: Commit and push sitemap
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: 'sitemap.xml'
-          message: 'Update sitemap.xml [Auto]'
-          author_name: GitHub Actions
-          author_email: actions@github.com
-
+      # THIS STEP IS MODIFIED TO UPLOAD THE BUILT SITE
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the entire repository for deployment
-          path: .
-
-  # The Deploy job
+          # Upload the _site folder instead of the whole repository
+          path: ./_site
+          
+  # The Deploy job (NO CHANGES NEEDED HERE)
   deploy:
-    # This job needs the build job to finish first
     needs: build
-    
-    # Grant permissions to deploy to GitHub Pages
     permissions:
       pages: write
       id-token: write
-      
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-      
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
