@@ -15,7 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # THIS IS THE NEW STEP THAT RUNS JEKYLL
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
@@ -25,18 +24,15 @@ jobs:
       - name: Generate sitemap
         uses: cicirello/generate-sitemap@v1
         with:
-          # Important: Generate the sitemap inside the build output folder
-          sitemap-path: ./_site
+          path-to-root: ./_site
           base-url-path: https://namethatyankeequiz.com
 
-      # THIS STEP IS MODIFIED TO UPLOAD THE BUILT SITE
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the _site folder instead of the whole repository
           path: ./_site
           
-  # The Deploy job (NO CHANGES NEEDED HERE)
+  # The Deploy job
   deploy:
     needs: build
     permissions:
