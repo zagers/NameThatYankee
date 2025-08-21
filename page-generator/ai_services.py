@@ -7,7 +7,7 @@ import time
 # The number of times to retry the API call if it returns an empty response.
 MAX_RETRIES = 5
 SLEEP_TIME = 30
-MODEL = 'gemini-2.5-flash'
+MODEL = 'gemini-2.5-pro'
 
 def get_player_info_from_image(image_path, api_key: str):
     """
