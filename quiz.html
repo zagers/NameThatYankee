@@ -96,6 +96,12 @@
 			
             const params = new URLSearchParams(window.location.search);
             const date = params.get('date');
+			
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            if (!date || !dateRegex.test(date)) {
+                document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
+                return; // Stop execution if the date is invalid
+            }
             
             if (params.get('reset') === 'true') {
                 localStorage.removeItem('nameThatYankeeTotalScore');
@@ -210,6 +216,14 @@
 	                console.error("Error writing document: ", error);
 	            }
 	        }
+			
+            function sanitizeHTML(text) {
+                const temp = document.createElement('div');
+                if (text) { // Ensure text is not null or undefined
+                    temp.textContent = text;
+                }
+                return temp.innerHTML;
+            }
 
             async function showIncorrectGuesses() {
                 showGuessesBtn.disabled = true;
@@ -237,8 +251,10 @@
                         .sort((a, b) => b[1] - a[1])
                         .slice(0, 5);
 
-                    const labels = sortedGuesses.map(entry => entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '));
-                    const data = sortedGuesses.map(entry => entry[1]);
+	                const labels = sortedGuesses.map(entry => 
+	                     sanitizeHTML(entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '))
+	                 );
+	                const data = sortedGuesses.map(entry => entry[1]);
 
                     guessesChartContainer.style.display = 'block';
                     
