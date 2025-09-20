@@ -129,14 +129,21 @@ def parse_yearly_war(soup):
 
     return sorted(yearly_data, key=lambda x: x['year'])
 
-
 def search_and_scrape_player(player_name, automated=False):
     """
     Opens a browser, finds a player's page, and scrapes both career totals and yearly WAR.
     """
     print(f"⚾ Scraping all stats for {player_name} from Baseball-Reference...")
-    
-    cleaned_name = re.sub(r'[^\w\s]', '', player_name)
+
+    # Strip trailing Roman numerals (e.g., " III", " IV") to improve search results.
+    # This handles cases like "Roy Smalley III" which fails in search, while "Roy Smalley" succeeds.
+    name_for_search = re.sub(r'\s[IVX]+$', '', player_name.strip())
+
+    if name_for_search != player_name.strip():
+        print(f"  (Note: Removed Roman numerals. Using '{name_for_search}' for search)")
+
+    # The existing cleaning step is still valuable for other characters. Apply it to the new name.
+    cleaned_name = re.sub(r'[^\w\s]', '', name_for_search)
     print(f"  (Using cleaned name for search: '{cleaned_name}')")
     
     options = webdriver.ChromeOptions()
