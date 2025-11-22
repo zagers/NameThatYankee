@@ -2392,7 +2392,7 @@ const ALL_PLAYERS = [
   "Gil Britton",
   "Jim Britton",
   "John Britton",
-  "Zack Britton",
+  "Zach Britton",
   "Tony Brizzolara",
   "Johnny Broaca",
   "Broadnax",
