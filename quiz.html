@@ -95,20 +95,20 @@
 			const guessesCollection = collection(db, 'guesses')
 			
             const params = new URLSearchParams(window.location.search);
-            const date = params.get('date');
 			
-            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-            if (!date || !dateRegex.test(date)) {
-                document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
-                return; // Stop execution if the date is invalid
-            }
-            
             if (params.get('reset') === 'true') {
                 localStorage.removeItem('nameThatYankeeTotalScore');
                 localStorage.removeItem('nameThatYankeeCompletedPuzzles');
                 alert('Your score and quiz history have been reset.');
                 window.location.href = 'index.html';
                 return;
+            }
+			
+            const date = params.get('date');		
+            const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+            if (!date || !dateRegex.test(date)) {
+                document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
+                return; // Stop execution if the date is invalid
             }
 
             if (!date) {
