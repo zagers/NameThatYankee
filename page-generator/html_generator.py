@@ -4,6 +4,7 @@ from datetime import datetime
 import re
 from pathlib import Path
 from datetime import date
+import html
 
 def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir):
     """Generates and saves the new HTML detail page, now with quiz and search data."""
@@ -11,11 +12,39 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     name = player_data.get('name', 'N/A')
     nickname = player_data.get('nickname', '')
     facts = player_data.get('facts', [])
+    followup_qa = player_data.get('followup_qa', [])
     career_totals_data = player_data.get('career_totals', {})
     yearly_war_data = player_data.get('yearly_war', [])
     
     display_name = f'{name} "{nickname}"' if nickname else name
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
+
+    followup_section_html = ""
+    if followup_qa:
+        items_html_parts = []
+        for idx, qa in enumerate(followup_qa[:3], start=1):
+            question = html.escape(str(qa.get('question', '')).strip())
+            answer = html.escape(str(qa.get('answer', '')).strip())
+            if not question or not answer:
+                continue
+            item_html = f"""
+                        <div class=\"followup-item\">
+                            <button class=\"followup-btn\" data-answer=\"{answer}\">{question}</button>
+                            <div class=\"followup-answer\" style=\"display:none;\"></div>
+                        </div>
+            """
+            items_html_parts.append(item_html)
+
+        if items_html_parts:
+            items_html = "\n".join(items_html_parts)
+            followup_section_html = f"""
+                <div class=\"followup-section\" id=\"followup-section\">
+                    <h3>Would you like to find out more about {html.escape(name)}?</h3>
+                    <div class=\"followup-buttons\">
+{items_html}
+                    </div>
+                </div>
+            """
     
     stats_table_html = ""
     if career_totals_data and any(career_totals_data.values()):
@@ -219,6 +248,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
                         <ul>
 {facts_html}
                         </ul>
+{followup_section_html}
                     </div>
                 </div>
                 {stats_table_html}
@@ -234,6 +264,34 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
         {search_data_html}
         {quiz_data_html}
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {{
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {{
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {{
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {{
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                }} else {{
+                    answerBox.style.display = 'none';
+                }}
+            }});
+        }});
+    }});
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.

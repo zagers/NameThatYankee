@@ -123,3 +123,104 @@ def get_facts_from_gemini(player_name: str, api_key: str):
 
     print(f"  ❌ All {MAX_RETRIES} retry attempts failed.")
     return []
+
+
+def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
+    """
+    Generates three follow-up questions and answers about the player, using
+    varied angles:
+      a) a career overview question
+      b) a Yankees-specific question focused on postseason or team records
+      c) a quirky / off-field question when possible; if not, generate
+         another Yankees-focused question.
+    """
+    print(f"🤖 Asking Gemini for follow-up Q&A about {player_name}...")
+
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel(MODEL)
+    generation_config = genai.types.GenerationConfig(temperature=0.2)
+
+    facts_list = facts or []
+    try:
+        facts_json = json.dumps(facts_list)
+    except Exception:
+        facts_json = "[]"
+
+    prompt = f"""
+    You are a precise baseball historian.
+
+    The player is: {player_name}
+    Here are AI-generated career facts about this player (they may not be exhaustive):
+    {facts_json}
+
+    Task: Create three natural-sounding follow-up questions a fan might ask
+    to learn more about this player, and provide concise, factual answers.
+
+    The three questions must follow this pattern:
+    1. A career overview / big-picture question about the player's overall
+       career impact, style, or accomplishments.
+    2. A Yankees-specific question that focuses on postseason performance,
+       memorable Yankees moments, or notable records or milestones achieved
+       while playing for the New York Yankees (for example, single-season
+       records, franchise records, or key playoff performances).
+    3. A quirky or off-field question (personality, famous quotes, unusual
+       jobs, military service, broadcasting career, or other notable
+       non-playing aspects). If there is no reliable quirky/off-field
+       angle available, then instead generate a second Yankees-specific
+       question following the description in #2.
+
+    Rules for questions:
+    - Refer to the player by name (e.g. "Yogi Berra") or as "he" where
+      appropriate.
+    - Each question should be one clear sentence, written as something a
+      fan might click on from a web page.
+    - Do not mention that the questions are AI-generated.
+
+    Rules for answers:
+    - Keep each answer to 2–4 sentences.
+    - Be factual and specific; avoid vague praise like "legendary" unless
+      it is historically common language for this player.
+    - Focus on historically grounded information: key stats, awards,
+      famous moments, quotes, or specific anecdotes.
+    - If information is uncertain, omit it rather than guessing.
+
+    Output format:
+    You must respond with a single valid JSON object and nothing else,
+    with this structure:
+    {{
+      "qa": [
+        {{ "question": "Question 1?", "answer": "Answer 1." }},
+        {{ "question": "Question 2?", "answer": "Answer 2." }},
+        {{ "question": "Question 3?", "answer": "Answer 3." }}
+      ]
+    }}
+    """
+
+    for attempt in range(MAX_RETRIES):
+        response = None
+        try:
+            response = model.generate_content(prompt, generation_config=generation_config)
+
+            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            qa_data = json.loads(json_text)
+
+            qa_list = qa_data.get("qa", [])
+            if not isinstance(qa_list, list):
+                print("  ⚠️ Follow-up QA data was not a list; falling back to empty list.")
+                return []
+
+            print("  ✅ Follow-up Q&A retrieved.")
+            return qa_list
+
+        except ValueError:
+            print(f"  ⚠️ Gemini returned an empty response for follow-up Q&A. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            if response:
+                print(f"     Finish Reason: {response.candidates[0].finish_reason if response.candidates else 'N/A'}")
+            time.sleep(SLEEP_TIME)
+
+        except Exception as e:
+            print(f"  ❌ Error getting follow-up Q&A from Gemini API: {e}")
+            return []
+
+    print(f"  ❌ All {MAX_RETRIES} retry attempts for follow-up Q&A failed.")
+    return []

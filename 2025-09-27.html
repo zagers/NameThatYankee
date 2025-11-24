@@ -19,19 +19,44 @@
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-2025-09-27.webp" alt="Photo of Robert Clayton Shantz">
+                        <img src="images/answer-2025-09-27.webp" alt="Photo of Bobby Shantz">
                     </div>
                     <div class="player-info">
-                        <h2>Robert Clayton Shantz "Bobby"</h2>
+                        <h2>Bobby Shantz</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
                         <li>Won the 1952 American League MVP award.</li>
-                        <li>Won eight consecutive Gold Glove awards from 1957-1964.</li>
-                        <li>Was a teammate of his brother, Billy Shantz, on the Athletics and Yankees.</li>
+                        <li>Won eight consecutive Gold Glove Awards from 1957-1964.</li>
+                        <li>Brother, Billy, was a major league catcher and a teammate on the Athletics and Yankees.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Bobby Shantz?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Standing just 5-foot-6, Bobby Shantz compensated for a lack of overpowering velocity with exceptional control and a diverse repertoire of pitches, including a tricky knuckleball. In his 1952 MVP season with the Philadelphia Athletics, he went 24-7 with a 2.48 ERA, leading the league in wins. His superb athleticism also made him one of the best fielders at his position, as evidenced by his eight consecutive Gold Gloves.">Considering Bobby Shantz won an MVP and eight Gold Gloves, what made him such a uniquely effective pitcher throughout his career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Shantz&#x27;s most memorable Yankees postseason moment came in the 1957 World Series against the Milwaukee Braves. Starting Game 2, he pitched a complete game, allowing just one run on ten hits to secure a crucial 3-1 victory. The win evened the series at one game apiece for the Yankees.">What was Bobby Shantz&#x27;s most significant postseason contribution during his time with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Bobby&#x27;s younger brother, Billy, a catcher, was his teammate on the Athletics (1954-55) and the Yankees (1957-60). While they shared a clubhouse for parts of six seasons, they rarely formed a battery on the field. In fact, Billy only caught Bobby for two innings in a single major league game in 1954.">What was the dynamic like having his brother, Billy Shantz, as a teammate on both the Athletics and the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["STL", "KCA", "CHC", "PHA", "NYY", "HOU", "PIT", "PHI"], "years": ["1953", "1964", "1962", "1955", "1954", "1951", "1963", "1956", "1958", "1961", "1957", "1949", "1952", "1959", "1960", "1950"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Robert Clayton Shantz", "hints": ["Won the 1952 American League MVP award.", "Won eight consecutive Gold Glove awards from 1957-1964.", "Was a teammate of his brother, Billy Shantz, on the Athletics and Yankees."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["STL", "PIT", "CHC", "PHA", "HOU", "KCA", "PHI", "NYY"], "years": ["1955", "1959", "1952", "1956", "1954", "1957", "1958", "1961", "1951", "1949", "1960", "1963", "1953", "1964", "1962", "1950"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Bobby Shantz", "hints": ["Won the 1952 American League MVP award.", "Won eight consecutive Gold Glove Awards from 1957-1964.", "Brother, Billy, was a major league catcher and a teammate on the Athletics and Yankees."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 22-Nov-2025</p>
+        <p>Last Updated: 24-Nov-2025</p>
     </footer>    
 </body>
 </html>
