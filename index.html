@@ -4905,13 +4905,16 @@
 
             // --- Combined Filtering Function ---
             function filterGallery() {
-                // Check for decade parameter from URL (takes precedence)
+                // Check for decade parameter from URL (only use if search bar is empty)
                 const urlParams = new URLSearchParams(window.location.search);
                 const decadeParam = urlParams.get('decade');
                 
                 const searchQuery = searchBar.value.toLowerCase().trim();
                 const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
                 const showUnsolvedOnly = unsolvedFilter.checked;
+                
+                // Only use decade parameter if search bar is empty (user typing takes precedence)
+                const useDecadeFilter = decadeParam && searchQuery.length === 0;
                 
                 let visibleCount = 0;
 
@@ -4932,7 +4935,8 @@
                     let textSearchMatch = false;
                     
                     // Special handling for decade filtering (OR logic for years in decade)
-                    if (decadeParam) {
+                    // Only use if search bar is empty
+                    if (useDecadeFilter) {
                         const decadeStart = parseInt(decadeParam);
                         if (!isNaN(decadeStart)) {
                             const currentYear = new Date().getFullYear();
