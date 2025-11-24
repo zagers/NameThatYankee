@@ -416,7 +416,12 @@ th { background-color: #f8f9fa; font-weight: 600; color: var(--primary-color); }
 tbody tr:nth-child(even) { background-color: #f8f9fa; }
 tbody tr:hover { background-color: #e9ecef; }
 .citation { margin-top: 1rem; font-size: 0.8rem; color: #666; text-align: right; font-style: italic; }
-.chart-wrapper { position: relative; min-height: 24rem; width: 100%; }
+/* General chart wrapper for detail pages */
+.chart-container .chart-wrapper { 
+    position: relative; 
+    min-height: 24rem; 
+    width: 100%; 
+}
 
 /* --- Quiz Page Styles --- */
 .quiz-container {
@@ -636,4 +641,62 @@ tbody tr:hover { background-color: #e9ecef; }
 .suggestion-item:hover {
     background-color: #f0f0f0;
     color: var(--primary-color); /* Makes text darker on hover */
+}
+
+/* --- Analytics Page Styles --- */
+#analytics-content .chart-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 1200px;  /* matches main container width */
+    margin: 2rem auto !important; /* centers the grid */
+}
+
+.chart-card {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    min-width: 0;
+    margin: 0 !important;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+@media (max-width: 800px) {
+    #analytics-content .chart-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.chart-card h2 {
+    margin-top: 0;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Analytics page specific chart wrapper */
+.chart-card .chart-wrapper {
+    position: relative;
+    height: 400px;
+}
+
+/* Make clickable charts show pointer cursor */
+#teamChart,
+#decadeChart,
+#toughestPuzzlesChart {
+    cursor: pointer;
+}
+
+/* Instruction text below clickable charts */
+.chart-instruction {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: #666;
+    font-style: italic;
+    text-align: center;
 }
