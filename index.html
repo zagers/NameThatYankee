@@ -4854,6 +4854,19 @@
             
             let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
 
+            // Read URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchParam = urlParams.get('search');
+            const decadeParam = urlParams.get('decade');
+
+            // Populate search bar if search parameter is present
+            // Clear search bar if decade parameter is present (decade takes precedence)
+            if (decadeParam) {
+                searchBar.value = '';
+            } else if (searchParam) {
+                searchBar.value = searchParam;
+            }
+
             function updateCompletedUI() {
                 galleryItems.forEach(item => {
                     const revealLink = item.querySelector('.reveal-link');
@@ -4892,6 +4905,10 @@
 
             // --- Combined Filtering Function ---
             function filterGallery() {
+                // Check for decade parameter from URL (takes precedence)
+                const urlParams = new URLSearchParams(window.location.search);
+                const decadeParam = urlParams.get('decade');
+                
                 const searchQuery = searchBar.value.toLowerCase().trim();
                 const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
                 const showUnsolvedOnly = unsolvedFilter.checked;
@@ -4903,7 +4920,7 @@
                     const unsolvedFilterMatch = !showUnsolvedOnly || (showUnsolvedOnly && !isCompleted);
 
                     const searchableData = item.dataset.searchTerms || '';
-                    let dataTokens = searchableData.replace(/,/g, '').split(' '); 
+                    let dataTokens = searchableData.replace(/,/g, '').split(/\s+/).filter(t => t.length > 0); 
                     const augmentedTokens = [];
                     dataTokens.forEach(token => {
                         if (!isNaN(token) && token.startsWith('0') && token.length > 1) {
@@ -4911,7 +4928,45 @@
                         }
                     });
                     dataTokens = dataTokens.concat(augmentedTokens);
-                    const textSearchMatch = searchTokens.every(token => dataTokens.includes(token));
+                    
+                    let textSearchMatch = false;
+                    
+                    // Special handling for decade filtering (OR logic for years in decade)
+                    if (decadeParam) {
+                        const decadeStart = parseInt(decadeParam);
+                        if (!isNaN(decadeStart)) {
+                            const currentYear = new Date().getFullYear();
+                            const decadeEnd = Math.min(decadeStart + 9, currentYear); // Don't go past current year
+                            const decadeYears = [];
+                            for (let year = decadeStart; year <= decadeEnd; year++) {
+                                decadeYears.push(year.toString());
+                            }
+                            
+                            // For decade filtering, we need to exclude the puzzle date year from matching
+                            // The search-terms format is: "month day year teams... years..."
+                            // We'll extract only the player years (4-digit numbers that are reasonable years)
+                            // and exclude the first occurrence which is likely the puzzle date
+                            const yearTokens = dataTokens.filter(token => {
+                                const yearNum = parseInt(token, 10);
+                                // Only consider 4-digit years in reasonable range (1900-2100)
+                                return !isNaN(yearNum) && yearNum >= 1900 && yearNum <= 2100 && token.length === 4;
+                            });
+                            
+                            // Remove the first year (which is the puzzle date) if it exists
+                            // and matches the current year or recent years (likely a puzzle date)
+                            const puzzleDateYear = currentYear.toString();
+                            let playerYears = yearTokens;
+                            if (yearTokens.length > 0 && yearTokens[0] === puzzleDateYear) {
+                                playerYears = yearTokens.slice(1);
+                            }
+                            
+                            // Check if ANY year in the decade (up to current year) is present in player years
+                            textSearchMatch = decadeYears.length > 0 && decadeYears.some(year => playerYears.includes(year));
+                        }
+                    } else {
+                        // Normal search: ALL tokens must match (AND logic)
+                        textSearchMatch = searchTokens.length === 0 || searchTokens.every(token => dataTokens.includes(token));
+                    }
 
                     if (unsolvedFilterMatch && textSearchMatch) {
                         item.style.display = '';
@@ -4921,7 +4976,7 @@
                     }
                 });
 
-                if (visibleCount === 0 && searchQuery) {
+                if (visibleCount === 0 && (searchQuery || decadeParam)) {
                     noResultsMessage.style.display = 'block';
                 } else {
                     noResultsMessage.style.display = 'none';
@@ -4931,6 +4986,11 @@
             // Add event listeners to both the search bar and the checkbox
             searchBar.addEventListener('keyup', filterGallery);
             unsolvedFilter.addEventListener('change', filterGallery);
+            
+            // Trigger filter on page load if URL parameters are present
+            if (searchParam || decadeParam) {
+                filterGallery();
+            }
         });
   </script>
  </body>
