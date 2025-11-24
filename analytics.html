@@ -6,33 +6,6 @@
     <title>Site Analytics - Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <style>
-        .chart-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .chart-card {
-            background-color: #fff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .chart-card h2 {
-            margin-top: 0;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--secondary-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .chart-wrapper {
-            position: relative;
-            height: 400px;
-        }
-        
-
-    </style>
 </head>
 <body>
     <header>
@@ -61,14 +34,16 @@
                 <div class="chart-card">
                     <h2>Team Representation (Non-Yankees)</h2>
                     <div class="chart-wrapper">
-                        <canvas id="teamChart"></canvas>
+                        <canvas id="teamChart" title="Click on a bar to filter puzzles by that team"></canvas>
                     </div>
+                    <p class="chart-instruction">💡 Click on any bar to filter puzzles by that team</p>
                 </div>
                 <div class="chart-card">
                     <h2>Career Eras of Puzzle Players</h2>
                     <div class="chart-wrapper">
-                        <canvas id="decadeChart"></canvas>
+                        <canvas id="decadeChart" title="Click on a bar to filter puzzles from that decade"></canvas>
                     </div>
+                    <p class="chart-instruction">💡 Click on any bar to filter puzzles from that decade</p>
                 </div>
                 <!-- Quiz Taker Analytics -->
                 <div class="chart-card">
@@ -80,8 +55,9 @@
                 <div class="chart-card">
                     <h2>Toughest Puzzles (Incorrect Guesses by Date)</h2>
                     <div class="chart-wrapper">
-                        <canvas id="toughestPuzzlesChart"></canvas>
+                        <canvas id="toughestPuzzlesChart" title="Click on a bar to view that puzzle"></canvas>
                     </div>
+                    <p class="chart-instruction">💡 Click on any bar to view that puzzle</p>
                 </div>
             </div>
         </div>
@@ -194,7 +170,23 @@
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                footer: function() {
+                                    return 'Click to filter puzzles by this team';
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const clickedIndex = elements[0].index;
+                            const teamAbbreviation = labels[clickedIndex];
+                            window.location.href = `index.html?search=${teamAbbreviation}`;
+                        }
+                    }
                 }
             });
         }
@@ -202,11 +194,23 @@
         function generateDecadeChart(playerData) {
             const decadeCounts = {};
             playerData.forEach(player => {
-                const years = player.years.map(y => parseInt(y));
+                // Handle years that might be strings or numbers
+                const years = player.years.map(y => {
+                    const yearNum = typeof y === 'string' ? parseInt(y, 10) : y;
+                    return isNaN(yearNum) ? null : yearNum;
+                }).filter(y => y !== null);
+                
                 if (years.length > 0) {
-                    const medianYear = years.sort()[Math.floor(years.length / 2)];
-                    const decade = Math.floor(medianYear / 10) * 10;
-                    decadeCounts[decade] = (decadeCounts[decade] || 0) + 1;
+                    // Count player in every decade they played in (matching filter behavior)
+                    const uniqueDecades = new Set();
+                    years.forEach(year => {
+                        const decade = Math.floor(year / 10) * 10;
+                        uniqueDecades.add(decade);
+                    });
+                    // Increment count for each decade the player played in
+                    uniqueDecades.forEach(decade => {
+                        decadeCounts[decade] = (decadeCounts[decade] || 0) + 1;
+                    });
                 }
             });
 
@@ -227,7 +231,23 @@
                  options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                footer: function() {
+                                    return 'Click to filter puzzles from this decade';
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const clickedIndex = elements[0].index;
+                            const decade = sortedDecades[clickedIndex][0]; // e.g., 1980
+                            window.location.href = `index.html?decade=${decade}`;
+                        }
+                    }
                 }
             });
         }
@@ -300,6 +320,8 @@
                 }
             });
             const data = sortedPuzzles.map(entry => entry[1]);
+            // Store original dates (YYYY-MM-DD) for navigation
+            const originalDates = sortedPuzzles.map(entry => entry[0]);
 
             new Chart(document.getElementById('toughestPuzzlesChart'), {
                 type: 'bar',
@@ -314,7 +336,23 @@
                  options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                footer: function() {
+                                    return 'Click to view this puzzle';
+                                }
+                            }
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const clickedIndex = elements[0].index;
+                            const date = originalDates[clickedIndex]; // YYYY-MM-DD format
+                            window.location.href = `${date}.html`;
+                        }
+                    }
                 }
             });
         }
