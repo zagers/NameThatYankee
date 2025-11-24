@@ -138,10 +138,13 @@ if __name__ == "__main__":
             if scraped_data:
                 player_info['career_totals'] = scraped_data['career_totals']
                 player_info['yearly_war'] = scraped_data['yearly_war']
-            
+
             facts = ai_services.get_facts_from_gemini(player_info['name'], api_key)
             player_info['facts'] = facts
-            
+
+            followup_qa = ai_services.get_followup_qa_from_gemini(player_info['name'], facts, api_key)
+            player_info['followup_qa'] = followup_qa
+
             verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
             html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)
     
