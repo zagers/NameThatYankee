@@ -22,16 +22,41 @@
                         <img src="images/answer-2025-09-09.webp" alt="Photo of Joba Chamberlain">
                     </div>
                     <div class="player-info">
-                        <h2>Joba Chamberlain</h2>
+                        <h2>Joba Chamberlain "Joba"</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Posted a 0.38 ERA across 19 relief appearances as a rookie in 2007.</li>
-                        <li>Was swarmed by midges on the mound during Game 2 of the 2007 ALDS.</li>
-                        <li>Was subject to a set of widely publicized pitching restrictions known as the 'Joba Rules'.</li>
+                        <li>Was the subject of specific workload restrictions created by the New York Yankees known as the 'Joba Rules'.</li>
+                        <li>Posted a 0.38 ERA over the first 19 appearances of a major league career.</li>
+                        <li>Won a World Series with the New York Yankees in 2009.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Joba Chamberlain?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Joba Chamberlain&#x27;s career was defined by an electric debut as a high-leverage reliever, followed by a difficult and injury-plagued transition to the starting rotation. The much-debated &#x27;Joba Rules&#x27; were implemented to manage his workload, but Tommy John surgery and a severe open dislocation of his ankle ultimately limited his effectiveness. After leaving the Yankees, he pitched as a middle reliever for several other teams before his career ended.">Despite his dominant start, what defined Joba Chamberlain&#x27;s overall career trajectory?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In Game 2 of the 2007 ALDS against Cleveland, a massive swarm of midges descended upon the field in the 8th inning with the Yankees leading 1-0. The insects visibly bothered Chamberlain on the mound, affecting his command as he threw two wild pitches that allowed the tying run to score. The Yankees went on to lose the game and, eventually, the series, with the &#x27;bug game&#x27; becoming an infamous moment in franchise playoff history.">What was the story behind Joba Chamberlain and the midges during the 2007 playoffs?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Joba is a portmanteau of the first names of his father, Harlan, and his father&#x27;s cousin, who were named after John F. Kennedy and his brother Robert F. Kennedy. His father&#x27;s name was originally John, but he went by Joba, a name he passed on to his son. The full name on his birth certificate is Justin Louis Chamberlain.">How did Joba Chamberlain get his distinctive first name?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["KCR", "DET", "NYY", "CLE"], "years": ["2011", "2007", "2012", "2009", "2013", "2014", "2010", "2016", "2008", "2015"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Joba Chamberlain", "hints": ["Posted a 0.38 ERA across 19 relief appearances as a rookie in 2007.", "Was swarmed by midges on the mound during Game 2 of the 2007 ALDS.", "Was subject to a set of widely publicized pitching restrictions known as the 'Joba Rules'."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["DET", "CLE", "NYY", "KCR"], "years": ["2016", "2011", "2008", "2009", "2010", "2012", "2013", "2007", "2014", "2015"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Joba Chamberlain", "hints": ["Was the subject of specific workload restrictions created by the New York Yankees known as the 'Joba Rules'.", "Posted a 0.38 ERA over the first 19 appearances of a major league career.", "Won a World Series with the New York Yankees in 2009."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

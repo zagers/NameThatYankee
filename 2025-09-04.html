@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Authored the best-selling book *Ball Four*.</li>
-                        <li>Won two complete games in the 1964 World Series.</li>
+                        <li>Won two games in the 1964 World Series.</li>
+                        <li>Authored the 1970 baseball book 'Ball Four'.</li>
                         <li>Returned to the major leagues in 1978 after a seven-year absence.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Jim Bouton?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Jim Bouton is remembered for both, but his book&#x27;s impact arguably surpassed his pitching career. He was an All-Star pitcher for the Yankees, winning 21 games in 1963 and 18 in 1964. However, his 1970 book &quot;Ball Four&quot; was a groundbreaking exposé of players&#x27; lives that changed sports journalism and made him a controversial but hugely influential figure in baseball culture.">How is Jim Bouton&#x27;s career best remembered, as a successful pitcher or as the author of &#x27;Ball Four&#x27;?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Pitching for the Yankees against the St. Louis Cardinals, Bouton was a standout performer in a losing effort. He threw a complete game in Game 3, allowing just one run in a 2-1 victory. He then came back on only two days&#x27; rest to win Game 6, securing an 8-3 victory to force a decisive seventh game.">What were the details of Jim Bouton&#x27;s two wins in the 1964 World Series?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="&quot;Ball Four&quot; shattered the idealized image of baseball players by revealing their off-field behavior, including heavy drinking, womanizing, and the widespread use of amphetamines. The book&#x27;s candid, diary-style approach was condemned by the baseball establishment, and Commissioner Bowie Kuhn even tried to force Bouton to sign a statement saying the book was fictional. Many former teammates and players ostracized him for years for breaking the clubhouse&#x27;s code of silence.">Why was Jim Bouton&#x27;s book &#x27;Ball Four&#x27; so controversial when it was published?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "HOU", "ATL", "SEP"], "years": ["1963", "1964", "1969", "1970", "1966", "1978", "1965", "1967", "1968", "1962"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Jim Bouton", "hints": ["Authored the best-selling book *Ball Four*.", "Won two complete games in the 1964 World Series.", "Returned to the major leagues in 1978 after a seven-year absence."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["SEP", "HOU", "NYY", "ATL"], "years": ["1964", "1963", "1965", "1968", "1978", "1970", "1962", "1967", "1966", "1969"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Jim Bouton", "hints": ["Won two games in the 1964 World Series.", "Authored the 1970 baseball book 'Ball Four'.", "Returned to the major leagues in 1978 after a seven-year absence."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 05-Sep-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

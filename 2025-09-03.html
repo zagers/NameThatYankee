@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was a six-time All-Star and won the 2011 World Series.</li>
-                        <li>Is one of only three switch-hitters in MLB history with at least 350 home runs and a .400 on-base percentage.</li>
-                        <li>Hit a game-tying, two-strike single in the 10th inning of Game 6 of the 2011 World Series.</li>
+                        <li>Named the 1997 National College Player of the Year after hitting 41 home runs with 134 RBI.</li>
+                        <li>Finished career with a 144 OPS+, tied for 38th all-time with Willie Mays and Mike Trout.</li>
+                        <li>Tied Game 6 of the 2011 World Series with a two-out, two-strike single in the 10th inning.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Lance Berkman?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Despite his elite peak performance, Lance Berkman&#x27;s Hall of Fame case was short-lived. He received just 1.2% of the vote in his only year on the ballot in 2019, falling short of the 5% needed to remain eligible. While his rate stats like OPS+ are on par with inner-circle Hall of Famers, his counting stats (366 HR, 1,234 RBI) and a career shortened by injuries are often cited as reasons he was overlooked.">Given his impressive career stats, how is Lance Berkman viewed in Hall of Fame discussions?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After joining the Yankees for their 2010 playoff push, Lance Berkman was a solid contributor in the ALCS against the Texas Rangers. Although the Yankees lost the series, he batted .320 with an .887 OPS in the six games. His performance included a solo home run off Colby Lewis in Game 3 at Yankee Stadium.">How did Lance Berkman perform for the Yankees in the 2010 postseason after being acquired at the trade deadline?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="The nickname originated early in his career when a Houston reporter described the large-framed Berkman as a &quot;fat cat.&quot; Berkman playfully retorted, &quot;I&#x27;m more like a puma... sleek and agile.&quot; The name stuck, and he embraced the &quot;Big Puma&quot; moniker throughout his career, even having a puma logo stitched into his gloves.">Where did Lance Berkman get his famous nickname, &#x27;Big Puma&#x27;?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "HOU", "TEX", "STL"], "years": ["2008", "2010", "2012", "2000", "2007", "1999", "2003", "2005", "2011", "2002", "2009", "2013", "2001", "2006", "2004"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Lance Berkman", "hints": ["Was a six-time All-Star and won the 2011 World Series.", "Is one of only three switch-hitters in MLB history with at least 350 home runs and a .400 on-base percentage.", "Hit a game-tying, two-strike single in the 10th inning of Game 6 of the 2011 World Series."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["HOU", "TEX", "STL", "NYY"], "years": ["2013", "1999", "2002", "2006", "2008", "2009", "2001", "2007", "2003", "2000", "2011", "2004", "2010", "2012", "2005"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Lance Berkman", "hints": ["Named the 1997 National College Player of the Year after hitting 41 home runs with 134 RBI.", "Finished career with a 144 OPS+, tied for 38th all-time with Willie Mays and Mike Trout.", "Tied Game 6 of the 2011 World Series with a two-out, two-strike single in the 10th inning."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 04-Sep-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

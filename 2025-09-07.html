@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Set the single-season record with six grand slams in 1987.</li>
+                        <li>Hit a single-season record six grand slams in 1987.</li>
                         <li>Tied the major league record by hitting a home run in eight consecutive games.</li>
-                        <li>Won nine Gold Glove awards at first base.</li>
+                        <li>Won nine Gold Glove Awards at first base.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Don Mattingly?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Don Mattingly is often seen as one of the best players not in the Hall of Fame, a victim of a career shortened by chronic back injuries. From 1984 to 1989, he won an MVP, a batting title, three Silver Sluggers, and five Gold Gloves, establishing himself as a superstar. However, his power numbers declined significantly afterward, and his career totals fall short of typical Hall of Fame standards, creating a classic &quot;peak vs. longevity&quot; debate among voters.">With such a dominant peak in the mid-1980s, how is Don Mattingly&#x27;s overall career and Hall of Fame case generally viewed?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In 1987, Don Mattingly hit six grand slams, a single-season MLB record that still stands (tied by Travis Hafner in 2006). Remarkably, these were the only six grand slams of his entire 14-year career. The record-setting sixth blast came on September 29, 1987, against the Boston Red Sox at Yankee Stadium.">What was the story behind Don Mattingly&#x27;s record-setting six grand slams in a single season?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In 1991, Mattingly was famously benched and fined $250 for refusing to cut his mullet, which violated owner George Steinbrenner&#x27;s strict team grooming policy. The standoff became a major media story, symbolizing the clash between player individuality and the team&#x27;s buttoned-up corporate image. The incident was later parodied in the classic &quot;Simpsons&quot; episode &quot;Homer at the Bat,&quot; where Mr. Burns repeatedly demands Mattingly shave his sideburns.">What was the famous off-field issue Don Mattingly had with Yankees management regarding his appearance?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY"], "years": ["1987", "1986", "1989", "1984", "1994", "1995", "1991", "1982", "1993", "1988", "1985", "1992", "1990", "1983"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Don Mattingly", "hints": ["Set the single-season record with six grand slams in 1987.", "Tied the major league record by hitting a home run in eight consecutive games.", "Won nine Gold Glove awards at first base."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY"], "years": ["1986", "1984", "1990", "1995", "1988", "1987", "1983", "1985", "1993", "1989", "1994", "1991", "1982", "1992"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Don Mattingly", "hints": ["Hit a single-season record six grand slams in 1987.", "Tied the major league record by hitting a home run in eight consecutive games.", "Won nine Gold Glove Awards at first base."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

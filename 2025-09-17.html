@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Won six World Series games without a loss.</li>
-                        <li>Was the winning pitcher in the first MLB All-Star Game in 1933.</li>
-                        <li>Won the American League pitching Triple Crown twice.</li>
+                        <li>Won the American League pitching Triple Crown in both 1934 and 1937.</li>
+                        <li>Posted a 6-0 record across five different World Series.</li>
+                        <li>Was the winning pitcher in the first-ever Major League Baseball All-Star Game in 1933.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Vernon Gomez?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Vernon &quot;Lefty&quot; Gomez was the ace of the powerful Yankees teams of that era, winning the American League pitching Triple Crown twice, in 1934 and 1937. He led the league in wins and strikeouts three times each and posted four 20-win seasons. This sustained excellence was a key reason for the Yankees&#x27; five World Series championships during his tenure and led to his Hall of Fame induction in 1972.">What made Vernon Gomez one of the most dominant pitchers of the 1930s?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Gomez was flawless in the postseason, posting a perfect 6-0 record in World Series play, which remains the record for most wins without a loss. Across five Fall Classics for the Yankees, he maintained a 2.86 ERA. He was the winning pitcher in the clinching game of the 1937 World Series against the New York Giants.">How dominant was Vernon Gomez in the World Series for the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, Gomez was famous for his sharp wit and self-deprecating humor, making him one of baseball&#x27;s most renowned characters. He is credited with many classic quotes, including his explanation for his success: &quot;The secret of my success is clean living and a fast outfield.&quot; He also famously quipped, &quot;I&#x27;d rather be lucky than good.&quot;">Was Vernon Gomez known for having a particularly colorful personality?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "WSH"], "years": ["1943", "1935", "1939", "1936", "1940", "1937", "1938", "1941", "1933", "1931", "1942", "1932", "1930", "1934"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Vernon Gomez", "hints": ["Won six World Series games without a loss.", "Was the winning pitcher in the first MLB All-Star Game in 1933.", "Won the American League pitching Triple Crown twice."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["WSH", "NYY"], "years": ["1941", "1939", "1938", "1931", "1937", "1935", "1933", "1936", "1932", "1943", "1934", "1930", "1940", "1942"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Vernon Gomez", "hints": ["Won the American League pitching Triple Crown in both 1934 and 1937.", "Posted a 6-0 record across five different World Series.", "Was the winning pitcher in the first-ever Major League Baseball All-Star Game in 1933."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

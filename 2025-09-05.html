@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Played for eight different MLB teams during a 12-year career.</li>
-                        <li>Finished with a career caught stealing percentage of 38%.</li>
-                        <li>Recorded more career sacrifice hits (31) than home runs (27).</li>
+                        <li>Played in the 2000 World Series with the New York Mets.</li>
+                        <li>Caught the final out of the 2000 National League Championship Series.</li>
+                        <li>Finished a 12-year MLB career with a 36% caught stealing percentage.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Alberto Castillo?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Alberto Castillo was highly regarded for his defensive skills and ability to handle a pitching staff. Over 12 seasons with seven different teams, he established himself as a reliable backup, prized more for his glove than his bat. His career 36% caught stealing percentage was significantly better than the league average during his era, cementing his reputation as a premier defensive catcher.">Besides his strong arm, what defined Alberto Castillo&#x27;s long career as a backup catcher?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Serving as the backup to Jorge Posada in 2002, Alberto Castillo&#x27;s most notable offensive contribution came on May 12 against the Minnesota Twins. He hit a three-run home run off pitcher Brad Radke, which accounted for the majority of the team&#x27;s offense in a game the Yankees would eventually win 4-3.">What was Alberto Castillo&#x27;s most significant contribution during his one season with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, Alberto Castillo was known for his highly unconventional and extremely open batting stance. He would set up almost facing the pitcher, with his front foot pointed far toward the third-base dugout, before taking a long stride toward the plate as the pitch was delivered. This unique approach made him one of the more distinctive hitters of his time.">Was there anything unusual about Alberto Castillo&#x27;s style at the plate?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "NYM", "BAL", "TOR", "STL", "SFG", "KCR", "OAK"], "years": ["1999", "2005", "2004", "2007", "1998", "2001", "1995", "1997", "2003", "2002", "1996", "2000"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Alberto Castillo", "hints": ["Played for eight different MLB teams during a 12-year career.", "Finished with a career caught stealing percentage of 38%.", "Recorded more career sacrifice hits (31) than home runs (27)."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYM", "NYY", "TOR", "BAL", "OAK", "STL", "KCR", "SFG"], "years": ["2003", "2002", "2001", "2005", "2000", "1997", "2007", "1999", "1996", "1995", "1998", "2004"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Alberto Castillo", "hints": ["Played in the 2000 World Series with the New York Mets.", "Caught the final out of the 2000 National League Championship Series.", "Finished a 12-year MLB career with a 36% caught stealing percentage."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 05-Sep-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

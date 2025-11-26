@@ -22,16 +22,41 @@
                         <img src="images/answer-2025-09-16.webp" alt="Photo of Ron Davis">
                     </div>
                     <div class="player-info">
-                        <h2>Ron Davis</h2>
+                        <h2>Ron Davis "The Vulture"</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
                         <li>Was an American League All-Star in 1981.</li>
-                        <li>Set an American League record by striking out eight consecutive batters in a 1981 game.</li>
-                        <li>Father of former major league first baseman Ike Davis.</li>
+                        <li>Set an American League record by striking out eight consecutive batters in a single game.</li>
+                        <li>Father of former MLB first baseman Ike Davis.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Ron Davis?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Ron Davis was a formidable setup man for the Yankees, primarily known for his overpowering fastball. He formed a devastating late-inning bullpen duo with closer Goose Gossage, earning an All-Star selection in 1981. After being traded to the Minnesota Twins, he became their closer and saved 20 or more games in three consecutive seasons.">Beyond his strikeout record, what defined Ron Davis&#x27;s career as a dominant relief pitcher?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="On May 4, 1981, in a game against the California Angels, Ron Davis entered in relief and was untouchable. He struck out eight consecutive batters, a feat that included striking out the side in both the eighth and ninth innings. This record-setting performance helped secure a 4-2 Yankees victory in extra innings.">What were the details of the game where Ron Davis set the American League record for consecutive strikeouts as a Yankee?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Ron Davis was deeply involved in his son&#x27;s baseball development, serving as a coach and mentor from a young age. When Ike became a first baseman for the New York Mets, Ron was a frequent and supportive presence at his games. This created a unique New York baseball dynamic, with the former Yankee star passionately cheering for his son on the cross-town rival team.">How involved was Ron Davis in the baseball career of his son, Ike Davis?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "MIN", "CHC", "SFG", "LAD"], "years": ["1986", "1982", "1985", "1987", "1980", "1981", "1983", "1978", "1984", "1988", "1979"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Ron Davis", "hints": ["Was an American League All-Star in 1981.", "Set an American League record by striking out eight consecutive batters in a 1981 game.", "Father of former major league first baseman Ike Davis."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["SFG", "LAD", "MIN", "CHC", "NYY"], "years": ["1986", "1984", "1988", "1979", "1987", "1978", "1981", "1983", "1985", "1980", "1982"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Ron Davis", "hints": ["Was an American League All-Star in 1981.", "Set an American League record by striking out eight consecutive batters in a single game.", "Father of former MLB first baseman Ike Davis."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Father was a major league catcher and a 1976 All-Star.</li>
-                        <li>Hit at least 20 home runs in nine consecutive seasons from 2005 to 2013.</li>
-                        <li>Was the recipient of the 2010 Roberto Clemente Award.</li>
+                        <li>Father was an MLB All-Star catcher.</li>
+                        <li>Won a World Series with the New York Yankees in 2009.</li>
+                        <li>Hit a home run from both sides of the plate in the same game 14 times.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Nick Swisher?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Nick Swisher was a 2010 All-Star and a consistent power threat, hitting at least 20 home runs for nine consecutive seasons (2005-2013). As a switch-hitter, he holds the MLB record for hitting a home run from both sides of the plate in the same game, accomplishing the feat 14 times. He finished his career with 245 home runs and a high walk rate, resulting in a solid .351 on-base percentage.">Beyond his World Series ring, what were Nick Swisher&#x27;s most significant career accomplishments?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="While he was a key part of the 2009 championship team, Swisher struggled at the plate for most of that postseason, batting just .173 overall. However, he delivered a crucial walk-off single in the 13th inning of Game 2 of the ALCS against the Angels. He also hit a solo home run in Game 3 of the World Series against the Phillies.">How did Nick Swisher perform during the Yankees&#x27; 2009 World Series run?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Swisher&#x27;s signature salute to the dugout after reaching base was a tribute to members of the U.S. military. He began the gesture after returning from a USO tour to visit troops in Iraq during the 2008 offseason. The celebration became an iconic part of his energetic and fan-friendly personality, particularly during his time in New York.">What was the story behind Nick Swisher&#x27;s famous &#x27;Swisher Salute&#x27; celebration?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "CHW", "OAK", "ATL", "CLE"], "years": ["2010", "2013", "2004", "2006", "2012", "2007", "2014", "2011", "2015", "2008", "2009", "2005"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Nick Swisher", "hints": ["Father was a major league catcher and a 1976 All-Star.", "Hit at least 20 home runs in nine consecutive seasons from 2005 to 2013.", "Was the recipient of the 2010 Roberto Clemente Award."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "CLE", "CHW", "ATL", "OAK"], "years": ["2013", "2007", "2009", "2006", "2005", "2012", "2015", "2010", "2011", "2014", "2008", "2004"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Nick Swisher", "hints": ["Father was an MLB All-Star catcher.", "Won a World Series with the New York Yankees in 2009.", "Hit a home run from both sides of the plate in the same game 14 times."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 22-Nov-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Finished eighth in the American League MVP voting in 1974.</li>
-                        <li>Named The Sporting News American League Comeback Player of the Year in 1976.</li>
-                        <li>Played every defensive position except for pitcher and catcher during a major league career.</li>
+                        <li>Finished third in the 1970 American League Rookie of the Year voting.</li>
+                        <li>Led the American League in times on base with 265 in 1974.</li>
+                        <li>Sued the City of New York after a career-altering knee injury at Shea Stadium in 1975.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Elliott Maddox?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Elliott Maddox was a versatile player who began as a third baseman with the Detroit Tigers before converting to a full-time outfielder. After being traded to the Yankees, he had a breakout 1974 season where he hit .303, played a stellar center field, and finished eighth in the AL MVP voting. His career was tragically altered by a severe knee injury the following season, preventing him from building on that success.">Beyond his great 1974 season, what defined Elliott Maddox&#x27;s career before his injury derailed it?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In his first year in pinstripes, Maddox was a revelation, posting career highs in batting average (.303), on-base percentage (.394), and hits (149). He led the entire American League in times on base with 265, showcasing elite plate discipline. This performance earned him an eighth-place finish in the AL MVP race.">How impressive was Elliott Maddox&#x27;s 1974 season, his first year with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="During a 1975 game at Shea Stadium, where the Yankees played while their stadium was renovated, Maddox slipped on a poorly drained patch of outfield grass and severely injured his knee. He sued the City of New York for negligent maintenance of the field. A jury found the city liable, and Maddox was awarded a settlement for the career-altering injury.">What was the story behind Elliott Maddox&#x27;s lawsuit against New York City after his injury at Shea Stadium?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYM", "BAL", "DET", "TEX", "WSA", "NYY"], "years": ["1978", "1972", "1973", "1976", "1971", "1979", "1975", "1970", "1977", "1974", "1980"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Elliott Maddox", "hints": ["Finished eighth in the American League MVP voting in 1974.", "Named The Sporting News American League Comeback Player of the Year in 1976.", "Played every defensive position except for pitcher and catcher during a major league career."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["TEX", "NYY", "NYM", "BAL", "WSA", "DET"], "years": ["1976", "1975", "1973", "1971", "1970", "1977", "1978", "1979", "1980", "1974", "1972"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Elliott Maddox", "hints": ["Finished third in the 1970 American League Rookie of the Year voting.", "Led the American League in times on base with 265 in 1974.", "Sued the City of New York after a career-altering knee injury at Shea Stadium in 1975."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

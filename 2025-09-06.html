@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was a member of the 1992 World Series champion Toronto Blue Jays.</li>
-                        <li>Pitched for both the New York Yankees and New York Mets.</li>
-                        <li>Appeared in 180 games over a seven-year MLB career.</li>
+                        <li>Pitched for the Seattle Pilots and Toronto Blue Jays in their inaugural seasons.</li>
+                        <li>Had an eight-year gap between major league appearances from 1969 to 1977.</li>
+                        <li>Was a member of the Seattle Pilots during the team's only season of existence.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Bob MacDonald?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Bob MacDonald holds the rare distinction of pitching for two different franchises in their inaugural seasons: the 1969 Seattle Pilots and the 1977 Toronto Blue Jays. He is one of only two players to do so, along with Diego Segui. His career is also notable for the seven full seasons he spent in the minor leagues between his major league appearances in 1969 and 1977.">What makes Bob MacDonald&#x27;s career so unique, particularly his connection to two inaugural MLB teams?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Bob MacDonald never played for the New York Yankees. His entire three-season major league career was spent with the American League&#x27;s two expansion franchises of that era, the Seattle Pilots and the Toronto Blue Jays.">What was Bob MacDonald&#x27;s most memorable moment as a member of the New York Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After his playing days were over, Bob MacDonald returned to his hometown of East Orange, New Jersey, to become a teacher and coach. He taught physical education and health at his alma mater, East Orange High School. He also coached the school&#x27;s baseball and basketball teams for many years.">What did Bob MacDonald do after his professional baseball career ended?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYM", "NYY", "TOR", "DET"], "years": ["1993", "1992", "1996", "1990", "1991", "1995"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Bob MacDonald", "hints": ["Was a member of the 1992 World Series champion Toronto Blue Jays.", "Pitched for both the New York Yankees and New York Mets.", "Appeared in 180 games over a seven-year MLB career."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["DET", "NYM", "TOR", "NYY"], "years": ["1992", "1990", "1993", "1996", "1995", "1991"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Bob MacDonald", "hints": ["Pitched for the Seattle Pilots and Toronto Blue Jays in their inaugural seasons.", "Had an eight-year gap between major league appearances from 1969 to 1977.", "Was a member of the Seattle Pilots during the team's only season of existence."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 06-Sep-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Posted a 0.54 ERA in 2016, the lowest in MLB history for a pitcher with at least 50 innings.</li>
-                        <li>Converted an American League record 60 consecutive save opportunities from 2015 to 2017.</li>
-                        <li>Brother, Buck Britton, is the manager for the Baltimore Orioles' Triple-A affiliate.</li>
+                        <li>Recorded a 0.54 ERA in 2016, the lowest in MLB history for a pitcher with at least 50 innings.</li>
+                        <li>Set an American League record by converting 60 consecutive save opportunities from 2015 to 2017.</li>
+                        <li>Began career as a starting pitcher before converting to a reliever in 2014.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Zach Britton?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Zach Britton&#x27;s dominance stemmed from a two-seam fastball, or sinker, that was unlike any other in the game. He threw it with elite velocity, averaging 95-97 mph, combined with extreme horizontal and vertical movement. This pitch induced an unprecedented number of ground balls; during his historic 2016 season, his ground ball rate was an astonishing 80%.">Beyond his record-setting ERA, what made Zach Britton&#x27;s sinker so uniquely effective during his peak?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After being acquired in 2018, Britton became a vital high-leverage setup man for the Yankees, typically pitching the eighth inning ahead of closer Aroldis Chapman. He was a reliable presence in four different postseasons for New York (2018, 2019, 2020, 2022). In 14 total postseason appearances for the Yankees, he posted a 2.79 ERA, solidifying his role as a key bridge to the ninth inning.">What was Zach Britton&#x27;s role in the Yankees&#x27; bullpen during their postseason runs?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, his older brother, Buck Britton, has had a long career in professional baseball. Buck was a minor league infielder for nine seasons, primarily in the Baltimore Orioles&#x27; farm system. After his playing days ended, he transitioned into coaching and has served as a successful minor league manager, also within the Orioles organization.">Does Zach Britton have any other family members involved in professional baseball?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["BAL", "NYY"], "years": ["2012", "2016", "2021", "2019", "2011", "2020", "2022", "2018", "2014", "2013", "2015", "2017"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Zach Britton", "hints": ["Posted a 0.54 ERA in 2016, the lowest in MLB history for a pitcher with at least 50 innings.", "Converted an American League record 60 consecutive save opportunities from 2015 to 2017.", "Brother, Buck Britton, is the manager for the Baltimore Orioles' Triple-A affiliate."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "BAL"], "years": ["2013", "2022", "2018", "2020", "2017", "2016", "2019", "2015", "2021", "2011", "2012", "2014"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Zach Britton", "hints": ["Recorded a 0.54 ERA in 2016, the lowest in MLB history for a pitcher with at least 50 innings.", "Set an American League record by converting 60 consecutive save opportunities from 2015 to 2017.", "Began career as a starting pitcher before converting to a reliever in 2014."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 18-Nov-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

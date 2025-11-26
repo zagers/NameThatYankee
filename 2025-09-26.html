@@ -29,9 +29,34 @@
                         </div>
                         <ul>
                         <li>Won five consecutive World Series championships from 1949 to 1953.</li>
-                        <li>Led the American League in on-base percentage in 1953.</li>
-                        <li>Was a member of the inaugural 1962 New York Mets team.</li>
+                        <li>Hit the first home run in the history of the modern Baltimore Orioles franchise in 1954.</li>
+                        <li>Pinch-hit for Roger Maris in Maris's first major league at-bat.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Gene Woodling?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Gene Woodling was a left-handed hitting outfielder best known for his outstanding plate discipline and high on-base percentage, finishing his career with more walks than strikeouts. Manager Casey Stengel often used him in a successful platoon system, primarily against right-handed pitchers. He was also a reliable defensive player with a strong arm, making him a valuable all-around contributor.">What defined Gene Woodling&#x27;s playing style throughout his 17-year career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Woodling was a clutch postseason performer for the Yankees during their championship dynasty. Across the 22 World Series games he played from 1949 to 1953, he batted .318 with three home runs and 11 RBI. His key moments included hitting .429 in the 1949 Series and a crucial home run in the 1951 Fall Classic.">How did Gene Woodling perform for the Yankees during their five consecutive World Series championships?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, Woodling&#x27;s career was paused for service in the U.S. Navy during World War II. While serving in the Pacific, he suffered significant injuries, including losing the top of his right thumb in an accident. Despite this, he successfully rehabilitated and returned to baseball, making his major league debut after the war.">Did Gene Woodling&#x27;s career get interrupted by military service?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["BAL", "CLE", "NYM", "WSA", "NYY", "PIT"], "years": ["1955", "1952", "1951", "1943", "1962", "1946", "1953", "1954", "1956", "1957", "1959", "1950", "1958", "1960", "1961", "1947", "1949"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Gene Woodling", "hints": ["Won five consecutive World Series championships from 1949 to 1953.", "Led the American League in on-base percentage in 1953.", "Was a member of the inaugural 1962 New York Mets team."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["CLE", "NYY", "NYM", "BAL", "WSA", "PIT"], "years": ["1947", "1956", "1955", "1954", "1957", "1959", "1953", "1943", "1946", "1950", "1952", "1961", "1958", "1962", "1960", "1951", "1949"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Gene Woodling", "hints": ["Won five consecutive World Series championships from 1949 to 1953.", "Hit the first home run in the history of the modern Baltimore Orioles franchise in 1954.", "Pinch-hit for Roger Maris in Maris's first major league at-bat."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 22-Nov-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

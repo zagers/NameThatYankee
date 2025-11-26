@@ -32,6 +32,31 @@
                         <li>Struck out 17 batters in a single game on May 12, 1961.</li>
                         <li>Was selected to four American League All-Star teams.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Bill Monbouquette?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Bill Monbouquette was the workhorse ace for some largely forgettable Boston Red Sox teams in the early 1960s. He led the team in wins three times and was known for his durability and competitive fire on the mound. Despite the team&#x27;s lack of success, he was consistently one of the top pitchers in the American League during his peak.">Considering his All-Star selections and no-hitter, what was Bill Monbouquette&#x27;s overall reputation as a pitcher for the Red Sox?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Monbouquette joined the Yankees for the 1967 and 1968 seasons, after his prime years with Boston. He served as a veteran arm for a team in a rebuilding phase, working as both a spot starter and a reliever. In his two seasons in pinstripes, he posted a combined 6-8 record with a 3.20 ERA in 46 appearances.">What was Bill Monbouquette&#x27;s role with the Yankees toward the end of his career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, he enjoyed a long and respected second career as a pitching coach that spanned several decades. He served as a major league coach for the New York Mets, New York Yankees, and Toronto Blue Jays. He was also a minor league instructor for multiple organizations, where he was highly regarded for his ability to mentor young pitchers.">Did Bill Monbouquette stay involved in baseball after he stopped playing?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["SFG", "NYY", "DET", "BOS"], "years": ["1960", "1958", "1962", "1964", "1968", "1959", "1963", "1965", "1967", "1961", "1966"]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["DET", "BOS", "SFG", "NYY"], "years": ["1958", "1963", "1960", "1961", "1959", "1965", "1966", "1962", "1968", "1964", "1967"]}</div>
         <div id="quiz-data" style="display:none;">{"answer": "Bill Monbouquette", "hints": ["Pitched a no-hitter against the Chicago White Sox on August 1, 1962.", "Struck out 17 batters in a single game on May 12, 1961.", "Was selected to four American League All-Star teams."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

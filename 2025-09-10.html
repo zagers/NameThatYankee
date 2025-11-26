@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Returned from a season in Japan to lead the American League in home runs and RBIs in 1990.</li>
-                        <li>Led the American League in RBIs for three consecutive seasons (1990-1992).</li>
-                        <li>Part of the only father-son duo in MLB history to each record a 50-home run season.</li>
+                        <li>Became the first American League player to hit 50 home runs in a season since 1961.</li>
+                        <li>Part of the only father-son duo in MLB history to each hit 50 home runs in a season.</li>
+                        <li>Led the American League in RBIs for three consecutive seasons from 1990-1992.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Cecil Fielder?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Fielder began with the Toronto Blue Jays but first became a star in Japan, hitting 38 home runs for the Hanshin Tigers in 1989. This led to his dominant run with the Detroit Tigers, where he became one of baseball&#x27;s most feared sluggers. He finished his career as a key designated hitter and first baseman, most notably winning a World Series with the New York Yankees in 1996.">Besides his incredible power surge with the Tigers, what was the overall shape of Cecil Fielder&#x27;s career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Acquired by the Yankees in a July 1996 trade, Fielder provided immediate and crucial power to the middle of the lineup. He hit 13 home runs in just 53 regular-season games for New York. During the 1996 postseason, he drove in 14 runs and hit three home runs, including one in the World Series, helping the Yankees capture their first title since 1978.">What role did Cecil Fielder play in the Yankees&#x27; 1996 World Series championship?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="The nickname &quot;Big Daddy&quot; was a natural fit due to Fielder&#x27;s large physical stature and his prodigious power at the plate. It became widely used by teammates, media, and fans during his dominant years with the Detroit Tigers. The name perfectly captured his imposing presence in the batter&#x27;s box.">Where did Cecil Fielder get his famous &#x27;Big Daddy&#x27; nickname?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["CLE", "NYY", "DET", "TOR", "ANA"], "years": ["1996", "1992", "1991", "1988", "1985", "1993", "1994", "1998", "1997", "1986", "1990", "1987", "1995"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Cecil Fielder", "hints": ["Returned from a season in Japan to lead the American League in home runs and RBIs in 1990.", "Led the American League in RBIs for three consecutive seasons (1990-1992).", "Part of the only father-son duo in MLB history to each record a 50-home run season."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["TOR", "DET", "ANA", "CLE", "NYY"], "years": ["1986", "1998", "1997", "1995", "1990", "1996", "1988", "1987", "1985", "1993", "1994", "1991", "1992"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Cecil Fielder", "hints": ["Became the first American League player to hit 50 home runs in a season since 1961.", "Part of the only father-son duo in MLB history to each hit 50 home runs in a season.", "Led the American League in RBIs for three consecutive seasons from 1990-1992."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Sep-2025</p>
+        <p>Last Updated: 25-Nov-2025</p>
     </footer>    
 </body>
 </html>

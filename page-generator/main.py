@@ -20,6 +20,38 @@ import user_interaction
 
 # --- Main Execution ---
 if __name__ == "__main__":
+    # Help / usage flag
+    if "-h" in sys.argv or "--help" in sys.argv:
+        print("""
+Name That Yankee Page Generator (Python Version)
+
+Usage:
+  python main.py [options]
+
+Options:
+  --automated           Run without manual review prompts. The script will
+                        skip the interactive stats/facts confirmation step.
+
+  --generate-player-list
+                        Generate a master list of all players from existing
+                        detail pages, then exit. Skips normal page generation.
+
+  -h, --help            Show this help message and exit.
+
+Interactive prompts (normal generation mode):
+  1) Website project folder path (uses last path as default if available).
+  2) Date selection:
+       - A single date:          YYYY-MM-DD
+       - A range of dates:      YYYY-MM-DD to YYYY-MM-DD
+       - All available clues:   ALL
+
+Notes:
+  - Clue images are expected in the 'images' folder as
+      clue-YYYY-MM-DD.webp
+  - Missing images inside a date range are skipped.
+        """)
+        sys.exit(0)
+
     print("--- Name That Yankee Page Generator (Python Version) ---")
     
     is_automated = "--automated" in sys.argv
