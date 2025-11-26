@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Served as President of the National League from 1989 to 1994.</li>
-                        <li>Was an eight-time All-Star and a seven-time Gold Glove winner.</li>
-                        <li>Hit for the cycle on August 14, 1960.</li>
+                        <li>Was an eight-time All-Star and a seven-time Gold Glove winner at first base.</li>
+                        <li>Became the first African American to serve as a league president in professional sports.</li>
+                        <li>Hit for the cycle in 1960 and collected 2,000 career hits in 1968.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Bill White?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Bill White was a highly respected first baseman for 13 seasons, primarily with the St. Louis Cardinals and Philadelphia Phillies. He was known for his exceptional defense and consistent bat, finishing with a .286 career batting average, 202 home runs, and 870 RBI. He was a key member of the Cardinals team that won the 1964 World Series.">What was Bill White&#x27;s career like as a player?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, he had a very prominent role with the Yankees as a broadcaster. For 18 seasons, from 1971 to 1988, he was a play-by-play announcer on WPIX, where he formed a beloved and long-running broadcast team with Phil Rizzuto and Frank Messer.">Did Bill White have any connection to the Yankees after his playing days?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In 1989, Bill White was elected President of the National League, a position he held until 1994. This was a historic appointment, as he became the highest-ranking African American executive in professional sports at the time. During his tenure, he oversaw the NL&#x27;s expansion with the addition of the Florida Marlins and Colorado Rockies.">What was his most significant role in baseball after he stopped playing and broadcasting?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["SFG", "PHI", "NYG", "STL"], "years": ["1962", "1964", "1959", "1960", "1965", "1968", "1966", "1956", "1958", "1961", "1963", "1967", "1969"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Bill White", "hints": ["Served as President of the National League from 1989 to 1994.", "Was an eight-time All-Star and a seven-time Gold Glove winner.", "Hit for the cycle on August 14, 1960."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["STL", "PHI", "NYG", "SFG"], "years": ["1969", "1958", "1966", "1959", "1964", "1963", "1960", "1967", "1962", "1961", "1965", "1956", "1968"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Bill White", "hints": ["Was an eight-time All-Star and a seven-time Gold Glove winner at first base.", "Became the first African American to serve as a league president in professional sports.", "Hit for the cycle in 1960 and collected 2,000 career hits in 1968."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 17-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

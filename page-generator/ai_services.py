@@ -9,6 +9,35 @@ MAX_RETRIES = 5
 SLEEP_TIME = 30
 MODEL = 'gemini-2.5-pro'
 
+# Simple in-process rate limiter to respect Free Tier limit
+# (2 requests per minute per model). We maintain at most one
+# Gemini request every ~35 seconds, which keeps any 60s window
+# at <= 2 requests.
+_LAST_GEMINI_CALL_TS = 0.0
+
+
+class GeminiDailyQuotaExceeded(Exception):
+    """Raised when the Gemini Free Tier daily quota has been exhausted."""
+    pass
+
+
+def _respect_free_tier_rate_limit():
+    """Enforce a conservative delay between Gemini API calls.
+
+    This keeps total request rate safely under the Free Tier limit
+    of 2 requests per minute by ensuring at least ~35 seconds
+    between *any* Gemini requests in this process.
+    """
+    global _LAST_GEMINI_CALL_TS
+    now = time.time()
+    min_interval = 35.0  # seconds; slightly conservative vs 30s
+    elapsed = now - _LAST_GEMINI_CALL_TS
+    if elapsed < min_interval:
+        sleep_for = min_interval - elapsed
+        print(f"  ⏱ Respecting Gemini Free Tier rate limit, sleeping {sleep_for:.1f}s before next API call...")
+        time.sleep(sleep_for)
+    _LAST_GEMINI_CALL_TS = time.time()
+
 def get_player_info_from_image(image_path, api_key: str):
     """
     Uses Gemini to get the player's name and nickname from the clue.
@@ -17,7 +46,7 @@ def get_player_info_from_image(image_path, api_key: str):
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL) 
+    model = genai.GenerativeModel(MODEL)
     clue_image = Image.open(image_path)
     generation_config = genai.types.GenerationConfig(temperature=0.1)
     prompt = """
@@ -41,6 +70,7 @@ def get_player_info_from_image(image_path, api_key: str):
     """
 
     for attempt in range(MAX_RETRIES):
+        _respect_free_tier_rate_limit()
         response = None
         try:
             response = model.generate_content([prompt, clue_image], generation_config=generation_config)
@@ -99,6 +129,7 @@ def get_facts_from_gemini(player_name: str, api_key: str):
     """
 
     for attempt in range(MAX_RETRIES):
+        _respect_free_tier_rate_limit()
         response = None
         try:
             response = model.generate_content(prompt, generation_config=generation_config)
@@ -219,8 +250,110 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            print(f"  ❌ Error getting follow-up Q&A from Gemini API: {e}")
+            print(f"  Error getting follow-up Q&A from Gemini API: {e}")
             return []
 
-    print(f"  ❌ All {MAX_RETRIES} retry attempts for follow-up Q&A failed.")
+    print(f"  All {MAX_RETRIES} retry attempts for follow-up Q&A failed.")
     return []
+
+
+def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
+    """
+    Single-call helper that retrieves both facts and follow-up Q&A
+    for a given player using one Gemini text request.
+
+    Returns a dict with structure:
+      { "facts": [...], "qa": [ {"question": ..., "answer": ...}, ... ] }
+    On failure, returns {"facts": [], "qa": []}.
+    """
+    print(f" Asking Gemini for facts and follow-up Q&A about {player_name} in a single call...")
+
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel(MODEL)
+    generation_config = genai.types.GenerationConfig(temperature=0.15)
+
+    prompt = f"""
+    You are a precise baseball historian.
+
+    The player is: {player_name}
+
+    Task:
+      1. Provide three interesting, concise career facts about this player.
+      2. Provide three follow-up question-and-answer pairs a fan might ask to
+         learn more about the player.
+
+    Facts requirements:
+      - Each fact must be a single, short sentence.
+      - Focus on career highlights, notable awards, unique statistical
+        achievements, or family/baseball lineage.
+      - Do not use the player's name or pronouns like "he" inside the facts
+        themselves; just state the facts.
+
+    Follow-up Q&A requirements:
+      - You must return exactly three Q&A pairs in total.
+      - The three questions must follow this pattern:
+        1) A career overview / big-picture question.
+        2) A Yankees-specific question about postseason performance,
+           memorable Yankees moments, or notable Yankees records.
+        3) A quirky or off-field question (personality, quotes, unusual
+           jobs, military service, broadcasting, or similar). If there is no
+           reliable quirky/off-field angle, instead provide a second
+           Yankees-focused question as described in (2).
+      - Each question should be one clear, natural-sounding sentence.
+      - Answers should be 2–4 sentences, factual and specific. Avoid vague
+        praise; focus on concrete accomplishments, stats, or anecdotes.
+      - If information is uncertain, omit it rather than guessing.
+
+    Output format:
+      Respond with a single valid JSON object and nothing else, with this
+      structure:
+
+      {{
+        "facts": [
+          "Fact 1.",
+          "Fact 2.",
+          "Fact 3."
+        ],
+        "qa": [
+          {{ "question": "Question 1?", "answer": "Answer 1." }},
+          {{ "question": "Question 2?", "answer": "Answer 2." }},
+          {{ "question": "Question 3?", "answer": "Answer 3." }}
+        ]
+      }}
+    """
+
+    for attempt in range(MAX_RETRIES):
+        response = None
+        try:
+            response = model.generate_content(prompt, generation_config=generation_config)
+
+            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            data = json.loads(json_text)
+
+            facts = data.get("facts", [])
+            qa_list = data.get("qa", [])
+            if not isinstance(facts, list):
+                facts = []
+            if not isinstance(qa_list, list):
+                qa_list = []
+
+            print("  Facts and follow-up Q&A retrieved in a single call.")
+            return {"facts": facts, "qa": qa_list}
+
+        except ValueError:
+            print(f"  Gemini returned an empty or malformed response for combined facts/Q&A. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            if response:
+                print(f"     Finish Reason: {response.candidates[0].finish_reason if response.candidates else 'N/A'}")
+            time.sleep(SLEEP_TIME)
+
+        except Exception as e:
+            message = str(e)
+            # Detect daily quota exhaustion (GenerateRequestsPerDay...)
+            if "GenerateRequestsPerDayPerProjectPerModel-FreeTier" in message or "quota_value: 50" in message:
+                print("  ❌ Gemini daily Free Tier quota appears to be exhausted.")
+                raise GeminiDailyQuotaExceeded(message)
+            print(f"  Error getting combined facts and follow-up Q&A from Gemini API: {e}")
+            return {"facts": [], "qa": []}
+
+    print(f"  All {MAX_RETRIES} retry attempts for combined facts/Q&A failed.")
+    return {"facts": [], "qa": []}

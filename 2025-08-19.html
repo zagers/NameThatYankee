@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Is the only player to be named World Series MVP while playing for the losing team.</li>
-                        <li>Set the single-series World Series record with 12 runs batted in during the 1960 series.</li>
-                        <li>Won five consecutive Gold Glove Awards from 1961 to 1965.</li>
+                        <li>Won the 1960 World Series MVP award as a member of the losing team.</li>
+                        <li>Earned five consecutive Gold Glove Awards at second base from 1961 to 1965.</li>
+                        <li>Drove in a single-series record 12 runs during the 1960 World Series.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Bobby Richardson?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He was regarded as a premier defensive second baseman and a consistent contact hitter for the dominant Yankees teams of the early 1960s. While not a power threat, he was a durable player who led the American League in at-bats three times. His steady play and strong character made him a seven-time All-Star and a respected clubhouse presence.">What was Bobby Richardson&#x27;s overall reputation as a player during his career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In Game 7 against the San Francisco Giants, with the Yankees clinging to a 1-0 lead in the bottom of the ninth, Richardson caught a screaming line drive hit by Willie McCovey. The catch ended the series and stranded runners on second and third, securing the championship for New York in one of the most dramatic finishes in World Series history.">What is the story behind the final out of the 1962 World Series?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After retiring at age 31 to spend more time with his family, Richardson became a successful college baseball coach. He led the University of South Carolina to its first College World Series finals appearance in 1975. He later coached at Coastal Carolina University and became a prominent public speaker for Christian organizations.">What did he do after his surprisingly early retirement from baseball?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY"], "years": ["1956", "1962", "1963", "1966", "1964", "1959", "1960", "1958", "1961", "1955", "1957", "1965"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Bobby Richardson", "hints": ["Is the only player to be named World Series MVP while playing for the losing team.", "Set the single-series World Series record with 12 runs batted in during the 1960 series.", "Won five consecutive Gold Glove Awards from 1961 to 1965."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY"], "years": ["1957", "1958", "1966", "1959", "1964", "1963", "1960", "1955", "1962", "1961", "1965", "1956"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Bobby Richardson", "hints": ["Won the 1960 World Series MVP award as a member of the losing team.", "Earned five consecutive Gold Glove Awards at second base from 1961 to 1965.", "Drove in a single-series record 12 runs during the 1960 World Series."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

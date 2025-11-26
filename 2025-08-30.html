@@ -22,16 +22,41 @@
                         <img src="images/answer-2025-08-30.webp" alt="Photo of Andrew Arthur Carey">
                     </div>
                     <div class="player-info">
-                        <h2>Andrew Arthur Carey</h2>
+                        <h2>Andrew Arthur Carey "Handy Andy"</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was traded from the New York Yankees to the Kansas City Athletics in the deal that brought Roger Maris to New York.</li>
-                        <li>Played in four consecutive World Series with the New York Yankees (1955-1958).</li>
-                        <li>Son, Todd Carey, played minor league baseball in the California Angels organization.</li>
+                        <li>Played third base in four consecutive World Series from 1955 to 1958.</li>
+                        <li>Was a second-generation major leaguer, as his father Joe played for the Washington Senators.</li>
+                        <li>Served two years in the U.S. Army during the Korean War, missing the 1952 and 1953 seasons.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Andrew Arthur Carey?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Andy Carey was the Yankees&#x27; primary starting third baseman from 1954 through mid-1958, providing solid defense at the hot corner. While surrounded by Hall of Fame sluggers, he was a dependable bat in the lineup. His best offensive season came in his 1954 rookie campaign when he hit .302 with 65 RBI.">What was Andy Carey&#x27;s role on those great Yankees teams of the 1950s?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="His most significant World Series hit was a two-run home run off Sal Maglie in Game 1 of the 1956 World Series against the Brooklyn Dodgers. He also hit a solo home run in the decisive Game 7 of the 1957 World Series, though the Yankees lost that game to the Milwaukee Braves. Across his four World Series appearances, he collected 19 hits.">Did Carey have any memorable World Series moments with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Despite the shared surname, Andy Carey was not related to Hall of Famer Max Carey or his son Scoop Carey. However, baseball did run in the family. He was a second-generation major leaguer, as his father, Joe Carey, was a catcher who played for the Washington Senators in 1924.">Was he related to the Hall of Famer Max Carey?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "LAD", "CHW", "KCA"], "years": ["1954", "1955", "1956", "1958", "1957", "1961", "1960", "1959", "1962", "1953", "1952"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Andrew Arthur Carey", "hints": ["Was traded from the New York Yankees to the Kansas City Athletics in the deal that brought Roger Maris to New York.", "Played in four consecutive World Series with the New York Yankees (1955-1958).", "Son, Todd Carey, played minor league baseball in the California Angels organization."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "KCA", "LAD", "CHW"], "years": ["1959", "1961", "1953", "1954", "1956", "1960", "1962", "1957", "1958", "1955", "1952"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Andrew Arthur Carey", "hints": ["Played third base in four consecutive World Series from 1955 to 1958.", "Was a second-generation major leaguer, as his father Joe played for the Washington Senators.", "Served two years in the U.S. Army during the Korean War, missing the 1952 and 1953 seasons."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 30-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

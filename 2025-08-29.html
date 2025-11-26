@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was the 1983 American League Rookie of the Year.</li>
-                        <li>Hit 35 home runs and recorded 100 RBI as a rookie.</li>
-                        <li>Was named the 1991 American League Comeback Player of the Year.</li>
+                        <li>Named the 1983 American League Rookie of the Year.</li>
+                        <li>Selected as an All-Star while hitting 35 home runs and collecting 100 RBI as a rookie.</li>
+                        <li>Hit three career home runs onto the roof of the original Comiskey Park.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Ron Kittle?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Kittle&#x27;s 1983 rookie season with the &quot;Winning Ugly&quot; Chicago White Sox was phenomenal, as he won Rookie of the Year by hitting 35 home runs with 100 RBI. His immense power made him an instant star, but a series of injuries, particularly to his back, limited his playing time and effectiveness over the following years. He had several stints with the White Sox and other clubs but never fully replicated the sustained success of his incredible debut.">What made Ron Kittle&#x27;s rookie season so spectacular, and how did the rest of his career unfold?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Kittle played parts of two seasons with the New York Yankees in 1986 and 1987 after being acquired in a trade from the White Sox. He served primarily as a designated hitter and platoon outfielder, hitting a combined 18 home runs in 90 games for the club. His time in New York was relatively brief, as he was traded to the Cleveland Indians during the 1987 season.">What was Ron Kittle&#x27;s time with the Yankees like?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Kittle was known for his blue-collar work ethic and fan-friendly personality, which stemmed from his pre-baseball career as an ironworker. He was a notorious clubhouse prankster and storyteller, once famously setting off a cherry bomb in teammate Carlton Fisk&#x27;s cowboy boot. After his playing career, he founded an Indiana-based company specializing in steel fabrication and construction.">I heard Ron Kittle had a reputation for being a character; what was he like off the field?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "CHW", "CLE", "BAL"], "years": ["1990", "1983", "1982", "1986", "1985", "1989", "1991", "1988", "1987", "1984"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Ron Kittle", "hints": ["Was the 1983 American League Rookie of the Year.", "Hit 35 home runs and recorded 100 RBI as a rookie.", "Was named the 1991 American League Comeback Player of the Year."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["CLE", "NYY", "BAL", "CHW"], "years": ["1987", "1985", "1990", "1984", "1991", "1983", "1982", "1988", "1986", "1989"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Ron Kittle", "hints": ["Named the 1983 American League Rookie of the Year.", "Selected as an All-Star while hitting 35 home runs and collecting 100 RBI as a rookie.", "Hit three career home runs onto the roof of the original Comiskey Park."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 30-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

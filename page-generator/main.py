@@ -36,6 +36,13 @@ Options:
                         Generate a master list of all players from existing
                         detail pages, then exit. Skips normal page generation.
 
+  --id-only             Identify the player from each clue image and scrape
+                        stats, but do not call Gemini for facts or follow-up
+                        questions. Maximizes number of puzzles per day.
+
+  --facts-only          Identify the player and generate three career facts
+                        via Gemini, but do not generate follow-up Q&A.
+
   -h, --help            Show this help message and exit.
 
 Interactive prompts (normal generation mode):
@@ -57,6 +64,18 @@ Notes:
     is_automated = "--automated" in sys.argv
     if is_automated:
         print("🤖 Running in AUTOMATED mode. User prompts will be skipped.")
+
+    id_only_mode = "--id-only" in sys.argv
+    facts_only_mode = "--facts-only" in sys.argv
+
+    if id_only_mode and facts_only_mode:
+        print("❌ Error: --id-only and --facts-only cannot be used together. Please choose one mode.")
+        sys.exit(1)
+
+    if id_only_mode:
+        print("⚙️  Running in ID-ONLY mode (no Gemini facts or follow-up Q&A).")
+    elif facts_only_mode:
+        print("⚙️  Running in FACTS-ONLY mode (no follow-up Q&A).")
 
     config = config_manager.load_config()
     last_path = config.get("last_project_path")
@@ -158,27 +177,45 @@ Notes:
     for clue_path in clue_files_to_process:
         print("\n" + "-"*50)
         date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.webp", clue_path.name)
-        if not date_match: continue
+        if not date_match:
+            continue
         
         date_str = date_match.group(1)
         dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
         formatted_date = dt_obj.strftime("%B %d, %Y")
         
-        player_info = ai_services.get_player_info_from_image(clue_path, api_key)
-        if player_info:
-            scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated)
-            if scraped_data:
-                player_info['career_totals'] = scraped_data['career_totals']
-                player_info['yearly_war'] = scraped_data['yearly_war']
+        try:
+            player_info = ai_services.get_player_info_from_image(clue_path, api_key)
+            if player_info:
+                scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated)
+                if scraped_data:
+                    player_info['career_totals'] = scraped_data['career_totals']
+                    player_info['yearly_war'] = scraped_data['yearly_war']
 
-            facts = ai_services.get_facts_from_gemini(player_info['name'], api_key)
-            player_info['facts'] = facts
+                # Determine how much Gemini usage to apply based on mode
+                if id_only_mode:
+                    # No Gemini text calls; leave facts and follow-up empty
+                    player_info['facts'] = []
+                    player_info['followup_qa'] = []
+                elif facts_only_mode:
+                    # Only fetch facts via Gemini, skip follow-up Q&A
+                    facts = ai_services.get_facts_from_gemini(player_info['name'], api_key)
+                    player_info['facts'] = facts
+                    player_info['followup_qa'] = []
+                else:
+                    # Full mode: single call to get both facts and follow-up Q&A
+                    combined = ai_services.get_facts_and_followup_from_gemini(player_info['name'], api_key)
+                    player_info['facts'] = combined.get('facts', [])
+                    player_info['followup_qa'] = combined.get('qa', [])
 
-            followup_qa = ai_services.get_followup_qa_from_gemini(player_info['name'], facts, api_key)
-            player_info['followup_qa'] = followup_qa
-
-            verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
-            html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)
+                verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
+                html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)
+        except ai_services.GeminiDailyQuotaExceeded as e:
+            print("\n❌ Gemini Free Tier daily quota has been reached.")
+            print("   Details from API: ")
+            print(f"   {e}")
+            print("\nStopping processing for today. You can rerun this script tomorrow to continue where you left off.")
+            break
     
     html_generator.rebuild_index_page(project_dir)
             

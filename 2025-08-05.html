@@ -22,16 +22,41 @@
                         <img src="images/answer-2025-08-05.webp" alt="Photo of Wayne Tolleson">
                     </div>
                     <div class="player-info">
-                        <h2>Wayne Tolleson "Tolly"</h2>
+                        <h2>Wayne Tolleson</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Led the American League with 21 sacrifice hits in 1987.</li>
-                        <li>Played over 250 career games at second base, shortstop, and third base.</li>
-                        <li>Father of former MLB infielder Steve Tolleson.</li>
+                        <li>Stole 56 bases for the Chicago White Sox in 1985.</li>
+                        <li>Led the American League in sacrifice hits with 25 in 1987.</li>
+                        <li>Father of former major league infielder Steve Tolleson.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Wayne Tolleson?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Wayne Tolleson was a versatile utility infielder, valued for his speed and defensive flexibility across shortstop, second base, and third base. He played for the Texas Rangers, Chicago White Sox, and New York Yankees over a 10-year career. His best all-around season came in 1985 with Chicago, when he hit .274 and stole 56 bases.">What was Wayne Tolleson&#x27;s primary role during his major league career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="While the Yankees did not make the postseason during his tenure from 1986 to 1990, Tolleson was a steady contributor. In 1987, he led the entire American League with 25 sacrifice hits, showcasing his skill at fundamental, team-oriented offense. He appeared in over 100 games for New York in both the 1987 and 1988 seasons.">Did Wayne Tolleson have any notable moments or statistical achievements during his time with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After retiring from baseball, Tolleson returned to his home state of South Carolina and became a successful high school baseball coach. He coached at his alma mater, Spartanburg High School, for many years. He also later worked as an area scout for the Kansas City Royals.">What did Wayne Tolleson do after his playing career ended?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -40,7 +65,7 @@
             <div class="table-wrapper">
                 <table>
                     <thead><tr><th>WAR</th><th>AB</th><th>H</th><th>HR</th><th>BA</th><th>R</th><th>RBI</th><th>SB</th><th>OBP</th><th>SLG</th><th>OPS</th><th>OPS+</th></tr></thead>
-                    <tbody><tr><td>2.3</td><td>2322</td><td>559</td><td>9</td><td>.241</td><td>301</td><td>133</td><td>108</td><td>.307</td><td>.293</td><td>.600</td><td>66</td></tr></tbody>
+                    <tbody><tr><td>1.2</td><td>331</td><td>81</td><td>6</td><td>.245</td><td>39</td><td>29</td><td>6</td><td>.299</td><td>.372</td><td>.670</td><td>86</td></tr></tbody>
                 </table>
             </div>
             <p class="citation">Statistics via Baseball-Reference.com</p>
@@ -62,9 +87,9 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            const years = ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990"];
-            const warData = [-0.2, -1.2, 0.8, -0.7, 1.5, 2.7, -0.2, 0.2, -0.4, -0.1];
-            const teamsByYear = ["TEX", "TEX", "TEX", "TEX", "TEX", "2TM", "NYY", "NYY", "NYY", "NYY"];
+            const years = ["2010", "2012", "2014", "2015"];
+            const warData = [0.2, -0.3, 0.8, 0.5];
+            const teamsByYear = ["OAK", "BAL", "TOR", "TOR"];
 
             const teamColors = {
                 'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
@@ -185,8 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["TEX", "NYY", "CHW"], "years": ["1984", "1987", "1983", "1982", "1986", "1990", "1985", "1981", "1988", "1989"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Wayne Tolleson", "hints": ["Led the American League with 21 sacrifice hits in 1987.", "Played over 250 career games at second base, shortstop, and third base.", "Father of former MLB infielder Steve Tolleson."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["TOR", "BAL", "OAK"], "years": ["2015", "2012", "2014", "2010"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Wayne Tolleson", "hints": ["Stole 56 bases for the Chicago White Sox in 1985.", "Led the American League in sacrifice hits with 25 in 1987.", "Father of former major league infielder Steve Tolleson."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+        <p>Last Updated: 26-Nov-2025</p>
+    </footer>    
 </body>
 </html>

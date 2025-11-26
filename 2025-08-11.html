@@ -28,10 +28,9 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was a member of the 2009 World Series champion New York Yankees.</li>
-                        <li>Was an American League All-Star in 2010.</li>
-                        <li>Set the all-time single-season record for strikeout-to-walk ratio at 11.63 in 2014.</li>
+
                         </ul>
+
                     </div>
                 </div>
                 
@@ -185,8 +184,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["SDP", "MIN", "NYY"], "years": ["2017", "2008", "2014", "2015", "2007", "2010", "2012", "2016", "2018", "2013", "2009", "2011"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Phil Hughes", "hints": ["Was a member of the 2009 World Series champion New York Yankees.", "Was an American League All-Star in 2010.", "Set the all-time single-season record for strikeout-to-walk ratio at 11.63 in 2014."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["MIN", "NYY", "SDP"], "years": ["2009", "2013", "2011", "2010", "2016", "2014", "2007", "2015", "2018", "2012", "2008", "2017"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Phil Hughes", "hints": []}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+        <p>Last Updated: 26-Nov-2025</p>
+    </footer>    
 </body>
 </html>

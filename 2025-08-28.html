@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Led the American League in strikeout percentage in 1991.</li>
-                        <li>Hit 20 or more home runs in three separate seasons.</li>
-                        <li>Finished a ten-year career with 117 home runs and 390 runs batted in.</li>
+                        <li>Was a key piece in the November 1987 trade that sent Rickey Henderson from New York to Oakland.</li>
+                        <li>Hit 16 home runs in only 92 games as a rookie in 1986.</li>
+                        <li>Homered in the 1993 American League Championship Series against the Toronto Blue Jays.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Dan Pasqua?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Dan Pasqua was known as a power-hitting outfielder with an all-or-nothing approach at the plate. He possessed significant home run power but also struck out frequently and posted low batting averages, never hitting above .262 in a full season. This profile made him a valuable platoon player, particularly against right-handed pitching, during his time with the Yankees and later the White Sox.">What was Dan Pasqua&#x27;s reputation as a major league player?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="His most notable Yankees season was his 1986 rookie campaign, where he showed immense promise as a power hitter. In just 92 games, he hit 16 home runs and drove in 47 runs with a solid .832 OPS. This performance established him as a key young power bat alongside Don Mattingly and Dave Winfield in the New York lineup.">What was his most notable season as a New York Yankee?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After retiring from baseball in 1994, Pasqua returned to his hometown of Oradell, New Jersey, and entered the business world. He became an executive for a construction company, a field he has worked in for many years. This marked a distinct transition away from the sport following his 10-year major league career.">What did Dan Pasqua do after his baseball career ended?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "CHW"], "years": ["1993", "1989", "1985", "1988", "1991", "1992", "1994", "1990", "1986", "1987"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Dan Pasqua", "hints": ["Led the American League in strikeout percentage in 1991.", "Hit 20 or more home runs in three separate seasons.", "Finished a ten-year career with 117 home runs and 390 runs batted in."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "CHW"], "years": ["1987", "1985", "1990", "1991", "1992", "1994", "1988", "1986", "1989", "1993"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Dan Pasqua", "hints": ["Was a key piece in the November 1987 trade that sent Rickey Henderson from New York to Oakland.", "Hit 16 home runs in only 92 games as a rookie in 1986.", "Homered in the 1993 American League Championship Series against the Toronto Blue Jays."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 30-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Became the fastest player in MLB history to reach 15 career home runs.</li>
-                        <li>Finished an MLB career with more home runs (65) than doubles (45).</li>
-                        <li>Hit 21 home runs in 79 games during the 1990 season.</li>
+                        <li>Set an MLB record as the fastest player to reach 15 career home runs, doing so in 133 at-bats.</li>
+                        <li>Finished second in the 1990 American League Rookie of the Year voting behind Sandy Alomar Jr.</li>
+                        <li>Played five professional seasons in Japan for the Hanshin Tigers and Chiba Lotte Marines.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Kevin Maas?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After hitting 21 home runs in 79 games in 1990, he hit 23 home runs in a full 1991 season, but his batting average dropped significantly. Pitchers adjusted to his pull-heavy, all-or-nothing approach, leading to high strikeout totals and declining production. He played parts of three more MLB seasons before his career in the majors concluded in 1995.">What was the story of Kevin Maas&#x27;s career after his incredible rookie season?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="No, he never appeared in a postseason game. His primary tenure with the Yankees from 1990 to 1993 was a rebuilding period for the franchise, preceding the dynasty that began in the mid-1990s. The team did not qualify for the playoffs during any of his seasons in New York.">Did Maas ever get to play in the postseason with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After retiring from baseball, he pursued a career in finance. He became a certified financial planner and a financial advisor for a major firm. In this role, he has often worked with other professional athletes to help manage their finances.">What did he do after his playing career ended?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,8 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "MIN"], "years": ["1990", "1993", "1995", "1991", "1992"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Kevin Maas", "hints": ["Became the fastest player in MLB history to reach 15 career home runs.", "Finished an MLB career with more home runs (65) than doubles (45).", "Hit 21 home runs in 79 games during the 1990 season."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["MIN", "NYY"], "years": ["1992", "1991", "1995", "1990", "1993"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Kevin Maas", "hints": ["Set an MLB record as the fastest player to reach 15 career home runs, doing so in 133 at-bats.", "Finished second in the 1990 American League Rookie of the Year voting behind Sandy Alomar Jr.", "Played five professional seasons in Japan for the Hanshin Tigers and Chiba Lotte Marines."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+        <p>Last Updated: 26-Nov-2025</p>
+    </footer>    
 </body>
 </html>

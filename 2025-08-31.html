@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Was the 1999 American League Championship Series MVP.</li>
-                        <li>Won four World Series championships with two different teams.</li>
-                        <li>Half-brother of 1997 World Series MVP Liván Hernández.</li>
+                        <li>Debuted in the major leagues at the age of 32.</li>
+                        <li>Was named the 1999 American League Championship Series MVP.</li>
+                        <li>Is the older half-brother of 1997 World Series MVP Liván Hernández.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Orlando Hernández?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After being a star pitcher for the Cuban national team, he was banned from Cuban baseball for life in 1996 after his half-brother Liván defected. In 1997, he escaped Cuba on a small boat, was detained in the Bahamas, and was eventually granted a visa to come to the United States, where he signed with the New York Yankees as a 32-year-old rookie.">What made his journey to the major leagues so remarkable?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He began his career by winning his first eight postseason decisions, a major league record at the time. As a Yankee, he posted a 9-3 record with a 2.65 ERA in 17 postseason appearances, winning three World Series rings. His signature performance was in the 1999 ALCS against Boston, where he allowed just one run in Game 1 and pitched seven shutout innings in the deciding Game 5.">How did he earn his reputation as a clutch postseason pitcher for the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="The nickname &#x27;El Duque&#x27; (The Duke) was inherited from his father, Arnaldo Hernández, who was a famous pitcher in Cuba. His iconic, sky-high leg kick was a deceptive and intimidating delivery style he developed to disrupt hitters&#x27; timing and hide the baseball until the last possible moment.">Why was he nicknamed &#x27;El Duque&#x27; and known for that high leg kick?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "ARI", "CHW", "NYM"], "years": ["2000", "2007", "2001", "2002", "1998", "2006", "2005", "1999", "2004"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Orlando Hern\u00e1ndez", "hints": ["Was the 1999 American League Championship Series MVP.", "Won four World Series championships with two different teams.", "Half-brother of 1997 World Series MVP Liv\u00e1n Hern\u00e1ndez."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["CHW", "ARI", "NYM", "NYY"], "years": ["2004", "2006", "2002", "2001", "1999", "1998", "2007", "2000", "2005"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Orlando Hern\u00e1ndez", "hints": ["Debuted in the major leagues at the age of 32.", "Was named the 1999 American League Championship Series MVP.", "Is the older half-brother of 1997 World Series MVP Liv\u00e1n Hern\u00e1ndez."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 31-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

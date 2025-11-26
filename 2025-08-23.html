@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Finished second in the American League batting race in 1968 with a .290 average.</li>
-                        <li>Led the American League in doubles in 1968.</li>
-                        <li>Was traded from the New York Yankees to the Boston Red Sox for future Cy Young Award winner Sparky Lyle.</li>
+                        <li>Was named an American League All-Star in 1968.</li>
+                        <li>Led the American League with 36 doubles in 1968.</li>
+                        <li>Was the centerpiece of a trade to the New York Yankees for future Cy Young winner Sparky Lyle.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Danny Cater?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Danny Cater was a solid contact hitter known for consistently posting high batting averages and providing gap power. During his peak from 1966 to 1968, he hit .301, .290, and .290, making the All-Star team in his final year of that stretch. He was also a versatile defender, playing primarily first and third base but also seeing time in the outfield.">What kind of player was Danny Cater during his prime?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Cater&#x27;s most notable achievement as a Yankee was a 21-game hitting streak during the 1970 season. The streak, which ran from August 28 to September 18, was the longest by a Yankee since Joe DiMaggio&#x27;s 56-game streak in 1941. He batted .386 (34-for-88) during that impressive stretch.">What was his most memorable achievement as a New York Yankee?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="The trade is widely regarded as one of the best in Yankees history and one of the worst for the Athletics. While Cater was a solid player for two seasons in New York, Sparky Lyle became a dominant relief pitcher for the Yankees. Lyle would go on to win the 1977 AL Cy Young Award and two World Series championships with the team.">How is the trade that brought him to the Yankees remembered today?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["BOS", "OAK", "NYY", "STL", "PHI", "KCA", "CHW"], "years": ["1967", "1964", "1974", "1971", "1965", "1970", "1975", "1966", "1968", "1972", "1973", "1969"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Danny Cater", "hints": ["Finished second in the American League batting race in 1968 with a .290 average.", "Led the American League in doubles in 1968.", "Was traded from the New York Yankees to the Boston Red Sox for future Cy Young Award winner Sparky Lyle."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["BOS", "STL", "NYY", "OAK", "PHI", "KCA", "CHW"], "years": ["1969", "1970", "1975", "1964", "1973", "1972", "1971", "1967", "1974", "1966", "1965", "1968"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Danny Cater", "hints": ["Was named an American League All-Star in 1968.", "Led the American League with 36 doubles in 1968.", "Was the centerpiece of a trade to the New York Yankees for future Cy Young winner Sparky Lyle."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 24-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

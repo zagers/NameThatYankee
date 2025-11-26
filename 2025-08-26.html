@@ -22,16 +22,41 @@
                         <img src="images/answer-2025-08-26.webp" alt="Photo of Ricky Bones">
                     </div>
                     <div class="player-info">
-                        <h2>Ricky Bones "Bones"</h2>
+                        <h2>Ricky Bones</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Played for eight different Major League Baseball teams.</li>
-                        <li>Was a member of the inaugural Florida Marlins team in 1993.</li>
-                        <li>Pitched in the 1997 World Series for the Florida Marlins.</li>
+                        <li>Was a 1994 American League All-Star with the Milwaukee Brewers.</li>
+                        <li>Pitched for Puerto Rico in the 1988 Summer Olympics.</li>
+                        <li>Played for nine different MLB teams over an 11-season career.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Ricky Bones?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He began his career as a starting pitcher, most successfully with the Milwaukee Brewers, where he was an All-Star in 1994. Later in his career, he transitioned into a durable relief pitcher known for his sinker. He was a quintessential journeyman, valued for his versatility and ability to pitch in various roles for many different clubs.">What was Ricky Bones&#x27;s role during his career and what was he best known for?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Yes, he pitched effectively for the Yankees during their 1997 postseason run. He appeared in two games of the American League Division Series against Cleveland, throwing 2.1 scoreless innings in relief. Though the Yankees ultimately lost the series, his performance was a reliable contribution from the bullpen.">Did Ricky Bones have any memorable moments during his brief time with the Yankees?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="After retiring as a player, he became a highly respected pitching coach. He served as the bullpen coach for the New York Mets for seven seasons (2012-2018) and has also coached for the Washington Nationals. Additionally, he has been a key coach for the Puerto Rican national team in multiple World Baseball Classic tournaments.">What has Ricky Bones done since his playing career ended?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["MIL", "SDP", "KCR", "NYY", "CIN", "FLA", "BAL"], "years": ["2001", "1998", "2000", "1994", "1993", "1991", "1992", "1996", "1995", "1997", "1999"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Ricky Bones", "hints": ["Played for eight different Major League Baseball teams.", "Was a member of the inaugural Florida Marlins team in 1993.", "Pitched in the 1997 World Series for the Florida Marlins."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["SDP", "NYY", "CIN", "BAL", "KCR", "FLA", "MIL"], "years": ["2001", "1991", "1993", "1997", "1999", "1995", "1998", "1994", "1992", "1996", "2000"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Ricky Bones", "hints": ["Was a 1994 American League All-Star with the Milwaukee Brewers.", "Pitched for Puerto Rico in the 1988 Summer Olympics.", "Played for nine different MLB teams over an 11-season career."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 27-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>

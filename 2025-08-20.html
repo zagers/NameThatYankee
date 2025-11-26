@@ -28,10 +28,35 @@
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Played in three consecutive World Series from 1962 to 1964.</li>
-                        <li>Hit two home runs in the 1964 World Series.</li>
-                        <li>Played for both the New York Yankees and New York Mets.</li>
+                        <li>Won a World Series championship as a rookie in 1962.</li>
+                        <li>Hit a go-ahead home run off Bob Gibson in Game 7 of the 1964 World Series.</li>
+                        <li>Appeared in three consecutive World Series from 1962 to 1964.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Phil Linz?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Phil Linz was a versatile utility infielder for the New York Yankees during their dynasty years of the early 1960s. He primarily served as a backup shortstop for Tony Kubek but also saw significant time at second and third base. His ability to play multiple positions made him a valuable role player on teams that reached the World Series three straight years.">What was Phil Linz&#x27;s primary role during his major league career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Linz had a memorable 1964 World Series, batting .259 with two home runs and four RBIs against the St. Louis Cardinals. Both of his home runs came off Hall of Fame pitcher Bob Gibson. His solo shot in Game 7 briefly gave the Yankees a lead before the Cardinals ultimately won the championship.">How did he perform in the 1964 World Series?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Following a tough loss in August 1964, Linz was playing his harmonica on the team bus when manager Yogi Berra told him to stop. Teammate Mickey Mantle jokingly told Linz that Berra had said to play it louder, which he did. This led to an angry confrontation, but the incident reportedly eased team tension and preceded a late-season surge to the pennant.">What is the story behind the famous &#x27;harmonica incident&#x27;?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["PHI", "NYM", "NYY"], "years": ["1963", "1967", "1962", "1964", "1965", "1966", "1968"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "Phil Linz", "hints": ["Played in three consecutive World Series from 1962 to 1964.", "Hit two home runs in the 1964 World Series.", "Played for both the New York Yankees and New York Mets."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["NYM", "NYY", "PHI"], "years": ["1964", "1963", "1967", "1962", "1966", "1965", "1968"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Phil Linz", "hints": ["Won a World Series championship as a rookie in 1962.", "Hit a go-ahead home run off Bob Gibson in Game 7 of the 1964 World Series.", "Appeared in three consecutive World Series from 1962 to 1964."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 20-Aug-2025</p>
+        <p>Last Updated: 26-Nov-2025</p>
     </footer>    
 </body>
 </html>
