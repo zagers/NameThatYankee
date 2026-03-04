@@ -3,3 +3,19 @@
 __pycache__/
 chromedriver
 DEVILS_MIGRATION_GUIDE.md
+
+# Python
+.venv/
+.pytest_cache/
+*.pyc
+*.pyo
+
+# Tools & Editors
+.vscode/
+.pyre/
+
+# Temp & Backups
+*.bak
+*.swp
+.pyre_configuration
+.vscode
