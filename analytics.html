@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
+
 <body>
     <header>
         <div class="header-content">
@@ -64,13 +66,24 @@
     </main>
 
     <footer>
-  	  <p class="disclaimer-footer">
-          This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-      </p>
-     <p>
-      Last Updated: August 15, 2025
-     </p>
-   <p class="copyright"><a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2025 by <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+        <p class="disclaimer-footer">
+            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League
+            Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+        </p>
+        <p>
+            Last Updated: August 15, 2025
+        </p>
+        <p class="copyright"><a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2025 by <a
+                href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under <a
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img
+                src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -105,9 +118,9 @@
                 const indexHtml = await indexResponse.text();
                 const parser = new DOMParser();
                 const indexDoc = parser.parseFromString(indexHtml, 'text/html');
-                
+
                 const detailPageLinks = Array.from(indexDoc.querySelectorAll('.gallery-item')).map(a => a.getAttribute('href'));
-                
+
                 const allPlayerData = [];
                 for (const link of detailPageLinks) {
                     const detailResponse = await fetch(link);
@@ -170,11 +183,11 @@
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                footer: function() {
+                                footer: function () {
                                     return 'Click to filter puzzles by this team';
                                 }
                             }
@@ -199,7 +212,7 @@
                     const yearNum = typeof y === 'string' ? parseInt(y, 10) : y;
                     return isNaN(yearNum) ? null : yearNum;
                 }).filter(y => y !== null);
-                
+
                 if (years.length > 0) {
                     // Count player in every decade they played in (matching filter behavior)
                     const uniqueDecades = new Set();
@@ -217,7 +230,7 @@
             const sortedDecades = Object.entries(decadeCounts).sort((a, b) => a[0] - b[0]);
             const labels = sortedDecades.map(entry => `${entry[0]}s`);
             const data = sortedDecades.map(entry => entry[1]);
-            
+
             new Chart(document.getElementById('decadeChart'), {
                 type: 'bar',
                 data: {
@@ -228,14 +241,14 @@
                         backgroundColor: 'rgba(196, 30, 58, 0.7)',
                     }]
                 },
-                 options: {
+                options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                footer: function() {
+                                footer: function () {
                                     return 'Click to filter puzzles from this decade';
                                 }
                             }
@@ -281,11 +294,11 @@
                     indexAxis: 'y',
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                title: function(context) {
+                                title: function (context) {
                                     return context[0].label;
                                 }
                             }
@@ -333,14 +346,14 @@
                         backgroundColor: 'rgba(0, 90, 156, 0.7)',
                     }]
                 },
-                 options: {
+                options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
+                    plugins: {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                footer: function() {
+                                footer: function () {
                                     return 'Click to view this puzzle';
                                 }
                             }
@@ -358,4 +371,5 @@
         }
     </script>
 </body>
+
 </html>

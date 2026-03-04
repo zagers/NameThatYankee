@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Name That Yankee - Quiz</title>
     <link rel="stylesheet" href="style.css">
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
 </head>
+
 <body>
     <header>
         <div class="header-content">
             <h1 id="quiz-title">Name That Yankee Quiz</h1>
         </div>
-    <div class="header-controls">
-        <a href="instructions.html" class="instructions-link">How does this site work?</a>
-        <div id="score-display">
-            Your Score: <span id="total-score">0</span>
+        <div class="header-controls">
+            <a href="instructions.html" class="instructions-link">How does this site work?</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+            </div>
         </div>
-    </div>
     </header>
 
     <main>
         <a href="index.html" class="back-link">← Back to All Questions</a>
-        
+
         <div class="quiz-layout">
             <div class="left-column">
                 <div class="quiz-container" id="quiz-area">
                     <img id="clue-image" src="" alt="Trivia Clue">
-					<div class="autocomplete-container">
-                    	<input type="text" id="guess-input" placeholder="Enter player's name..." autofocus>
-						<div id="suggestions-container"></div>
-					</div>
+                    <div class="autocomplete-container">
+                        <input type="text" id="guess-input" placeholder="Enter player's name..." autofocus>
+                        <div id="suggestions-container"></div>
+                    </div>
                     <div class="quiz-actions">
                         <button id="submit-guess">Submit Guess</button>
                         <button id="request-hint">Request Hint</button>
@@ -42,7 +44,7 @@
                         <h3>Hints</h3>
                         <ul id="hints-list"></ul>
                     </div>
-					<p class="disclaimer">Facts are AI-generated and may require verification</p>
+                    <p class="disclaimer">Facts are AI-generated and may require verification</p>
                 </div>
 
                 <div class="quiz-container" id="success-area" style="display: none;">
@@ -50,7 +52,8 @@
                     <h2 id="success-header" class="text-2xl font-bold correct"></h2>
                     <p id="success-points" class="text-lg"></p>
                     <!-- UPDATED: This link now goes to the detail page -->
-                    <a id="view-answer-link" href="" class="back-link" style="margin-top: 1.5rem;">View Player Details</a>
+                    <a id="view-answer-link" href="" class="back-link" style="margin-top: 1.5rem;">View Player
+                        Details</a>
                 </div>
             </div>
 
@@ -67,35 +70,46 @@
         </div>
     </main>
     <footer>
-  	  <p class="disclaimer-footer">
-          This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-      </p>
-     <p>
-      Last Updated: August 15, 2025
-     </p>
-   <p class="copyright"><a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2025 by <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>	 
+        <p class="disclaimer-footer">
+            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League
+            Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+        </p>
+        <p>
+            Last Updated: August 15, 2025
+        </p>
+        <p class="copyright"><a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2025 by <a
+                href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under <a
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img
+                src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="firebase-config.js"></script>
-	<script src="all_players.js"></script>
+    <script src="all_players.js"></script>
 
     <script type=module>
-	    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-	    import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
-		import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-		
-        document.addEventListener('DOMContentLoaded', () => {    
-	        const app = initializeApp(firebaseConfig);
-			const appCheck = initializeAppCheck(app, {
-				provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
-				isTokenAutoRefreshEnabled: true
-			});
-	        const db = getFirestore(app);
-			const guessesCollection = collection(db, 'guesses')
-			
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = initializeApp(firebaseConfig);
+            const appCheck = initializeAppCheck(app, {
+                provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
+                isTokenAutoRefreshEnabled: true
+            });
+            const db = getFirestore(app);
+            const guessesCollection = collection(db, 'guesses')
+
             const params = new URLSearchParams(window.location.search);
-			
+
             if (params.get('reset') === 'true') {
                 localStorage.removeItem('nameThatYankeeTotalScore');
                 localStorage.removeItem('nameThatYankeeCompletedPuzzles');
@@ -103,8 +117,8 @@
                 window.location.href = 'index.html';
                 return;
             }
-			
-            const date = params.get('date');		
+
+            const date = params.get('date');
             const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
             if (!date || !dateRegex.test(date)) {
                 document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
@@ -143,16 +157,16 @@
             const showGuessesBtn = document.getElementById('show-guesses-btn');
             const guessesChartContainer = document.getElementById('guesses-chart-container');
             const guessesChartCanvas = document.getElementById('guessesChart');
-			const suggestionsContainer = document.getElementById('suggestions-container');
+            const suggestionsContainer = document.getElementById('suggestions-container');
 
             let correctAnswer = '';
             let hints = [];
             let hintsRevealed = 0;
             const points = [10, 7, 4, 1, 0];
             //let allPlayers = [];
-			//Initialize the local variable with the global one from all_players.js
-			let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
-			let highlightedIndex = -1; // For keyboard navigation
+            //Initialize the local variable with the global one from all_players.js
+            let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
+            let highlightedIndex = -1; // For keyboard navigation
 
             let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
             let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
@@ -163,7 +177,7 @@
                 localStorage.setItem('nameThatYankeeTotalScore', totalScore);
                 totalScoreEl.textContent = totalScore;
             }
-            
+
             function markPuzzleAsComplete() {
                 if (!completedPuzzles.includes(date)) {
                     completedPuzzles.push(date);
@@ -183,14 +197,14 @@
                 }
 
                 try {
-               //     const playerListResponse = await fetch('all_players.json');
-               //     allPlayers = (await playerListResponse.json()).map(p => p.toLowerCase());
+                    //     const playerListResponse = await fetch('all_players.json');
+                    //     allPlayers = (await playerListResponse.json()).map(p => p.toLowerCase());
 
                     const response = await fetch(`${date}.html`);
                     const htmlText = await response.text();
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(htmlText, 'text/html');
-                    
+
                     const quizDataEl = doc.getElementById('quiz-data');
                     if (quizDataEl) {
                         const data = JSON.parse(quizDataEl.textContent);
@@ -205,18 +219,18 @@
                 }
             }
 
-	        async function saveIncorrectGuess(guess) {
-	            try {
-	                await addDoc(guessesCollection, {
-	                    puzzleDate: date,
-	                    guessText: guess,
-	                    timestamp: serverTimestamp()
-	                });
-	            } catch (error) {
-	                console.error("Error writing document: ", error);
-	            }
-	        }
-			
+            async function saveIncorrectGuess(guess) {
+                try {
+                    await addDoc(guessesCollection, {
+                        puzzleDate: date,
+                        guessText: guess,
+                        timestamp: serverTimestamp()
+                    });
+                } catch (error) {
+                    console.error("Error writing document: ", error);
+                }
+            }
+
             function sanitizeHTML(text) {
                 const temp = document.createElement('div');
                 if (text) { // Ensure text is not null or undefined
@@ -230,9 +244,9 @@
                 showGuessesBtn.textContent = "Loading...";
 
                 try {
-					const q = query(guessesCollection, where("puzzleDate", "==", date));
-					const querySnapshot = await getDocs(q);
-					const guesses = querySnapshot.docs.map(doc => doc.data().guessText.toLowerCase());
+                    const q = query(guessesCollection, where("puzzleDate", "==", date));
+                    const querySnapshot = await getDocs(q);
+                    const guesses = querySnapshot.docs.map(doc => doc.data().guessText.toLowerCase());
 
                     showGuessesBtn.textContent = "See Common Incorrect Guesses";
 
@@ -251,13 +265,13 @@
                         .sort((a, b) => b[1] - a[1])
                         .slice(0, 5);
 
-	                const labels = sortedGuesses.map(entry => 
-	                     sanitizeHTML(entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '))
-	                 );
-	                const data = sortedGuesses.map(entry => entry[1]);
+                    const labels = sortedGuesses.map(entry =>
+                        sanitizeHTML(entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '))
+                    );
+                    const data = sortedGuesses.map(entry => entry[1]);
 
                     guessesChartContainer.style.display = 'block';
-                    
+
                     new Chart(guessesChartCanvas, {
                         type: 'bar',
                         data: {
@@ -284,7 +298,7 @@
                             },
                             layout: {
                                 padding: {
-                                    left: 25 
+                                    left: 25
                                 }
                             }
                         }
@@ -299,7 +313,11 @@
 
             function checkGuess() {
                 const userGuess = guessInputEl.value.trim().toLowerCase();
-                if (!userGuess) return;
+                if (!userGuess) {
+                    feedbackMsg.textContent = "Please enter a valid guess.";
+                    feedbackMsg.className = 'incorrect';
+                    return;
+                }
 
                 if (userGuess === correctAnswer) {
                     const pointsEarned = points[hintsRevealed];
@@ -337,17 +355,17 @@
                     newHint.textContent = hints[hintsRevealed];
                     hintsList.appendChild(newHint);
                     hintsRevealed++;
-                } 
-                
+                }
+
                 if (hintsRevealed >= hints.length) {
-                    hintBtn.disabled = true; 
+                    hintBtn.disabled = true;
                     if (!submitBtn.disabled) {
                         feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
                         feedbackMsg.className = '';
                     }
                 }
             }
-            
+
             // NEW: Function to end the quiz and show the answer
             function endQuizAndShowAnswer() {
                 const formattedAnswer = correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
@@ -357,11 +375,11 @@
                 giveUpBtn.disabled = true;
                 guessInputEl.disabled = true;
                 markPuzzleAsComplete();
-            }	
-			
+            }
+
             // --- NEW: Autocomplete Logic ---
             guessInputEl.addEventListener('input', () => {
-				const normalizeText = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const normalizeText = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 const inputText = normalizeText(guessInputEl.value.toLowerCase());
                 suggestionsContainer.innerHTML = '';
                 if (inputText.length < 2) {
@@ -373,7 +391,7 @@
                     if (typeof player !== 'string') return false;
                     return normalizeText(player.toLowerCase()).startsWith(inputText);
                 }).slice(0, 7);
-				
+
                 if (matches.length > 0) {
                     matches.forEach(match => {
                         const suggestionItem = document.createElement('div');
@@ -391,11 +409,11 @@
                     suggestionsContainer.style.display = 'none';
                 }
             });
-			
+
             // --- UPDATED: Keyboard Navigation Logic ---
             guessInputEl.addEventListener('keydown', (e) => {
                 const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
-                
+
                 if (e.key === 'ArrowDown') {
                     e.preventDefault();
                     if (suggestions.length > 0) {
@@ -443,20 +461,17 @@
                         item.classList.remove('highlighted');
                     }
                 });
-            }		
+            }
 
             submitBtn.addEventListener('click', checkGuess);
             hintBtn.addEventListener('click', revealHint);
             giveUpBtn.addEventListener('click', endQuizAndShowAnswer); // New event listener
             showGuessesBtn.addEventListener('click', showIncorrectGuesses);
-            guessInputEl.addEventListener('keyup', (e) => {
-                if (e.key === 'Enter') {
-                    checkGuess();
-                }
-            });
+
 
             loadQuizData();
         });
     </script>
 </body>
+
 </html>
