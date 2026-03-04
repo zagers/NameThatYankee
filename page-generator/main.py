@@ -1,6 +1,5 @@
 import os
 from PIL import Image
-import google.generativeai as genai
 from pathlib import Path
 import json
 from bs4 import BeautifulSoup

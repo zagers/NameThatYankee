@@ -1,0 +1,13 @@
+{
+  "source_directories": [
+    "."
+  ],
+  "search_path": [
+    {"site-package": "google"},
+    {"site-package": "PIL"}
+  ],
+  "exclude": [
+    ".venv"
+  ],
+  "strict": false
+}

@@ -19,19 +19,44 @@
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-2025-03-29.webp" alt="Photo of James Edward Key">
+                        <img src="images/answer-2025-03-29.webp" alt="Photo of Jimmy Key">
                     </div>
                     <div class="player-info">
-                        <h2>James Edward Key "Jimmy"</h2>
+                        <h2>Jimmy Key</h2>
                         <div class="facts-header">
                             <h3>Career Highlights & Facts</h3>
                             <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
                         </div>
                         <ul>
-                        <li>Won the 1987 American League ERA title with a 2.76 ERA.</li>
-                        <li>Was a five-time American League All-Star.</li>
-                        <li>Won the clinching game of the 1996 World Series for the New York Yankees.</li>
+                        <li>Won World Series titles with both the Toronto Blue Jays in 1992 and the New York Yankees in 1996.</li>
+                        <li>Finished as the runner-up for the American League Cy Young Award in both 1987 and 1994.</li>
+                        <li>Led the American League with a 2.76 ERA and a 1.057 WHIP during the 1987 season.</li>
                         </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Jimmy Key?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Key was a four-time All-Star known for exceptional control, finishing his career with 186 wins and a 3.51 ERA. He served as the ace of the Blue Jays&#x27; rotation for nearly a decade before becoming a high-profile free agent signing for the Yankees in 1993. His precision allowed him to maintain a career walks-per-nine-innings rate of just 2.2, making him one of the most reliable starters of his era.">How would you summarize Jimmy Key&#x27;s overall impact and consistency as a left-handed pitcher during his 15-season career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Key earned the win in the clinching Game 6 of the 1996 World Series against the Atlanta Braves, allowing only one run over six innings of work. He also provided veteran stability for a rotation that featured a young Andy Pettitte and helped bridge the gap to the team&#x27;s late-90s dynasty. During his four seasons in New York, he compiled a 48-30 record and earned two All-Star selections.">What was Jimmy Key&#x27;s most significant contribution to the Yankees during their 1996 World Series championship run?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="Key was an elite golfer who played both baseball and golf while attending Clemson University. After retiring from Major League Baseball, he continued to compete in high-level amateur golf tournaments. His legendary control on the mound was frequently compared to the focus and accuracy required for his success on the golf course.">Did Jimmy Key have any notable talents or interests outside of professional baseball?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
                     </div>
                 </div>
                 
@@ -185,14 +210,42 @@
         
             </div>
         </div>
-        <div id="search-data" style="display:none;">{"teams": ["NYY", "TOR", "BAL"], "years": ["1994", "1988", "1990", "1992", "1993", "1985", "1996", "1997", "1991", "1998", "1987", "1986", "1995", "1984", "1989"]}</div>
-        <div id="quiz-data" style="display:none;">{"answer": "James Edward Key", "hints": ["Won the 1987 American League ERA title with a 2.76 ERA.", "Was a five-time American League All-Star.", "Won the clinching game of the 1996 World Series for the New York Yankees."]}</div>
+        <div id="search-data" style="display:none;">{"teams": ["BAL", "NYY", "TOR"], "years": ["1985", "1989", "1988", "1992", "1984", "1998", "1994", "1997", "1990", "1993", "1996", "1987", "1986", "1991", "1995"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Jimmy Key", "hints": ["Won World Series titles with both the Toronto Blue Jays in 1992 and the New York Yankees in 1996.", "Finished as the runner-up for the American League Cy Young Award in both 1987 and 1994.", "Led the American League with a 2.76 ERA and a 1.057 WHIP during the 1987 season."]}</div>
     </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: 23-Nov-2025</p>
+        <p>Last Updated: 02-Mar-2026</p>
     </footer>    
 </body>
 </html>

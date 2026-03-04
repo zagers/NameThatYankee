@@ -1,7 +1,9 @@
-import google.generativeai as genai
-from PIL import Image
+from google import genai  # pyre-ignore[21]
+from google.genai import types, errors  # pyre-ignore[21]
+from PIL import Image  # pyre-ignore[21]
 import json
 import time
+
 
 # --- CONFIGURATION ---
 # The number of times to retry the API call if it returns an empty response.
@@ -45,10 +47,9 @@ def get_player_info_from_image(image_path, api_key: str):
     """
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL)
+    client = genai.Client(api_key=api_key)
     clue_image = Image.open(image_path)
-    generation_config = genai.types.GenerationConfig(temperature=0.1)
+    generation_config = types.GenerateContentConfig(temperature=0.1)
     prompt = """
     You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card and return the name and nickname of the player whose stats are shown.
 
@@ -73,10 +74,10 @@ def get_player_info_from_image(image_path, api_key: str):
         _respect_free_tier_rate_limit()
         response = None
         try:
-            response = model.generate_content([prompt, clue_image], generation_config=generation_config)
+            response = client.models.generate_content(model=MODEL, contents=[prompt, clue_image], config=generation_config)
             
             # This line will raise ValueError on an empty response
-            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
             player_data = json.loads(json_text)
 
             print(f"  ✅ Player identified as: {player_data['name']}")
@@ -104,9 +105,8 @@ def get_facts_from_gemini(player_name: str, api_key: str):
     """
     print(f"🤖 Asking Gemini for interesting facts about {player_name}...")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL)
-    generation_config = genai.types.GenerationConfig(temperature=0.1)
+    client = genai.Client(api_key=api_key)
+    generation_config = types.GenerateContentConfig(temperature=0.1)
     prompt = f"""
     Provide three interesting and unique career facts about the baseball player {player_name}.
 
@@ -132,10 +132,10 @@ def get_facts_from_gemini(player_name: str, api_key: str):
         _respect_free_tier_rate_limit()
         response = None
         try:
-            response = model.generate_content(prompt, generation_config=generation_config)
+            response = client.models.generate_content(model=MODEL, contents=prompt, config=generation_config)
             
             # This line will raise ValueError on an empty response
-            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
             fact_data = json.loads(json_text)
             
             print("  ✅ Facts retrieved.")
@@ -167,9 +167,8 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
     """
     print(f"🤖 Asking Gemini for follow-up Q&A about {player_name}...")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL)
-    generation_config = genai.types.GenerationConfig(temperature=0.2)
+    client = genai.Client(api_key=api_key)
+    generation_config = types.GenerateContentConfig(temperature=0.2)
 
     facts_list = facts or []
     try:
@@ -228,11 +227,12 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
     """
 
     for attempt in range(MAX_RETRIES):
+        _respect_free_tier_rate_limit()
         response = None
         try:
-            response = model.generate_content(prompt, generation_config=generation_config)
+            response = client.models.generate_content(model=MODEL, contents=prompt, config=generation_config)
 
-            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
             qa_data = json.loads(json_text)
 
             qa_list = qa_data.get("qa", [])
@@ -250,8 +250,9 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            print(f"  Error getting follow-up Q&A from Gemini API: {e}")
-            return []
+            print(f"  ⚠️ Error getting follow-up Q&A from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            time.sleep(SLEEP_TIME)
+            continue
 
     print(f"  All {MAX_RETRIES} retry attempts for follow-up Q&A failed.")
     return []
@@ -268,9 +269,8 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
     """
     print(f" Asking Gemini for facts and follow-up Q&A about {player_name} in a single call...")
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(MODEL)
-    generation_config = genai.types.GenerationConfig(temperature=0.15)
+    client = genai.Client(api_key=api_key)
+    generation_config = types.GenerateContentConfig(temperature=0.15)
 
     prompt = f"""
     You are a precise baseball historian.
@@ -323,11 +323,12 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
     """
 
     for attempt in range(MAX_RETRIES):
+        _respect_free_tier_rate_limit()
         response = None
         try:
-            response = model.generate_content(prompt, generation_config=generation_config)
+            response = client.models.generate_content(model=MODEL, contents=prompt, config=generation_config)
 
-            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
+            json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
             data = json.loads(json_text)
 
             facts = data.get("facts", [])
@@ -347,13 +348,19 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            message = str(e)
-            # Detect daily quota exhaustion (GenerateRequestsPerDay...)
-            if "GenerateRequestsPerDayPerProjectPerModel-FreeTier" in message or "quota_value: 50" in message:
-                print("  ❌ Gemini daily Free Tier quota appears to be exhausted.")
-                raise GeminiDailyQuotaExceeded(message)
-            print(f"  Error getting combined facts and follow-up Q&A from Gemini API: {e}")
-            return {"facts": [], "qa": []}
+            if isinstance(e, errors.APIError) and getattr(e, 'code', None) == 429:
+                message = str(e)
+                # Detect daily quota exhaustion (GenerateRequestsPerDay...)
+                if "GenerateRequestsPerDayPerProjectPerModel-FreeTier" in message or "quota_value: 50" in message:
+                    print("  ❌ Gemini daily Free Tier quota appears to be exhausted.")
+                    raise GeminiDailyQuotaExceeded(message)
+                else:
+                    print(f"  ⚠️ Gemini API rate limit exceeded (429): {message}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                    time.sleep(SLEEP_TIME)
+                    continue
+            print(f"  ⚠️ Error getting combined facts and follow-up Q&A from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            time.sleep(SLEEP_TIME)
+            continue
 
     print(f"  All {MAX_RETRIES} retry attempts for combined facts/Q&A failed.")
     return {"facts": [], "qa": []}
