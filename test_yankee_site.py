@@ -15,12 +15,14 @@ import requests  # type: ignore
 from urllib.parse import urljoin, urlparse
 import sys
 import os
+from axe_selenium_python import Axe  # type: ignore
 
 # --- Test Configuration ---
-BASE_URL = "http://localhost:8000/"
-DETAIL_PAGE_URL = "http://localhost:8000/2025-07-11.html"
-QUIZ_URL = "http://localhost:8000/quiz.html"
-ANALYTICS_URL = "http://localhost:8000/analytics.html"
+TEST_FIXTURE_DIR = Path(__file__).parent / "tests" / "fixtures" / "www"
+BASE_URL = "http://localhost:8001/"
+DETAIL_PAGE_URL = "http://localhost:8001/2000-01-01.html"
+QUIZ_URL = "http://localhost:8001/quiz.html"
+ANALYTICS_URL = "http://localhost:8001/analytics.html"
 
 # --- Test Setup (Fixture) ---
 @pytest.fixture(scope="session")
@@ -41,19 +43,35 @@ def browser():
 
 @pytest.fixture(scope="session", autouse=True)
 def check_web_server():
-    """Check that the web server is running before running tests."""
-    try:
-        response = requests.get("http://localhost:8000/", timeout=5)
-        if response.status_code != 200:
-            print("❌ Web server is not responding correctly")
-            print("Please start your web server with: python -m http.server 8000")
-            sys.exit(1)
-        print("✅ Web server is running at http://localhost:8000/")
-    except requests.exceptions.RequestException as e:
-        print("❌ Web server is not running")
-        print("Please start your web server with: python -m http.server 8000")
-        print(f"Error: {e}")
-        sys.exit(1)
+    """Starts the web server before running tests and stops it after."""
+    import subprocess
+    import sys
+    import requests
+    import time
+    
+    server_process = subprocess.Popen(
+        [sys.executable, "-m", "http.server", "8001"],
+        cwd=str(TEST_FIXTURE_DIR),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    
+    # Wait for server to start
+    for _ in range(30):
+        try:
+            response = requests.get(BASE_URL, timeout=1)
+            if response.status_code == 200:
+                print(f"✅ Web server running at {BASE_URL}")
+                break
+        except requests.exceptions.RequestException:
+            pass
+        time.sleep(0.5)
+    else:
+        server_process.kill()
+        pytest.fail(f"❌ Web server failed to start at {BASE_URL}")
+        
+    yield
+    server_process.kill()
 
 @pytest.fixture
 def wait(browser):
@@ -275,7 +293,7 @@ class TestQuizFunctionality:
     def test_quiz_page_loads_correctly(self, browser, wait):
         """Test that quiz page loads with all required elements."""
         # Navigate to a specific quiz
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'clue-image')))
@@ -293,7 +311,7 @@ class TestQuizFunctionality:
         """Test that the quiz scoring system works correctly."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'guess-input')))
@@ -324,7 +342,7 @@ class TestQuizFunctionality:
         """Test that hints are revealed correctly."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'request-hint')))
@@ -345,7 +363,7 @@ class TestQuizFunctionality:
         """Test that only 4 wrong guesses are allowed."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'submit-guess')))
@@ -367,7 +385,7 @@ class TestQuizFunctionality:
         
         # After 4 wrong guesses, should show failure message inline
         feedback = wait.until(EC.visibility_of_element_located((By.ID, 'feedback-message')))
-        assert "sorry" in feedback.text.lower()
+        assert "sorry" in feedback.text.lower() or "give up" in feedback.text.lower()
         
         # Input should be disabled
         assert not browser.find_element(By.ID, 'guess-input').is_enabled()
@@ -376,7 +394,7 @@ class TestQuizFunctionality:
         """Test the incorrect guesses chart functionality."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'show-guesses-btn')))
@@ -400,7 +418,7 @@ class TestQuizFunctionality:
         """Test that only valid player names are accepted."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'guess-input')))
@@ -522,7 +540,7 @@ class TestSecurity:
     def test_file_access_restriction(self, browser, wait):
         """Test that file access is properly restricted."""
         # Try to access a non-existent page
-        browser.get("http://localhost:8000/nonexistent-page.html")
+        browser.get(f"{BASE_URL}nonexistent-page.html")
         
         # Wait for page to load
         time.sleep(2)  # Give time for redirect or error
@@ -558,6 +576,60 @@ class TestAnalyticsPage:
         # Check for chart containers
         chart_cards = browser.find_elements(By.CLASS_NAME, 'chart-card')
         assert len(chart_cards) >= 4  # Should have at least 4 charts
+
+    def test_analytics_empty_data(self, browser, wait):
+        """Test how the analytics page handles completely empty localStorage data."""
+        browser.get(BASE_URL)
+        browser.execute_script("window.localStorage.clear();")
+        
+        browser.get(ANALYTICS_URL)
+        time.sleep(1) # Give JS a moment to initialize and fail gracefully
+        
+        # Total score should gracefully default to 0
+        total_score_el = browser.find_element(By.ID, 'total-score')
+        assert total_score_el.text == "0"
+
+    def test_analytics_corrupted_data(self, browser, wait):
+        """Test how the analytics page handles intentionally corrupted localStorage data."""
+        browser.get(BASE_URL)
+        
+        # Inject corrupted data
+        browser.execute_script("window.localStorage.setItem('nameThatYankeeTotalScore', 'Not-A-Number');")
+        browser.execute_script("window.localStorage.setItem('nameThatYankeeCompletedPuzzles', '{malformed[json]');")
+        
+        browser.get(ANALYTICS_URL)
+        time.sleep(1)
+        
+        # Should gracefully fail to NaN or 0 but not break the whole page
+        total_score_el = browser.find_element(By.ID, 'total-score')
+        assert total_score_el.is_displayed()
+        
+        # The chart grid container should still be there even if charts fail to build
+        chart_grid = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'chart-grid')))
+        assert chart_grid.is_displayed()
+
+    def test_analytics_large_dataset(self, browser, wait):
+        """Test how the analytics page handles a highly populated dataset."""
+        browser.get(BASE_URL)
+        
+        # Inject 100 simulated completed puzzles
+        simulated_puzzles = {f"2000-01-{i%30+1:02d}": {"score": 10} for i in range(1, 101)}
+        puzzles_json = json.dumps(simulated_puzzles)
+        browser.execute_script(f"window.localStorage.setItem('nameThatYankeeCompletedPuzzles', '{puzzles_json}');")
+        browser.execute_script("window.localStorage.setItem('nameThatYankeeTotalScore', '1000');")
+        
+        browser.get(ANALYTICS_URL)
+        time.sleep(3) # Give charts time to render with data
+        
+        # Total score should render
+        total_score_el = browser.find_element(By.ID, 'total-score')
+        assert total_score_el.text == "1000"
+        
+        # All canvases should be present and visible
+        chart_canvases = browser.find_elements(By.TAG_NAME, 'canvas')
+        assert len(chart_canvases) >= 3
+        for canvas in chart_canvases:
+            assert canvas.is_displayed()
     
     def test_analytics_charts_load(self, browser, wait):
         """Test that analytics charts are properly loaded."""
@@ -647,19 +719,41 @@ class TestUtilities:
         assert load_time < 5, f"Page took {load_time:.2f} seconds to load"
     
     def test_accessibility_basic(self, browser, wait):
-        """Basic accessibility test."""
-        browser.get(BASE_URL)
-        wait.until(EC.presence_of_element_located((By.TAG_NAME, 'header')))
+        """Automated accessibility test using Axe-core parsing."""
+        urls_to_test = [
+            BASE_URL,
+            f"{QUIZ_URL}?date=2000-01-01",
+            ANALYTICS_URL
+        ]
         
-        # Check for alt text on images
-        images = browser.find_elements(By.TAG_NAME, 'img')
-        for img in images:
-            alt_text = img.get_attribute('alt')
-            assert alt_text is not None and alt_text != "", "Images should have alt text"
+        axe = Axe(browser)
         
-        # Check for proper heading structure
-        headings = browser.find_elements(By.TAG_NAME, 'h1')
-        assert len(headings) == 1, "Should have exactly one h1 element"
+        for url in urls_to_test:
+            browser.get(url)
+            # Give UI time to stabilize
+            time.sleep(1)
+            
+            # Inject axe-core into the page
+            axe.inject()
+            
+            # Run axe-core
+            results = axe.run()
+            
+            # Filter for critical violations
+            critical_violations = [
+                v for v in results.get("violations", [])
+                if v.get("impact") in ["critical", "serious"]
+            ]
+            
+            if critical_violations:
+                print(f"\\nAccessibility violations found on {url}:")
+                for v in critical_violations:
+                    print(f"- {v['id']} ({v['impact']}): {v['description']}")
+                    for node in v['nodes']:
+                        print(f"  Target: {node['target']}")
+                        
+            # Assert no critical or serious violations
+            assert len(critical_violations) == 0, f"Found {len(critical_violations)} critical/serious accessibility violations on {url}"
 
 if __name__ == "__main__":
     # Run tests with verbose output

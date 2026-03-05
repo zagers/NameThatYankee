@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Name That Yankee Archives</title>
+    <link href="style.css" rel="stylesheet" />
+    <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Name That Yankee Archives</h1>
+            <p>Click on a trivia card below to reveal the player and their career highlights.</p>
+        </div>
+        <div class="header-controls">
+            <a class="instructions-link" href="instructions.html">How does this site work?</a>
+            <a class="analytics-link" href="analytics.html">📊 Site Analytics</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+            </div>
+        </div>
+    </header>
+    <div class="sticky-search-wrapper">
+        <div class="search-container">
+            <input id="search-bar" aria-label="Search puzzles by date, year, or team"
+                placeholder="Search by trivia date, year, or team..." type="search" />
+            <div class="filter-container">
+                <input id="unsolved-filter" type="checkbox" />
+                <label for="unsolved-filter">Show Unsolved Only</label>
+            </div>
+        </div>
+    </div>
+    <main>
+        <div class="gallery" id="gallery-grid">
+            <div class="gallery-container"
+                data-search-terms="january 01 2000 nyy bos 1990 1995 2000 new york yankees boston red sox">
+                <a class="gallery-item" href="2000-01-01.html">
+                    <img alt="Name that Yankee trivia card from 2000-01-01" src="images/clue-2000-01-01.webp" />
+                </a>
+                <div class="p-4">
+                    <p class="gallery-date">Trivia Date: January 01, 2000</p>
+                    <div class="action-links">
+                        <a class="action-link reveal-link" href="2000-01-01.html">
+                            <span>Reveal</span>
+                        </a>
+                        <a class="action-link quiz-link" href="quiz.html?date=2000-01-01">
+                            <span>Quiz</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-container"
+                data-search-terms="july 09 2000 tor nym reds 1980 1982 toronto blue jays cincinnati reds">
+                <a class="gallery-item" href="2000-07-09.html">
+                    <img alt="Name that Yankee trivia card from 2000-07-09" src="images/clue-2000-07-09.webp" />
+                </a>
+                <div class="p-4">
+                    <p class="gallery-date">Trivia Date: July 09, 2000</p>
+                    <div class="action-links">
+                        <a class="action-link reveal-link" href="2000-07-09.html">
+                            <span>Reveal</span>
+                        </a>
+                        <a class="action-link quiz-link" href="quiz.html?date=2000-07-09">
+                            <span>Quiz</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p id="no-results" style="display: none;">No trivia cards found matching your search criteria.</p>
+    </main>
+    <footer>
+        <p>Copyright 2025</p>
+    </footer>
+    <script type="module" src="js/index.js"></script>
+</body>
+
+</html>

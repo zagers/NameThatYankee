@@ -1,6 +1,8 @@
 :root {
-    --primary-color: #0C2340; /* Yankees Navy */
-    --secondary-color: #C4CED3; /* Gray */
+    --primary-color: #0C2340;
+    /* Yankees Navy */
+    --secondary-color: #C4CED3;
+    /* Gray */
     --background-color: #f4f4f4;
     --text-color: #333;
     --card-bg: #ffffff;
@@ -32,9 +34,10 @@ header .header-content {
 header h1 {
     margin: 0;
     font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    color: white; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white;
 }
+
 header p {
     margin: 0;
 }
@@ -83,7 +86,7 @@ footer {
     padding: 1rem;
     margin-top: 2rem;
     font-size: 0.8rem;
-    color: #777;
+    color: #555;
 }
 
 /* --- Gallery & Search Styles --- */
@@ -114,7 +117,7 @@ footer {
     font-size: 1rem;
     border-radius: 9999px;
     border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-container {
@@ -157,9 +160,9 @@ footer {
     background-color: var(--card-bg);
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; 
+    overflow: hidden;
     position: relative;
     height: fit-content;
 }
@@ -184,7 +187,7 @@ footer {
 
 .gallery-container:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .gallery-item {
@@ -243,7 +246,8 @@ footer {
 }
 
 .reveal-link {
-    background-color: #1d4ed8; /* Blue */
+    background-color: #1d4ed8;
+    /* Blue */
 }
 
 .reveal-link:hover {
@@ -253,7 +257,8 @@ footer {
 }
 
 .quiz-link {
-    background-color: #0C2340; /* Dark blue matching header */
+    background-color: #0C2340;
+    /* Dark blue matching header */
 }
 
 .quiz-link:hover {
@@ -294,7 +299,8 @@ footer {
     background-color: #1a3a63;
 }
 
-.detail-layout, .quiz-layout {
+.detail-layout,
+.quiz-layout {
     display: flex;
     align-items: flex-start;
 }
@@ -303,22 +309,34 @@ footer {
 .detail-layout {
     gap: 2rem;
 }
+
 .quiz-layout {
     gap: 1.5rem;
 }
 
-.left-column, .right-column {
+.left-column,
+.right-column {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    min-width: 0; 
+    min-width: 0;
 }
 
-.detail-layout .left-column { flex: 3; }
-.detail-layout .right-column { flex: 1; }
+.detail-layout .left-column {
+    flex: 3;
+}
 
-.quiz-layout .left-column { flex: 1; }
-.quiz-layout .right-column { flex: 1; }
+.detail-layout .right-column {
+    flex: 1;
+}
+
+.quiz-layout .left-column {
+    flex: 1;
+}
+
+.quiz-layout .right-column {
+    flex: 1;
+}
 
 
 .player-profile {
@@ -328,12 +346,21 @@ footer {
     background-color: var(--card-bg);
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.player-photo { flex: 1 1 80px; }
-.player-photo img { width: 100%; border-radius: 8px; }
-.player-info { flex: 2 1 300px; }
+.player-photo {
+    flex: 1 1 80px;
+}
+
+.player-photo img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.player-info {
+    flex: 2 1 300px;
+}
 
 .player-info h2 {
     margin-top: 0;
@@ -386,7 +413,8 @@ footer {
 }
 
 .followup-btn {
-    background-color: #0C2340; /* Match primary dark blue */
+    background-color: #0C2340;
+    /* Match primary dark blue */
     color: white;
     border: none;
     padding: 0.55rem 0.75rem;
@@ -418,7 +446,7 @@ footer {
     background-color: var(--card-bg);
     padding: 0.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .original-card img {
@@ -427,21 +455,24 @@ footer {
     border-radius: 8px;
 }
 
-.original-card h3, .facts-header h3 {
+.original-card h3,
+.facts-header h3 {
     margin-top: 0;
     font-size: 1.5rem;
     margin-bottom: 0;
 }
 
 /* --- Stats Table & Chart Styles --- */
-.stats-table-container, .chart-container {
+.stats-table-container,
+.chart-container {
     background-color: var(--card-bg);
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.stats-table-container h3, .chart-container h3 {
+.stats-table-container h3,
+.chart-container h3 {
     margin-top: 0;
     font-size: 1.5rem;
     color: var(--primary-color);
@@ -450,19 +481,55 @@ footer {
     margin-bottom: 0;
 }
 
-.chart-container h3 { text-align: center; }
-.table-wrapper { width: 100%; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
-th { background-color: #f8f9fa; font-weight: 600; color: var(--primary-color); }
-tbody tr:nth-child(even) { background-color: #f8f9fa; }
-tbody tr:hover { background-color: #e9ecef; }
-.citation { margin-top: 1rem; font-size: 0.8rem; color: #666; text-align: right; font-style: italic; }
+.chart-container h3 {
+    text-align: center;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+th,
+td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.citation {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+    font-style: italic;
+}
+
 /* General chart wrapper for detail pages */
-.chart-container .chart-wrapper { 
-    position: relative; 
-    min-height: 24rem; 
-    width: 100%; 
+.chart-container .chart-wrapper {
+    position: relative;
+    min-height: 24rem;
+    width: 100%;
 }
 
 /* --- Quiz Page Styles --- */
@@ -472,17 +539,19 @@ tbody tr:hover { background-color: #e9ecef; }
     background-color: #fff;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
-#clue-image { 
+
+#clue-image {
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 8px; 
-    border: 1px solid #ddd; 
-    margin-bottom: 1.5rem; 
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 1.5rem;
 }
+
 #guess-input {
     width: 100%;
     padding: 0.75rem;
@@ -491,12 +560,16 @@ tbody tr:hover { background-color: #e9ecef; }
     border-radius: 5px;
     box-sizing: border-box;
 }
+
 .quiz-actions {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
 }
-#submit-guess, #request-hint, #give-up-btn {
+
+#submit-guess,
+#request-hint,
+#give-up-btn {
     flex: 1;
     padding: 0.75rem;
     font-size: 1.1rem;
@@ -507,53 +580,100 @@ tbody tr:hover { background-color: #e9ecef; }
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 #submit-guess {
     background-color: var(--primary-color);
 }
-#give-up-btn{
-	background-color: gray;
+
+#give-up-btn {
+    background-color: #555;
+    /* Dark gray for better contrast with white text */
 }
+
 #request-hint {
-    background-color: #ffc107; /* Yellow */
+    background-color: #ffc107;
+    /* Yellow */
     color: #212529;
 }
-#submit-guess:hover { background-color: #1a3a63; }
-#request-hint:hover { background-color: #e0a800; }
 
-#submit-guess:disabled, #request-hint:disabled {
+#submit-guess:hover {
+    background-color: #1a3a63;
+}
+
+#request-hint:hover {
+    background-color: #e0a800;
+}
+
+#give-up-btn:hover {
+    background-color: #333;
+}
+
+#submit-guess:disabled,
+#request-hint:disabled {
     background-color: #adb5bd;
     cursor: not-allowed;
 }
 
-#feedback-message { margin-top: 1rem; font-weight: 600; min-height: 24px; }
-.correct { color: #16a34a; }
-.incorrect { color: #dc2626; }
-#hints-container { margin-top: 1.5rem; text-align: left; }
-#hints-container h3 { text-align: center; margin-bottom: 0.5rem; color: var(--primary-color); }
-#hints-list { list-style-type: '⚾'; padding-left: 1.5rem; }
-#hints-list li { padding-left: 0.5rem; margin-bottom: 0.5rem; }
+#feedback-message {
+    margin-top: 1rem;
+    font-weight: 600;
+    min-height: 24px;
+}
+
+.correct {
+    color: #16a34a;
+}
+
+.incorrect {
+    color: #dc2626;
+}
+
+#hints-container {
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+#hints-container h3 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+#hints-list {
+    list-style-type: '⚾';
+    padding-left: 1.5rem;
+}
+
+#hints-list li {
+    padding-left: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 #score-display {
     background-color: var(--secondary-color);
     color: var(--primary-color);
     padding: 0.5rem 1rem;
     border-radius: 9999px;
     font-weight: 600;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 20;
 }
+
 .answer-photo {
     max-width: 250px;
     max-height: 350px;
     margin: 0 auto 1.5rem auto;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .guesses-container {
     background-color: var(--card-bg);
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 #show-guesses-btn {
     width: 100%;
     padding: 0.75rem;
@@ -565,9 +685,11 @@ tbody tr:hover { background-color: #e9ecef; }
     cursor: pointer;
     transition: all 0.3s ease;
 }
+
 #show-guesses-btn:hover {
     background-color: #1a3a63;
 }
+
 #show-guesses-btn:disabled {
     background-color: #e9ecef;
     color: #6c757d;
@@ -580,9 +702,21 @@ tbody tr:hover { background-color: #e9ecef; }
 }
 
 @media (max-width: 992px) {
-    .detail-layout, .quiz-layout { flex-direction: column; }
-    .player-profile { flex-wrap: wrap; }
-    header { flex-direction: column; gap: 0.5rem; }
+
+    .detail-layout,
+    .quiz-layout {
+        flex-direction: column;
+    }
+
+    .player-profile {
+        flex-wrap: wrap;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
     .gallery {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 1rem;
@@ -594,10 +728,12 @@ tbody tr:hover { background-color: #e9ecef; }
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 0.75rem;
     }
+
     .action-links {
         flex-direction: column;
         gap: 0.5rem;
     }
+
     .action-link {
         min-width: auto;
         width: 100%;
@@ -619,37 +755,45 @@ tbody tr:hover { background-color: #e9ecef; }
     background-color: #fff;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .instructions-container h2 {
     color: var(--primary-color);
     border-bottom: 2px solid var(--secondary-color);
     padding-bottom: 0.5rem;
     margin-top: 0;
 }
+
 .instructions-container h3 {
     color: var(--primary-color);
     margin-top: 2rem;
 }
-.instructions-container p, .instructions-container li {
+
+.instructions-container p,
+.instructions-container li {
     line-height: 1.8;
 }
+
 .instructions-container ul {
     list-style-type: '⚾';
     padding-left: 1.5rem;
 }
+
 .instructions-container code {
     background-color: #e9ecef;
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: monospace;
 }
+
 .disclaimer-footer {
     font-size: 0.75rem;
     font-style: italic;
-    color: #888;
+    color: #555;
     max-width: 700px;
-    margin: 0 auto 1rem auto; /* Center the text and add space below */
+    margin: 0 auto 1rem auto;
+    /* Center the text and add space below */
 }
 
 /* Autocomplete Styles */
@@ -666,12 +810,15 @@ tbody tr:hover { background-color: #e9ecef; }
     right: 0;
     background-color: white;
     border: 1px solid #ccc;
-    border-top: none; /* This makes it feel connected to the input box */
-    border-radius: 0 0 8px 8px; /* Rounds the bottom corners */
+    border-top: none;
+    /* This makes it feel connected to the input box */
+    border-radius: 0 0 8px 8px;
+    /* Rounds the bottom corners */
     z-index: 100;
     max-height: 200px;
     overflow-y: auto;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Adds a subtle shadow */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Adds a subtle shadow */
 }
 
 .suggestion-item {
@@ -682,7 +829,8 @@ tbody tr:hover { background-color: #e9ecef; }
 
 .suggestion-item:hover {
     background-color: #f0f0f0;
-    color: var(--primary-color); /* Makes text darker on hover */
+    color: var(--primary-color);
+    /* Makes text darker on hover */
 }
 
 /* --- Analytics Page Styles --- */
@@ -692,18 +840,21 @@ tbody tr:hover { background-color: #e9ecef; }
     gap: 1.5rem !important;
     margin-top: 2rem;
     width: 100%;
-    max-width: 1200px;  /* matches main container width */
-    margin: 2rem auto !important; /* centers the grid */
+    max-width: 1200px;
+    /* matches main container width */
+    margin: 2rem auto !important;
+    /* centers the grid */
 }
 
 .chart-card {
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 0;
     margin: 0 !important;
-    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    box-sizing: border-box;
+    /* Ensure padding doesn't affect width */
 }
 
 @media (max-width: 800px) {
@@ -741,4 +892,16 @@ tbody tr:hover { background-color: #e9ecef; }
     color: #666;
     font-style: italic;
     text-align: center;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
