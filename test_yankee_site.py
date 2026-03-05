@@ -539,7 +539,7 @@ class TestSecurity:
     def test_file_access_restriction(self, browser, wait):
         """Test that file access is properly restricted."""
         # Try to access a non-existent page
-        browser.get("http://localhost:8000/nonexistent-page.html")
+        browser.get(f"{BASE_URL}nonexistent-page.html")
         
         # Wait for page to load
         time.sleep(2)  # Give time for redirect or error
