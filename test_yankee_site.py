@@ -1,17 +1,17 @@
-import pytest
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from webdriver_manager.chrome import ChromeDriverManager
+import pytest  # type: ignore
+from selenium import webdriver  # type: ignore
+from selenium.webdriver.common.by import By  # type: ignore
+from selenium.webdriver.chrome.service import Service as ChromeService  # type: ignore
+from selenium.webdriver.support.ui import WebDriverWait  # type: ignore
+from selenium.webdriver.support import expected_conditions as EC  # type: ignore
+from selenium.webdriver.common.keys import Keys  # type: ignore
+from selenium.webdriver.common.action_chains import ActionChains  # type: ignore
+from webdriver_manager.chrome import ChromeDriverManager  # type: ignore
 from pathlib import Path
 import time
 import json
 import re
-import requests
+import requests  # type: ignore
 from urllib.parse import urljoin, urlparse
 import sys
 

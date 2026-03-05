@@ -1,13 +1,12 @@
 {
   "source_directories": [
-    "."
+    "page-generator",
+    "tests"
   ],
   "search_path": [
-    {"site-package": "google"},
-    {"site-package": "PIL"}
+    ".venv/lib/python3.14/site-packages",
+    "page-generator"
   ],
-  "exclude": [
-    ".venv"
-  ],
+  "site_package_search_strategy": "all",
   "strict": false
 }

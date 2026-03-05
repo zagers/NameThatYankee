@@ -1,6 +1,6 @@
-from google import genai  # pyre-ignore[21]
-from google.genai import types, errors  # pyre-ignore[21]
-from PIL import Image  # pyre-ignore[21]
+from google import genai  # type: ignore
+from google.genai import types, errors  # type: ignore
+from PIL import Image  # type: ignore
 import json
 import time
 
