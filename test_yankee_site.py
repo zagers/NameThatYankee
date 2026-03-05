@@ -575,6 +575,60 @@ class TestAnalyticsPage:
         # Check for chart containers
         chart_cards = browser.find_elements(By.CLASS_NAME, 'chart-card')
         assert len(chart_cards) >= 4  # Should have at least 4 charts
+
+    def test_analytics_empty_data(self, browser, wait):
+        """Test how the analytics page handles completely empty localStorage data."""
+        browser.get(BASE_URL)
+        browser.execute_script("window.localStorage.clear();")
+        
+        browser.get(ANALYTICS_URL)
+        time.sleep(1) # Give JS a moment to initialize and fail gracefully
+        
+        # Total score should gracefully default to 0
+        total_score_el = browser.find_element(By.ID, 'total-score')
+        assert total_score_el.text == "0"
+
+    def test_analytics_corrupted_data(self, browser, wait):
+        """Test how the analytics page handles intentionally corrupted localStorage data."""
+        browser.get(BASE_URL)
+        
+        # Inject corrupted data
+        browser.execute_script("window.localStorage.setItem('nameThatYankeeTotalScore', 'Not-A-Number');")
+        browser.execute_script("window.localStorage.setItem('nameThatYankeeCompletedPuzzles', '{malformed[json]');")
+        
+        browser.get(ANALYTICS_URL)
+        time.sleep(1)
+        
+        # Should gracefully fail to NaN or 0 but not break the whole page
+        total_score_el = browser.find_element(By.ID, 'total-score')
+        assert total_score_el.is_displayed()
+        
+        # The chart grid container should still be there even if charts fail to build
+        chart_grid = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'chart-grid')))
+        assert chart_grid.is_displayed()
+
+    def test_analytics_large_dataset(self, browser, wait):
+        """Test how the analytics page handles a highly populated dataset."""
+        browser.get(BASE_URL)
+        
+        # Inject 100 simulated completed puzzles
+        simulated_puzzles = {f"2000-01-{i%30+1:02d}": {"score": 10} for i in range(1, 101)}
+        puzzles_json = json.dumps(simulated_puzzles)
+        browser.execute_script(f"window.localStorage.setItem('nameThatYankeeCompletedPuzzles', '{puzzles_json}');")
+        browser.execute_script("window.localStorage.setItem('nameThatYankeeTotalScore', '1000');")
+        
+        browser.get(ANALYTICS_URL)
+        time.sleep(3) # Give charts time to render with data
+        
+        # Total score should render
+        total_score_el = browser.find_element(By.ID, 'total-score')
+        assert total_score_el.text == "1000"
+        
+        # All canvases should be present and visible
+        chart_canvases = browser.find_elements(By.TAG_NAME, 'canvas')
+        assert len(chart_canvases) >= 3
+        for canvas in chart_canvases:
+            assert canvas.is_displayed()
     
     def test_analytics_charts_load(self, browser, wait):
         """Test that analytics charts are properly loaded."""
