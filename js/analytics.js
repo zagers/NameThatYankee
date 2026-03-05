@@ -3,7 +3,7 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import { processTeamData, processDecadeData, processGuessesData, processToughestPuzzlesData } from "./analyticsData.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
+export async function initAnalytics() {
     // --- Initialize Firebase and App Check with modern API ---
     console.log("Initializing Firebase with modern API...");
     const app = initializeApp(firebaseConfig);
@@ -59,7 +59,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error("Error loading analytics:", error);
         loadingMessage.innerHTML = '<p class="text-xl font-semibold text-red-600">Could not load analytics data.</p>';
     }
-});
+}
+
+if (typeof document !== 'undefined' && !window.__TESTING__) {
+    document.addEventListener('DOMContentLoaded', initAnalytics);
+}
 
 // --- Chart Generation Functions ---
 function generateTeamChart(playerData) {
