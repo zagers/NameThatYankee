@@ -1,14 +1,14 @@
 import json
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup  # type: ignore
 from datetime import datetime
 import re
 from pathlib import Path
 from datetime import date
 import html
+from typing import Dict, List
 
-def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir):
-    """Generates and saves the new HTML detail page, now with quiz and search data."""
-    print(f"  📄 Generating detail page for {date_str}...")
+def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str) -> str:
+    """Builds and returns the HTML string for the detail page."""
     name = player_data.get('name', 'N/A')
     nickname = player_data.get('nickname', '')
     facts = player_data.get('facts', [])
@@ -21,7 +21,7 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
 
     followup_section_html = ""
     if followup_qa:
-        items_html_parts = []
+        items_html_parts: List[str] = []
         for idx, qa in enumerate(followup_qa[:3], start=1):
             question = html.escape(str(qa.get('question', '')).strip())
             answer = html.escape(str(qa.get('answer', '')).strip())
@@ -67,8 +67,8 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
     chart_html = ""
     search_data_html = ""
     quiz_data_html = ""
+    script_run_date: str = date.today().strftime("%d-%b-%Y")
     if yearly_war_data:
-        script_run_date = date.today().strftime("%d-%b-%Y")
         years = json.dumps([item['year'] for item in yearly_war_data])
         war_data = json.dumps([item['war'] for item in yearly_war_data])
         teams_by_year = json.dumps([item['display_team'] for item in yearly_war_data])
@@ -301,9 +301,17 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
 </body>
 </html>"""
     
+    return template
+
+def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, project_dir: Path):
+    """Generates and saves the new HTML detail page, now with quiz and search data."""
+    print(f"  📄 Generating detail page for {date_str}...")
+    
+    html_content = build_detail_page_html(player_data, date_str, formatted_date)
+    
     file_path = project_dir / f"{date_str}.html"
     with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(template)
+        f.write(html_content)
     print(f"  ✅ Detail page saved successfully.")
 
 def rebuild_index_page(project_dir: Path):
@@ -347,7 +355,7 @@ def rebuild_index_page(project_dir: Path):
                 formatted_date = dt_obj.strftime("%B %d, %Y")
                 
                 detail_page_path = project_dir / f"{date_str}.html"
-                search_terms = formatted_date.lower().replace(',', '') 
+                search_terms: str = formatted_date.lower().replace(',', '') 
 
                 if detail_page_path.exists():
                     with open(detail_page_path, 'r', encoding='utf-8') as detail_f:
@@ -355,7 +363,8 @@ def rebuild_index_page(project_dir: Path):
                     
                     search_data_div = detail_soup.find('div', id='search-data')
                     if search_data_div:
-                        search_data = json.loads(search_data_div.string)
+                        search_data_str = search_data_div.string or "{}"
+                        search_data = json.loads(search_data_str)
                         teams = search_data.get('teams', [])
                         years = search_data.get('years', [])
                         
@@ -364,7 +373,7 @@ def rebuild_index_page(project_dir: Path):
                         
                         for team_abbr in teams:
                             if team_abbr in team_name_map:
-                                search_terms += " " + team_name_map[team_abbr]
+                                search_terms = f"{search_terms} {team_name_map.get(team_abbr, '')}"
 
                 # THE FIX: Add specific classes to the links
                 snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
