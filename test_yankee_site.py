@@ -15,6 +15,7 @@ import requests  # type: ignore
 from urllib.parse import urljoin, urlparse
 import sys
 import os
+from axe_selenium_python import Axe  # type: ignore
 
 # --- Test Configuration ---
 TEST_FIXTURE_DIR = Path(__file__).parent / "tests" / "fixtures" / "www"
@@ -718,19 +719,41 @@ class TestUtilities:
         assert load_time < 5, f"Page took {load_time:.2f} seconds to load"
     
     def test_accessibility_basic(self, browser, wait):
-        """Basic accessibility test."""
-        browser.get(BASE_URL)
-        wait.until(EC.presence_of_element_located((By.TAG_NAME, 'header')))
+        """Automated accessibility test using Axe-core parsing."""
+        urls_to_test = [
+            BASE_URL,
+            f"{QUIZ_URL}?date=2000-01-01",
+            ANALYTICS_URL
+        ]
         
-        # Check for alt text on images
-        images = browser.find_elements(By.TAG_NAME, 'img')
-        for img in images:
-            alt_text = img.get_attribute('alt')
-            assert alt_text is not None and alt_text != "", "Images should have alt text"
+        axe = Axe(browser)
         
-        # Check for proper heading structure
-        headings = browser.find_elements(By.TAG_NAME, 'h1')
-        assert len(headings) == 1, "Should have exactly one h1 element"
+        for url in urls_to_test:
+            browser.get(url)
+            # Give UI time to stabilize
+            time.sleep(1)
+            
+            # Inject axe-core into the page
+            axe.inject()
+            
+            # Run axe-core
+            results = axe.run()
+            
+            # Filter for critical violations
+            critical_violations = [
+                v for v in results.get("violations", [])
+                if v.get("impact") in ["critical", "serious"]
+            ]
+            
+            if critical_violations:
+                print(f"\\nAccessibility violations found on {url}:")
+                for v in critical_violations:
+                    print(f"- {v['id']} ({v['impact']}): {v['description']}")
+                    for node in v['nodes']:
+                        print(f"  Target: {node['target']}")
+                        
+            # Assert no critical or serious violations
+            assert len(critical_violations) == 0, f"Found {len(critical_violations)} critical/serious accessibility violations on {url}"
 
 if __name__ == "__main__":
     # Run tests with verbose output
