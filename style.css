@@ -83,7 +83,7 @@ footer {
     padding: 1rem;
     margin-top: 2rem;
     font-size: 0.8rem;
-    color: #777;
+    color: #555;
 }
 
 /* --- Gallery & Search Styles --- */
@@ -647,7 +647,7 @@ tbody tr:hover { background-color: #e9ecef; }
 .disclaimer-footer {
     font-size: 0.75rem;
     font-style: italic;
-    color: #888;
+    color: #555;
     max-width: 700px;
     margin: 0 auto 1rem auto; /* Center the text and add space below */
 }
@@ -742,3 +742,4 @@ tbody tr:hover { background-color: #e9ecef; }
     font-style: italic;
     text-align: center;
 }
+\n.sr-only {\n    position: absolute;\n    width: 1px;\n    height: 1px;\n    padding: 0;\n    margin: -1px;\n    overflow: hidden;\n    clip: rect(0, 0, 0, 0);\n    white-space: nowrap;\n    border-width: 0;\n}
