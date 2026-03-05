@@ -3,7 +3,7 @@ import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com
 import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import { normalizeText, validateGuess, calculateScore, getAutocompleteSuggestions } from "./quizEngine.js";
 
-document.addEventListener('DOMContentLoaded', () => {
+export async function initQuiz() {
     const app = initializeApp(firebaseConfig);
     const appCheck = initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
@@ -366,5 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showGuessesBtn.addEventListener('click', showIncorrectGuesses);
 
 
-    loadQuizData();
-});
+    await loadQuizData();
+}
+
+if (typeof document !== 'undefined' && !window.__TESTING__) {
+    document.addEventListener('DOMContentLoaded', initQuiz);
+}

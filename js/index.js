@@ -1,6 +1,6 @@
 import { shouldShowGalleryItem } from './galleryFilter.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+export async function initIndex() {
     const searchBar = document.getElementById('search-bar');
     const unsolvedFilter = document.getElementById('unsolved-filter');
     const galleryGrid = document.getElementById('gallery-grid');
@@ -106,4 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchParam || decadeParam) {
         filterGallery();
     }
-});
+}
+
+if (typeof document !== 'undefined' && !window.__TESTING__) {
+    document.addEventListener('DOMContentLoaded', initIndex);
+}
