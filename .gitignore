@@ -4,6 +4,10 @@ __pycache__/
 chromedriver
 DEVILS_MIGRATION_GUIDE.md
 
+# Node/JavaScript
+node_modules/
+coverage/
+
 # Python
 .venv/
 .pytest_cache/
