@@ -1,0 +1,32 @@
+{
+  "name": "namethatyankee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "all_players.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zagers/NameThatYankee.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/zagers/NameThatYankee/issues"
+  },
+  "homepage": "https://github.com/zagers/NameThatYankee#readme",
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
+    "jsdom": "^28.1.0",
+    "vitest": "^4.0.18"
+  }
+}
