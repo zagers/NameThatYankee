@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Analytics - Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Site Analytics</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions.html" class="instructions-link">How to Play</a>
+            <div id="score-display">Your Score: <span id="total-score">0</span></div>
+        </div>
+    </header>
+
+    <main>
+        <a href="index.html" class="back-link">← Back to All Puzzles</a>
+
+        <div id="loading-message" class="text-center p-8">
+            <p class="text-xl font-semibold">Loading analytics data...</p>
+        </div>
+
+        <div id="analytics-content" class="hidden">
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <h2>Team Representation (Non-Yankees)</h2>
+                    <canvas id="teamChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h2>Career Eras of Puzzle Players</h2>
+                    <canvas id="decadeChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h2>Most Common Incorrect Guesses</h2>
+                    <canvas id="guessesChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h2>Toughest Puzzles (Incorrect Guesses by Date)</h2>
+                    <canvas id="toughestPuzzlesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="firebase-config.js"></script>
+    <script type="module" src="js/analytics.js"></script>
+</body>
+
+</html>

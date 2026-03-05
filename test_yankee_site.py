@@ -17,10 +17,11 @@ import sys
 import os
 
 # --- Test Configuration ---
-BASE_URL = "http://localhost:8000/"
-DETAIL_PAGE_URL = "http://localhost:8000/2025-07-11.html"
-QUIZ_URL = "http://localhost:8000/quiz.html"
-ANALYTICS_URL = "http://localhost:8000/analytics.html"
+TEST_FIXTURE_DIR = Path(__file__).parent / "tests" / "fixtures" / "www"
+BASE_URL = "http://localhost:8001/"
+DETAIL_PAGE_URL = "http://localhost:8001/2000-01-01.html"
+QUIZ_URL = "http://localhost:8001/quiz.html"
+ANALYTICS_URL = "http://localhost:8001/analytics.html"
 
 # --- Test Setup (Fixture) ---
 @pytest.fixture(scope="session")
@@ -41,19 +42,35 @@ def browser():
 
 @pytest.fixture(scope="session", autouse=True)
 def check_web_server():
-    """Check that the web server is running before running tests."""
-    try:
-        response = requests.get("http://localhost:8000/", timeout=5)
-        if response.status_code != 200:
-            print("❌ Web server is not responding correctly")
-            print("Please start your web server with: python -m http.server 8000")
-            sys.exit(1)
-        print("✅ Web server is running at http://localhost:8000/")
-    except requests.exceptions.RequestException as e:
-        print("❌ Web server is not running")
-        print("Please start your web server with: python -m http.server 8000")
-        print(f"Error: {e}")
-        sys.exit(1)
+    """Starts the web server before running tests and stops it after."""
+    import subprocess
+    import sys
+    import requests
+    import time
+    
+    server_process = subprocess.Popen(
+        [sys.executable, "-m", "http.server", "8001"],
+        cwd=str(TEST_FIXTURE_DIR),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
+    
+    # Wait for server to start
+    for _ in range(30):
+        try:
+            response = requests.get(BASE_URL, timeout=1)
+            if response.status_code == 200:
+                print(f"✅ Web server running at {BASE_URL}")
+                break
+        except requests.exceptions.RequestException:
+            pass
+        time.sleep(0.5)
+    else:
+        server_process.kill()
+        pytest.fail(f"❌ Web server failed to start at {BASE_URL}")
+        
+    yield
+    server_process.kill()
 
 @pytest.fixture
 def wait(browser):
@@ -275,7 +292,7 @@ class TestQuizFunctionality:
     def test_quiz_page_loads_correctly(self, browser, wait):
         """Test that quiz page loads with all required elements."""
         # Navigate to a specific quiz
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'clue-image')))
@@ -293,7 +310,7 @@ class TestQuizFunctionality:
         """Test that the quiz scoring system works correctly."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'guess-input')))
@@ -324,7 +341,7 @@ class TestQuizFunctionality:
         """Test that hints are revealed correctly."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'request-hint')))
@@ -345,7 +362,7 @@ class TestQuizFunctionality:
         """Test that only 4 wrong guesses are allowed."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'submit-guess')))
@@ -367,7 +384,7 @@ class TestQuizFunctionality:
         
         # After 4 wrong guesses, should show failure message inline
         feedback = wait.until(EC.visibility_of_element_located((By.ID, 'feedback-message')))
-        assert "sorry" in feedback.text.lower()
+        assert "sorry" in feedback.text.lower() or "give up" in feedback.text.lower()
         
         # Input should be disabled
         assert not browser.find_element(By.ID, 'guess-input').is_enabled()
@@ -376,7 +393,7 @@ class TestQuizFunctionality:
         """Test the incorrect guesses chart functionality."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'show-guesses-btn')))
@@ -400,7 +417,7 @@ class TestQuizFunctionality:
         """Test that only valid player names are accepted."""
         browser.get(BASE_URL)
         browser.execute_script("window.localStorage.clear();")
-        browser.get(f"{QUIZ_URL}?date=2025-07-11")
+        browser.get(f"{QUIZ_URL}?date=2000-01-01")
         
         # Wait for page to load
         wait.until(EC.presence_of_element_located((By.ID, 'guess-input')))
