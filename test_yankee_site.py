@@ -1,15 +1,15 @@
-import pytest  # pyre-ignore[21]
-from playwright.sync_api import Page, expect  # pyre-ignore[21]
+import pytest
+from playwright.sync_api import Page, expect
 import os
 import json
 import re
 import time
 import sys
 import subprocess
-import requests  # pyre-ignore[21]
+import requests
 from urllib.parse import urlparse
 from pathlib import Path
-from axe_playwright_python.sync_playwright import Axe  # pyre-ignore[21]
+from axe_playwright_python.sync_playwright import Axe
 
 # --- Test Configuration ---
 PROJECT_ROOT = Path(__file__).parent
