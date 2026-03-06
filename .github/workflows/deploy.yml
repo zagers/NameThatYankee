@@ -89,7 +89,7 @@ jobs:
         run: chmod -R a+w .
 
       - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.12.0
+        uses: zaproxy/action-baseline@v0.15.0
         with:
           target: 'http://localhost:8001'
           issue_title: 'ZAP Security Report'
