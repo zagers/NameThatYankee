@@ -141,11 +141,14 @@ class AutomatedWorkflow:
         """Identify the player from the clue image using AI."""
         try:
             player_info = ai_services.get_player_info_from_image(clue_path, self.api_key)
-            if player_info and player_info.get('name') and player_info['name'] != 'Unknown':
+            if player_info:
                 logger.info(f"Player identified: {player_info['name']}")
+                # Handle "Unknown" case - continue with workflow but note the issue
+                if player_info.get('name') == 'Unknown':
+                    logger.warning("AI returned 'Unknown' for player - continuing workflow may have limited results")
                 return player_info
             else:
-                logger.error("AI could not identify player or returned 'Unknown'")
+                logger.error("AI could not identify player")
                 return None
         except Exception as e:
             logger.error(f"Error identifying player: {e}")
@@ -154,6 +157,11 @@ class AutomatedWorkflow:
     def _scrape_player_stats(self, player_name: str) -> Optional[Dict[str, Any]]:
         """Scrape player statistics from Baseball-Reference."""
         try:
+            # Skip scraping if player is "Unknown"
+            if player_name == 'Unknown':
+                logger.warning("Skipping stats scraping for 'Unknown' player")
+                return None
+                
             scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
             if scraped_data:
                 logger.info(f"Successfully scraped stats for {player_name}")
@@ -168,6 +176,13 @@ class AutomatedWorkflow:
     def _generate_ai_content(self, player_info: Dict[str, Any]) -> None:
         """Generate AI content (facts and follow-up Q&A)."""
         try:
+            # Skip AI content generation for "Unknown" player
+            if player_info.get('name') == 'Unknown':
+                logger.warning("Skipping AI content generation for 'Unknown' player")
+                player_info['facts'] = []
+                player_info['followup_qa'] = []
+                return
+                
             # Use the single-call method for efficiency
             combined = ai_services.get_facts_and_followup_from_gemini(
                 player_info['name'], self.api_key
@@ -184,6 +199,11 @@ class AutomatedWorkflow:
     def _find_player_image(self, player_name: str, date_str: str) -> Optional[Path]:
         """Find and process a player image."""
         try:
+            # Skip image search for "Unknown" player
+            if player_name == 'Unknown':
+                logger.warning("Skipping player image search for 'Unknown' player")
+                return None
+                
             # Try primary search first
             answer_path = self.player_image_search.download_and_process_player_image(player_name, date_str)
             
