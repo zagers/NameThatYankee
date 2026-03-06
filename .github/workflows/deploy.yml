@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - master
+  schedule:
+    - cron: '0 0 * * *' # Every night at midnight
 
 permissions:
   contents: read
@@ -59,6 +61,35 @@ jobs:
         with:
           path: ./_site
           
+  # The Security Scan Job
+  security-scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start local server for DAST
+        run: python3 -m http.server 8001 --bind 127.0.0.1 --directory tests/fixtures/www &
+
+      - name: Wait for server
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8001 > /dev/null; then
+              echo "Server is up!"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:8001'
+          issue_title: 'ZAP Security Report'
+
   # The Deploy job
   deploy:
     needs: build
