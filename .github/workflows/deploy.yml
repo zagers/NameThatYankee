@@ -93,6 +93,7 @@ jobs:
         with:
           target: 'http://localhost:8001'
           issue_title: 'ZAP Security Report'
+          artifact_name: 'zap-scan-report'
 
   # The Deploy job
   deploy:
