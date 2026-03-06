@@ -95,6 +95,7 @@ jobs:
           target: 'http://localhost:8001'
           issue_title: 'ZAP Security Report'
           artifact_name: 'zap-scan-report'
+          rules_file_name: '.zap/rules.tsv'
 
   # The Deploy job
   deploy:

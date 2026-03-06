@@ -1,0 +1,10 @@
+10038	IGNORE	Content Security Policy (CSP) Header Not Set
+10020	IGNORE	Missing Anti-clickjacking Header
+10017	IGNORE	Cross-Domain JavaScript Source File Inclusion
+90004	IGNORE	Cross-Origin Header Missing or Invalid
+10063	IGNORE	Permissions Policy Header Not Set
+10036	IGNORE	Server Leaks Version Information via "Server" HTTP Response Header Field
+10021	IGNORE	X-Content-Type-Options Header Missing
+10027	IGNORE	Information Disclosure - Suspicious Comments
+10109	IGNORE	Modern Web Application
+10049	IGNORE	Storable and Cacheable Content
