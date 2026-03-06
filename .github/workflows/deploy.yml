@@ -8,6 +8,7 @@ on:
       - master
   schedule:
     - cron: '0 0 * * *' # Every night at midnight
+  workflow_dispatch:
 
 permissions:
   contents: read
