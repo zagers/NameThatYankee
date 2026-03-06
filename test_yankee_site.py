@@ -7,6 +7,7 @@ import time
 import sys
 import subprocess
 import requests
+from urllib.parse import urlparse
 from pathlib import Path
 from axe_playwright_python.sync_playwright import Axe
 
@@ -361,7 +362,7 @@ class TestSecurity:
         
         content = page.content()
         http_urls = re.findall(r'http://[^\s"\'<>]+', content)
-        http_urls = [url for url in http_urls if not url.startswith('http://localhost') and not url.startswith('http://www.w3.org')]
+        http_urls = [url for url in http_urls if urlparse(url).hostname not in ['localhost', 'www.w3.org']]
         assert len(http_urls) == 0, f"Found HTTP URLs: {http_urls}"
 
     def test_input_sanitization(self, page: Page):
