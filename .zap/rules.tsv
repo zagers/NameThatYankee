@@ -1,6 +1,5 @@
 10038	IGNORE	Content Security Policy (CSP) Header Not Set
 10020	IGNORE	Missing Anti-clickjacking Header
-90003	IGNORE	Sub Resource Integrity Attribute Missing
 10017	IGNORE	Cross-Domain JavaScript Source File Inclusion
 90004	IGNORE	Cross-Origin Header Missing or Invalid
 10063	IGNORE	Permissions Policy Header Not Set

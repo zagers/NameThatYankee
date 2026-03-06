@@ -92,7 +92,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
         <script>
             const years = {years};
             const warData = {war_data};
