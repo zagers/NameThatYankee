@@ -13,6 +13,7 @@ coverage/
 .pytest_cache/
 *.pyc
 *.pyo
+.coverage
 
 # Tools & Editors
 .vscode/
