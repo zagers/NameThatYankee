@@ -26,6 +26,192 @@ except ImportError:
     AUTOMATION_AVAILABLE = False
     print("⚠️  Automation modules not available - using manual workflow only")
 
+
+# --- Automation Helper Functions ---
+
+def handle_config_mode():
+    """Handle configuration mode for automation settings."""
+    print("\n--- Automation Configuration ---")
+    
+    automation_config = AutomationConfig()
+    
+    while True:
+        print("\nConfiguration Options:")
+        print("1. Show current configuration")
+        print("2. Set image quality")
+        print("3. Enable/disable auto-commit")
+        print("4. Enable/disable auto-push")
+        print("5. Reset to defaults")
+        print("6. Exit")
+        
+        choice = input("\nEnter your choice (1-6): ").strip()
+        
+        if choice == "1":
+            print("\nCurrent Configuration:")
+            print(json.dumps(automation_config.config, indent=2))
+        
+        elif choice == "2":
+            try:
+                quality = int(input("Enter image quality (1-100): ").strip())
+                if 1 <= quality <= 100:
+                    automation_config.set_image_quality(quality)
+                    print(f"✅ Image quality set to {quality}")
+                else:
+                    print("❌ Quality must be between 1 and 100")
+            except ValueError:
+                print("❌ Invalid number")
+        
+        elif choice == "3":
+            enabled = automation_config.is_auto_commit_enabled()
+            new_setting = not enabled
+            automation_config.set_auto_commit(new_setting)
+            print(f"✅ Auto-commit {'enabled' if new_setting else 'disabled'}")
+        
+        elif choice == "4":
+            enabled = automation_config.is_auto_push_enabled()
+            new_setting = not enabled
+            automation_config.set_auto_push(new_setting)
+            print(f"✅ Auto-push {'enabled' if new_setting else 'disabled'}")
+        
+        elif choice == "5":
+            if input("Reset to defaults? (y/N): ").lower().startswith('y'):
+                automation_config.reset_to_defaults()
+                print("✅ Configuration reset to defaults")
+        
+        elif choice == "6":
+            break
+        
+        else:
+            print("❌ Invalid choice")
+
+def handle_automation_mode(config: dict, automate_workflow: bool, batch_automate: bool):
+    """Handle automation mode for puzzle processing."""
+    print("\n--- Automated Workflow ---")
+    
+    # Get project directory
+    last_path = config.get("last_project_path")
+    prompt_message = "Enter the path to your website project folder"
+    if last_path:
+        prompt_message += f" [Default: {last_path}]: "
+    else:
+        prompt_message += ": "
+    
+    project_dir_str = input(prompt_message).strip().strip("'\"")
+    if not project_dir_str and last_path:
+        project_dir_str = last_path
+        print(f"Using default path: {project_dir_str}")
+    
+    project_dir = Path(project_dir_str).resolve()
+    if not project_dir.is_dir():
+        print(f"❌ Error: Directory not found at '{project_dir}'")
+        exit()
+    
+    # Save the path for next time
+    config["last_project_path"] = str(project_dir)
+    config_manager.save_config(config)
+    
+    # Get API key
+    api_key = config.get("gemini_api_key")
+    if not api_key:
+        api_key = input("Please enter your Google Gemini API key: ").strip()
+        config["gemini_api_key"] = api_key
+        config_manager.save_config(config)
+    
+    # Initialize automation workflow
+    workflow = AutomatedWorkflow(project_dir, config)
+    
+    if automate_workflow:
+        handle_single_automation(workflow)
+    elif batch_automate:
+        handle_batch_automation(workflow)
+
+def handle_single_automation(workflow: AutomatedWorkflow):
+    """Handle single puzzle automation."""
+    # Get screenshot path
+    screenshot_path = None
+    try:
+        screenshot_index = sys.argv.index("--automate-workflow") + 1
+        if screenshot_index < len(sys.argv):
+            screenshot_path = Path(sys.argv[screenshot_index])
+    except (ValueError, IndexError):
+        pass
+    
+    if not screenshot_path:
+        screenshot_str = input("Enter path to puzzle screenshot: ").strip().strip("'\"")
+        screenshot_path = Path(screenshot_str)
+    
+    if not screenshot_path.exists():
+        print(f"❌ Screenshot not found: {screenshot_path}")
+        exit()
+    
+    # Get optional date
+    date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
+    if not date_str:
+        date_str = datetime.now().strftime("%Y-%m-%d")
+    else:
+        try:
+            datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            print("❌ Invalid date format. Use YYYY-MM-DD")
+            exit()
+    
+    print(f"\n🚀 Starting automated workflow for {date_str}...")
+    success = workflow.process_puzzle_screenshot(screenshot_path, date_str)
+    
+    if success:
+        print(f"\n✅ Automation completed successfully for {date_str}!")
+    else:
+        print(f"\n❌ Automation failed for {date_str}. Check logs for details.")
+
+def handle_batch_automation(workflow: AutomatedWorkflow):
+    """Handle batch puzzle automation."""
+    # Get screenshot directory
+    screenshot_dir = None
+    try:
+        dir_index = sys.argv.index("--batch-automate") + 1
+        if dir_index < len(sys.argv):
+            screenshot_dir = Path(sys.argv[dir_index])
+    except (ValueError, IndexError):
+        pass
+    
+    if not screenshot_dir:
+        screenshot_str = input("Enter path to screenshot directory: ").strip().strip("'\"")
+        screenshot_dir = Path(screenshot_str)
+    
+    if not screenshot_dir.is_dir():
+        print(f"❌ Directory not found: {screenshot_dir}")
+        exit()
+    
+    # Get optional date range
+    print("\nOptional date range (leave blank for all files):")
+    start_date_str = input("Start date (YYYY-MM-DD): ").strip()
+    end_date_str = input("End date (YYYY-MM-DD): ").strip()
+    
+    date_range = None
+    if start_date_str and end_date_str:
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
+            date_range = (start_date, end_date)
+        except ValueError:
+            print("❌ Invalid date format. Use YYYY-MM-DD")
+            exit()
+    
+    print(f"\n🚀 Starting batch automation...")
+    results = workflow.batch_process_puzzles(screenshot_dir, date_range)
+    
+    # Summary
+    successful = sum(1 for success in results.values() if success)
+    total = len(results)
+    print(f"\n📊 Batch processing completed: {successful}/{total} successful")
+    
+    if successful < total:
+        print("\nFailed puzzles:")
+        for date, success in results.items():
+            if not success:
+                print(f"  ❌ {date}")
+
+
 # --- Main Execution ---
 if __name__ == "__main__":
     # Help / usage flag
@@ -256,188 +442,3 @@ Notes:
     html_generator.rebuild_index_page(project_dir)
             
     print("\n🎉 All tasks completed successfully! 🎉")
-
-
-# --- Automation Helper Functions ---
-
-def handle_config_mode():
-    """Handle configuration mode for automation settings."""
-    print("\n--- Automation Configuration ---")
-    
-    automation_config = AutomationConfig()
-    
-    while True:
-        print("\nConfiguration Options:")
-        print("1. Show current configuration")
-        print("2. Set image quality")
-        print("3. Enable/disable auto-commit")
-        print("4. Enable/disable auto-push")
-        print("5. Reset to defaults")
-        print("6. Exit")
-        
-        choice = input("\nEnter your choice (1-6): ").strip()
-        
-        if choice == "1":
-            print("\nCurrent Configuration:")
-            print(json.dumps(automation_config.config, indent=2))
-        
-        elif choice == "2":
-            try:
-                quality = int(input("Enter image quality (1-100): ").strip())
-                if 1 <= quality <= 100:
-                    automation_config.set_image_quality(quality)
-                    print(f"✅ Image quality set to {quality}")
-                else:
-                    print("❌ Quality must be between 1 and 100")
-            except ValueError:
-                print("❌ Invalid number")
-        
-        elif choice == "3":
-            enabled = automation_config.is_auto_commit_enabled()
-            new_setting = not enabled
-            automation_config.set_auto_commit(new_setting)
-            print(f"✅ Auto-commit {'enabled' if new_setting else 'disabled'}")
-        
-        elif choice == "4":
-            enabled = automation_config.is_auto_push_enabled()
-            new_setting = not enabled
-            automation_config.set_auto_push(new_setting)
-            print(f"✅ Auto-push {'enabled' if new_setting else 'disabled'}")
-        
-        elif choice == "5":
-            if input("Reset to defaults? (y/N): ").lower().startswith('y'):
-                automation_config.reset_to_defaults()
-                print("✅ Configuration reset to defaults")
-        
-        elif choice == "6":
-            break
-        
-        else:
-            print("❌ Invalid choice")
-
-def handle_automation_mode(config: dict, automate_workflow: bool, batch_automate: bool):
-    """Handle automation mode for puzzle processing."""
-    print("\n--- Automated Workflow ---")
-    
-    # Get project directory
-    last_path = config.get("last_project_path")
-    prompt_message = "Enter the path to your website project folder"
-    if last_path:
-        prompt_message += f" [Default: {last_path}]: "
-    else:
-        prompt_message += ": "
-    
-    project_dir_str = input(prompt_message).strip().strip("'\"")
-    if not project_dir_str and last_path:
-        project_dir_str = last_path
-        print(f"Using default path: {project_dir_str}")
-    
-    project_dir = Path(project_dir_str).resolve()
-    if not project_dir.is_dir():
-        print(f"❌ Error: Directory not found at '{project_dir}'")
-        exit()
-    
-    # Save the path for next time
-    config["last_project_path"] = str(project_dir)
-    config_manager.save_config(config)
-    
-    # Get API key
-    api_key = config.get("gemini_api_key")
-    if not api_key:
-        api_key = input("Please enter your Google Gemini API key: ").strip()
-        config["gemini_api_key"] = api_key
-        config_manager.save_config(config)
-    
-    # Initialize automation workflow
-    workflow = AutomatedWorkflow(project_dir, config)
-    
-    if automate_workflow:
-        handle_single_automation(workflow)
-    elif batch_automate:
-        handle_batch_automation(workflow)
-
-def handle_single_automation(workflow: AutomatedWorkflow):
-    """Handle single puzzle automation."""
-    # Get screenshot path
-    screenshot_path = None
-    try:
-        screenshot_index = sys.argv.index("--automate-workflow") + 1
-        if screenshot_index < len(sys.argv):
-            screenshot_path = Path(sys.argv[screenshot_index])
-    except (ValueError, IndexError):
-        pass
-    
-    if not screenshot_path:
-        screenshot_str = input("Enter path to puzzle screenshot: ").strip().strip("'\"")
-        screenshot_path = Path(screenshot_str)
-    
-    if not screenshot_path.exists():
-        print(f"❌ Screenshot not found: {screenshot_path}")
-        exit()
-    
-    # Get optional date
-    date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
-    if not date_str:
-        date_str = datetime.now().strftime("%Y-%m-%d")
-    else:
-        try:
-            datetime.strptime(date_str, "%Y-%m-%d")
-        except ValueError:
-            print("❌ Invalid date format. Use YYYY-MM-DD")
-            exit()
-    
-    print(f"\n🚀 Starting automated workflow for {date_str}...")
-    success = workflow.process_puzzle_screenshot(screenshot_path, date_str)
-    
-    if success:
-        print(f"\n✅ Automation completed successfully for {date_str}!")
-    else:
-        print(f"\n❌ Automation failed for {date_str}. Check logs for details.")
-
-def handle_batch_automation(workflow: AutomatedWorkflow):
-    """Handle batch puzzle automation."""
-    # Get screenshot directory
-    screenshot_dir = None
-    try:
-        dir_index = sys.argv.index("--batch-automate") + 1
-        if dir_index < len(sys.argv):
-            screenshot_dir = Path(sys.argv[dir_index])
-    except (ValueError, IndexError):
-        pass
-    
-    if not screenshot_dir:
-        screenshot_str = input("Enter path to screenshot directory: ").strip().strip("'\"")
-        screenshot_dir = Path(screenshot_str)
-    
-    if not screenshot_dir.is_dir():
-        print(f"❌ Directory not found: {screenshot_dir}")
-        exit()
-    
-    # Get optional date range
-    print("\nOptional date range (leave blank for all files):")
-    start_date_str = input("Start date (YYYY-MM-DD): ").strip()
-    end_date_str = input("End date (YYYY-MM-DD): ").strip()
-    
-    date_range = None
-    if start_date_str and end_date_str:
-        try:
-            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
-            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
-            date_range = (start_date, end_date)
-        except ValueError:
-            print("❌ Invalid date format. Use YYYY-MM-DD")
-            exit()
-    
-    print(f"\n🚀 Starting batch automation...")
-    results = workflow.batch_process_puzzles(screenshot_dir, date_range)
-    
-    # Summary
-    successful = sum(1 for success in results.values() if success)
-    total = len(results)
-    print(f"\n📊 Batch processing completed: {successful}/{total} successful")
-    
-    if successful < total:
-        print("\nFailed puzzles:")
-        for date, success in results.items():
-            if not success:
-                print(f"  ❌ {date}")
