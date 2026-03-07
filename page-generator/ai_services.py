@@ -51,15 +51,18 @@ def get_player_info_from_image(image_path, api_key: str):
     
     client = genai.Client(api_key=api_key)
     clue_image = Image.open(image_path)
+    current_date = "March 7, 2026"
     generation_config = types.GenerateContentConfig(
         temperature=0.1,
         tools=[types.Tool(
             google_search=types.GoogleSearch()
         )]
     )
-    prompt = """
+    prompt = f"""
     You are a baseball historian and statistical auditor. Analyze the provided image of a "Name That Yankee" trivia card. 
     Accuracy is your only priority. A wrong name is far worse than returning "Unknown".
+
+    **CONTEXT**: The current date is {current_date}. Statistics for the 2024 and 2025 seasons are historical facts and should NOT be treated as futuristic or fictitious.
 
     Follow these steps precisely:
 
@@ -74,15 +77,15 @@ def get_player_info_from_image(image_path, api_key: str):
         - **Team Sequence**: The chronological order of teams must be identical.
 
     Your response must be a single valid JSON object with the following structure, and nothing else:
-    {
-      "step_by_step_reasoning": {
+    {{
+      "step_by_step_reasoning": {{
         "transcribed_stats": "...",
         "search_query_used": "...",
         "audit_findings": "Detailed comparison of card stats vs search data"
-      },
+      }},
       "name": "Player's Full Name or 'Unknown'",
       "nickname": "Player's common nickname, or an empty string"
-    }
+    }}
     """
 
     for attempt in range(MAX_RETRIES):

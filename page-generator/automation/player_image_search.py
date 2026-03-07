@@ -67,7 +67,7 @@ class PlayerImageSearch:
 
         logger.info(f"Total candidates available from search: {len(candidates)}")
         best_matches = []
-        best_fallback = None
+        fallbacks = []
         max_candidates_to_check = 25
         
         # Determine actual number to check
@@ -76,7 +76,7 @@ class PlayerImageSearch:
 
         for i, candidate in enumerate(candidates[:max_candidates_to_check]):
             current_idx = i + 1
-            logger.info(f"--- Evaluating Candidate {current_idx}/{num_to_check} ---")
+            logger.info(f"\n--- 🧐 Evaluating Candidate {current_idx}/{num_to_check} ---")
             logger.info(f"Source: {candidate['source_page'][:80]}...")
             
             # Step 2 & 3: Download full scale and check suitability
@@ -88,14 +88,15 @@ class PlayerImageSearch:
             img_info = self.image_processor.get_image_info(temp_file)
             if img_info:
                 width, height = img_info.get('width', 0), img_info.get('height', 0)
-                if width < 300 or height < 300:
-                    logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 300x300. Skipping.")
+                if width < 200 or height < 200:
+                    logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 200x200. Skipping.")
                     temp_file.unlink(missing_ok=True)
                     continue
-                
+
                 # Orientation check: Reject landscape (width > height)
+
                 if width > height:
-                    logger.info(f"  ❌ Image is landscape format ({width}x{height}). Only portrait allowed. Skipping.")
+                    logger.info(f"  ❌ Image is landscape format ({width}x{height}). Skipping.")
                     temp_file.unlink(missing_ok=True)
                     continue
             else:
@@ -116,25 +117,20 @@ class PlayerImageSearch:
                         candidate['priority'] = priority
                         best_matches.append(candidate)
                         
-                        # Stop once we have 3 Priority 1 images
+                        # Stop ONLY if we have 3 Priority 1 images specifically
                         p1_count = len([m for m in best_matches if m['priority'] == 1])
                         if p1_count >= 3:
-                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping search.")
-                            break
-                        
-                        # Also stop if we have 5 total high-priority matches (preventing 6+)
-                        if len(best_matches) >= 5:
-                            logger.info(f"  🏁 Found {len(best_matches)} total high-priority matches. Stopping search.")
+                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping search early.")
                             break
                     
                     elif priority == 3:
-                        if not best_fallback:
-                            logger.info("  📍 Found Priority 3 (Fallback image). Saving as fallback and continuing...")
+                        if len(fallbacks) < 3:
+                            logger.info(f"  📍 Found Priority 3 (Fallback). Staging as option {len(fallbacks)+1}...")
                             candidate['temp_file'] = temp_file
                             candidate['priority'] = 3
-                            best_fallback = candidate
+                            fallbacks.append(candidate)
                         else:
-                            logger.info("  ⏭️ Another Priority 3. Already have a fallback. Continuing...")
+                            logger.info("  ⏭️ Already have 3 fallbacks. Skipping.")
                             temp_file.unlink(missing_ok=True)
                     else:
                         logger.info(f"  ❌ Image rejected by AI (Priority {priority}).")
@@ -144,22 +140,26 @@ class PlayerImageSearch:
                     logger.error(f"  ⚠️ Error during AI analysis: {e}")
                     temp_file.unlink(missing_ok=True)
             else:
-                # No API key, just take the first suitable image
-                logger.warning("  ⚠️ No API key provided for verification. Using first suitable image.")
+                # No API key, just take the first 3 suitable images
+                logger.warning("  ⚠️ No API key provided for verification.")
                 candidate['temp_file'] = temp_file
                 candidate['priority'] = 99
                 best_matches.append(candidate)
-                return best_matches
+                if len(best_matches) >= 3:
+                    return best_matches
 
-        if best_matches:
-            logger.info(f"  🏁 Finished search. Found {len(best_matches)} high-priority matches.")
-            # Clean up the fallback if we found better matches
-            if best_fallback and 'temp_file' in best_fallback:
-                best_fallback['temp_file'].unlink(missing_ok=True)
-            return best_matches
-        elif best_fallback:
-            logger.info("  🏁 Finished search. Using the best fallback found.")
-            return [best_fallback]
+        # Combine results: Best matches first, then fill with fallbacks until we have 3
+        final_results = best_matches + fallbacks
+        final_results = final_results[:3]
+        
+        # Cleanup any fallbacks that didn't make the final cut
+        for f in fallbacks:
+            if f not in final_results and 'temp_file' in f:
+                f['temp_file'].unlink(missing_ok=True)
+
+        if final_results:
+            logger.info(f"  🏁 Finished search. Providing {len(final_results)} candidates for review.")
+            return final_results
             
         logger.warning(f"  ❌ No suitable images found for {player_name} after checking {max_candidates_to_check} results.")
         return []
@@ -181,8 +181,9 @@ class PlayerImageSearch:
         
         try:
             encoded_query = urllib.parse.quote_plus(search_term)
-            # Use both udm=2 and tbm=isch fallback logic if one fails
-            search_url = f"https://www.google.com/search?q={encoded_query}&udm=2"
+            # Use udm=2 for the modern image search experience
+            search_url = f"https://www.google.com/search?q={encoded_query}&udm=2&gbv=2"
+            logger.info(f"🔍 Searching Google Images: {search_url}")
             driver.get(search_url)
             
             # Allow time for the page to settle
