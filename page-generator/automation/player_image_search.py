@@ -128,40 +128,86 @@ class PlayerImageSearch:
             
             logger.info(f"Searching: {search_term}")
             driver.get(search_url)
-            time.sleep(2)
+            time.sleep(3)  # Wait longer for dynamic content
             
             # Scroll to load more images
             for _ in range(2):
                 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                 time.sleep(1)
             
-            # Get image elements - use updated selector
-            image_elements = driver.find_elements(By.CSS_SELECTOR, "img.YQ4gaf")
-            
             results = []
-            for i, img_elem in enumerate(image_elements[:max_results]):
-                try:
-                    src = img_elem.get_attribute('src')
-                    # Handle both HTTP URLs and data URIs
-                    if src and (src.startswith('http') or src.startswith('data:')):
+            
+            # First try to find actual image source links
+            try:
+                # Look for links that contain image URLs
+                image_links = driver.find_elements(By.CSS_SELECTOR, "a.EZAeBe[href*='showzone.gg'], a.EZAeBe[href*='imgurl'], a.EZAeBe[href*='.jpg'], a.EZAeBe[href*='.png']")
+                
+                for link in image_links[:max_results]:
+                    href = link.get_attribute('href')
+                    if href and ('showzone.gg' in href or 'imgurl=' in href):
+                        # Extract actual image URL if it's a Google redirect
+                        if 'imgurl=' in href:
+                            import re
+                            match = re.search(r'imgurl=([^&]+)', href)
+                            if match:
+                                actual_url = urllib.parse.unquote(match.group(1))
+                            else:
+                                actual_url = href
+                        else:
+                            actual_url = href
+                        
                         # Calculate relevance score
                         relevance_score = self._calculate_relevance_score(search_term, card_search)
                         
                         results.append({
-                            'url': src,
+                            'url': actual_url,
                             'search_term': search_term,
                             'relevance_score': relevance_score,
                             'is_card': card_search,
-                            'index': i
+                            'index': len(results)
                         })
-                except Exception as e:
-                    logger.debug(f"Error processing image element {i}: {e}")
-                    continue
+                        
+                        if len(results) >= max_results:
+                            break
+                            
+            except Exception as e:
+                logger.debug(f"Error finding image links: {e}")
+            
+            # If we didn't find enough actual image URLs, fall back to thumbnails
+            if len(results) < max_results:
+                # Get image elements - use updated selector
+                image_elements = driver.find_elements(By.CSS_SELECTOR, "img.YQ4gaf")
+                
+                for i, img_elem in enumerate(image_elements[:max_results - len(results)]):
+                    try:
+                        src = img_elem.get_attribute('src')
+                        # Handle both HTTP URLs and data URIs
+                        if src and (src.startswith('http') or src.startswith('data:')):
+                            # Skip Google logos and doodles
+                            if 'google.com/logos' in src or 'doodles' in src:
+                                continue
+                            # Skip very small data URIs (likely icons)
+                            if src.startswith('data:') and len(src) < 1000:
+                                continue
+                                
+                            # Calculate relevance score
+                            relevance_score = self._calculate_relevance_score(search_term, card_search) - 10  # Lower priority for thumbnails
+                            
+                            results.append({
+                                'url': src,
+                                'search_term': search_term,
+                                'relevance_score': relevance_score,
+                                'is_card': card_search,
+                                'index': len(results)
+                            })
+                    except Exception as e:
+                        logger.debug(f"Error processing image element {i}: {e}")
+                        continue
             
             return results
             
         except Exception as e:
-            logger.error(f"Error in Selenium image search: {e}")
+            logger.error(f"Error in image search: {e}")
             return []
         finally:
             driver.quit()
@@ -217,6 +263,16 @@ class PlayerImageSearch:
         try:
             url = image_result['url']
             
+            # Handle showzone.gg pages - need to extract the actual image
+            if 'showzone.gg' in url:
+                logger.info(f"Extracting image from showzone.gg page: {url}")
+                actual_image_url = self._extract_image_from_showzone(url)
+                if actual_image_url:
+                    url = actual_image_url
+                else:
+                    logger.debug(f"Could not extract image from showzone.gg page")
+                    return False
+            
             # Handle data URIs
             if url.startswith('data:'):
                 import base64
@@ -254,6 +310,66 @@ class PlayerImageSearch:
         except Exception as e:
             logger.debug(f"Error downloading image {image_result['url']}: {e}")
             return False
+    
+    def _extract_image_from_showzone(self, page_url: str) -> Optional[str]:
+        """Extract the actual baseball card image from a showzone.gg player page."""
+        try:
+            response = requests.get(page_url, headers=self.headers, timeout=10)
+            response.raise_for_status()
+            
+            from bs4 import BeautifulSoup
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Look for player card images
+            # Common selectors for player images on showzone.gg
+            image_selectors = [
+                'img.player-card',
+                'img[alt*="Duke Ellis"]',
+                'img[src*="card"]',
+                '.player-image img',
+                '.card-image img',
+                'img[src*=".png"]',
+                'img[src*=".jpg"]'
+            ]
+            
+            for selector in image_selectors:
+                images = soup.select(selector)
+                for img in images:
+                    src = img.get('src')
+                    if src and any(ext in src.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
+                        # Convert relative URLs to absolute
+                        if src.startswith('/'):
+                            src = f"https://showzone.gg{src}"
+                        elif not src.startswith('http'):
+                            src = f"https://showzone.gg/{src}"
+                        
+                        logger.info(f"Found showzone image: {src}")
+                        return src
+            
+            # If no specific selectors work, look for any large images
+            all_images = soup.find_all('img')
+            for img in all_images:
+                src = img.get('src')
+                if src and any(ext in src.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
+                    # Skip small icons and logos
+                    if 'icon' in src.lower() or 'logo' in src.lower() or 'avatar' in src.lower():
+                        continue
+                    
+                    # Convert relative URLs to absolute
+                    if src.startswith('/'):
+                        src = f"https://showzone.gg{src}"
+                    elif not src.startswith('http'):
+                        src = f"https://showzone.gg/{src}"
+                    
+                    logger.info(f"Found fallback showzone image: {src}")
+                    return src
+            
+            logger.debug(f"No suitable images found on showzone.gg page")
+            return None
+            
+        except Exception as e:
+            logger.debug(f"Error extracting image from showzone.gg: {e}")
+            return None
     
     def download_and_process_player_image(self, player_name: str, date_str: str) -> Optional[Path]:
         """
