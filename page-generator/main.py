@@ -88,18 +88,13 @@ def handle_automation_mode(config: dict, automate_workflow: bool, batch_automate
     """Handle automation mode for puzzle processing."""
     print("\n--- Automated Workflow ---")
     
-    # Get project directory
+    # Get project directory - use cached path without prompting for automation
     last_path = config.get("last_project_path")
-    prompt_message = "Enter the path to your website project folder"
     if last_path:
-        prompt_message += f" [Default: {last_path}]: "
-    else:
-        prompt_message += ": "
-    
-    project_dir_str = input(prompt_message).strip().strip("'\"")
-    if not project_dir_str and last_path:
         project_dir_str = last_path
         print(f"Using default path: {project_dir_str}")
+    else:
+        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
     
     project_dir = Path(project_dir_str).resolve()
     if not project_dir.is_dir():
