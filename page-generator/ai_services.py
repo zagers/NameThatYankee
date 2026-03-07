@@ -298,31 +298,41 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     
     generation_config = types.GenerateContentConfig(temperature=0.1)
     prompt = f"""
-    Analyze the provided image and determine if it shows the baseball player "{player_name}".
+    Analyze the provided baseball player image and determine if the player is in a New York Yankees uniform, if the image is a baseball card, and if it is in portrait orientation.
+    
+    You do NOT need to verify the player's identity; assume the image is of the correct player.
+    Focus ONLY on the uniform, the format (card vs photo), the text content, and the orientation.
+
+    **CRITICAL REJECTION CRITERIA:**
+    1. **Orientation:** Reject or downgrade to Priority 3 any image that is in landscape orientation (width > height). The website ONLY supports portrait images.
+    2. **Transient Text:** Reject or downgrade to Priority 3 any image that contains "point-in-time" or transient text overlays (e.g., "HE'S BACK", "SIGNED", "BREAKING NEWS").
+    3. **Multi-Player/Collages:** Reject or downgrade to Priority 3 any image that shows more than one baseball card or more than one primary player (e.g., a 4-card collage or a group shot). Priority 1 and 2 MUST feature a SINGLE baseball card or a SINGLE player.
+
     Rate the image based on the following priority levels:
 
-    **Priority 1: Baseball Card in Yankee Uniform**
-    - The image is a physical or digital baseball card.
-    - The player is clearly wearing a New York Yankees uniform (pinstripes, "NY" logo, or "New York" text).
-
-    **Priority 2: Non-Card Image in Yankee Uniform**
-    - The image is a photo, digital graphic, or other non-card format.
+    **Priority 1: Single Portrait Baseball Card in Yankee Uniform**
+    - The image is a portrait-oriented physical or digital baseball card featuring ONE player.
     - The player is clearly wearing a New York Yankees uniform.
+    - Contains NO transient/event-based text overlays and is NOT a collage of multiple cards.
 
-    **Priority 3: Any Image of the Player**
-    - The image shows {player_name}, but they are NOT in a Yankees uniform (e.g., civilian clothes or another team's uniform) 
-    - OR the uniform is not clearly identifiable as Yankees.
+    **Priority 2: Clean Single Portrait Photo in Yankee Uniform**
+    - The image is a clean portrait-oriented action photo or portrait featuring ONE player.
+    - The player is clearly wearing a New York Yankees uniform.
+    - Contains NO transient/event-based text overlays, intrusive graphics, or multiple players.
 
-    **Priority 0: Not the Player / Low Quality**
-    - The person in the image is NOT {player_name}.
-    - The image is extremely low quality, blurry, or otherwise unsuitable.
+    **Priority 3: Any Other Image (Landscape, Collage, Non-Yankee, Ambiguous, or Graphic)**
+    - The image shows multiple cards or a collage.
+    - OR the image is in landscape orientation.
+    - OR the player is NOT in a Yankees uniform.
+    - OR the image contains transient text overlays.
 
     Your response must be a valid JSON object with the following structure, and nothing else:
     {{
-      "player_match": true/false,
       "is_yankee_uniform": true/false,
       "is_baseball_card": true/false,
-      "priority_level": 1 | 2 | 3 | 0,
+      "is_portrait": true/false,
+      "has_transient_text": true/false,
+      "priority_level": 1 | 2 | 3,
       "confidence": "high/medium/low",
       "reasoning": "Brief explanation of your decision"
     }}
@@ -337,25 +347,30 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
             data = json.loads(json_text)
 
-            priority = data.get('priority_level', 0)
-            player_match = data.get('player_match', False)
+            priority = data.get('priority_level', 3)
             confidence = data.get('confidence', 'low')
             reasoning = data.get('reasoning', 'No reasoning provided')
+            is_portrait = data.get('is_portrait', True) # Default to True to allow if not specified
             
-            if player_match and priority > 0 and confidence in ['high', 'medium']:
-                print(f"  ✅ Match Found: Priority {priority} ({confidence} confidence)")
+            # Additional check based on AI's finding of portrait status
+            if not is_portrait:
+                priority = 3
+                reasoning = f"(AI identified as landscape): {reasoning}"
+
+            if priority > 0 and confidence in ['high', 'medium']:
+                print(f"  ✅ Image Rated: Priority {priority} ({confidence} confidence)")
                 print(f"     Reasoning: {reasoning}")
                 return {"success": True, "priority": priority, "reasoning": reasoning}
             else:
-                print(f"  ❌ Rejected: Priority {priority} ({confidence} confidence)")
-                print(f"     Reasoning: {reasoning}")
-                return {"success": False, "priority": 0, "reasoning": reasoning}
+                # If confidence is low, we still treat it as Priority 3 rather than rejecting
+                print(f"  ⚠️ Low Confidence Match: Falling back to Priority 3")
+                return {"success": True, "priority": 3, "reasoning": f"Low confidence: {reasoning}"}
 
         except Exception as e:
             print(f"  ⚠️ Error during image analysis: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
             time.sleep(SLEEP_TIME)
 
-    return {"success": False, "priority": 0, "reasoning": "All attempts failed"}
+    return {"success": False, "priority": 3, "reasoning": "All attempts failed, defaulted to 3"}
 
 
 def verify_yankee_uniform(image_path, player_name: str, api_key: str) -> bool:

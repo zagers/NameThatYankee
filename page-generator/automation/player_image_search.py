@@ -47,29 +47,37 @@ class PlayerImageSearch:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
     
-    def find_first_yankee_image(self, player_name: str, api_key: str = None) -> Optional[dict]:
+    def find_first_yankee_image(self, player_name: str, api_key: str = None) -> List[dict]:
         """
-        Find the best image of the player based on prioritized criteria.
+        Find up to 3 best images of the player based on prioritized criteria.
         
-        Search Term: "<player name> yankees baseball card"
+        Search Term: "<player name> yankees card"
         Priorities:
         1. Baseball card + Yankee uniform
         2. Any image + Yankee uniform
         3. Any image of the player
         """
-        search_term = f"{player_name} yankees baseball card"
+        search_term = f"{player_name} yankees card"
         logger.info(f"🚀 Searching Google Images for: {search_term}")
         
         candidates = self._get_image_candidates_from_google(search_term)
         if not candidates:
             logger.warning("No image candidates found in Google Search.")
-            return None
+            return []
 
+        logger.info(f"Total candidates available from search: {len(candidates)}")
+        best_matches = []
         best_fallback = None
-        max_candidates_to_check = 10
+        max_candidates_to_check = 25
         
+        # Determine actual number to check
+        num_to_check = min(len(candidates), max_candidates_to_check)
+        logger.info(f"🔍 Will evaluate up to {num_to_check} candidates...")
+
         for i, candidate in enumerate(candidates[:max_candidates_to_check]):
-            logger.info(f"🧐 Checking candidate {i+1}/{max_candidates_to_check}: {candidate['source_page'][:60]}...")
+            current_idx = i + 1
+            logger.info(f"--- Evaluating Candidate {current_idx}/{num_to_check} ---")
+            logger.info(f"Source: {candidate['source_page'][:80]}...")
             
             # Step 2 & 3: Download full scale and check suitability
             temp_file = self._download_full_size_image(candidate)
@@ -84,6 +92,12 @@ class PlayerImageSearch:
                     logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 300x300. Skipping.")
                     temp_file.unlink(missing_ok=True)
                     continue
+                
+                # Orientation check: Reject landscape (width > height)
+                if width > height:
+                    logger.info(f"  ❌ Image is landscape format ({width}x{height}). Only portrait allowed. Skipping.")
+                    temp_file.unlink(missing_ok=True)
+                    continue
             else:
                 logger.info("  ❌ Could not determine image dimensions. Skipping.")
                 temp_file.unlink(missing_ok=True)
@@ -94,17 +108,28 @@ class PlayerImageSearch:
                 try:
                     import ai_services
                     analysis = ai_services.analyze_player_image(temp_file, player_name, api_key)
-                    priority = analysis.get('priority', 0)
+                    priority = analysis.get('priority', 3)
                     
                     if priority in [1, 2]:
-                        logger.info(f"  ✨ Found High Priority Match (Level {priority})! Stopping search.")
+                        logger.info(f"  ✨ Found High Priority Match (Level {priority})!")
                         candidate['temp_file'] = temp_file
                         candidate['priority'] = priority
-                        return candidate
+                        best_matches.append(candidate)
+                        
+                        # Stop once we have 3 Priority 1 images
+                        p1_count = len([m for m in best_matches if m['priority'] == 1])
+                        if p1_count >= 3:
+                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping search.")
+                            break
+                        
+                        # Also stop if we have 5 total high-priority matches (preventing 6+)
+                        if len(best_matches) >= 5:
+                            logger.info(f"  🏁 Found {len(best_matches)} total high-priority matches. Stopping search.")
+                            break
                     
-                    if priority == 3:
+                    elif priority == 3:
                         if not best_fallback:
-                            logger.info("  📍 Found Priority 3 (Any image of player). Saving as fallback and continuing...")
+                            logger.info("  📍 Found Priority 3 (Fallback image). Saving as fallback and continuing...")
                             candidate['temp_file'] = temp_file
                             candidate['priority'] = 3
                             best_fallback = candidate
@@ -123,78 +148,111 @@ class PlayerImageSearch:
                 logger.warning("  ⚠️ No API key provided for verification. Using first suitable image.")
                 candidate['temp_file'] = temp_file
                 candidate['priority'] = 99
-                return candidate
+                best_matches.append(candidate)
+                return best_matches
 
-            # Optimization: If we've checked 5 images and have a fallback, settle
-            if i >= 4 and best_fallback:
-                logger.info("  🏁 Settle: Found a good enough player image after 5 checks.")
-                return best_fallback
-
-        if best_fallback:
+        if best_matches:
+            logger.info(f"  🏁 Finished search. Found {len(best_matches)} high-priority matches.")
+            # Clean up the fallback if we found better matches
+            if best_fallback and 'temp_file' in best_fallback:
+                best_fallback['temp_file'].unlink(missing_ok=True)
+            return best_matches
+        elif best_fallback:
             logger.info("  🏁 Finished search. Using the best fallback found.")
-            return best_fallback
+            return [best_fallback]
             
         logger.warning(f"  ❌ No suitable images found for {player_name} after checking {max_candidates_to_check} results.")
-        return None
+        return []
 
     def _get_image_candidates_from_google(self, search_term: str) -> List[dict]:
-        """Uses Selenium and regex to extract image candidate URLs from Google's internal data arrays."""
+        """Uses Selenium to extract image candidate URLs using a robust hybrid strategy."""
         options = webdriver.ChromeOptions()
         options.add_argument("--headless=new")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1920,1080")
+        
+        # More sophisticated headers to avoid bot detection
+        user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        options.add_argument(f"user-agent={user_agent}")
         
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
         candidates = []
         
         try:
             encoded_query = urllib.parse.quote_plus(search_term)
-            search_url = f"https://www.google.com/search?q={encoded_query}&tbm=isch"
+            # Use both udm=2 and tbm=isch fallback logic if one fails
+            search_url = f"https://www.google.com/search?q={encoded_query}&udm=2"
             driver.get(search_url)
             
-            # Wait a moment for dynamic content
-            time.sleep(2)
+            # Allow time for the page to settle
+            time.sleep(5)
             
-            # Get the full page source to parse script tags
-            page_source = driver.page_source
+            # Scroll multiple times to trigger lazy loading of primary results
+            for _ in range(3):
+                driver.execute_script("window.scrollBy(0, 800);")
+                time.sleep(1)
             
-            # Pattern: [0,"DOCID",["THUMB_URL",H,W],["SOURCE_URL",H,W],...]
-            # This regex captures the SOURCE_URL which is the second URL in the array structure
-            pattern = r'\[0,"[^"]+",\["https?://encrypted-tbn\d+\.gstatic\.com/images\?q=tbn:[^"]+",\d+,\d+\],\["(https?://[^"]+)",(\d+),(\d+)\]'
-            matches = re.findall(pattern, page_source)
-            
-            for img_url, height, width in matches:
-                # Clean up escaped characters (e.g., \u003d -> =)
-                img_url = img_url.replace('\\u003d', '=').replace('\\u0026', '&')
-                
-                # Filter out Google domains to ensure we have the actual source
-                if "google.com" not in img_url and "gstatic.com" not in img_url:
-                    candidates.append({
-                        'direct_url': img_url,
-                        'source_page': img_url  # For this strategy, source page is usually same as direct url
-                    })
-            
-            # If regex fails, fall back to a broader search for high-res looking URLs in scripts
-            if not candidates:
-                logger.info("  Primary regex failed. Trying fallback pattern search.")
-                # Look for strings that look like full-res image URLs in JSON-like structures
-                potential_urls = re.findall(r'\["(https?://[^"]+\.(?:jpg|jpeg|png|webp))",(\d+),(\d+)\]', page_source)
-                for img_url, h, w in potential_urls:
-                    if "google.com" not in img_url and "gstatic.com" not in img_url:
-                        candidates.append({
-                            'direct_url': img_url,
-                            'source_page': img_url
-                        })
+            # --- Method 1: Direct DOM Attribute Extraction ---
+            # Modern Google Images often puts the source URL in a data attribute or script-linked ID
+            # We'll look for common patterns in <img> and <a> tags
+            elements = driver.find_elements(By.CSS_SELECTOR, "img[src^='http'], a[href*='imgurl']")
+            for el in elements:
+                try:
+                    # If it's a link, extract from query params
+                    href = el.get_attribute("href")
+                    if href and "imgurl=" in href:
+                        parsed = urllib.parse.urlparse(href)
+                        img_url = urllib.parse.parse_qs(parsed.query).get('imgurl', [None])[0]
+                        if img_url:
+                            candidates.append({'direct_url': img_url, 'source_page': img_url})
+                    
+                    # If it's an image, check for data-src (lazy load source)
+                    data_src = el.get_attribute("data-src")
+                    if data_src and data_src.startswith("http") and "gstatic" not in data_src:
+                        candidates.append({'direct_url': data_src, 'source_page': data_src})
+                except:
+                    continue
 
-            # Deduplicate
+            # --- Method 2: Comprehensive Regex Parsing ---
+            page_source = driver.page_source
+            # Pattern for the standard data array
+            patterns = [
+                r'\[0,"[^"]+",\["https?://encrypted-tbn\d+\.gstatic\.com/images\?q=tbn:[^"]+",\d+,\d+\],\["(https?://[^"]+)",(\d+),(\d+)\]',
+                r'\["(https?://[^"]+\.(?:jpg|jpeg|png|webp))",(\d+),(\d+)\]'
+            ]
+            
+            for pattern in patterns:
+                matches = re.findall(pattern, page_source)
+                for match in matches:
+                    img_url = match[0] if isinstance(match, tuple) else match
+                    img_url = img_url.replace('\\u003d', '=').replace('\\u0026', '&')
+                    if "google.com" not in img_url and "gstatic.com" not in img_url:
+                        candidates.append({'direct_url': img_url, 'source_page': img_url})
+
+            # Deduplicate and Prioritize
             seen = set()
             unique_candidates = []
+            priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com']
+            
+            # First pass: Priority domains
             for c in candidates:
-                if c['direct_url'] not in seen:
-                    seen.add(c['direct_url'])
+                url = c['direct_url']
+                if url not in seen and any(domain in url.lower() for domain in priority_domains):
+                    seen.add(url)
                     unique_candidates.append(c)
             
-            logger.info(f"Found {len(unique_candidates)} unique candidates using data-array extraction.")
+            # Second pass: General results
+            for c in candidates:
+                url = c['direct_url']
+                if url not in seen:
+                    seen.add(url)
+                    unique_candidates.append(c)
+            
+            logger.info(f"Total unique candidates identified: {len(unique_candidates)}")
+            if unique_candidates:
+                logger.info(f"Top candidate: {unique_candidates[0]['direct_url'][:80]}...")
+                
             return unique_candidates
             
         except Exception as e:
@@ -271,21 +329,51 @@ class PlayerImageSearch:
         except Exception:
             return None
 
-    def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> Optional[Path]:
-        """Complete workflow orchestrator for finding and saving a player image."""
-        result = self.find_first_yankee_image(player_name, api_key)
+    def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> List[Path]:
+        """Complete workflow orchestrator for finding and saving multiple player image candidates."""
+        results = self.find_first_yankee_image(player_name, api_key)
         
-        if not result or 'temp_file' not in result:
-            return None
+        if not results:
+            return []
             
-        temp_file = result['temp_file']
+        final_paths = []
+        staging_dir = self.images_dir.parent / "temp_player_images"
+        staging_dir.mkdir(exist_ok=True)
         
-        # Process and save final image (converts to WEBP and moves to images/ folder)
-        final_path = self.image_processor.process_player_image(temp_file, self.images_dir, date_str)
+        # --- Archive old candidates ---
+        old_dir = staging_dir / "old"
+        old_dir.mkdir(exist_ok=True)
+        for old_file in staging_dir.glob("*.webp"):
+            try:
+                import shutil
+                shutil.move(str(old_file), str(old_dir / old_file.name))
+            except Exception as e:
+                logger.debug(f"Could not archive {old_file.name}: {e}")
+
+        for i, result in enumerate(results):
+            temp_file = result.get('temp_file')
+            if not temp_file or not temp_file.exists():
+                continue
+                
+            # Name: answer-YYYY-MM-DD-N.webp
+            target_name = f"answer-{date_str}-{i+1}.webp"
+            target_path = staging_dir / target_name
+            
+            # Process and convert to webp
+            try:
+                self.image_processor.convert_to_webp(temp_file, target_path)
+                final_paths.append(target_path)
+            except Exception as e:
+                logger.error(f"Error converting {temp_file} to webp: {e}")
+            
+            # Clean up original temp download
+            temp_file.unlink(missing_ok=True)
+            
+        # Final cleanup of any stray downloads in the temp folder
+        self.cleanup_temp_files()
         
-        # Clean up
-        temp_file.unlink(missing_ok=True)
-        return final_path
+        logger.info(f"✅ Staged {len(final_paths)} candidate images in {staging_dir}")
+        return final_paths
 
     def cleanup_temp_files(self):
         """Clean up temporary image files."""

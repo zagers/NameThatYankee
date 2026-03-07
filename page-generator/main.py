@@ -179,8 +179,15 @@ def handle_find_image(config: dict):
     
     player_name = None
     date_str = None
+    direct_url = None
     
     try:
+        # Check for --url flag first
+        if "--url" in sys.argv:
+            url_idx = sys.argv.index("--url")
+            if url_idx + 1 < len(sys.argv):
+                direct_url = sys.argv[url_idx + 1]
+        
         idx = sys.argv.index("--find-image")
         if idx + 1 < len(sys.argv):
             player_name = sys.argv[idx + 1]
@@ -227,13 +234,32 @@ def handle_find_image(config: dict):
     # Initialize searcher
     searcher = PlayerImageSearch(images_dir)
     
+    if direct_url:
+        print(f"🚀 Processing direct URL for {player_name}: {direct_url}")
+        candidate = {'direct_url': direct_url, 'source_page': direct_url}
+        staging_dir = project_dir / "temp_player_images"
+        staging_dir.mkdir(exist_ok=True)
+        
+        temp_file = searcher._download_full_size_image(candidate)
+        if temp_file:
+            target_path = staging_dir / f"answer-{date_str}-direct.webp"
+            searcher.image_processor.convert_to_webp(temp_file, target_path)
+            temp_file.unlink(missing_ok=True)
+            print(f"\n✅ Successfully saved direct image to: {target_path}")
+        else:
+            print(f"❌ Failed to download image from: {direct_url}")
+        return
+
     print(f"🚀 Searching for {player_name} for date {date_str}...")
-    final_path = searcher.download_and_process_player_image(player_name, date_str, api_key)
+    final_paths = searcher.download_and_process_player_image(player_name, date_str, api_key)
     
-    if final_path:
-        print(f"\n✅ Successfully saved image to: {final_path}")
+    if final_paths:
+        print(f"\n✅ Successfully saved {len(final_paths)} candidate(s) to temp_player_images/:")
+        for path in final_paths:
+            print(f"   - {path}")
+        print("\nReview these in 'temp_player_images/' and move the correct one to 'images/' renamed appropriately.")
     else:
-        print(f"\n❌ Failed to find or process a suitable image for {player_name}")
+        print(f"\n❌ Failed to find or process any suitable images for {player_name}")
 
 def handle_batch_automation(workflow: AutomatedWorkflow):
     """Handle batch puzzle automation."""
@@ -318,7 +344,11 @@ Options:
   --find-image         [player_name] [date]
                         Standalone player image search and processing. Finds a 
                         suitable player image, downloads it, converts it to 
-                        WEBP, and saves it to the images folder.
+                        WEBP, and saves it to the staging folder.
+
+  --url                [direct_url]
+                        Used with --find-image to process a specific image 
+                        URL directly, skipping the Google search.
 
   --batch-automate      [screenshot_dir]
                         Batch process multiple screenshots from a directory.

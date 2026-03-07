@@ -197,32 +197,32 @@ class AutomatedWorkflow:
             player_info['followup_qa'] = []
     
     def _find_player_image(self, player_name: str, date_str: str) -> Optional[Path]:
-        """Find and process a player image using sequential search."""
+        """Find and process player image candidates."""
         try:
             # Skip image search for "Unknown" player
             if player_name == 'Unknown':
                 logger.warning("Skipping player image search for 'Unknown' player")
                 return None
                 
-            # Use new sequential search to find first valid Yankee image
-            logger.info(f"Searching for first valid Yankee image of {player_name}")
-            image_candidate = self.player_image_search.find_first_yankee_image(player_name, self.api_key)
+            # Find and process multiple candidates
+            logger.info(f"Searching for Yankee image candidates for {player_name}")
+            candidate_paths = self.player_image_search.download_and_process_player_image(player_name, date_str, self.api_key)
             
-            if not image_candidate:
-                logger.warning(f"No valid Yankee image found for {player_name}")
+            if not candidate_paths:
+                logger.warning(f"No valid images found for {player_name}")
                 return None
             
-            # Process the found image
-            answer_path = self.images_dir / f"answer-{date_str}.webp"
+            # The first one is the default "best" match
+            default_path = self.images_dir / f"answer-{date_str}.webp"
             
-            # Convert and save the image
-            if image_candidate.get('temp_file'):
-                self.image_processor.convert_to_webp(image_candidate['temp_file'], answer_path)
-                logger.info(f"Saved Yankee image: {answer_path}")
-                return answer_path
-            else:
-                logger.error("No temp file found in image candidate")
-                return None
+            # Copy the first candidate to the final location as a default
+            import shutil
+            shutil.copy2(candidate_paths[0], default_path)
+            
+            logger.info(f"Saved {len(candidate_paths)} candidates to temp_player_images/")
+            logger.info(f"Defaulting to: {default_path}")
+            
+            return default_path
             
         except Exception as e:
             logger.error(f"Error finding player image: {e}")
