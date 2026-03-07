@@ -20,6 +20,7 @@ import user_interaction
 # Import automation modules
 try:
     from automation.automated_workflow import AutomatedWorkflow
+    from automation.player_image_search import PlayerImageSearch
     from config.automation_config import AutomationConfig
     AUTOMATION_AVAILABLE = True
 except ImportError:
@@ -172,6 +173,68 @@ def handle_single_automation(workflow: AutomatedWorkflow):
     else:
         print(f"\n❌ Automation failed for {date_str}. Check logs for details.")
 
+def handle_find_image(config: dict):
+    """Handle standalone player image search."""
+    print("\n--- Standalone Player Image Search ---")
+    
+    player_name = None
+    date_str = None
+    
+    try:
+        idx = sys.argv.index("--find-image")
+        if idx + 1 < len(sys.argv):
+            player_name = sys.argv[idx + 1]
+            if idx + 2 < len(sys.argv):
+                potential_date = sys.argv[idx + 2]
+                try:
+                    datetime.strptime(potential_date, "%Y-%m-%d")
+                    date_str = potential_date
+                except ValueError:
+                    pass
+    except (ValueError, IndexError):
+        pass
+        
+    if not player_name:
+        player_name = input("Enter player name: ").strip()
+    
+    if not date_str:
+        date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
+        if not date_str:
+            date_str = datetime.now().strftime("%Y-%m-%d")
+            
+    try:
+        datetime.strptime(date_str, "%Y-%m-%d")
+    except ValueError:
+        print("❌ Invalid date format. Use YYYY-MM-DD")
+        exit()
+
+    # Get project directory
+    last_path = config.get("last_project_path")
+    if last_path:
+        project_dir_str = last_path
+        print(f"Using default path: {project_dir_str}")
+    else:
+        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
+    
+    project_dir = Path(project_dir_str).resolve()
+    if not project_dir.is_dir():
+        print(f"❌ Error: Directory not found at '{project_dir}'")
+        exit()
+        
+    images_dir = project_dir / "images"
+    api_key = config.get("gemini_api_key")
+    
+    # Initialize searcher
+    searcher = PlayerImageSearch(images_dir)
+    
+    print(f"🚀 Searching for {player_name} for date {date_str}...")
+    final_path = searcher.download_and_process_player_image(player_name, date_str, api_key)
+    
+    if final_path:
+        print(f"\n✅ Successfully saved image to: {final_path}")
+    else:
+        print(f"\n❌ Failed to find or process a suitable image for {player_name}")
+
 def handle_batch_automation(workflow: AutomatedWorkflow):
     """Handle batch puzzle automation."""
     # Get screenshot directory
@@ -252,6 +315,11 @@ Options:
                         If not provided, will prompt for missing values.
                         Processes the entire puzzle addition pipeline automatically.
 
+  --find-image         [player_name] [date]
+                        Standalone player image search and processing. Finds a 
+                        suitable player image, downloads it, converts it to 
+                        WEBP, and saves it to the images folder.
+
   --batch-automate      [screenshot_dir]
                         Batch process multiple screenshots from a directory.
 
@@ -297,11 +365,20 @@ Notes:
     # Check for automation flags
     automate_workflow = "--automate-workflow" in sys.argv
     batch_automate = "--batch-automate" in sys.argv
+    find_image = "--find-image" in sys.argv
     config_mode = "--config" in sys.argv
 
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
         handle_config_mode()
+        exit()
+
+    # Handle standalone image search
+    if find_image and AUTOMATION_AVAILABLE:
+        handle_find_image(config)
+        exit()
+    elif find_image and not AUTOMATION_AVAILABLE:
+        print("❌ Automation modules not available. Please check installation.")
         exit()
 
     # Handle automated workflow
