@@ -15,7 +15,7 @@ MODEL = 'gemini-3.1-pro-preview'
 # (2 requests per minute per model). We maintain at most one
 # Gemini request every ~35 seconds, which keeps any 60s window
 # at <= 2 requests.
-_LAST_GEMINI_CALL_TS = 0.0
+_LAST_GEMINI_CALL_TS = time.time()  # Initialize to current time, not 0.0
 
 
 class GeminiDailyQuotaExceeded(Exception):
