@@ -332,16 +332,11 @@ class PlayerImageSearch:
 
     def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> List[Path]:
         """Complete workflow orchestrator for finding and saving multiple player image candidates."""
-        results = self.find_first_yankee_image(player_name, api_key)
-        
-        if not results:
-            return []
-            
-        final_paths = []
         staging_dir = self.images_dir.parent / "temp_player_images"
         staging_dir.mkdir(exist_ok=True)
         
         # --- Archive old candidates ---
+        # We do this first to ensure a clean slate for new candidates
         old_dir = staging_dir / "old"
         old_dir.mkdir(exist_ok=True)
         for old_file in staging_dir.glob("*.webp"):
@@ -351,6 +346,13 @@ class PlayerImageSearch:
             except Exception as e:
                 logger.debug(f"Could not archive {old_file.name}: {e}")
 
+        results = self.find_first_yankee_image(player_name, api_key)
+        
+        if not results:
+            return []
+            
+        final_paths = []
+        
         for i, result in enumerate(results):
             temp_file = result.get('temp_file')
             if not temp_file or not temp_file.exists():

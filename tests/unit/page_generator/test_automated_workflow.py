@@ -227,13 +227,15 @@ class TestAutomatedWorkflow:
 
     def test_find_player_image_success(self, automated_workflow, temp_dir):
         """Test successful player image finding."""
+        mock_file = temp_dir / "answer.webp"
+        mock_file.touch()
         with patch.object(automated_workflow.player_image_search, 'download_and_process_player_image') as mock_download:
-            mock_download.return_value = temp_dir / "answer.webp"
+            mock_download.return_value = [mock_file]
             
             result = automated_workflow._find_player_image("Test Player", "2025-03-06")
             
             assert result is not None
-            assert result.name == "answer.webp"
+            assert result.name == "answer-2025-03-06.webp"
 
     def test_find_player_image_unknown_player(self, automated_workflow):
         """Test player image finding for 'Unknown' player."""
@@ -243,11 +245,9 @@ class TestAutomatedWorkflow:
 
     def test_find_player_image_failure(self, automated_workflow):
         """Test player image finding when search fails."""
-        with patch.object(automated_workflow.player_image_search, 'download_and_process_player_image') as mock_download, \
-             patch.object(automated_workflow.player_image_search, 'fallback_image_search') as mock_fallback:
+        with patch.object(automated_workflow.player_image_search, 'download_and_process_player_image') as mock_download:
             
-            mock_download.return_value = None
-            mock_fallback.return_value = None
+            mock_download.return_value = []
             
             result = automated_workflow._find_player_image("Test Player", "2025-03-06")
             
