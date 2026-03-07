@@ -129,10 +129,22 @@ def handle_single_automation(workflow: AutomatedWorkflow):
     """Handle single puzzle automation."""
     # Get screenshot path
     screenshot_path = None
+    date_str = None
+    
     try:
         screenshot_index = sys.argv.index("--automate-workflow") + 1
         if screenshot_index < len(sys.argv):
             screenshot_path = Path(sys.argv[screenshot_index])
+            # Check if date is also provided
+            if screenshot_index + 1 < len(sys.argv):
+                potential_date = sys.argv[screenshot_index + 1]
+                # Validate if it's a date format (YYYY-MM-DD)
+                try:
+                    datetime.strptime(potential_date, "%Y-%m-%d")
+                    date_str = potential_date
+                except ValueError:
+                    # Not a date format, so it's not the date argument
+                    pass
     except (ValueError, IndexError):
         pass
     
@@ -144,8 +156,10 @@ def handle_single_automation(workflow: AutomatedWorkflow):
         print(f"❌ Screenshot not found: {screenshot_path}")
         exit()
     
-    # Get optional date
-    date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
+    # Get optional date if not provided via command line
+    if not date_str:
+        date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
+    
     if not date_str:
         date_str = datetime.now().strftime("%Y-%m-%d")
     else:
@@ -237,9 +251,10 @@ Options:
   --facts-only          Identify the player and generate three career facts
                         via Gemini, but do not generate follow-up Q&A.
 
-  --automate-workflow  [screenshot_path]
+  --automate-workflow  [screenshot_path] [date]
                         Run fully automated workflow. Takes a screenshot file
-                        path as optional argument, or will prompt for one.
+                        path as optional argument, and optionally a date (YYYY-MM-DD).
+                        If not provided, will prompt for missing values.
                         Processes the entire puzzle addition pipeline automatically.
 
   --batch-automate      [screenshot_dir]
