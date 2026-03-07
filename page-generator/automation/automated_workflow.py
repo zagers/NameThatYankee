@@ -197,27 +197,32 @@ class AutomatedWorkflow:
             player_info['followup_qa'] = []
     
     def _find_player_image(self, player_name: str, date_str: str) -> Optional[Path]:
-        """Find and process a player image."""
+        """Find and process a player image using sequential search."""
         try:
             # Skip image search for "Unknown" player
             if player_name == 'Unknown':
                 logger.warning("Skipping player image search for 'Unknown' player")
                 return None
                 
-            # Try primary search first
-            answer_path = self.player_image_search.download_and_process_player_image(player_name, date_str)
+            # Use new sequential search to find first valid Yankee image
+            logger.info(f"Searching for first valid Yankee image of {player_name}")
+            image_candidate = self.player_image_search.find_first_yankee_image(player_name, self.api_key)
             
-            # If primary search fails, try fallback
-            if not answer_path:
-                logger.info("Primary image search failed, trying fallback...")
-                answer_path = self.player_image_search.fallback_image_search(player_name, date_str)
+            if not image_candidate:
+                logger.warning(f"No valid Yankee image found for {player_name}")
+                return None
             
-            if answer_path:
-                logger.info(f"Successfully found player image for {player_name}")
+            # Process the found image
+            answer_path = self.images_dir / f"answer-{date_str}.webp"
+            
+            # Convert and save the image
+            if image_candidate.get('temp_file'):
+                self.image_processor.convert_to_webp(image_candidate['temp_file'], answer_path)
+                logger.info(f"Saved Yankee image: {answer_path}")
+                return answer_path
             else:
-                logger.warning(f"Could not find player image for {player_name}")
-            
-            return answer_path
+                logger.error("No temp file found in image candidate")
+                return None
             
         except Exception as e:
             logger.error(f"Error finding player image: {e}")

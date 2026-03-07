@@ -9,12 +9,12 @@ import time
 # The number of times to retry the API call if it returns an empty response.
 MAX_RETRIES = 5
 SLEEP_TIME = 30
-MODEL = 'gemini-3.1-pro-preview'
+MODEL = 'gemini-2.5-pro'
 
 # Simple in-process rate limiter to respect Free Tier limit
-# (2 requests per minute per model). We maintain at most one
-# Gemini request every ~35 seconds, which keeps any 60s window
-# at <= 2 requests.
+# (5 requests per minute per model). We maintain at most one
+# Gemini request every ~13 seconds, which keeps any 60s window
+# at <= 5 requests with a conservative buffer.
 _LAST_GEMINI_CALL_TS = time.time()  # Initialize to current time, not 0.0
 
 
@@ -27,12 +27,12 @@ def _respect_free_tier_rate_limit():
     """Enforce a conservative delay between Gemini API calls.
 
     This keeps total request rate safely under the Free Tier limit
-    of 2 requests per minute by ensuring at least ~35 seconds
+    of 5 requests per minute by ensuring at least ~13 seconds
     between *any* Gemini requests in this process.
     """
     global _LAST_GEMINI_CALL_TS
     now = time.time()
-    min_interval = 35.0  # seconds; slightly conservative vs 30s
+    min_interval = 13.0  # seconds; conservative vs 12s (60s/5 requests)
     elapsed = now - _LAST_GEMINI_CALL_TS
     if elapsed < min_interval:
         sleep_for = min_interval - elapsed
@@ -51,7 +51,12 @@ def get_player_info_from_image(image_path, api_key: str):
     
     client = genai.Client(api_key=api_key)
     clue_image = Image.open(image_path)
-    generation_config = types.GenerateContentConfig(temperature=0.1)
+    generation_config = types.GenerateContentConfig(
+        temperature=0.1,
+        tools=[types.Tool(
+            google_search=types.GoogleSearch()
+        )]
+    )
     prompt = """
     You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card and return the name and nickname of the player whose stats are shown.
 
@@ -270,6 +275,95 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
 
     print(f"  All {MAX_RETRIES} retry attempts for follow-up Q&A failed.")
     return []
+
+
+def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
+    """
+    Uses Gemini to analyze a player image based on prioritized criteria:
+    1. Baseball card + Yankee uniform
+    2. Any image + Yankee uniform
+    3. Any image of the player
+    
+    Returns a dict with verification results and priority level.
+    """
+    print(f"🤖 Analyzing image for {player_name} with prioritized criteria...")
+    
+    client = genai.Client(api_key=api_key)
+    
+    try:
+        verification_image = Image.open(image_path)
+    except Exception as e:
+        print(f"  ❌ Error opening image for analysis: {e}")
+        return {"success": False, "priority": 0, "reasoning": str(e)}
+    
+    generation_config = types.GenerateContentConfig(temperature=0.1)
+    prompt = f"""
+    Analyze the provided image and determine if it shows the baseball player "{player_name}".
+    Rate the image based on the following priority levels:
+
+    **Priority 1: Baseball Card in Yankee Uniform**
+    - The image is a physical or digital baseball card.
+    - The player is clearly wearing a New York Yankees uniform (pinstripes, "NY" logo, or "New York" text).
+
+    **Priority 2: Non-Card Image in Yankee Uniform**
+    - The image is a photo, digital graphic, or other non-card format.
+    - The player is clearly wearing a New York Yankees uniform.
+
+    **Priority 3: Any Image of the Player**
+    - The image shows {player_name}, but they are NOT in a Yankees uniform (e.g., civilian clothes or another team's uniform) 
+    - OR the uniform is not clearly identifiable as Yankees.
+
+    **Priority 0: Not the Player / Low Quality**
+    - The person in the image is NOT {player_name}.
+    - The image is extremely low quality, blurry, or otherwise unsuitable.
+
+    Your response must be a valid JSON object with the following structure, and nothing else:
+    {{
+      "player_match": true/false,
+      "is_yankee_uniform": true/false,
+      "is_baseball_card": true/false,
+      "priority_level": 1 | 2 | 3 | 0,
+      "confidence": "high/medium/low",
+      "reasoning": "Brief explanation of your decision"
+    }}
+    """
+
+    for attempt in range(MAX_RETRIES):
+        _respect_free_tier_rate_limit()
+        response = None
+        try:
+            response = client.models.generate_content(model=MODEL, contents=[prompt, verification_image], config=generation_config)
+            
+            json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
+            data = json.loads(json_text)
+
+            priority = data.get('priority_level', 0)
+            player_match = data.get('player_match', False)
+            confidence = data.get('confidence', 'low')
+            reasoning = data.get('reasoning', 'No reasoning provided')
+            
+            if player_match and priority > 0 and confidence in ['high', 'medium']:
+                print(f"  ✅ Match Found: Priority {priority} ({confidence} confidence)")
+                print(f"     Reasoning: {reasoning}")
+                return {"success": True, "priority": priority, "reasoning": reasoning}
+            else:
+                print(f"  ❌ Rejected: Priority {priority} ({confidence} confidence)")
+                print(f"     Reasoning: {reasoning}")
+                return {"success": False, "priority": 0, "reasoning": reasoning}
+
+        except Exception as e:
+            print(f"  ⚠️ Error during image analysis: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            time.sleep(SLEEP_TIME)
+
+    return {"success": False, "priority": 0, "reasoning": "All attempts failed"}
+
+
+def verify_yankee_uniform(image_path, player_name: str, api_key: str) -> bool:
+    """
+    Backward compatibility wrapper for verify_yankee_uniform.
+    """
+    result = analyze_player_image(image_path, player_name, api_key)
+    return result["success"] and result["priority"] in [1, 2]
 
 
 def get_facts_and_followup_from_gemini(player_name: str, api_key: str):

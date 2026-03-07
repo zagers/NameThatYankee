@@ -1,7 +1,8 @@
 """
 Player image search automation for puzzle workflow.
 
-Automatically searches for, downloads, and processes player images.
+Automatically searches for, downloads, and processes player images with a prioritized 
+verification system using Gemini AI.
 """
 
 import os
@@ -10,22 +11,23 @@ import urllib.parse
 import requests
 from pathlib import Path
 from PIL import Image
-from typing import List, Optional, Tuple
+from typing import List, Optional, Dict, Any
 import time
 import logging
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-from bs4 import BeautifulSoup
 
 from .image_processor import ImageProcessor
 
 logger = logging.getLogger(__name__)
 
 class PlayerImageSearch:
-    """Handles automated player image search and download."""
+    """Handles automated player image search and download with prioritized verification."""
     
     def __init__(self, images_dir: Path, temp_dir: Optional[Path] = None):
         """
@@ -45,425 +47,250 @@ class PlayerImageSearch:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
     
-    def search_player_images(self, player_name: str, max_results: int = 10) -> List[dict]:
+    def find_first_yankee_image(self, player_name: str, api_key: str = None) -> Optional[dict]:
         """
-        Search for player images using multiple search terms.
+        Find the best image of the player based on prioritized criteria.
         
-        Args:
-            player_name: Name of the player to search for
-            max_results: Maximum number of results per search term
+        Search Term: "<player name> yankees baseball card"
+        Priorities:
+        1. Baseball card + Yankee uniform
+        2. Any image + Yankee uniform
+        3. Any image of the player
+        """
+        search_term = f"{player_name} yankees baseball card"
+        logger.info(f"🚀 Searching Google Images for: {search_term}")
+        
+        candidates = self._get_image_candidates_from_google(search_term)
+        if not candidates:
+            logger.warning("No image candidates found in Google Search.")
+            return None
+
+        best_fallback = None
+        max_candidates_to_check = 10
+        
+        for i, candidate in enumerate(candidates[:max_candidates_to_check]):
+            logger.info(f"🧐 Checking candidate {i+1}/{max_candidates_to_check}: {candidate['source_page'][:60]}...")
             
-        Returns:
-            List of image search results
-        """
-        search_terms = [
-            f'"{player_name}" yankees baseball card',
-            f'"{player_name}" yankees photo', 
-            f'"{player_name}" baseball player',
-            f'"{player_name}" mlb player'
-        ]
-        
-        results = []
-        for term in search_terms:
-            term_results = self._search_images_with_selenium(term, max_results, card_search=False)
-            results.extend(term_results)
-        
-        # Filter out Google logos and non-relevant images
-        filtered_results = []
-        for result in results:
-            url = result['url']
-            # Skip Google logos and doodles
-            if 'google.com/logos' in url or 'doodles' in url:
+            # Step 2 & 3: Download full scale and check suitability
+            temp_file = self._download_full_size_image(candidate)
+            if not temp_file:
                 continue
-            # Skip very small images (likely icons)
-            if url.startswith('data:') and len(url) < 1000:
+                
+            # Check suitability (size & format)
+            img_info = self.image_processor.get_image_info(temp_file)
+            if img_info:
+                width, height = img_info.get('width', 0), img_info.get('height', 0)
+                if width < 300 or height < 300:
+                    logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 300x300. Skipping.")
+                    temp_file.unlink(missing_ok=True)
+                    continue
+            else:
+                logger.info("  ❌ Could not determine image dimensions. Skipping.")
+                temp_file.unlink(missing_ok=True)
                 continue
-            filtered_results.append(result)
-        
-        return filtered_results
-    
-    def _search_baseball_cards(self, player_name: str, max_results: int) -> List[dict]:
-        """Search specifically for baseball card images."""
-        search_terms = [
-            f"{player_name} baseball card yankees",
-            f"{player_name} topps card",
-            f"{player_name} yankees baseball card"
-        ]
-        
-        results = []
-        for term in search_terms:
-            term_results = self._search_images_with_selenium(term, max_results, card_search=True)
-            results.extend(term_results)
-        
-        return results
-    
-    def _search_general_player_images(self, player_name: str, max_results: int) -> List[dict]:
-        """Search for general player images."""
-        search_terms = [
-            f"{player_name} yankees photo",
-            f"{player_name} baseball player",
-            f"{player_name} mlb player"
-        ]
-        
-        results = []
-        for term in search_terms:
-            term_results = self._search_images_with_selenium(term, max_results, card_search=False)
-            results.extend(term_results)
-        
-        return results
-    
-    def _search_images_with_selenium(self, search_term: str, max_results: int, card_search: bool = False) -> List[dict]:
-        """Use Selenium to search for images."""
+
+            # Step 4: Use Gemini to verify priority
+            if api_key:
+                try:
+                    import ai_services
+                    analysis = ai_services.analyze_player_image(temp_file, player_name, api_key)
+                    priority = analysis.get('priority', 0)
+                    
+                    if priority in [1, 2]:
+                        logger.info(f"  ✨ Found High Priority Match (Level {priority})! Stopping search.")
+                        candidate['temp_file'] = temp_file
+                        candidate['priority'] = priority
+                        return candidate
+                    
+                    if priority == 3:
+                        if not best_fallback:
+                            logger.info("  📍 Found Priority 3 (Any image of player). Saving as fallback and continuing...")
+                            candidate['temp_file'] = temp_file
+                            candidate['priority'] = 3
+                            best_fallback = candidate
+                        else:
+                            logger.info("  ⏭️ Another Priority 3. Already have a fallback. Continuing...")
+                            temp_file.unlink(missing_ok=True)
+                    else:
+                        logger.info(f"  ❌ Image rejected by AI (Priority {priority}).")
+                        temp_file.unlink(missing_ok=True)
+                        
+                except Exception as e:
+                    logger.error(f"  ⚠️ Error during AI analysis: {e}")
+                    temp_file.unlink(missing_ok=True)
+            else:
+                # No API key, just take the first suitable image
+                logger.warning("  ⚠️ No API key provided for verification. Using first suitable image.")
+                candidate['temp_file'] = temp_file
+                candidate['priority'] = 99
+                return candidate
+
+            # Optimization: If we've checked 5 images and have a fallback, settle
+            if i >= 4 and best_fallback:
+                logger.info("  🏁 Settle: Found a good enough player image after 5 checks.")
+                return best_fallback
+
+        if best_fallback:
+            logger.info("  🏁 Finished search. Using the best fallback found.")
+            return best_fallback
+            
+        logger.warning(f"  ❌ No suitable images found for {player_name} after checking {max_candidates_to_check} results.")
+        return None
+
+    def _get_image_candidates_from_google(self, search_term: str) -> List[dict]:
+        """Uses Selenium and regex to extract image candidate URLs from Google's internal data arrays."""
         options = webdriver.ChromeOptions()
         options.add_argument("--headless=new")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         
         driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        candidates = []
         
         try:
-            # Use Google Images search
             encoded_query = urllib.parse.quote_plus(search_term)
             search_url = f"https://www.google.com/search?q={encoded_query}&tbm=isch"
-            
-            logger.info(f"Searching: {search_term}")
             driver.get(search_url)
-            time.sleep(3)  # Wait longer for dynamic content
             
-            # Scroll to load more images
-            for _ in range(2):
-                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                time.sleep(1)
+            # Wait a moment for dynamic content
+            time.sleep(2)
             
-            results = []
+            # Get the full page source to parse script tags
+            page_source = driver.page_source
             
-            # First try to find actual image source links
-            try:
-                # Look for links that contain image URLs
-                image_links = driver.find_elements(By.CSS_SELECTOR, "a.EZAeBe[href*='showzone.gg'], a.EZAeBe[href*='imgurl'], a.EZAeBe[href*='.jpg'], a.EZAeBe[href*='.png']")
+            # Pattern: [0,"DOCID",["THUMB_URL",H,W],["SOURCE_URL",H,W],...]
+            # This regex captures the SOURCE_URL which is the second URL in the array structure
+            pattern = r'\[0,"[^"]+",\["https?://encrypted-tbn\d+\.gstatic\.com/images\?q=tbn:[^"]+",\d+,\d+\],\["(https?://[^"]+)",(\d+),(\d+)\]'
+            matches = re.findall(pattern, page_source)
+            
+            for img_url, height, width in matches:
+                # Clean up escaped characters (e.g., \u003d -> =)
+                img_url = img_url.replace('\\u003d', '=').replace('\\u0026', '&')
                 
-                for link in image_links[:max_results]:
-                    href = link.get_attribute('href')
-                    if href and ('showzone.gg' in href or 'imgurl=' in href):
-                        # Extract actual image URL if it's a Google redirect
-                        if 'imgurl=' in href:
-                            import re
-                            match = re.search(r'imgurl=([^&]+)', href)
-                            if match:
-                                actual_url = urllib.parse.unquote(match.group(1))
-                            else:
-                                actual_url = href
-                        else:
-                            actual_url = href
-                        
-                        # Calculate relevance score
-                        relevance_score = self._calculate_relevance_score(search_term, card_search)
-                        
-                        results.append({
-                            'url': actual_url,
-                            'search_term': search_term,
-                            'relevance_score': relevance_score,
-                            'is_card': card_search,
-                            'index': len(results)
+                # Filter out Google domains to ensure we have the actual source
+                if "google.com" not in img_url and "gstatic.com" not in img_url:
+                    candidates.append({
+                        'direct_url': img_url,
+                        'source_page': img_url  # For this strategy, source page is usually same as direct url
+                    })
+            
+            # If regex fails, fall back to a broader search for high-res looking URLs in scripts
+            if not candidates:
+                logger.info("  Primary regex failed. Trying fallback pattern search.")
+                # Look for strings that look like full-res image URLs in JSON-like structures
+                potential_urls = re.findall(r'\["(https?://[^"]+\.(?:jpg|jpeg|png|webp))",(\d+),(\d+)\]', page_source)
+                for img_url, h, w in potential_urls:
+                    if "google.com" not in img_url and "gstatic.com" not in img_url:
+                        candidates.append({
+                            'direct_url': img_url,
+                            'source_page': img_url
                         })
-                        
-                        if len(results) >= max_results:
-                            break
-                            
-            except Exception as e:
-                logger.debug(f"Error finding image links: {e}")
+
+            # Deduplicate
+            seen = set()
+            unique_candidates = []
+            for c in candidates:
+                if c['direct_url'] not in seen:
+                    seen.add(c['direct_url'])
+                    unique_candidates.append(c)
             
-            # If we didn't find enough actual image URLs, fall back to thumbnails
-            if len(results) < max_results:
-                # Get image elements - use updated selector
-                image_elements = driver.find_elements(By.CSS_SELECTOR, "img.YQ4gaf")
-                
-                for i, img_elem in enumerate(image_elements[:max_results - len(results)]):
-                    try:
-                        src = img_elem.get_attribute('src')
-                        # Handle both HTTP URLs and data URIs
-                        if src and (src.startswith('http') or src.startswith('data:')):
-                            # Skip Google logos and doodles
-                            if 'google.com/logos' in src or 'doodles' in src:
-                                continue
-                            # Skip very small data URIs (likely icons)
-                            if src.startswith('data:') and len(src) < 1000:
-                                continue
-                                
-                            # Calculate relevance score
-                            relevance_score = self._calculate_relevance_score(search_term, card_search) - 10  # Lower priority for thumbnails
-                            
-                            results.append({
-                                'url': src,
-                                'search_term': search_term,
-                                'relevance_score': relevance_score,
-                                'is_card': card_search,
-                                'index': len(results)
-                            })
-                    except Exception as e:
-                        logger.debug(f"Error processing image element {i}: {e}")
-                        continue
-            
-            return results
+            logger.info(f"Found {len(unique_candidates)} unique candidates using data-array extraction.")
+            return unique_candidates
             
         except Exception as e:
-            logger.error(f"Error in image search: {e}")
+            logger.error(f"Error extracting Google Image results: {e}")
             return []
         finally:
             driver.quit()
-    
-    def _calculate_relevance_score(self, search_term: str, is_card: bool) -> int:
-        """Calculate relevance score for an image based on search term."""
-        base_score = 50
+
+    def _download_full_size_image(self, candidate: dict) -> Optional[Path]:
+        """Downloads the full-size image, prioritizing the direct URL but falling back to page scraping."""
+        temp_path = self.temp_dir / f"download_{hash(candidate['direct_url'])}.jpg"
         
-        if is_card:
-            base_score += 30  # Prefer baseball cards
-        
-        if "yankees" in search_term.lower():
-            base_score += 20  # Prefer Yankees-related images
-        
-        if "topps" in search_term.lower():
-            base_score += 10  # Prefer well-known card brands
-        
-        return base_score
-    
-    def select_best_image(self, search_results: List[dict]) -> Optional[dict]:
-        """
-        Select the best image from search results.
-        
-        Args:
-            search_results: List of image search results
-            
-        Returns:
-            Best image result or None if no suitable image found
-        """
-        if not search_results:
-            return None
-        
-        # Sort by relevance score (already done, but ensure)
-        search_results.sort(key=lambda x: x.get('relevance_score', 0), reverse=True)
-        
-        # Try to download and validate top candidates
-        for result in search_results[:5]:  # Try top 5
-            if self._download_and_validate_image(result):
-                return result
-        
-        return None
-    
-    def _download_and_validate_image(self, image_result: dict) -> bool:
-        """
-        Download and validate an image.
-        
-        Args:
-            image_result: Image search result
-            
-        Returns:
-            True if image downloaded and validated successfully
-        """
+        # Strategy A: Try direct download from imgurl
         try:
-            url = image_result['url']
-            
-            # Handle showzone.gg pages - need to extract the actual image
-            if 'showzone.gg' in url:
-                logger.info(f"Extracting image from showzone.gg page: {url}")
-                actual_image_url = self._extract_image_from_showzone(url)
-                if actual_image_url:
-                    url = actual_image_url
-                else:
-                    logger.debug(f"Could not extract image from showzone.gg page")
-                    return False
-            
-            # Handle data URIs
-            if url.startswith('data:'):
-                import base64
-                # Extract the base64 data from data URI
-                if ',' in url:
-                    header, data = url.split(',', 1)
-                    image_data = base64.b64decode(data)
-                else:
-                    logger.debug(f"Invalid data URI format: {url[:50]}...")
-                    return False
-            else:
-                # Download regular HTTP image
-                response = requests.get(url, headers=self.headers, timeout=10)
-                response.raise_for_status()
-                image_data = response.content
-            
-            # Save to temp file
-            temp_file = self.temp_dir / f"temp_{hash(url)}.jpg"
-            with open(temp_file, 'wb') as f:
-                f.write(image_data)
-            
-            # Validate image with lower size requirements for player images
-            # (Google Images often returns thumbnails)
-            if self.image_processor.validate_image_quality(temp_file, min_width=100, min_height=100):
-                # Store the temp file path for later use
-                image_result['temp_file'] = temp_file
-                logger.info(f"Downloaded and validated: {url[:50]}...")
-                return True
-            else:
-                # Remove invalid image
-                temp_file.unlink(missing_ok=True)
-                logger.debug(f"Image failed validation: {url[:50]}...")
-                return False
-                
+            logger.debug(f"  Attempting direct download: {candidate['direct_url'][:60]}...")
+            response = requests.get(candidate['direct_url'], headers=self.headers, timeout=10)
+            if response.status_code == 200 and len(response.content) > 5000: # Simple check for non-thumbnail
+                with open(temp_path, 'wb') as f:
+                    f.write(response.content)
+                return temp_path
         except Exception as e:
-            logger.debug(f"Error downloading image {image_result['url']}: {e}")
-            return False
-    
-    def _extract_image_from_showzone(self, page_url: str) -> Optional[str]:
-        """Extract the actual baseball card image from a showzone.gg player page."""
+            logger.debug(f"  Direct download failed: {e}")
+
+        # Strategy B: Navigate to source site and scrape (User requirement Step 2)
+        if candidate['source_page'] and candidate['source_page'] != candidate['direct_url']:
+            try:
+                logger.info(f"  Navigating to source site to find full-scale image: {candidate['source_page'][:60]}...")
+                scraped_url = self._extract_image_from_generic_page(candidate['source_page'])
+                if scraped_url:
+                    response = requests.get(scraped_url, headers=self.headers, timeout=10)
+                    if response.status_code == 200:
+                        with open(temp_path, 'wb') as f:
+                            f.write(response.content)
+                        return temp_path
+            except Exception as e:
+                logger.debug(f"  Source site scraping failed: {e}")
+                
+        return None
+
+    def _extract_image_from_generic_page(self, page_url: str) -> Optional[str]:
+        """Scrapes a webpage to find the primary image (likely the high-res player card)."""
         try:
             response = requests.get(page_url, headers=self.headers, timeout=10)
-            response.raise_for_status()
-            
             from bs4 import BeautifulSoup
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Look for player card images
-            # Common selectors for player images on showzone.gg
-            image_selectors = [
-                'img.player-card',
-                'img[alt*="Duke Ellis"]',
-                'img[src*="card"]',
-                '.player-image img',
-                '.card-image img',
-                'img[src*=".png"]',
-                'img[src*=".jpg"]'
+            # Common selectors for main high-res images on collector/sports sites
+            selectors = [
+                'meta[property="og:image"]', 
+                'link[rel="image_src"]',
+                '.main-image img', '.primary-image img',
+                'img.player-card', 'img.card-image',
+                '#main-image', '[data-main-image] img'
             ]
             
-            for selector in image_selectors:
-                images = soup.select(selector)
+            for selector in selectors:
+                found = soup.select_one(selector)
+                if found:
+                    url = found.get('src') or found.get('content') or found.get('href')
+                    if url:
+                        return urllib.parse.urljoin(page_url, url)
+            
+            # Fallback: Find the largest image on the page
+            images = soup.find_all('img')
+            if images:
+                # Prioritize images with 'player' or 'card' in their name/alt
                 for img in images:
                     src = img.get('src')
-                    if src and any(ext in src.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
-                        # Convert relative URLs to absolute
-                        if src.startswith('/'):
-                            src = f"https://showzone.gg{src}"
-                        elif not src.startswith('http'):
-                            src = f"https://showzone.gg/{src}"
-                        
-                        logger.info(f"Found showzone image: {src}")
-                        return src
+                    alt = img.get('alt', '').lower()
+                    if src and ('card' in alt or 'player' in alt or 'yankees' in alt):
+                        return urllib.parse.urljoin(page_url, src)
             
-            # If no specific selectors work, look for any large images
-            all_images = soup.find_all('img')
-            for img in all_images:
-                src = img.get('src')
-                if src and any(ext in src.lower() for ext in ['.png', '.jpg', '.jpeg', '.webp']):
-                    # Skip small icons and logos
-                    if 'icon' in src.lower() or 'logo' in src.lower() or 'avatar' in src.lower():
-                        continue
-                    
-                    # Convert relative URLs to absolute
-                    if src.startswith('/'):
-                        src = f"https://showzone.gg{src}"
-                    elif not src.startswith('http'):
-                        src = f"https://showzone.gg/{src}"
-                    
-                    logger.info(f"Found fallback showzone image: {src}")
-                    return src
-            
-            logger.debug(f"No suitable images found on showzone.gg page")
+            return None
+        except Exception:
+            return None
+
+    def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> Optional[Path]:
+        """Complete workflow orchestrator for finding and saving a player image."""
+        result = self.find_first_yankee_image(player_name, api_key)
+        
+        if not result or 'temp_file' not in result:
             return None
             
-        except Exception as e:
-            logger.debug(f"Error extracting image from showzone.gg: {e}")
-            return None
-    
-    def download_and_process_player_image(self, player_name: str, date_str: str) -> Optional[Path]:
-        """
-        Complete workflow to download and process a player image.
+        temp_file = result['temp_file']
         
-        Args:
-            player_name: Name of the player
-            date_str: Date string for naming (YYYY-MM-DD)
-            
-        Returns:
-            Path to processed player image or None if failed
-        """
-        logger.info(f"Starting player image search for: {player_name}")
-        
-        # Search for images
-        search_results = self.search_player_images(player_name)
-        
-        if not search_results:
-            logger.warning(f"No images found for {player_name}")
-            return None
-        
-        # Select best image
-        best_result = self.select_best_image(search_results)
-        
-        if not best_result:
-            logger.warning(f"No suitable image found for {player_name}")
-            return None
-        
-        # Process the selected image
-        temp_file = best_result.get('temp_file')
-        if not temp_file or not temp_file.exists():
-            logger.error(f"Temp file not found for {player_name}")
-            return None
-        
-        # Process and save final image
+        # Process and save final image (converts to WEBP and moves to images/ folder)
         final_path = self.image_processor.process_player_image(temp_file, self.images_dir, date_str)
         
-        # Clean up temp file
+        # Clean up
         temp_file.unlink(missing_ok=True)
-        
-        if final_path:
-            logger.info(f"Successfully processed player image for {player_name}: {final_path.name}")
-            return final_path
-        else:
-            logger.error(f"Failed to process player image for {player_name}")
-            return None
-    
-    def fallback_image_search(self, player_name: str, date_str: str) -> Optional[Path]:
-        """
-        Fallback search using alternative methods if primary search fails.
-        
-        Args:
-            player_name: Name of the player
-            date_str: Date string for naming
-            
-        Returns:
-            Path to processed player image or None if failed
-        """
-        logger.info(f"Attempting fallback image search for: {player_name}")
-        
-        # Try with simplified search terms
-        simplified_name = re.sub(r'\s+(Jr\.|Sr\.|II|III|IV)$', '', player_name.strip())
-        
-        # Try just last name + yankees
-        last_name = simplified_name.split()[-1] if simplified_name else player_name
-        fallback_terms = [
-            f"{last_name} yankees",
-            simplified_name,
-            player_name
-        ]
-        
-        for term in fallback_terms:
-            search_results = self._search_general_player_images(term, max_results=5)
-            
-            if search_results:
-                best_result = self.select_best_image(search_results)
-                if best_result:
-                    temp_file = best_result.get('temp_file')
-                    if temp_file and temp_file.exists():
-                        final_path = self.image_processor.process_player_image(temp_file, self.images_dir, date_str)
-                        temp_file.unlink(missing_ok=True)
-                        
-                        if final_path:
-                            logger.info(f"Fallback search successful for {player_name}: {final_path.name}")
-                            return final_path
-        
-        logger.warning(f"All fallback searches failed for {player_name}")
-        return None
-    
+        return final_path
+
     def cleanup_temp_files(self):
         """Clean up temporary image files."""
         try:
-            for temp_file in self.temp_dir.glob("temp_*.jpg"):
+            for temp_file in self.temp_dir.glob("download_*.jpg"):
                 temp_file.unlink(missing_ok=True)
-            logger.info("Cleaned up temporary image files")
         except Exception as e:
             logger.error(f"Error cleaning up temp files: {e}")
