@@ -9,7 +9,7 @@ import time
 # The number of times to retry the API call if it returns an empty response.
 MAX_RETRIES = 5
 SLEEP_TIME = 30
-MODEL = 'gemini-2.5-pro'
+MODEL = 'gemini-3.1-pro-preview'
 
 # Simple in-process rate limiter to respect Free Tier limit
 # (2 requests per minute per model). We maintain at most one
@@ -38,6 +38,8 @@ def _respect_free_tier_rate_limit():
         sleep_for = min_interval - elapsed
         print(f"  ⏱ Respecting Gemini Free Tier rate limit, sleeping {sleep_for:.1f}s before next API call...")
         time.sleep(sleep_for)
+    else:
+        print(f"  ⚡ No rate limit needed, {elapsed:.1f}s since last call")
     _LAST_GEMINI_CALL_TS = time.time()
 
 def get_player_info_from_image(image_path, api_key: str):
