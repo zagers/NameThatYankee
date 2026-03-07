@@ -58,24 +58,27 @@ def get_player_info_from_image(image_path, api_key: str):
         )]
     )
     prompt = """
-    You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card. 
-    To identify the player correctly, you must follow these steps precisely:
+    You are a baseball historian and statistical auditor. Analyze the provided image of a "Name That Yankee" trivia card. 
+    Accuracy is your only priority. A wrong name is far worse than returning "Unknown".
 
-    1.  **OCR Extraction**: Transcribe exactly what you see on the card. List the years, the teams, and the specific statistics (e.g., HR, AVG, W-L, ERA) shown for at least three rows.
-    2.  **Search Query Formulation**: Based on the transcribed data, use your search tool to find players who match this specific career path. 
-        *Query Example*: "MLB player who played for [Team A] in [Year] and [Team B] in [Year] with [Stat Value] [Stat Name]"
-    3.  **Cross-Reference**: Compare the statistics from your search results (prioritizing Baseball-Reference.com) against your transcription from step 1.
-    4.  **Verification and Final Decision**: 
-        - **Logical Impossibility**: If the player found never played for one of the teams listed on the card, or if a major stat is wildly different (e.g., card shows 40 HR, search shows 2 HR), you MUST return "Unknown".
-        - **OCR Error**: If the player matches all teams and the career trajectory perfectly, but there is a minor character discrepancy (e.g., "8" read as "B", or a 0.01 difference in ERA), assume it is a reading error and return the player's name.
-        - **Nickname Verification**: Only provide a nickname if it is a widely recognized baseball moniker.
+    Follow these steps precisely:
+
+    1.  **Statistical Extraction**: Transcribe the career stats shown on the card. For each row, list: Year, Team, and the primary stats (e.g., W-L and ERA for pitchers, or HR and AVG for hitters).
+    2.  **Targeted Search**: Use your search tool to find the player who recorded these EXACT statistics in these specific years for these teams. 
+        *Search Strategy*: Search for the most unique stat line on the card. 
+        *Example*: "MLB pitcher [Year] [W-L Record] [ERA]"
+    3.  **Rigorous Audit**: Compare your search results against every single row on the card.
+    4.  **Final Decision (Ultra-Strict)**: 
+        - **Stats Must Match**: The primary statistics (Wins, Losses, ERA, Home Runs, Average) must match the card exactly. 
+        - **No Leeway**: Do NOT assume OCR errors. If you cannot find a player whose statistics and team history match every row on the card, you MUST return "Unknown".
+        - **Team Sequence**: The chronological order of teams must be identical.
 
     Your response must be a single valid JSON object with the following structure, and nothing else:
     {
       "step_by_step_reasoning": {
         "transcribed_stats": "...",
         "search_query_used": "...",
-        "verification_findings": "..."
+        "audit_findings": "Detailed comparison of card stats vs search data"
       },
       "name": "Player's Full Name or 'Unknown'",
       "nickname": "Player's common nickname, or an empty string"
@@ -94,7 +97,7 @@ def get_player_info_from_image(image_path, api_key: str):
 
             print(f"  ✅ Player identified as: {player_data['name']}")
             if player_data.get('step_by_step_reasoning'):
-                findings = player_data['step_by_step_reasoning'].get('verification_findings', 'No findings provided')
+                findings = player_data['step_by_step_reasoning'].get('audit_findings', 'No findings provided')
                 print(f"     AI Reasoning: {findings[:150]}...")
                 
             return player_data # Success, exit the function
