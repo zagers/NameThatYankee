@@ -45,7 +45,7 @@ def _respect_free_tier_rate_limit():
 def get_player_info_from_image(image_path, api_key: str):
     """
     Uses Gemini to get the player's name and nickname from the clue.
-    Includes retry logic for empty responses.
+    Includes retry logic for empty responses and Chain of Thought reasoning.
     """
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     
@@ -58,21 +58,26 @@ def get_player_info_from_image(image_path, api_key: str):
         )]
     )
     prompt = """
-    You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card and return the name and nickname of the player whose stats are shown.
+    You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card. 
+    To identify the player correctly, you must follow these steps precisely:
 
-    Your only task is to identify the player's name. Accuracy is paramount. Do not guess.
+    1.  **OCR Extraction**: Transcribe exactly what you see on the card. List the years, the teams, and the specific statistics (e.g., HR, AVG, W-L, ERA) shown for at least three rows.
+    2.  **Search Query Formulation**: Based on the transcribed data, use your search tool to find players who match this specific career path. 
+        *Query Example*: "MLB player who played for [Team A] in [Year] and [Team B] in [Year] with [Stat Value] [Stat Name]"
+    3.  **Cross-Reference**: Compare the statistics from your search results (prioritizing Baseball-Reference.com) against your transcription from step 1.
+    4.  **Verification and Final Decision**: 
+        - **Logical Impossibility**: If the player found never played for one of the teams listed on the card, or if a major stat is wildly different (e.g., card shows 40 HR, search shows 2 HR), you MUST return "Unknown".
+        - **OCR Error**: If the player matches all teams and the career trajectory perfectly, but there is a minor character discrepancy (e.g., "8" read as "B", or a 0.01 difference in ERA), assume it is a reading error and return the player's name.
+        - **Nickname Verification**: Only provide a nickname if it is a widely recognized baseball moniker.
 
-    **Verification Steps:**
-    1.  Verify that every single career stat on the card exactly matches the player you identify.
-    2.  Verify that the player was on each team listed for the corresponding year.
-
-    **Output Rules:**
-    - If, and only if, you can verify a perfect match based on the verification steps, return the player's data.
-    - If you cannot find a player who perfectly matches all stats and team history, or if the image is unreadable, **you must** return "Unknown" as the player's name.
-
-    Your response must be a valid JSON object with the following structure, and nothing else:
+    Your response must be a single valid JSON object with the following structure, and nothing else:
     {
-      "name": "Player's Full Name",
+      "step_by_step_reasoning": {
+        "transcribed_stats": "...",
+        "search_query_used": "...",
+        "verification_findings": "..."
+      },
+      "name": "Player's Full Name or 'Unknown'",
       "nickname": "Player's common nickname, or an empty string"
     }
     """
@@ -88,33 +93,34 @@ def get_player_info_from_image(image_path, api_key: str):
             player_data = json.loads(json_text)
 
             print(f"  ✅ Player identified as: {player_data['name']}")
+            if player_data.get('step_by_step_reasoning'):
+                findings = player_data['step_by_step_reasoning'].get('verification_findings', 'No findings provided')
+                print(f"     AI Reasoning: {findings[:150]}...")
+                
             return player_data # Success, exit the function
 
         except ValueError:
             print(f"  ⚠️ Gemini returned an empty response. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
             if response:
                 print(f"     Finish Reason: {response.candidates[0].finish_reason if response.candidates else 'N/A'}")
-            time.sleep(SLEEP_TIME) # Wait before the next attempt
+            time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            # Handle connection-related errors that should be retried
+            # Handle connection-related errors
             error_msg = str(e).lower()
             is_connection_error = any(keyword in error_msg for keyword in [
-                'server disconnected', 'connection', 'timeout', 'network', 
-                'read timeout', 'connection reset'
+                'server disconnected', 'connection', 'timeout', 'network'
             ])
             
             if is_connection_error and attempt < MAX_RETRIES - 1:
-                print(f"  🔌 Connection error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                print(f"  plug Connection error: {e}. Retrying...")
                 time.sleep(SLEEP_TIME)
                 continue
             else:
-                # For other errors (API key, etc.), fail immediately
-                print(f"  ❌ An unexpected error occurred: {e}")
+                print(f"  ❌ Error during identification: {e}")
                 return None
 
-    print(f"  ❌ All {MAX_RETRIES} retry attempts failed.")
-    return None
+    return {"name": "Unknown", "nickname": ""}
 
 
 def get_facts_from_gemini(player_name: str, api_key: str):
