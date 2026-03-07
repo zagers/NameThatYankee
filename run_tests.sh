@@ -9,19 +9,25 @@ echo "================================================="
 
 # Run Python Unit Tests
 echo ""
-echo "▶️ [1/3] Running Python Backend Unit Tests..."
+echo "▶️ [1/4] Running Python Backend Unit Tests..."
 echo "-------------------------------------------------"
 pytest tests/unit/ -v
 
+# Run Python Automation Integration Tests
+echo ""
+echo "▶️ [2/4] Running Automation Integration Tests..."
+echo "-------------------------------------------------"
+pytest test_automation.py -v
+
 # Run Python UI/E2E Tests
 echo ""
-echo "▶️ [2/3] Running Python E2E & Accessibility Tests..."
+echo "▶️ [3/4] Running Python E2E & Accessibility Tests..."
 echo "-------------------------------------------------"
 pytest test_yankee_site.py -v
 
 # Run JavaScript Tests (using npx vitest run to avoid watch mode)
 echo ""
-echo "▶️ [3/3] Running JavaScript Frontend Tests..."
+echo "▶️ [4/4] Running JavaScript Frontend Tests..."
 echo "-------------------------------------------------"
 npx vitest run
 
