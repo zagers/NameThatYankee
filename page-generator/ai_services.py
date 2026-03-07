@@ -92,9 +92,21 @@ def get_player_info_from_image(image_path, api_key: str):
             time.sleep(SLEEP_TIME) # Wait before the next attempt
 
         except Exception as e:
-            # For other errors (API key, network, etc.), fail immediately
-            print(f"  ❌ An unexpected error occurred: {e}")
-            return None
+            # Handle connection-related errors that should be retried
+            error_msg = str(e).lower()
+            is_connection_error = any(keyword in error_msg for keyword in [
+                'server disconnected', 'connection', 'timeout', 'network', 
+                'read timeout', 'connection reset'
+            ])
+            
+            if is_connection_error and attempt < MAX_RETRIES - 1:
+                print(f"  🔌 Connection error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
+            else:
+                # For other errors (API key, etc.), fail immediately
+                print(f"  ❌ An unexpected error occurred: {e}")
+                return None
 
     print(f"  ❌ All {MAX_RETRIES} retry attempts failed.")
     return None
@@ -350,6 +362,13 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
+            # Handle connection-related errors that should be retried
+            error_msg = str(e).lower()
+            is_connection_error = any(keyword in error_msg for keyword in [
+                'server disconnected', 'connection', 'timeout', 'network', 
+                'read timeout', 'connection reset'
+            ])
+            
             if isinstance(e, errors.APIError) and getattr(e, 'code', None) == 429:
                 message = str(e)
                 # Detect daily quota exhaustion (GenerateRequestsPerDay...)
@@ -360,9 +379,14 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
                     print(f"  ⚠️ Gemini API rate limit exceeded (429): {message}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
                     time.sleep(SLEEP_TIME)
                     continue
-            print(f"  ⚠️ Error getting combined facts and follow-up Q&A from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
-            time.sleep(SLEEP_TIME)
-            continue
+            elif is_connection_error and attempt < MAX_RETRIES - 1:
+                print(f"  🔌 Connection error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
+            else:
+                print(f"  ⚠️ Error getting combined facts and follow-up Q&A from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
 
     print(f"  All {MAX_RETRIES} retry attempts for combined facts/Q&A failed.")
     return {"facts": [], "qa": []}
