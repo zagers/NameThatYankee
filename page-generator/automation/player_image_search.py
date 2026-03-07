@@ -47,32 +47,40 @@ class PlayerImageSearch:
     
     def search_player_images(self, player_name: str, max_results: int = 10) -> List[dict]:
         """
-        Search for player images using multiple strategies.
+        Search for player images using multiple search terms.
         
         Args:
             player_name: Name of the player to search for
-            max_results: Maximum number of results to return
+            max_results: Maximum number of results per search term
             
         Returns:
-            List of image search results with metadata
+            List of image search results
         """
-        logger.info(f"Searching for images of: {player_name}")
+        search_terms = [
+            f'"{player_name}" yankees baseball card',
+            f'"{player_name}" yankees photo', 
+            f'"{player_name}" baseball player',
+            f'"{player_name}" mlb player'
+        ]
         
-        all_results = []
+        results = []
+        for term in search_terms:
+            term_results = self._search_images_with_selenium(term, max_results, card_search=False)
+            results.extend(term_results)
         
-        # Strategy 1: Baseball card specific search
-        card_results = self._search_baseball_cards(player_name, max_results // 2)
-        all_results.extend(card_results)
+        # Filter out Google logos and non-relevant images
+        filtered_results = []
+        for result in results:
+            url = result['url']
+            # Skip Google logos and doodles
+            if 'google.com/logos' in url or 'doodles' in url:
+                continue
+            # Skip very small images (likely icons)
+            if url.startswith('data:') and len(url) < 1000:
+                continue
+            filtered_results.append(result)
         
-        # Strategy 2: General player image search
-        general_results = self._search_general_player_images(player_name, max_results // 2)
-        all_results.extend(general_results)
-        
-        # Sort by relevance score (baseball cards get higher priority)
-        all_results.sort(key=lambda x: x.get('relevance_score', 0), reverse=True)
-        
-        logger.info(f"Found {len(all_results)} potential images for {player_name}")
-        return all_results[:max_results]
+        return filtered_results
     
     def _search_baseball_cards(self, player_name: str, max_results: int) -> List[dict]:
         """Search specifically for baseball card images."""
@@ -127,14 +135,15 @@ class PlayerImageSearch:
                 driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
                 time.sleep(1)
             
-            # Get image elements
-            image_elements = driver.find_elements(By.CSS_SELECTOR, "img.Q4LuWd")
+            # Get image elements - use updated selector
+            image_elements = driver.find_elements(By.CSS_SELECTOR, "img.YQ4gaf")
             
             results = []
             for i, img_elem in enumerate(image_elements[:max_results]):
                 try:
                     src = img_elem.get_attribute('src')
-                    if src and src.startswith('http'):
+                    # Handle both HTTP URLs and data URIs
+                    if src and (src.startswith('http') or src.startswith('data:')):
                         # Calculate relevance score
                         relevance_score = self._calculate_relevance_score(search_term, card_search)
                         
@@ -206,25 +215,40 @@ class PlayerImageSearch:
             True if image downloaded and validated successfully
         """
         try:
-            # Download image
-            response = requests.get(image_result['url'], headers=self.headers, timeout=10)
-            response.raise_for_status()
+            url = image_result['url']
+            
+            # Handle data URIs
+            if url.startswith('data:'):
+                import base64
+                # Extract the base64 data from data URI
+                if ',' in url:
+                    header, data = url.split(',', 1)
+                    image_data = base64.b64decode(data)
+                else:
+                    logger.debug(f"Invalid data URI format: {url[:50]}...")
+                    return False
+            else:
+                # Download regular HTTP image
+                response = requests.get(url, headers=self.headers, timeout=10)
+                response.raise_for_status()
+                image_data = response.content
             
             # Save to temp file
-            temp_file = self.temp_dir / f"temp_{hash(image_result['url'])}.jpg"
+            temp_file = self.temp_dir / f"temp_{hash(url)}.jpg"
             with open(temp_file, 'wb') as f:
-                f.write(response.content)
+                f.write(image_data)
             
-            # Validate image
-            if self.image_processor.validate_image_quality(temp_file):
+            # Validate image with lower size requirements for player images
+            # (Google Images often returns thumbnails)
+            if self.image_processor.validate_image_quality(temp_file, min_width=100, min_height=100):
                 # Store the temp file path for later use
                 image_result['temp_file'] = temp_file
-                logger.info(f"Downloaded and validated: {image_result['url']}")
+                logger.info(f"Downloaded and validated: {url[:50]}...")
                 return True
             else:
                 # Remove invalid image
                 temp_file.unlink(missing_ok=True)
-                logger.debug(f"Image failed validation: {image_result['url']}")
+                logger.debug(f"Image failed validation: {url[:50]}...")
                 return False
                 
         except Exception as e:
