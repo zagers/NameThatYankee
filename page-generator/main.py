@@ -173,6 +173,44 @@ def handle_single_automation(workflow: AutomatedWorkflow):
     else:
         print(f"\n❌ Automation failed for {date_str}. Check logs for details.")
 
+def handle_identify_player(config: dict):
+    """Handle standalone player identification from a screenshot."""
+    print("\n--- Standalone Player Identification ---")
+    
+    screenshot_path = None
+    try:
+        idx = sys.argv.index("--identify-player")
+        if idx + 1 < len(sys.argv):
+            screenshot_path = Path(sys.argv[idx + 1])
+    except (ValueError, IndexError):
+        pass
+        
+    if not screenshot_path:
+        screenshot_str = input("Enter path to puzzle screenshot: ").strip().strip("'\"")
+        screenshot_path = Path(screenshot_str)
+    
+    if not screenshot_path.exists():
+        print(f"❌ Screenshot not found: {screenshot_path}")
+        exit()
+        
+    api_key = config.get("gemini_api_key")
+    if not api_key:
+        api_key = input("Please enter your Google Gemini API key: ").strip()
+        config["gemini_api_key"] = api_key
+        config_manager.save_config(config)
+        
+    print(f"🚀 Analyzing {screenshot_path.name}...")
+    try:
+        player_info = ai_services.get_player_info_from_image(screenshot_path, api_key)
+        if player_info:
+            print(f"\n✅ Identification Result:")
+            print(f"   Name:     {player_info.get('name')}")
+            print(f"   Nickname: {player_info.get('nickname', 'None')}")
+        else:
+            print(f"\n❌ AI could not identify the player in the image.")
+    except Exception as e:
+        print(f"❌ Error during identification: {e}")
+
 def handle_find_image(config: dict):
     """Handle standalone player image search."""
     print("\n--- Standalone Player Image Search ---")
@@ -335,6 +373,10 @@ Options:
   --facts-only          Identify the player and generate three career facts
                         via Gemini, but do not generate follow-up Q&A.
 
+  --identify-player    [screenshot_path]
+                        Standalone player identification. Analyzes a puzzle 
+                        screenshot and returns the player's name and nickname.
+
   --automate-workflow  [screenshot_path] [date]
                         Run fully automated workflow. Takes a screenshot file
                         path as optional argument, and optionally a date (YYYY-MM-DD).
@@ -396,11 +438,17 @@ Notes:
     automate_workflow = "--automate-workflow" in sys.argv
     batch_automate = "--batch-automate" in sys.argv
     find_image = "--find-image" in sys.argv
+    identify_player = "--identify-player" in sys.argv
     config_mode = "--config" in sys.argv
 
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
         handle_config_mode()
+        exit()
+
+    # Handle standalone identification
+    if identify_player:
+        handle_identify_player(config)
         exit()
 
     # Handle standalone image search
