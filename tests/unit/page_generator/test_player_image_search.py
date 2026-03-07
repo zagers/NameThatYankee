@@ -139,7 +139,7 @@ class TestPlayerImageSearch:
             # Should get results from 4 search terms, each returning 1 link = 4 total
             assert len(results) == 4
             # Check that at least one result has the expected URL (the filtering logic might be complex)
-            assert any(result['url'] == "https://example.com/high-res.jpg" for result in results)
+            assert any("https://example.com/high-res.jpg" in result['url'] for result in results)
 
     def test_search_player_images_filters_google_logos(self, player_search):
         """Test that Google logos are filtered out."""

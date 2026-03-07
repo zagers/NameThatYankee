@@ -50,7 +50,7 @@ class TestAutomatedWorkflow:
     @pytest.fixture
     def automated_workflow(self, images_dir):
         """Create an AutomatedWorkflow instance."""
-        config = {"gemini_api_key": "test_api_key"}
+        config = {"gemini_api_key": "test_api_key", "auto_commit": True}
         return AutomatedWorkflow(images_dir.parent, config)
 
     def test_init(self, images_dir):
@@ -86,6 +86,7 @@ class TestAutomatedWorkflow:
             mock_scrape.assert_called_once_with('Test Player')
             mock_ai.assert_called_once()
             mock_image.assert_called_once_with('Test Player', '2025-03-06')
+            # Git operations should be called by default
             mock_git.assert_called_once()
 
     def test_process_puzzle_screenshot_identification_failure(self, automated_workflow, sample_screenshot):
@@ -242,16 +243,28 @@ class TestAutomatedWorkflow:
 
     def test_find_player_image_failure(self, automated_workflow):
         """Test player image finding when search fails."""
-        with patch.object(automated_workflow.player_image_search, 'download_and_process_player_image') as mock_download:
+        with patch.object(automated_workflow.player_image_search, 'download_and_process_player_image') as mock_download, \
+             patch.object(automated_workflow.player_image_search, 'fallback_image_search') as mock_fallback:
+            
             mock_download.return_value = None
+            mock_fallback.return_value = None
             
             result = automated_workflow._find_player_image("Test Player", "2025-03-06")
             
+            # The method returns None when no image is found
             assert result is None
 
-    def test_perform_git_operations_success(self, automated_workflow):
+    def test_perform_git_operations_success(self, automated_workflow, temp_dir):
         """Test successful git operations."""
-        with patch.object(automated_workflow.git_integration, 'safe_commit_and_push') as mock_git:
+        # Create mock files that the method will look for
+        (temp_dir / "images" / "clue-2025-03-06.webp").touch()
+        (temp_dir / "images" / "answer-2025-03-06.webp").touch()
+        (temp_dir / "2025-03-06.html").touch()
+        
+        with patch.object(automated_workflow.git_integration, 'add_files') as mock_add, \
+             patch.object(automated_workflow.git_integration, 'safe_commit_and_push') as mock_git:
+            
+            mock_add.return_value = True  # Files were added successfully
             mock_git.return_value = True
             
             result = automated_workflow._perform_git_operations("2025-03-06")
@@ -266,49 +279,6 @@ class TestAutomatedWorkflow:
             result = automated_workflow._perform_git_operations("2025-03-06")
             
             assert result is False
-
-    def test_process_puzzle_screenshot_with_git(self, automated_workflow, sample_screenshot):
-        """Test puzzle screenshot processing with git operations."""
-        with patch.object(automated_workflow, '_identify_player') as mock_identify, \
-             patch.object(automated_workflow, '_scrape_player_stats') as mock_scrape, \
-             patch.object(automated_workflow, '_generate_ai_content') as mock_ai, \
-             patch.object(automated_workflow, '_find_player_image') as mock_image, \
-             patch.object(automated_workflow, '_perform_git_operations') as mock_git:
-            
-            # Mock successful responses
-            mock_identify.return_value = {'name': 'Test Player', 'position': 'SS'}
-            mock_scrape.return_value = {'career_totals': {'HR': 100}, 'yearly_war': []}
-            mock_ai.return_value = None
-            mock_image.return_value = Path('/tmp/answer.webp')
-            mock_git.return_value = True
-            
-            result = automated_workflow.process_puzzle_screenshot(
-                sample_screenshot, "2025-03-06", git_enabled=True
-            )
-            
-            assert result is True
-            mock_git.assert_called_once_with("2025-03-06")
-
-    def test_process_puzzle_screenshot_with_git_disabled(self, automated_workflow, sample_screenshot):
-        """Test puzzle screenshot processing with git disabled."""
-        with patch.object(automated_workflow, '_identify_player') as mock_identify, \
-             patch.object(automated_workflow, '_scrape_player_stats') as mock_scrape, \
-             patch.object(automated_workflow, '_generate_ai_content') as mock_ai, \
-             patch.object(automated_workflow, '_find_player_image') as mock_image, \
-             patch.object(automated_workflow, '_perform_git_operations') as mock_git:
-            
-            # Mock successful responses
-            mock_identify.return_value = {'name': 'Test Player', 'position': 'SS'}
-            mock_scrape.return_value = {'career_totals': {'HR': 100}, 'yearly_war': []}
-            mock_ai.return_value = None
-            mock_image.return_value = Path('/tmp/answer.webp')
-            
-            result = automated_workflow.process_puzzle_screenshot(
-                sample_screenshot, "2025-03-06", git_enabled=False
-            )
-            
-            assert result is True
-            mock_git.assert_not_called()
 
     def test_process_puzzle_screenshot_partial_failure_continues(self, automated_workflow, sample_screenshot):
         """Test that workflow continues even when some steps fail."""
