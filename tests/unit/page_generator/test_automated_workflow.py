@@ -70,16 +70,14 @@ class TestAutomatedWorkflow:
              patch.object(automated_workflow, '_scrape_player_stats') as mock_scrape, \
              patch.object(automated_workflow, '_generate_ai_content') as mock_ai, \
              patch.object(automated_workflow, '_find_player_image') as mock_image, \
-             patch.object(automated_workflow, '_generate_html_page') as mock_html, \
-             patch.object(automated_workflow, '_rebuild_index') as mock_index:
+             patch.object(automated_workflow, '_perform_git_operations') as mock_git:
             
             # Mock successful responses
             mock_identify.return_value = {'name': 'Test Player', 'position': 'SS'}
             mock_scrape.return_value = {'career_totals': {'HR': 100}, 'yearly_war': []}
             mock_ai.return_value = None
             mock_image.return_value = Path('/tmp/answer.webp')
-            mock_html.return_value = Path('/tmp/puzzle.html')
-            mock_index.return_value = True
+            mock_git.return_value = True
             
             result = automated_workflow.process_puzzle_screenshot(sample_screenshot, "2025-03-06")
             
@@ -88,8 +86,7 @@ class TestAutomatedWorkflow:
             mock_scrape.assert_called_once_with('Test Player')
             mock_ai.assert_called_once()
             mock_image.assert_called_once_with('Test Player', '2025-03-06')
-            mock_html.assert_called_once()
-            mock_index.assert_called_once()
+            mock_git.assert_called_once()
 
     def test_process_puzzle_screenshot_identification_failure(self, automated_workflow, sample_screenshot):
         """Test puzzle screenshot processing when player identification fails."""
@@ -108,7 +105,7 @@ class TestAutomatedWorkflow:
         
         assert result is False
 
-    def test_identify_player_success(self, automated_workflow, images_dir):
+    def test_identify_player_success(self, automated_workflow, temp_dir):
         """Test successful player identification."""
         with patch('automation.automated_workflow.ai_services') as mock_ai_services:
             mock_ai_services.get_player_info_from_image.return_value = {
@@ -117,7 +114,7 @@ class TestAutomatedWorkflow:
                 'team': 'Yankees'
             }
             
-            clue_path = str(images_dir / "clue-2025-03-06.webp")
+            clue_path = str(temp_dir / "clue-2025-03-06.webp")
             
             result = automated_workflow._identify_player(clue_path)
             
@@ -125,7 +122,7 @@ class TestAutomatedWorkflow:
             assert result['name'] == 'Test Player'
             assert result['position'] == 'SS'
 
-    def test_identify_player_unknown(self, automated_workflow, images_dir):
+    def test_identify_player_unknown(self, automated_workflow, temp_dir):
         """Test player identification when AI returns 'Unknown'."""
         with patch('automation.automated_workflow.ai_services') as mock_ai_services:
             mock_ai_services.get_player_info_from_image.return_value = {
@@ -133,30 +130,30 @@ class TestAutomatedWorkflow:
                 'position': 'Unknown'
             }
             
-            clue_path = str(images_dir / "clue-2025-03-06.webp")
+            clue_path = str(temp_dir / "clue-2025-03-06.webp")
             
             result = automated_workflow._identify_player(clue_path)
             
             assert result is not None
             assert result['name'] == 'Unknown'
 
-    def test_identify_player_failure(self, automated_workflow, images_dir):
+    def test_identify_player_failure(self, automated_workflow, temp_dir):
         """Test player identification when AI service fails."""
         with patch('automation.automated_workflow.ai_services') as mock_ai_services:
             mock_ai_services.get_player_info_from_image.return_value = None
             
-            clue_path = str(images_dir / "clue-2025-03-06.webp")
+            clue_path = str(temp_dir / "clue-2025-03-06.webp")
             
             result = automated_workflow._identify_player(clue_path)
             
             assert result is None
 
-    def test_identify_player_exception(self, automated_workflow, images_dir):
+    def test_identify_player_exception(self, automated_workflow, temp_dir):
         """Test player identification when AI service raises exception."""
         with patch('automation.automated_workflow.ai_services') as mock_ai_services:
             mock_ai_services.get_player_info_from_image.side_effect = Exception("API Error")
             
-            clue_path = str(images_dir / "clue-2025-03-06.webp")
+            clue_path = str(temp_dir / "clue-2025-03-06.webp")
             
             result = automated_workflow._identify_player(clue_path)
             
@@ -250,73 +247,25 @@ class TestAutomatedWorkflow:
             
             result = automated_workflow._find_player_image("Test Player", "2025-03-06")
             
-            # The method returns None when no image is found
             assert result is None
 
-    def test_generate_html_page_success(self, automated_workflow, temp_dir):
-        """Test successful HTML page generation."""
-        with patch('automation.automated_workflow.html_generator') as mock_html_gen:
-            mock_html_gen.generate_detail_page.return_value = temp_dir / "puzzle.html"
-            
-            player_info = {
-                'name': 'Test Player',
-                'facts': ['Fact 1'],
-                'followup_qa': [{'q': 'Q1', 'a': 'A1'}],
-                'career_totals': {'HR': 100},
-                'yearly_war': []
-            }
-            clue_path = str(temp_dir / "clue.webp")
-            answer_path = str(temp_dir / "answer.webp")
-            
-            result = automated_workflow._generate_html_page(
-                player_info, "2025-03-06", clue_path, answer_path
-            )
-            
-            assert result is not None
-            mock_html_gen.generate_detail_page.assert_called_once()
-
-    def test_rebuild_index_success(self, automated_workflow):
-        """Test successful index rebuilding."""
-        with patch('automation.automated_workflow.html_generator') as mock_html_gen:
-            mock_html_gen.rebuild_index_page.return_value = True
-            
-            result = automated_workflow._rebuild_index()
-            
-            assert result is True
-
-    def test_rebuild_index_failure(self, automated_workflow):
-        """Test index rebuilding when it fails."""
-        with patch('automation.automated_workflow.html_generator') as mock_html_gen:
-            mock_html_gen.rebuild_index_page.return_value = False
-            
-            result = automated_workflow._rebuild_index()
-            
-            assert result is False
-
-    def test_commit_and_push_success(self, automated_workflow):
-        """Test successful git commit and push."""
+    def test_perform_git_operations_success(self, automated_workflow):
+        """Test successful git operations."""
         with patch.object(automated_workflow.git_integration, 'safe_commit_and_push') as mock_git:
             mock_git.return_value = True
             
-            result = automated_workflow._commit_and_push("Test Player", "2025-03-06")
+            result = automated_workflow._perform_git_operations("2025-03-06")
             
             assert result is True
-            mock_git.assert_called_once_with("Add puzzle for 2025-03-06 - Test Player")
 
-    def test_commit_and_push_failure(self, automated_workflow):
-        """Test git commit and push when it fails."""
+    def test_perform_git_operations_failure(self, automated_workflow):
+        """Test git operations when they fail."""
         with patch.object(automated_workflow.git_integration, 'safe_commit_and_push') as mock_git:
             mock_git.return_value = False
             
-            result = automated_workflow._commit_and_push("Test Player", "2025-03-06")
+            result = automated_workflow._perform_git_operations("2025-03-06")
             
             assert result is False
-
-    def test_commit_and_push_disabled(self, automated_workflow):
-        """Test git commit and push when disabled."""
-        result = automated_workflow._commit_and_push("Test Player", "2025-03-06", git_enabled=False)
-        
-        assert result is True  # Should return True without doing anything
 
     def test_process_puzzle_screenshot_with_git(self, automated_workflow, sample_screenshot):
         """Test puzzle screenshot processing with git operations."""
@@ -324,17 +273,13 @@ class TestAutomatedWorkflow:
              patch.object(automated_workflow, '_scrape_player_stats') as mock_scrape, \
              patch.object(automated_workflow, '_generate_ai_content') as mock_ai, \
              patch.object(automated_workflow, '_find_player_image') as mock_image, \
-             patch.object(automated_workflow, '_generate_html_page') as mock_html, \
-             patch.object(automated_workflow, '_rebuild_index') as mock_index, \
-             patch.object(automated_workflow, '_commit_and_push') as mock_git:
+             patch.object(automated_workflow, '_perform_git_operations') as mock_git:
             
             # Mock successful responses
             mock_identify.return_value = {'name': 'Test Player', 'position': 'SS'}
             mock_scrape.return_value = {'career_totals': {'HR': 100}, 'yearly_war': []}
             mock_ai.return_value = None
             mock_image.return_value = Path('/tmp/answer.webp')
-            mock_html.return_value = Path('/tmp/puzzle.html')
-            mock_index.return_value = True
             mock_git.return_value = True
             
             result = automated_workflow.process_puzzle_screenshot(
@@ -342,7 +287,7 @@ class TestAutomatedWorkflow:
             )
             
             assert result is True
-            mock_git.assert_called_once_with('Test Player', '2025-03-06', git_enabled=True)
+            mock_git.assert_called_once_with("2025-03-06")
 
     def test_process_puzzle_screenshot_with_git_disabled(self, automated_workflow, sample_screenshot):
         """Test puzzle screenshot processing with git disabled."""
@@ -350,17 +295,13 @@ class TestAutomatedWorkflow:
              patch.object(automated_workflow, '_scrape_player_stats') as mock_scrape, \
              patch.object(automated_workflow, '_generate_ai_content') as mock_ai, \
              patch.object(automated_workflow, '_find_player_image') as mock_image, \
-             patch.object(automated_workflow, '_generate_html_page') as mock_html, \
-             patch.object(automated_workflow, '_rebuild_index') as mock_index, \
-             patch.object(automated_workflow, '_commit_and_push') as mock_git:
+             patch.object(automated_workflow, '_perform_git_operations') as mock_git:
             
             # Mock successful responses
             mock_identify.return_value = {'name': 'Test Player', 'position': 'SS'}
             mock_scrape.return_value = {'career_totals': {'HR': 100}, 'yearly_war': []}
             mock_ai.return_value = None
             mock_image.return_value = Path('/tmp/answer.webp')
-            mock_html.return_value = Path('/tmp/puzzle.html')
-            mock_index.return_value = True
             
             result = automated_workflow.process_puzzle_screenshot(
                 sample_screenshot, "2025-03-06", git_enabled=False
@@ -375,16 +316,14 @@ class TestAutomatedWorkflow:
              patch.object(automated_workflow, '_scrape_player_stats') as mock_scrape, \
              patch.object(automated_workflow, '_generate_ai_content') as mock_ai, \
              patch.object(automated_workflow, '_find_player_image') as mock_image, \
-             patch.object(automated_workflow, '_generate_html_page') as mock_html, \
-             patch.object(automated_workflow, '_rebuild_index') as mock_index:
+             patch.object(automated_workflow, '_perform_git_operations') as mock_git:
             
             # Mock some failures
             mock_identify.return_value = {'name': 'Test Player', 'position': 'SS'}
             mock_scrape.return_value = None  # Stats scraping fails
             mock_ai.return_value = None
             mock_image.return_value = None  # Image search fails
-            mock_html.return_value = Path('/tmp/puzzle.html')
-            mock_index.return_value = True
+            mock_git.return_value = True
             
             result = automated_workflow.process_puzzle_screenshot(sample_screenshot, "2025-03-06")
             
@@ -393,5 +332,4 @@ class TestAutomatedWorkflow:
             mock_scrape.assert_called_once()
             mock_ai.assert_called_once()
             mock_image.assert_called_once()
-            mock_html.assert_called_once()
-            mock_index.assert_called_once()
+            mock_git.assert_called_once()
