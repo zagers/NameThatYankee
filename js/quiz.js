@@ -69,7 +69,7 @@ export async function initQuiz() {
     let hints = [];
     let hintsRevealed = 0;
     let hintsRequested = 0; // Track manual hint requests only
-    let guessResults = []; // Track sequence of guesses (true for correct, false for incorrect)
+    let shareEvents = []; // Track sequence of events: 'hint', 'miss', 'hit'
     const points = [10, 7, 4, 1, 0];
     //let allPlayers = [];
     //Initialize the local variable with the global one from all_players.js
@@ -232,7 +232,7 @@ export async function initQuiz() {
         const validation = validateGuess(userGuess, correctAnswer, allPlayers);
 
         if (validation.status === 'CORRECT') {
-            guessResults.push(true);
+            shareEvents.push('hit');
             const pointsEarned = calculateScore(hintsRevealed, points);
             answerImageEl.src = `images/answer-${date}.webp`;
             successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
@@ -244,7 +244,7 @@ export async function initQuiz() {
             successArea.style.display = 'block';
         } else {
             if (validation.status === 'INCORRECT_VALID_PLAYER') {
-                guessResults.push(false);
+                shareEvents.push('miss');
                 saveIncorrectGuess(userGuess.trim().toLowerCase());
                 if (hintsRevealed >= hints.length) {
                     endQuizAndShowAnswer();
@@ -269,7 +269,10 @@ export async function initQuiz() {
             newHint.textContent = hints[hintsRevealed];
             hintsList.appendChild(newHint);
             hintsRevealed++;
-            if (isManual) hintsRequested++;
+            if (isManual) {
+                hintsRequested++;
+                shareEvents.push('hint');
+            }
         }
 
         if (hintsRevealed >= hints.length) {
@@ -371,15 +374,18 @@ export async function initQuiz() {
     }
 
     function generateShareText() {
-        const isWin = guessResults.includes(true);
-        const tries = isWin ? guessResults.length : 'X';
+        const isWin = shareEvents.includes('hit');
+        const totalGuesses = shareEvents.filter(e => e === 'hit' || e === 'miss').length;
+        const tries = isWin ? totalGuesses : 'X';
         const dateStr = quizTitle.textContent.replace('Quiz for ', '');
         
-        let emojiGrid = guessResults.map(res => res ? '🟩' : '⬛').join('');
-        // Pad with empty squares if they won in fewer than 4 tries
-        if (isWin && guessResults.length < 4) {
-            // No padding needed for Wordle-style if we just want to show the path to success
-        }
+        // Map events to emojis: hint=🟦, miss=🟥, hit=🟩
+        const emojiMap = {
+            'hint': '🟦',
+            'miss': '🟥',
+            'hit': '🟩'
+        };
+        const emojiGrid = shareEvents.map(event => emojiMap[event]).join('');
 
         const shareText = `Name That Yankee - ${dateStr}\n` +
             `⚾ Guesses: ${tries}/4\n` +
