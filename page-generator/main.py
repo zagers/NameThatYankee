@@ -145,8 +145,13 @@ def handle_single_automation(workflow: AutomatedWorkflow):
         pass
     
     if not screenshot_path:
-        screenshot_str = input("Enter path to puzzle screenshot: ").strip().strip("'\"")
-        screenshot_path = Path(screenshot_str)
+        default_path = Path.home() / "Downloads" / "nty.png"
+        prompt = f"Enter path to puzzle screenshot [Default: {default_path}]: "
+        screenshot_str = input(prompt).strip().strip("'\"")
+        if not screenshot_str:
+            screenshot_path = default_path
+        else:
+            screenshot_path = Path(screenshot_str)
     
     if not screenshot_path.exists():
         print(f"❌ Screenshot not found: {screenshot_path}")
@@ -186,8 +191,13 @@ def handle_identify_player(config: dict):
         pass
         
     if not screenshot_path:
-        screenshot_str = input("Enter path to puzzle screenshot: ").strip().strip("'\"")
-        screenshot_path = Path(screenshot_str)
+        default_path = Path.home() / "Downloads" / "nty.png"
+        prompt = f"Enter path to puzzle screenshot [Default: {default_path}]: "
+        screenshot_str = input(prompt).strip().strip("'\"")
+        if not screenshot_str:
+            screenshot_path = default_path
+        else:
+            screenshot_path = Path(screenshot_str)
     
     if not screenshot_path.exists():
         print(f"❌ Screenshot not found: {screenshot_path}")
@@ -311,8 +321,13 @@ def handle_batch_automation(workflow: AutomatedWorkflow):
         pass
     
     if not screenshot_dir:
-        screenshot_str = input("Enter path to screenshot directory: ").strip().strip("'\"")
-        screenshot_dir = Path(screenshot_str)
+        default_dir = Path.home() / "Downloads"
+        prompt = f"Enter path to screenshot directory [Default: {default_dir}]: "
+        screenshot_str = input(prompt).strip().strip("'\"")
+        if not screenshot_str:
+            screenshot_dir = default_dir
+        else:
+            screenshot_dir = Path(screenshot_str)
     
     if not screenshot_dir.is_dir():
         print(f"❌ Directory not found: {screenshot_dir}")

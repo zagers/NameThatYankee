@@ -23,4 +23,4 @@ coverage/
 *.bak
 *.swp
 .pyre_configuration
-.vscodetemp_player_images/
+temp_player_images/
