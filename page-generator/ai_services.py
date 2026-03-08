@@ -9,13 +9,13 @@ import time
 # The number of times to retry the API call if it returns an empty response.
 MAX_RETRIES = 5
 SLEEP_TIME = 30
-MODEL = 'gemini-2.5-pro'
+MODEL = 'gemini-2.5-flash'
 
 # Simple in-process rate limiter to respect Free Tier limit
-# (2 requests per minute per model). We maintain at most one
-# Gemini request every ~35 seconds, which keeps any 60s window
-# at <= 2 requests.
-_LAST_GEMINI_CALL_TS = 0.0
+# (5 requests per minute per model). We maintain at most one
+# Gemini request every ~13 seconds, which keeps any 60s window
+# at <= 5 requests with a conservative buffer.
+_LAST_GEMINI_CALL_TS = time.time()  # Initialize to current time, not 0.0
 
 
 class GeminiDailyQuotaExceeded(Exception):
@@ -27,49 +27,82 @@ def _respect_free_tier_rate_limit():
     """Enforce a conservative delay between Gemini API calls.
 
     This keeps total request rate safely under the Free Tier limit
-    of 2 requests per minute by ensuring at least ~35 seconds
+    of 5 requests per minute by ensuring at least ~13 seconds
     between *any* Gemini requests in this process.
     """
     global _LAST_GEMINI_CALL_TS
     now = time.time()
-    min_interval = 35.0  # seconds; slightly conservative vs 30s
+    min_interval = 13.0  # seconds; conservative vs 12s (60s/5 requests)
     elapsed = now - _LAST_GEMINI_CALL_TS
     if elapsed < min_interval:
         sleep_for = min_interval - elapsed
         print(f"  ⏱ Respecting Gemini Free Tier rate limit, sleeping {sleep_for:.1f}s before next API call...")
         time.sleep(sleep_for)
+    else:
+        print(f"  ⚡ No rate limit needed, {elapsed:.1f}s since last call")
     _LAST_GEMINI_CALL_TS = time.time()
 
 def get_player_info_from_image(image_path, api_key: str):
     """
     Uses Gemini to get the player's name and nickname from the clue.
-    Includes retry logic for empty responses.
+    Includes retry logic for empty responses and Chain of Thought reasoning.
     """
     print(f"🤖 Analyzing clue image with Gemini to identify player...")
     
     client = genai.Client(api_key=api_key)
     clue_image = Image.open(image_path)
-    generation_config = types.GenerateContentConfig(temperature=0.1)
-    prompt = """
-    You are a baseball historian. Analyze the provided image of a "Name That Yankee" trivia card and return the name and nickname of the player whose stats are shown.
+    current_date = "March 7, 2026"
+    generation_config = types.GenerateContentConfig(
+        temperature=0.1,
+        tools=[types.Tool(
+            google_search=types.GoogleSearch()
+        )],
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(
+            disable=False
+        )
+    )
+    prompt = f"""
+    You are an expert MLB Statistical Auditor. Your goal is to identify the player on the provided "Name That Yankee" trivia card with 100% accuracy.
 
-    Your only task is to identify the player's name. Accuracy is paramount. Do not guess.
+    **CONTEXT**: Today is {current_date}. 2024 and 2025 stats are historical facts.
+    
+    All of the following steps MUST be followed exactly as listed.
 
-    **Verification Steps:**
-    1.  Verify that every single career stat on the card exactly matches the player you identify.
-    2.  Verify that the player was on each team listed for the corresponding year.
+    ### STEP 1: DATA EXTRACTION (OCR)
+    1.  **Transcribe the Card**: Extract every statistic and team logo as shown on the card.
+    2.  **Identify Stat Categories**: Determine what the stat column headers represent (e.g., ERA, HR, W-L, GMS/GS).
+    3.  **Team History**: Note the teams that the player played for (based on the logos shown) and the years that the player played for each team (e.g. Mets Logo over the numbers 2024-2025 means the player played for the mets in both 2024 and 2025).
 
-    **Output Rules:**
-    - If, and only if, you can verify a perfect match based on the verification steps, return the player's data.
-    - If you cannot find a player who perfectly matches all stats and team history, or if the image is unreadable, **you must** return "Unknown" as the player's name.
+    ### STEP 2: SEARCH STRATEGY (BASEBALL-REFERENCE)
+    1.  **Determine Anchor Stat**: Select a stat to anchor your search on (e.g., a specific ERA like 4.97).
+    2.  **Search Pattern**: Query **baseball-reference.com** using: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
+    3.  **Candidate Extraction**: Look at the FIRST THREE results returned by the search tool. List their titles and snippets. DO NOT skip to lower results because a name looks familiar.
 
-    Your response must be a valid JSON object with the following structure, and nothing else:
-    {
-      "name": "Player's Full Name",
-      "nickname": "Player's common nickname, or an empty string"
-    }
+    ### STEP 3: SEQUENTIAL VERIFICATION (ANTI-HALLUCINATION PROTOCOL)
+    Audit the top 3 candidates one-by-one. For each candidate, you MUST fill out this mental checklist:
+    1.  **URL**: What is the specific Baseball-Reference URL for this player?
+    2.  **Stat Comparison Table**: 
+        - [Stat Category] | [Card Value] | [Search/URL Value] | [Match?]
+        - Example: ERA | 4.97 | 4.20 | NO (REJECT PLAYER)
+    3.  **Strict Rule**: If ANY numeric value (ERA, W-L, G, GS) differs from the card by more than 0.01, you MUST mark it as a MISMATCH and move to the next candidate.
+    4.  **Final Decision**: Only if EVERY row in the Comparison Table is a "YES" can you identify the player.
+    
+    ### OUTPUT FORMAT
+    Return ONLY a JSON object:
+    {{
+      "step_by_step_reasoning": {{
+        "extracted_stats": "Markdown table of what you see on the card",
+        "search_query_used": "The exact string used for the site: search",
+        "top_3_search_results": [
+          {{"title": "...", "url": "..."}}
+        ],
+        "verification_table": "Markdown table comparing Card vs Candidate",
+        "final_audit_summary": "Why this specific player was accepted or rejected"
+      }},
+      "name": "Full Player Name or 'Unknown'",
+      "nickname": "Player's common nickname, or empty string"
+    }}
     """
-
     for attempt in range(MAX_RETRIES):
         _respect_free_tier_rate_limit()
         response = None
@@ -81,21 +114,41 @@ def get_player_info_from_image(image_path, api_key: str):
             player_data = json.loads(json_text)
 
             print(f"  ✅ Player identified as: {player_data['name']}")
-            return player_data # Success, exit the function
+            if player_data.get('step_by_step_reasoning'):
+                reasoning = player_data['step_by_step_reasoning']
+                query = reasoning.get('search_query_used', 'No query provided')
+                results = reasoning.get('top_3_search_results', 'No results listed')
+                audit = reasoning.get('verification_table', 'No table provided')
+                summary = reasoning.get('final_audit_summary', 'No summary provided')
+                
+                print(f"     Search Query:  {query}")
+                print(f"     Top Results:   {results}")
+                print(f"     Audit Table:\n{audit}")
+                print(f"     AI Summary:    {summary}")
 
+            return player_data # Success, exit the function
         except ValueError:
             print(f"  ⚠️ Gemini returned an empty response. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
             if response:
                 print(f"     Finish Reason: {response.candidates[0].finish_reason if response.candidates else 'N/A'}")
-            time.sleep(SLEEP_TIME) # Wait before the next attempt
+            time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            # For other errors (API key, network, etc.), fail immediately
-            print(f"  ❌ An unexpected error occurred: {e}")
-            return None
+            # Handle connection-related errors
+            error_msg = str(e).lower()
+            is_connection_error = any(keyword in error_msg for keyword in [
+                'server disconnected', 'connection', 'timeout', 'network'
+            ])
+            
+            if is_connection_error and attempt < MAX_RETRIES - 1:
+                print(f"  plug Connection error: {e}. Retrying...")
+                time.sleep(SLEEP_TIME)
+                continue
+            else:
+                print(f"  ❌ Error during identification: {e}")
+                return None
 
-    print(f"  ❌ All {MAX_RETRIES} retry attempts failed.")
-    return None
+    return {"name": "Unknown", "nickname": ""}
 
 
 def get_facts_from_gemini(player_name: str, api_key: str):
@@ -258,6 +311,110 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
     return []
 
 
+def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
+    """
+    Uses Gemini to analyze a player image based on prioritized criteria:
+    1. Baseball card + Yankee uniform
+    2. Any image + Yankee uniform
+    3. Any image of the player
+    
+    Returns a dict with verification results and priority level.
+    """
+    print(f"🤖 Analyzing image for {player_name} with prioritized criteria...")
+    
+    client = genai.Client(api_key=api_key)
+    
+    try:
+        verification_image = Image.open(image_path)
+    except Exception as e:
+        print(f"  ❌ Error opening image for analysis: {e}")
+        return {"success": False, "priority": 0, "reasoning": str(e)}
+    
+    generation_config = types.GenerateContentConfig(temperature=0.1)
+    prompt = f"""
+    Analyze the provided baseball player image and determine if the player is in a New York Yankees uniform, if the image is a baseball card, and if it is in portrait orientation.
+    
+    You do NOT need to verify the player's identity; assume the image is of the correct player.
+    Focus ONLY on the uniform, the format (card vs photo), the text content, and the orientation.
+
+    **CRITICAL REJECTION CRITERIA:**
+    1. **Orientation:** Reject or downgrade to Priority 3 any image that is in landscape orientation (width > height). The website ONLY supports portrait images.
+    2. **Transient Text:** Reject or downgrade to Priority 3 any image that contains "point-in-time" or transient text overlays (e.g., "HE'S BACK", "SIGNED", "BREAKING NEWS").
+    3. **Multi-Player/Collages:** Reject or downgrade to Priority 3 any image that shows more than one baseball card or more than one primary player (e.g., a 4-card collage or a group shot). Priority 1 and 2 MUST feature a SINGLE baseball card or a SINGLE player.
+
+    Rate the image based on the following priority levels:
+
+    **Priority 1: Single Portrait Baseball Card in Yankee Uniform**
+    - The image is a portrait-oriented physical or digital baseball card featuring ONE player.
+    - The player is clearly wearing a New York Yankees uniform.
+    - Contains NO transient/event-based text overlays and is NOT a collage of multiple cards.
+
+    **Priority 2: Clean Single Portrait Photo in Yankee Uniform**
+    - The image is a clean portrait-oriented action photo or portrait featuring ONE player.
+    - The player is clearly wearing a New York Yankees uniform.
+    - Contains NO transient/event-based text overlays, intrusive graphics, or multiple players.
+
+    **Priority 3: Any Other Image (Landscape, Collage, Non-Yankee, Ambiguous, or Graphic)**
+    - The image shows multiple cards or a collage.
+    - OR the image is in landscape orientation.
+    - OR the player is NOT in a Yankees uniform.
+    - OR the image contains transient text overlays.
+
+    Your response must be a valid JSON object with the following structure, and nothing else:
+    {{
+      "is_yankee_uniform": true/false,
+      "is_baseball_card": true/false,
+      "is_portrait": true/false,
+      "has_transient_text": true/false,
+      "priority_level": 1 | 2 | 3,
+      "confidence": "high/medium/low",
+      "reasoning": "Brief explanation of your decision"
+    }}
+    """
+
+    for attempt in range(MAX_RETRIES):
+        _respect_free_tier_rate_limit()
+        response = None
+        try:
+            response = client.models.generate_content(model=MODEL, contents=[prompt, verification_image], config=generation_config)
+            
+            json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
+            data = json.loads(json_text)
+
+            priority = data.get('priority_level', 3)
+            confidence = data.get('confidence', 'low')
+            reasoning = data.get('reasoning', 'No reasoning provided')
+            is_portrait = data.get('is_portrait', True) # Default to True to allow if not specified
+            
+            # Additional check based on AI's finding of portrait status
+            if not is_portrait:
+                priority = 3
+                reasoning = f"(AI identified as landscape): {reasoning}"
+
+            if priority > 0 and confidence in ['high', 'medium']:
+                print(f"  ✅ Image Rated: Priority {priority} ({confidence} confidence)")
+                print(f"     Reasoning: {reasoning}")
+                return {"success": True, "priority": priority, "reasoning": reasoning}
+            else:
+                # If confidence is low, we still treat it as Priority 3 rather than rejecting
+                print(f"  ⚠️ Low Confidence Match: Falling back to Priority 3")
+                return {"success": True, "priority": 3, "reasoning": f"Low confidence: {reasoning}"}
+
+        except Exception as e:
+            print(f"  ⚠️ Error during image analysis: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            time.sleep(SLEEP_TIME)
+
+    return {"success": False, "priority": 3, "reasoning": "All attempts failed, defaulted to 3"}
+
+
+def verify_yankee_uniform(image_path, player_name: str, api_key: str) -> bool:
+    """
+    Backward compatibility wrapper for verify_yankee_uniform.
+    """
+    result = analyze_player_image(image_path, player_name, api_key)
+    return result["success"] and result["priority"] in [1, 2]
+
+
 def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
     """
     Single-call helper that retrieves both facts and follow-up Q&A
@@ -348,6 +505,13 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
+            # Handle connection-related errors that should be retried
+            error_msg = str(e).lower()
+            is_connection_error = any(keyword in error_msg for keyword in [
+                'server disconnected', 'connection', 'timeout', 'network', 
+                'read timeout', 'connection reset'
+            ])
+            
             if isinstance(e, errors.APIError) and getattr(e, 'code', None) == 429:
                 message = str(e)
                 # Detect daily quota exhaustion (GenerateRequestsPerDay...)
@@ -358,9 +522,14 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
                     print(f"  ⚠️ Gemini API rate limit exceeded (429): {message}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
                     time.sleep(SLEEP_TIME)
                     continue
-            print(f"  ⚠️ Error getting combined facts and follow-up Q&A from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
-            time.sleep(SLEEP_TIME)
-            continue
+            elif is_connection_error and attempt < MAX_RETRIES - 1:
+                print(f"  🔌 Connection error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
+            else:
+                print(f"  ⚠️ Error getting combined facts and follow-up Q&A from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
 
     print(f"  All {MAX_RETRIES} retry attempts for combined facts/Q&A failed.")
     return {"facts": [], "qa": []}

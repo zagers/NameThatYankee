@@ -17,6 +17,352 @@ import scraper
 import html_generator
 import user_interaction
 
+# Import automation modules
+try:
+    from automation.automated_workflow import AutomatedWorkflow
+    from automation.player_image_search import PlayerImageSearch
+    from config.automation_config import AutomationConfig
+    AUTOMATION_AVAILABLE = True
+except ImportError:
+    AUTOMATION_AVAILABLE = False
+    print("⚠️  Automation modules not available - using manual workflow only")
+
+
+# --- Automation Helper Functions ---
+
+def handle_config_mode():
+    """Handle configuration mode for automation settings."""
+    print("\n--- Automation Configuration ---")
+    
+    automation_config = AutomationConfig()
+    
+    while True:
+        print("\nConfiguration Options:")
+        print("1. Show current configuration")
+        print("2. Set image quality")
+        print("3. Enable/disable auto-commit")
+        print("4. Enable/disable auto-push")
+        print("5. Reset to defaults")
+        print("6. Exit")
+        
+        choice = input("\nEnter your choice (1-6): ").strip()
+        
+        if choice == "1":
+            print("\nCurrent Configuration:")
+            print(json.dumps(automation_config.config, indent=2))
+        
+        elif choice == "2":
+            try:
+                quality = int(input("Enter image quality (1-100): ").strip())
+                if 1 <= quality <= 100:
+                    automation_config.set_image_quality(quality)
+                    print(f"✅ Image quality set to {quality}")
+                else:
+                    print("❌ Quality must be between 1 and 100")
+            except ValueError:
+                print("❌ Invalid number")
+        
+        elif choice == "3":
+            enabled = automation_config.is_auto_commit_enabled()
+            new_setting = not enabled
+            automation_config.set_auto_commit(new_setting)
+            print(f"✅ Auto-commit {'enabled' if new_setting else 'disabled'}")
+        
+        elif choice == "4":
+            enabled = automation_config.is_auto_push_enabled()
+            new_setting = not enabled
+            automation_config.set_auto_push(new_setting)
+            print(f"✅ Auto-push {'enabled' if new_setting else 'disabled'}")
+        
+        elif choice == "5":
+            if input("Reset to defaults? (y/N): ").lower().startswith('y'):
+                automation_config.reset_to_defaults()
+                print("✅ Configuration reset to defaults")
+        
+        elif choice == "6":
+            break
+        
+        else:
+            print("❌ Invalid choice")
+
+def handle_automation_mode(config: dict, automate_workflow: bool, batch_automate: bool):
+    """Handle automation mode for puzzle processing."""
+    print("\n--- Automated Workflow ---")
+    
+    # Get project directory - use cached path without prompting for automation
+    last_path = config.get("last_project_path")
+    if last_path:
+        project_dir_str = last_path
+        print(f"Using default path: {project_dir_str}")
+    else:
+        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
+    
+    project_dir = Path(project_dir_str).resolve()
+    if not project_dir.is_dir():
+        print(f"❌ Error: Directory not found at '{project_dir}'")
+        exit()
+    
+    # Save the path for next time
+    config["last_project_path"] = str(project_dir)
+    config_manager.save_config(config)
+    
+    # Get API key
+    api_key = config.get("gemini_api_key")
+    if not api_key:
+        api_key = input("Please enter your Google Gemini API key: ").strip()
+        config["gemini_api_key"] = api_key
+        config_manager.save_config(config)
+    
+    # Initialize automation workflow
+    workflow = AutomatedWorkflow(project_dir, config)
+    
+    if automate_workflow:
+        handle_single_automation(workflow)
+    elif batch_automate:
+        handle_batch_automation(workflow)
+
+def handle_single_automation(workflow: AutomatedWorkflow):
+    """Handle single puzzle automation."""
+    # Get screenshot path
+    screenshot_path = None
+    date_str = None
+    
+    try:
+        screenshot_index = sys.argv.index("--automate-workflow") + 1
+        if screenshot_index < len(sys.argv):
+            screenshot_path = Path(sys.argv[screenshot_index])
+            # Check if date is also provided
+            if screenshot_index + 1 < len(sys.argv):
+                potential_date = sys.argv[screenshot_index + 1]
+                # Validate if it's a date format (YYYY-MM-DD)
+                try:
+                    datetime.strptime(potential_date, "%Y-%m-%d")
+                    date_str = potential_date
+                except ValueError:
+                    # Not a date format, so it's not the date argument
+                    pass
+    except (ValueError, IndexError):
+        pass
+    
+    if not screenshot_path:
+        default_path = Path.home() / "Downloads" / "nty.png"
+        prompt = f"Enter path to puzzle screenshot [Default: {default_path}]: "
+        screenshot_str = input(prompt).strip().strip("'\"")
+        if not screenshot_str:
+            screenshot_path = default_path
+        else:
+            screenshot_path = Path(screenshot_str)
+    
+    if not screenshot_path.exists():
+        print(f"❌ Screenshot not found: {screenshot_path}")
+        exit()
+    
+    # Get optional date if not provided via command line
+    if not date_str:
+        date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
+    
+    if not date_str:
+        date_str = datetime.now().strftime("%Y-%m-%d")
+    else:
+        try:
+            datetime.strptime(date_str, "%Y-%m-%d")
+        except ValueError:
+            print("❌ Invalid date format. Use YYYY-MM-DD")
+            exit()
+    
+    print(f"\n🚀 Starting automated workflow for {date_str}...")
+    success = workflow.process_puzzle_screenshot(screenshot_path, date_str)
+    
+    if success:
+        print(f"\n✅ Automation completed successfully for {date_str}!")
+    else:
+        print(f"\n❌ Automation failed for {date_str}. Check logs for details.")
+
+def handle_identify_player(config: dict):
+    """Handle standalone player identification from a screenshot."""
+    print("\n--- Standalone Player Identification ---")
+    
+    screenshot_path = None
+    try:
+        idx = sys.argv.index("--identify-player")
+        if idx + 1 < len(sys.argv):
+            screenshot_path = Path(sys.argv[idx + 1])
+    except (ValueError, IndexError):
+        pass
+        
+    if not screenshot_path:
+        default_path = Path.home() / "Downloads" / "nty.png"
+        prompt = f"Enter path to puzzle screenshot [Default: {default_path}]: "
+        screenshot_str = input(prompt).strip().strip("'\"")
+        if not screenshot_str:
+            screenshot_path = default_path
+        else:
+            screenshot_path = Path(screenshot_str)
+    
+    if not screenshot_path.exists():
+        print(f"❌ Screenshot not found: {screenshot_path}")
+        exit()
+        
+    api_key = config.get("gemini_api_key")
+    if not api_key:
+        api_key = input("Please enter your Google Gemini API key: ").strip()
+        config["gemini_api_key"] = api_key
+        config_manager.save_config(config)
+        
+    print(f"🚀 Analyzing {screenshot_path.name}...")
+    try:
+        player_info = ai_services.get_player_info_from_image(screenshot_path, api_key)
+        if player_info:
+            print(f"\n✅ Identification Result:")
+            print(f"   Name:     {player_info.get('name')}")
+            print(f"   Nickname: {player_info.get('nickname', 'None')}")
+        else:
+            print(f"\n❌ AI could not identify the player in the image.")
+    except Exception as e:
+        print(f"❌ Error during identification: {e}")
+
+def handle_find_image(config: dict):
+    """Handle standalone player image search."""
+    print("\n--- Standalone Player Image Search ---")
+    
+    player_name = None
+    date_str = None
+    direct_url = None
+    
+    try:
+        # Check for --url flag first
+        if "--url" in sys.argv:
+            url_idx = sys.argv.index("--url")
+            if url_idx + 1 < len(sys.argv):
+                direct_url = sys.argv[url_idx + 1]
+        
+        idx = sys.argv.index("--find-image")
+        if idx + 1 < len(sys.argv):
+            player_name = sys.argv[idx + 1]
+            if idx + 2 < len(sys.argv):
+                potential_date = sys.argv[idx + 2]
+                try:
+                    datetime.strptime(potential_date, "%Y-%m-%d")
+                    date_str = potential_date
+                except ValueError:
+                    pass
+    except (ValueError, IndexError):
+        pass
+        
+    if not player_name:
+        player_name = input("Enter player name: ").strip()
+    
+    if not date_str:
+        date_str = input("Enter date (YYYY-MM-DD) or press Enter for today: ").strip()
+        if not date_str:
+            date_str = datetime.now().strftime("%Y-%m-%d")
+            
+    try:
+        datetime.strptime(date_str, "%Y-%m-%d")
+    except ValueError:
+        print("❌ Invalid date format. Use YYYY-MM-DD")
+        exit()
+
+    # Get project directory
+    last_path = config.get("last_project_path")
+    if last_path:
+        project_dir_str = last_path
+        print(f"Using default path: {project_dir_str}")
+    else:
+        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
+    
+    project_dir = Path(project_dir_str).resolve()
+    if not project_dir.is_dir():
+        print(f"❌ Error: Directory not found at '{project_dir}'")
+        exit()
+        
+    images_dir = project_dir / "images"
+    api_key = config.get("gemini_api_key")
+    
+    # Initialize searcher
+    searcher = PlayerImageSearch(images_dir)
+    
+    if direct_url:
+        print(f"🚀 Processing direct URL for {player_name}: {direct_url}")
+        candidate = {'direct_url': direct_url, 'source_page': direct_url}
+        staging_dir = project_dir / "temp_player_images"
+        staging_dir.mkdir(exist_ok=True)
+        
+        temp_file = searcher._download_full_size_image(candidate)
+        if temp_file:
+            target_path = staging_dir / f"answer-{date_str}-direct.webp"
+            searcher.image_processor.convert_to_webp(temp_file, target_path)
+            temp_file.unlink(missing_ok=True)
+            print(f"\n✅ Successfully saved direct image to: {target_path}")
+        else:
+            print(f"❌ Failed to download image from: {direct_url}")
+        return
+
+    print(f"🚀 Searching for {player_name} for date {date_str}...")
+    final_paths = searcher.download_and_process_player_image(player_name, date_str, api_key)
+    
+    if final_paths:
+        print(f"\n✅ Successfully saved {len(final_paths)} candidate(s) to temp_player_images/:")
+        for path in final_paths:
+            print(f"   - {path}")
+        print("\nReview these in 'temp_player_images/' and move the correct one to 'images/' renamed appropriately.")
+    else:
+        print(f"\n❌ Failed to find or process any suitable images for {player_name}")
+
+def handle_batch_automation(workflow: AutomatedWorkflow):
+    """Handle batch puzzle automation."""
+    # Get screenshot directory
+    screenshot_dir = None
+    try:
+        dir_index = sys.argv.index("--batch-automate") + 1
+        if dir_index < len(sys.argv):
+            screenshot_dir = Path(sys.argv[dir_index])
+    except (ValueError, IndexError):
+        pass
+    
+    if not screenshot_dir:
+        default_dir = Path.home() / "Downloads"
+        prompt = f"Enter path to screenshot directory [Default: {default_dir}]: "
+        screenshot_str = input(prompt).strip().strip("'\"")
+        if not screenshot_str:
+            screenshot_dir = default_dir
+        else:
+            screenshot_dir = Path(screenshot_str)
+    
+    if not screenshot_dir.is_dir():
+        print(f"❌ Directory not found: {screenshot_dir}")
+        exit()
+    
+    # Get optional date range
+    print("\nOptional date range (leave blank for all files):")
+    start_date_str = input("Start date (YYYY-MM-DD): ").strip()
+    end_date_str = input("End date (YYYY-MM-DD): ").strip()
+    
+    date_range = None
+    if start_date_str and end_date_str:
+        try:
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
+            date_range = (start_date, end_date)
+        except ValueError:
+            print("❌ Invalid date format. Use YYYY-MM-DD")
+            exit()
+    
+    print(f"\n🚀 Starting batch automation...")
+    results = workflow.batch_process_puzzles(screenshot_dir, date_range)
+    
+    # Summary
+    successful = sum(1 for success in results.values() if success)
+    total = len(results)
+    print(f"\n📊 Batch processing completed: {successful}/{total} successful")
+    
+    if successful < total:
+        print("\nFailed puzzles:")
+        for date, success in results.items():
+            if not success:
+                print(f"  ❌ {date}")
+
+
 # --- Main Execution ---
 if __name__ == "__main__":
     # Help / usage flag
@@ -41,6 +387,30 @@ Options:
 
   --facts-only          Identify the player and generate three career facts
                         via Gemini, but do not generate follow-up Q&A.
+
+  --identify-player    [screenshot_path]
+                        Standalone player identification. Analyzes a puzzle 
+                        screenshot and returns the player's name and nickname.
+
+  --automate-workflow  [screenshot_path] [date]
+                        Run fully automated workflow. Takes a screenshot file
+                        path as optional argument, and optionally a date (YYYY-MM-DD).
+                        If not provided, will prompt for missing values.
+                        Processes the entire puzzle addition pipeline automatically.
+
+  --find-image         [player_name] [date]
+                        Standalone player image search and processing. Finds a 
+                        suitable player image, downloads it, converts it to 
+                        WEBP, and saves it to the staging folder.
+
+  --url                [direct_url]
+                        Used with --find-image to process a specific image 
+                        URL directly, skipping the Google search.
+
+  --batch-automate      [screenshot_dir]
+                        Batch process multiple screenshots from a directory.
+
+  --config             Show or modify automation configuration settings.
 
   -h, --help            Show this help message and exit.
 
@@ -78,6 +448,39 @@ Notes:
 
     config = config_manager.load_config()
     last_path = config.get("last_project_path")
+
+    # Check for automation flags
+    automate_workflow = "--automate-workflow" in sys.argv
+    batch_automate = "--batch-automate" in sys.argv
+    find_image = "--find-image" in sys.argv
+    identify_player = "--identify-player" in sys.argv
+    config_mode = "--config" in sys.argv
+
+    # Handle automation configuration
+    if config_mode and AUTOMATION_AVAILABLE:
+        handle_config_mode()
+        exit()
+
+    # Handle standalone identification
+    if identify_player:
+        handle_identify_player(config)
+        exit()
+
+    # Handle standalone image search
+    if find_image and AUTOMATION_AVAILABLE:
+        handle_find_image(config)
+        exit()
+    elif find_image and not AUTOMATION_AVAILABLE:
+        print("❌ Automation modules not available. Please check installation.")
+        exit()
+
+    # Handle automated workflow
+    if (automate_workflow or batch_automate) and AUTOMATION_AVAILABLE:
+        handle_automation_mode(config, automate_workflow, batch_automate)
+        exit()
+    elif (automate_workflow or batch_automate) and not AUTOMATION_AVAILABLE:
+        print("❌ Automation modules not available. Please check installation.")
+        exit()
 
     # NEW: Check for the --generate-player-list flag
     if "--generate-player-list" in sys.argv:
