@@ -68,6 +68,7 @@ export async function initQuiz() {
     let correctAnswer = '';
     let hints = [];
     let hintsRevealed = 0;
+    let hintsRequested = 0; // Track manual hint requests only
     let guessResults = []; // Track sequence of guesses (true for correct, false for incorrect)
     const points = [10, 7, 4, 1, 0];
     //let allPlayers = [];
@@ -261,13 +262,14 @@ export async function initQuiz() {
         }
     }
 
-    function revealHint() {
+    function revealHint(isManual = false) {
         if (hintsRevealed < hints.length) {
             hintsContainer.style.display = 'block';
             const newHint = document.createElement('li');
             newHint.textContent = hints[hintsRevealed];
             hintsList.appendChild(newHint);
             hintsRevealed++;
+            if (isManual) hintsRequested++;
         }
 
         if (hintsRevealed >= hints.length) {
@@ -381,7 +383,7 @@ export async function initQuiz() {
 
         const shareText = `Name That Yankee - ${dateStr}\n` +
             `⚾ Guesses: ${tries}/4\n` +
-            `💡 Hints used: ${hintsRevealed}\n` +
+            `💡 Hints used: ${hintsRequested}\n` +
             `${emojiGrid}\n\n` +
             `${window.location.href}`;
         
@@ -406,7 +408,7 @@ export async function initQuiz() {
     }
 
     submitBtn.addEventListener('click', checkGuess);
-    hintBtn.addEventListener('click', revealHint);
+    hintBtn.addEventListener('click', () => revealHint(true));
     giveUpBtn.addEventListener('click', endQuizAndShowAnswer); // New event listener
     showGuessesBtn.addEventListener('click', showIncorrectGuesses);
     
