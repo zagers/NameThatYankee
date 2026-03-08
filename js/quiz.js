@@ -405,6 +405,22 @@ export async function initQuiz() {
 
     async function copyShareText(btn, dateStr, state) {
         const text = generateShareText(dateStr, state);
+        
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    text: text
+                });
+                return; // Successfully shared using native dialog
+            } catch (err) {
+                // If user cancels the share dialog, it throws an AbortError.
+                // We shouldn't alert on cancellation, just silently return.
+                if (err.name === 'AbortError') return;
+                console.error('Native share failed, falling back to clipboard: ', err);
+                // Fall through to clipboard approach
+            }
+        }
+
         try {
             await navigator.clipboard.writeText(text);
             const originalText = btn.textContent;

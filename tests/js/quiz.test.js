@@ -83,11 +83,12 @@ describe('Quiz DOM tests', () => {
         delete window.location;
         window.location = new URL('http://localhost/quiz.html?date=2025-07-11');
 
-        // Mock clipboard
+        // Mock clipboard and share API
         Object.assign(navigator, {
             clipboard: {
                 writeText: vi.fn().mockImplementation(() => Promise.resolve()),
             },
+            share: vi.fn().mockImplementation(() => Promise.resolve())
         });
 
         // Mock fetch
@@ -254,8 +255,12 @@ describe('Quiz DOM tests', () => {
 
         shareBtn.click();
 
-        expect(navigator.clipboard.writeText).toHaveBeenCalled();
-        const sharedText = vi.mocked(navigator.clipboard.writeText).mock.calls[0][0];
+        // Wait a tiny bit for the async click handler to resolve
+        await new Promise(resolve => setTimeout(resolve, 10));
+
+        expect(navigator.share).toHaveBeenCalled();
+        const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
+        const sharedText = sharedData.text;
         
         expect(sharedText).toContain('Name That Yankee');
         expect(sharedText).toContain('Score: 4 pts');
@@ -274,8 +279,31 @@ describe('Quiz DOM tests', () => {
         expect(shareFailContainer.style.display).toBe('block');
         
         shareBtn.click();
-        expect(navigator.clipboard.writeText).toHaveBeenCalled();
-        const sharedText = vi.mocked(navigator.clipboard.writeText).mock.calls[0][0];
+        
+        // Wait a tiny bit for the async click handler to resolve
+        await new Promise(resolve => setTimeout(resolve, 10));
+        
+        expect(navigator.share).toHaveBeenCalled();
+        const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
+        const sharedText = sharedData.text;
         expect(sharedText).toContain('Score: 0 pts');
+    });
+
+    it('should fallback to clipboard if navigator.share fails', async () => {
+        // Force navigator.share to fail
+        navigator.share.mockImplementationOnce(() => Promise.reject(new Error('Share failed')));
+        
+        await initQuiz();
+        const giveUpBtn = document.getElementById('give-up-btn');
+        const shareBtn = document.getElementById('share-btn-fail');
+
+        giveUpBtn.click();
+        shareBtn.click();
+        
+        // Wait a tiny bit for the async click handler to resolve
+        await new Promise(resolve => setTimeout(resolve, 10));
+        
+        expect(navigator.share).toHaveBeenCalled();
+        expect(navigator.clipboard.writeText).toHaveBeenCalled();
     });
 });
