@@ -9,7 +9,7 @@ import time
 # The number of times to retry the API call if it returns an empty response.
 MAX_RETRIES = 5
 SLEEP_TIME = 30
-MODEL = 'gemini-3-flash-preview'
+MODEL = 'gemini-2.5-flash'
 
 # Simple in-process rate limiter to respect Free Tier limit
 # (5 requests per minute per model). We maintain at most one
@@ -56,38 +56,53 @@ def get_player_info_from_image(image_path, api_key: str):
         temperature=0.1,
         tools=[types.Tool(
             google_search=types.GoogleSearch()
-        )]
+        )],
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(
+            disable=False
+        )
     )
     prompt = f"""
-    You are a baseball historian and statistical auditor. Analyze the provided image of a "Name That Yankee" trivia card. 
-    Accuracy is your only priority. A wrong name is far worse than returning "Unknown".
+    You are an expert MLB Statistical Auditor. Your goal is to identify the player on the provided "Name That Yankee" trivia card with 100% accuracy.
 
-    **CONTEXT**: The current date is {current_date}. Statistics for the 2024 and 2025 seasons are historical facts and should NOT be treated as futuristic or fictitious.
+    **CONTEXT**: Today is {current_date}. 2024 and 2025 stats are historical facts.
+    
+    All of the following steps MUST be followed exactly as listed.
 
-    Follow these steps precisely:
+    ### STEP 1: DATA EXTRACTION (OCR)
+    1.  **Transcribe the Card**: Extract every statistic and team logo as shown on the card.
+    2.  **Identify Stat Categories**: Determine what the stat column headers represent (e.g., ERA, HR, W-L, GMS/GS).
+    3.  **Team History**: Note the teams that the player played for (based on the logos shown) and the years that the player played for each team (e.g. Mets Logo over the numbers 2024-2025 means the player played for the mets in both 2024 and 2025).
 
-    1.  **Statistical Extraction**: Transcribe the career stats shown on the card. For each row, list: Year, Team, and the primary stats (e.g., W-L and ERA for pitchers, or HR and AVG for hitters).
-    2.  **Targeted Search**: Use your search tool to find the player who recorded these EXACT statistics in these specific years for these teams. 
-        *Search Strategy*: Search for the most unique stat line on the card. 
-        *Example*: "MLB pitcher [Year] [W-L Record] [ERA]"
-    3.  **Rigorous Audit**: Compare your search results against every single row on the card.
-    4.  **Final Decision (Ultra-Strict)**: 
-        - **Stats Must Match**: The primary statistics (Wins, Losses, ERA, Home Runs, Average) must match the card exactly. 
-        - **No Leeway**: Do NOT assume OCR errors. If you cannot find a player whose statistics and team history match every row on the card, you MUST return "Unknown".
-        - **Team Sequence**: The chronological order of teams must be identical.
+    ### STEP 2: SEARCH STRATEGY (BASEBALL-REFERENCE)
+    1.  **Determine Anchor Stat**: Select a stat to anchor your search on (e.g., a specific ERA like 4.97).
+    2.  **Search Pattern**: Query **baseball-reference.com** using: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
+    3.  **Candidate Extraction**: Look at the FIRST THREE results returned by the search tool. List their titles and snippets. DO NOT skip to lower results because a name looks familiar.
 
-    Your response must be a single valid JSON object with the following structure, and nothing else:
+    ### STEP 3: SEQUENTIAL VERIFICATION (ANTI-HALLUCINATION PROTOCOL)
+    Audit the top 3 candidates one-by-one. For each candidate, you MUST fill out this mental checklist:
+    1.  **URL**: What is the specific Baseball-Reference URL for this player?
+    2.  **Stat Comparison Table**: 
+        - [Stat Category] | [Card Value] | [Search/URL Value] | [Match?]
+        - Example: ERA | 4.97 | 4.20 | NO (REJECT PLAYER)
+    3.  **Strict Rule**: If ANY numeric value (ERA, W-L, G, GS) differs from the card by more than 0.01, you MUST mark it as a MISMATCH and move to the next candidate.
+    4.  **Final Decision**: Only if EVERY row in the Comparison Table is a "YES" can you identify the player.
+    
+    ### OUTPUT FORMAT
+    Return ONLY a JSON object:
     {{
       "step_by_step_reasoning": {{
-        "transcribed_stats": "...",
-        "search_query_used": "...",
-        "audit_findings": "Detailed comparison of card stats vs search data"
+        "extracted_stats": "Markdown table of what you see on the card",
+        "search_query_used": "The exact string used for the site: search",
+        "top_3_search_results": [
+          {{"title": "...", "url": "..."}}
+        ],
+        "verification_table": "Markdown table comparing Card vs Candidate",
+        "final_audit_summary": "Why this specific player was accepted or rejected"
       }},
-      "name": "Player's Full Name or 'Unknown'",
-      "nickname": "Player's common nickname, or an empty string"
+      "name": "Full Player Name or 'Unknown'",
+      "nickname": "Player's common nickname, or empty string"
     }}
     """
-
     for attempt in range(MAX_RETRIES):
         _respect_free_tier_rate_limit()
         response = None
@@ -100,8 +115,16 @@ def get_player_info_from_image(image_path, api_key: str):
 
             print(f"  ✅ Player identified as: {player_data['name']}")
             if player_data.get('step_by_step_reasoning'):
-                findings = player_data['step_by_step_reasoning'].get('audit_findings', 'No findings provided')
-                print(f"     AI Reasoning: {findings}")
+                reasoning = player_data['step_by_step_reasoning']
+                query = reasoning.get('search_query_used', 'No query provided')
+                results = reasoning.get('top_3_search_results', 'No results listed')
+                audit = reasoning.get('verification_table', 'No table provided')
+                summary = reasoning.get('final_audit_summary', 'No summary provided')
+                
+                print(f"     Search Query:  {query}")
+                print(f"     Top Results:   {results}")
+                print(f"     Audit Table:\n{audit}")
+                print(f"     AI Summary:    {summary}")
 
             return player_data # Success, exit the function
         except ValueError:
