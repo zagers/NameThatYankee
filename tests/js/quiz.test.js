@@ -50,7 +50,9 @@ describe('Quiz DOM tests', () => {
                 <button id="request-hint"></button>
                 <button id="give-up-btn"></button>
                 <div id="feedback-message"></div>
-                <button id="share-btn-fail" style="display: none;"></button>
+                <div id="share-fail-container" style="display: none;">
+                    <button id="share-btn-fail"></button>
+                </div>
                 <div id="hints-container" style="display: none;">
                     <ul id="hints-list"></ul>
                 </div>
@@ -265,10 +267,10 @@ describe('Quiz DOM tests', () => {
     it('should show share button on failure', async () => {
         await initQuiz();
         const giveUpBtn = document.getElementById('give-up-btn');
-        const shareBtnFail = document.getElementById('share-btn-fail');
+        const shareFailContainer = document.getElementById('share-fail-container');
 
         giveUpBtn.click();
 
-        expect(shareBtnFail.style.display).toBe('block');
+        expect(shareFailContainer.style.display).toBe('block');
     });
 });

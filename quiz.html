@@ -41,7 +41,9 @@
                         <button id="give-up-btn">I Give Up</button>
                     </div>
                     <p id="feedback-message"></p>
-                    <button id="share-btn-fail" class="share-button" style="display: none;">Share Results ⚾</button>
+                    <div id="share-fail-container" style="display: none; margin-top: 1rem;">
+                        <button id="share-btn-fail" class="share-button">Share Results ⚾</button>
+                    </div>
                     <div id="hints-container" style="display: none;">
                         <h3>Hints</h3>
                         <ul id="hints-list"></ul>
@@ -53,10 +55,12 @@
                     <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
                     <h2 id="success-header" class="text-2xl font-bold correct"></h2>
                     <p id="success-points" class="text-lg"></p>
-                    <button id="share-btn-success" class="share-button">Share Results ⚾</button>
-                    <!-- UPDATED: This link now goes to the detail page -->
-                    <a id="view-answer-link" href="" class="back-link" style="margin-top: 1.5rem;">View Player
-                        Details</a>
+                    
+                    <div class="success-actions">
+                        <button id="share-btn-success" class="share-button">Share Results ⚾</button>
+                        <!-- UPDATED: This link now goes to the detail page -->
+                        <a id="view-answer-link" href="" class="view-details-link">View Player Details</a>
+                    </div>
                 </div>
             </div>
 

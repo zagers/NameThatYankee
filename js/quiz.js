@@ -64,6 +64,7 @@ export async function initQuiz() {
     const suggestionsContainer = document.getElementById('suggestions-container');
     const shareBtnSuccess = document.getElementById('share-btn-success');
     const shareBtnFail = document.getElementById('share-btn-fail');
+    const shareFailContainer = document.getElementById('share-fail-container');
 
     let correctAnswer = '';
     let hints = [];
@@ -103,7 +104,7 @@ export async function initQuiz() {
             giveUpBtn.disabled = true;
             guessInputEl.disabled = true;
             shareBtnSuccess.style.display = 'none';
-            shareBtnFail.style.display = 'none';
+            if (shareFailContainer) shareFailContainer.style.display = 'none';
         }
 
         try {
@@ -292,7 +293,7 @@ export async function initQuiz() {
         hintBtn.disabled = true;
         giveUpBtn.disabled = true;
         guessInputEl.disabled = true;
-        shareBtnFail.style.display = 'block';
+        if (shareFailContainer) shareFailContainer.style.display = 'block';
         markPuzzleAsComplete();
     }
 
