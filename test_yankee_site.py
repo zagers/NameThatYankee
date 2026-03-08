@@ -323,6 +323,28 @@ class TestQuizFunctionality:
         guess_input.press("Enter")
         expect(feedback).to_be_visible()
 
+    def test_share_button_visibility(self, page: Page):
+        page.goto(BASE_URL)
+        page.evaluate("window.localStorage.clear();")
+        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        
+        # Mocking or using actual autocomplete would be better, but we just need a correct guess
+        guess_input = page.locator("#guess-input")
+        guess_input.fill("Fake Player")
+        guess_input.press("Enter")
+        
+        expect(page.locator("#success-area")).to_be_visible()
+        expect(page.locator("#share-btn-success")).to_be_visible()
+
+    def test_share_button_on_failure(self, page: Page):
+        page.goto(BASE_URL)
+        page.evaluate("window.localStorage.clear();")
+        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        
+        page.locator("#give-up-btn").click()
+        
+        expect(page.locator("#share-btn-fail")).to_be_visible()
+
 # ============================================================================
 # 4. SECURITY TESTING
 # ============================================================================

@@ -37,9 +37,11 @@
                     <div class="quiz-actions">
                         <button id="submit-guess">Submit Guess</button>
                         <button id="request-hint">Request Hint</button>
+                        <!-- NEW: "I Give Up" button -->
                         <button id="give-up-btn">I Give Up</button>
                     </div>
                     <p id="feedback-message"></p>
+                    <button id="share-btn-fail" class="share-button" style="display: none;">Share Results ⚾</button>
                     <div id="hints-container" style="display: none;">
                         <h3>Hints</h3>
                         <ul id="hints-list"></ul>
@@ -51,6 +53,8 @@
                     <img id="answer-image" src="" alt="Answer Image" class="answer-photo">
                     <h2 id="success-header" class="text-2xl font-bold correct"></h2>
                     <p id="success-points" class="text-lg"></p>
+                    <button id="share-btn-success" class="share-button">Share Results ⚾</button>
+                    <!-- UPDATED: This link now goes to the detail page -->
                     <a id="view-answer-link" href="" class="back-link" style="margin-top: 1.5rem;">View Player
                         Details</a>
                 </div>
@@ -68,10 +72,31 @@
             </div>
         </div>
     </main>
+    <footer>
+        <p class="disclaimer-footer">
+            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League
+            Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+        </p>
+        <p>
+            Last Updated: August 15, 2025
+        </p>
+        <p class="copyright"><a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2025 by <a
+                href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under <a
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img
+                src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
+                src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA"
+                style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
     <script src="firebase-config.js"></script>
     <script src="all_players.js"></script>
+
     <script type="module" src="js/quiz.js"></script>
 </body>
 

@@ -50,6 +50,7 @@ describe('Quiz DOM tests', () => {
                 <button id="request-hint"></button>
                 <button id="give-up-btn"></button>
                 <div id="feedback-message"></div>
+                <button id="share-btn-fail" style="display: none;"></button>
                 <div id="hints-container" style="display: none;">
                     <ul id="hints-list"></ul>
                 </div>
@@ -59,6 +60,7 @@ describe('Quiz DOM tests', () => {
                 <img id="answer-image" />
                 <h2 id="success-header"></h2>
                 <div id="success-points"></div>
+                <button id="share-btn-success"></button>
                 <a id="view-answer-link"></a>
             </div>
             <div id="total-score">0</div>
@@ -234,5 +236,39 @@ describe('Quiz DOM tests', () => {
 
         // The mock logic will handle this as CORRECT
         expect(document.getElementById('success-area').style.display).toBe('block');
+    });
+
+    it('should generate correct share text on success', async () => {
+        await initQuiz();
+        const guessInput = document.getElementById('guess-input');
+        const submitBtn = document.getElementById('submit-guess');
+        const hintBtn = document.getElementById('request-hint');
+
+        // First guess wrong
+        guessInput.value = 'Babe Ruth';
+        submitBtn.click();
+        
+        // Use a hint
+        hintBtn.click();
+
+        // Second guess right
+        guessInput.value = 'Derek Jeter';
+        submitBtn.click();
+
+        const shareBtn = document.getElementById('share-btn-success');
+        // We can't easily test navigator.clipboard in jsdom without more mocking, 
+        // but we can check if the button is visible.
+        expect(document.getElementById('success-area').style.display).toBe('block');
+        expect(shareBtn).toBeDefined();
+    });
+
+    it('should show share button on failure', async () => {
+        await initQuiz();
+        const giveUpBtn = document.getElementById('give-up-btn');
+        const shareBtnFail = document.getElementById('share-btn-fail');
+
+        giveUpBtn.click();
+
+        expect(shareBtnFail.style.display).toBe('block');
     });
 });

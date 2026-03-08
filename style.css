@@ -905,3 +905,31 @@ tbody tr:hover {
     white-space: nowrap;
     border-width: 0;
 }
+
+/* --- Share Button Styles --- */
+.share-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 1rem 0;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: 100%;
+    display: block;
+}
+
+.share-button:hover {
+    background-color: #163a66; /* Slightly lighter navy */
+}
+
+.share-button:active {
+    transform: scale(0.98);
+}
+
+.share-button.copied {
+    background-color: #28a745; /* Success green */
+}

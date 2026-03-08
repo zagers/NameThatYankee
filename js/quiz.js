@@ -62,10 +62,13 @@ export async function initQuiz() {
     const guessesChartContainer = document.getElementById('guesses-chart-container');
     const guessesChartCanvas = document.getElementById('guessesChart');
     const suggestionsContainer = document.getElementById('suggestions-container');
+    const shareBtnSuccess = document.getElementById('share-btn-success');
+    const shareBtnFail = document.getElementById('share-btn-fail');
 
     let correctAnswer = '';
     let hints = [];
     let hintsRevealed = 0;
+    let guessResults = []; // Track sequence of guesses (true for correct, false for incorrect)
     const points = [10, 7, 4, 1, 0];
     //let allPlayers = [];
     //Initialize the local variable with the global one from all_players.js
@@ -98,6 +101,8 @@ export async function initQuiz() {
             hintBtn.disabled = true;
             giveUpBtn.disabled = true;
             guessInputEl.disabled = true;
+            shareBtnSuccess.style.display = 'none';
+            shareBtnFail.style.display = 'none';
         }
 
         try {
@@ -226,6 +231,7 @@ export async function initQuiz() {
         const validation = validateGuess(userGuess, correctAnswer, allPlayers);
 
         if (validation.status === 'CORRECT') {
+            guessResults.push(true);
             const pointsEarned = calculateScore(hintsRevealed, points);
             answerImageEl.src = `images/answer-${date}.webp`;
             successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
@@ -237,6 +243,7 @@ export async function initQuiz() {
             successArea.style.display = 'block';
         } else {
             if (validation.status === 'INCORRECT_VALID_PLAYER') {
+                guessResults.push(false);
                 saveIncorrectGuess(userGuess.trim().toLowerCase());
                 if (hintsRevealed >= hints.length) {
                     endQuizAndShowAnswer();
@@ -280,6 +287,7 @@ export async function initQuiz() {
         hintBtn.disabled = true;
         giveUpBtn.disabled = true;
         guessInputEl.disabled = true;
+        shareBtnFail.style.display = 'block';
         markPuzzleAsComplete();
     }
 
@@ -360,10 +368,50 @@ export async function initQuiz() {
         });
     }
 
+    function generateShareText() {
+        const isWin = guessResults.includes(true);
+        const tries = isWin ? guessResults.length : 'X';
+        const dateStr = quizTitle.textContent.replace('Quiz for ', '');
+        
+        let emojiGrid = guessResults.map(res => res ? '🟩' : '⬛').join('');
+        // Pad with empty squares if they won in fewer than 4 tries
+        if (isWin && guessResults.length < 4) {
+            // No padding needed for Wordle-style if we just want to show the path to success
+        }
+
+        const shareText = `Name That Yankee - ${dateStr}\n` +
+            `⚾ ${tries}/4\n` +
+            `💡 Hints used: ${hintsRevealed}\n` +
+            `${emojiGrid}\n\n` +
+            `${window.location.href}`;
+        
+        return shareText;
+    }
+
+    async function copyShareText(btn) {
+        const text = generateShareText();
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied! ✅';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+            alert('Could not copy to clipboard. Please try again.');
+        }
+    }
+
     submitBtn.addEventListener('click', checkGuess);
     hintBtn.addEventListener('click', revealHint);
     giveUpBtn.addEventListener('click', endQuizAndShowAnswer); // New event listener
     showGuessesBtn.addEventListener('click', showIncorrectGuesses);
+    
+    shareBtnSuccess.addEventListener('click', () => copyShareText(shareBtnSuccess));
+    shareBtnFail.addEventListener('click', () => copyShareText(shareBtnFail));
 
 
     await loadQuizData();
