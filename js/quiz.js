@@ -379,9 +379,9 @@ export async function initQuiz() {
         const tries = isWin ? totalGuesses : 'X';
         const dateStr = quizTitle.textContent.replace('Quiz for ', '');
         
-        // Map events to emojis: hint=🟦, miss=🟥, hit=🟩
+        // Map events to emojis: hint=📘, miss=🟥, hit=🟩
         const emojiMap = {
-            'hint': '🟦',
+            'hint': '📘',
             'miss': '🟥',
             'hit': '🟩'
         };
