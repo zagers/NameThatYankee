@@ -384,8 +384,7 @@ export async function initQuiz() {
 
     function generateShareText(dateStr, state) {
         const isWin = state.shareEvents.includes('hit');
-        const totalGuesses = state.shareEvents.filter(e => e === 'hit' || e === 'miss').length;
-        const tries = isWin ? totalGuesses : 'X';
+        const pointsEarned = isWin ? calculateScore(state.hintsRevealed, state.points) : 0;
         
         // Map events to emojis: hint=📘, miss=🟥, hit=🟩
         const emojiMap = {
@@ -396,7 +395,7 @@ export async function initQuiz() {
         const emojiGrid = state.shareEvents.map(event => emojiMap[event]).join('');
 
         const shareText = `Name That Yankee - ${dateStr}\n` +
-            `⚾ Guesses: ${tries}/4\n` +
+            `⚾ Score: ${pointsEarned} pts\n` +
             `💡 Hints used: ${state.hintsRequested}\n` +
             `${emojiGrid}\n\n` +
             `${window.location.href}`;
