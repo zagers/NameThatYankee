@@ -380,7 +380,7 @@ export async function initQuiz() {
         }
 
         const shareText = `Name That Yankee - ${dateStr}\n` +
-            `⚾ ${tries}/4\n` +
+            `⚾ Guesses: ${tries}/4\n` +
             `💡 Hints used: ${hintsRevealed}\n` +
             `${emojiGrid}\n\n` +
             `${window.location.href}`;
