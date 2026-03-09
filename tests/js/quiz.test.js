@@ -262,6 +262,8 @@ describe('Quiz DOM tests', () => {
         const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
         const sharedText = sharedData.text;
         
+        expect(sharedData.title).toBe('Name That Yankee');
+        expect(sharedData.url).toContain('quiz.html?date=2025-07-11');
         expect(sharedText).toContain('Name That Yankee');
         expect(sharedText).toContain('Score: 4 pts');
         expect(sharedText).toContain('Hints used: 1');

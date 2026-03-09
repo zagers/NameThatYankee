@@ -409,7 +409,9 @@ export async function initQuiz() {
         if (navigator.share) {
             try {
                 await navigator.share({
-                    text: text
+                    title: 'Name That Yankee',
+                    text: text,
+                    url: window.location.href
                 });
                 return; // Successfully shared using native dialog
             } catch (err) {
