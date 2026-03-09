@@ -225,7 +225,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
-    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <!-- Meta tags for better social sharing -->
     <meta property="og:title" content="Name That Yankee - {formatted_date}">
