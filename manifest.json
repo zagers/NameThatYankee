@@ -1,0 +1,22 @@
+{
+  "name": "Name That Yankee",
+  "short_name": "NameThatYankee",
+  "description": "Can you name this New York Yankee based on their career stats?",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0C2340",
+  "theme_color": "#0C2340",
+  "icons": [
+    {
+      "src": "images/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
