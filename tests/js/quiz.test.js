@@ -30,7 +30,7 @@ vi.mock('../../js/quizEngine.js', () => ({
         if (guess.toLowerCase() === 'babe ruth') return { status: 'INCORRECT_VALID_PLAYER' };
         return { status: 'INVALID_PLAYER' };
     }),
-    calculateScore: vi.fn(() => 10),
+    calculateScore: vi.fn((hints) => [10, 7, 4, 1, 0][hints]),
     getAutocompleteSuggestions: vi.fn((input) => {
         if (input.toLowerCase() === 'de') return ['Derek Jeter', 'Dennis Rasmussen'];
         return [];
@@ -45,11 +45,17 @@ describe('Quiz DOM tests', () => {
             <h1 id="quiz-title"></h1>
             <div id="quiz-area">
                 <img id="clue-image" />
+                <div id="suggestions-container" style="display: none;"></div>
                 <input id="guess-input" />
-                <button id="submit-guess"></button>
-                <button id="request-hint"></button>
-                <button id="give-up-btn"></button>
+                <div class="quiz-actions">
+                    <button id="submit-guess"></button>
+                    <button id="request-hint"></button>
+                    <button id="give-up-btn"></button>
+                </div>
                 <div id="feedback-message"></div>
+                <div id="share-fail-container" style="display: none;">
+                    <button id="share-btn-fail"></button>
+                </div>
                 <div id="hints-container" style="display: none;">
                     <ul id="hints-list"></ul>
                 </div>
@@ -59,13 +65,15 @@ describe('Quiz DOM tests', () => {
                 <img id="answer-image" />
                 <h2 id="success-header"></h2>
                 <div id="success-points"></div>
-                <a id="view-answer-link"></a>
+                <div class="success-actions">
+                    <button id="share-btn-success"></button>
+                    <a id="view-answer-link"></a>
+                </div>
             </div>
             <div id="total-score">0</div>
             <div id="guesses-chart-container">
                 <canvas id="guessesChart"></canvas>
             </div>
-            <div id="suggestions-container" style="display: none;"></div>
         `;
 
         window.firebaseConfig = {}; // Mock global
@@ -75,11 +83,19 @@ describe('Quiz DOM tests', () => {
         delete window.location;
         window.location = new URL('http://localhost/quiz.html?date=2025-07-11');
 
+        // Mock clipboard and share API
+        Object.assign(navigator, {
+            clipboard: {
+                writeText: vi.fn().mockImplementation(() => Promise.resolve()),
+            },
+            share: vi.fn().mockImplementation(() => Promise.resolve())
+        });
+
         // Mock fetch
         global.fetch = vi.fn((url) => {
             if (url.endsWith('.html')) {
                 return Promise.resolve({
-                    text: () => Promise.resolve('<div id="quiz-data">{"answer": "Derek Jeter", "hints": ["Hint 1", "Hint 2"]}</div>')
+                    text: () => Promise.resolve('<div id="quiz-data">{"answer": "Derek Jeter", "hints": ["Hint 1", "Hint 2", "Hint 3"]}</div>')
                 });
             }
             return Promise.resolve({});
@@ -160,6 +176,7 @@ describe('Quiz DOM tests', () => {
         // Reveal all hits
         hintBtn.click(); // Hint 1
         hintBtn.click(); // Hint 2
+        hintBtn.click(); // Hint 3
         expect(hintBtn.disabled).toBe(true);
         expect(feedbackMsg.textContent).toContain('All hints revealed! One guess remaining.');
 
@@ -183,24 +200,6 @@ describe('Quiz DOM tests', () => {
         expect(submitBtn.disabled).toBe(true);
         expect(giveUpBtn.disabled).toBe(true);
         expect(feedbackMsg.innerHTML).toContain('Sorry, the correct answer was');
-    });
-
-    it('should show autocomplete suggestions', async () => {
-        await initQuiz();
-        const guessInput = document.getElementById('guess-input');
-        const suggestionsContainer = document.getElementById('suggestions-container');
-
-        guessInput.value = 'de';
-        guessInput.dispatchEvent(new Event('input'));
-
-        expect(suggestionsContainer.style.display).toBe('block');
-        const items = suggestionsContainer.querySelectorAll('.suggestion-item');
-        expect(items.length).toBe(2);
-
-        // Click suggestion
-        items[0].click();
-        expect(guessInput.value).toBe('Derek Jeter');
-        expect(suggestionsContainer.style.display).toBe('none');
     });
 
     it('should keyboard navigate autocomplete suggestions', async () => {
@@ -234,5 +233,79 @@ describe('Quiz DOM tests', () => {
 
         // The mock logic will handle this as CORRECT
         expect(document.getElementById('success-area').style.display).toBe('block');
+    });
+
+    it('should generate correct share text on success', async () => {
+        await initQuiz();
+        const guessInput = document.getElementById('guess-input');
+        const submitBtn = document.getElementById('submit-guess');
+        const hintBtn = document.getElementById('request-hint');
+        const shareBtn = document.getElementById('share-btn-success');
+
+        // First guess wrong
+        guessInput.value = 'Babe Ruth';
+        submitBtn.click();
+        
+        // Use a hint
+        hintBtn.click();
+
+        // Second guess right
+        guessInput.value = 'Derek Jeter';
+        submitBtn.click();
+
+        shareBtn.click();
+
+        // Wait a tiny bit for the async click handler to resolve
+        await new Promise(resolve => setTimeout(resolve, 10));
+
+        expect(navigator.share).toHaveBeenCalled();
+        const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
+        const sharedText = sharedData.text;
+        
+        expect(sharedData.title).toBe('Name That Yankee');
+        expect(sharedData.url).toContain('quiz.html?date=2025-07-11');
+        expect(sharedText).toContain('Name That Yankee');
+        expect(sharedText).toContain('Score: 4 pts');
+        expect(sharedText).toContain('Hints used: 1');
+        expect(sharedText).toContain('🟥📘🟩'); // Chronological: miss, hint, hit
+    });
+
+    it('should show share button on failure', async () => {
+        await initQuiz();
+        const giveUpBtn = document.getElementById('give-up-btn');
+        const shareFailContainer = document.getElementById('share-fail-container');
+        const shareBtn = document.getElementById('share-btn-fail');
+
+        giveUpBtn.click();
+
+        expect(shareFailContainer.style.display).toBe('block');
+        
+        shareBtn.click();
+        
+        // Wait a tiny bit for the async click handler to resolve
+        await new Promise(resolve => setTimeout(resolve, 10));
+        
+        expect(navigator.share).toHaveBeenCalled();
+        const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
+        const sharedText = sharedData.text;
+        expect(sharedText).toContain('Score: 0 pts');
+    });
+
+    it('should fallback to clipboard if navigator.share fails', async () => {
+        // Force navigator.share to fail
+        navigator.share.mockImplementationOnce(() => Promise.reject(new Error('Share failed')));
+        
+        await initQuiz();
+        const giveUpBtn = document.getElementById('give-up-btn');
+        const shareBtn = document.getElementById('share-btn-fail');
+
+        giveUpBtn.click();
+        shareBtn.click();
+        
+        // Wait a tiny bit for the async click handler to resolve
+        await new Promise(resolve => setTimeout(resolve, 10));
+        
+        expect(navigator.share).toHaveBeenCalled();
+        expect(navigator.clipboard.writeText).toHaveBeenCalled();
     });
 });

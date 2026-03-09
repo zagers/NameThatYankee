@@ -62,11 +62,21 @@ export async function initQuiz() {
     const guessesChartContainer = document.getElementById('guesses-chart-container');
     const guessesChartCanvas = document.getElementById('guessesChart');
     const suggestionsContainer = document.getElementById('suggestions-container');
+    const shareBtnSuccess = document.getElementById('share-btn-success');
+    const shareBtnFail = document.getElementById('share-btn-fail');
+    const shareFailContainer = document.getElementById('share-fail-container');
 
-    let correctAnswer = '';
-    let hints = [];
-    let hintsRevealed = 0;
-    const points = [10, 7, 4, 1, 0];
+    // Consolidated Game State
+    const gameState = {
+        correctAnswer: '',
+        hints: [],
+        hintsRevealed: 0,
+        hintsRequested: 0,
+        shareEvents: [], // 'hint', 'miss', 'hit'
+        isComplete: false,
+        points: [10, 7, 4, 1, 0]
+    };
+
     //let allPlayers = [];
     //Initialize the local variable with the global one from all_players.js
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
@@ -98,6 +108,9 @@ export async function initQuiz() {
             hintBtn.disabled = true;
             giveUpBtn.disabled = true;
             guessInputEl.disabled = true;
+            shareBtnSuccess.style.display = 'none';
+            if (shareFailContainer) shareFailContainer.style.display = 'none';
+            gameState.isComplete = true;
         }
 
         try {
@@ -112,8 +125,8 @@ export async function initQuiz() {
             const quizDataEl = doc.getElementById('quiz-data');
             if (quizDataEl) {
                 const data = JSON.parse(quizDataEl.textContent);
-                correctAnswer = data.answer.toLowerCase();
-                hints = data.hints;
+                gameState.correctAnswer = data.answer.toLowerCase();
+                gameState.hints = data.hints;
             } else {
                 throw new Error('Quiz data not found on detail page.');
             }
@@ -223,12 +236,14 @@ export async function initQuiz() {
             return;
         }
 
-        const validation = validateGuess(userGuess, correctAnswer, allPlayers);
+        const validation = validateGuess(userGuess, gameState.correctAnswer, allPlayers);
 
         if (validation.status === 'CORRECT') {
-            const pointsEarned = calculateScore(hintsRevealed, points);
+            gameState.shareEvents.push('hit');
+            gameState.isComplete = true;
+            const pointsEarned = calculateScore(gameState.hintsRevealed, gameState.points);
             answerImageEl.src = `images/answer-${date}.webp`;
-            successHeader.textContent = `Correct! The answer is ${correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
+            successHeader.textContent = `Correct! The answer is ${gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
             successPoints.textContent = `You earned ${pointsEarned} points!`;
             viewAnswerLink.href = `${date}.html`; // Set the link
             updateTotalScore(pointsEarned);
@@ -237,8 +252,9 @@ export async function initQuiz() {
             successArea.style.display = 'block';
         } else {
             if (validation.status === 'INCORRECT_VALID_PLAYER') {
+                gameState.shareEvents.push('miss');
                 saveIncorrectGuess(userGuess.trim().toLowerCase());
-                if (hintsRevealed >= hints.length) {
+                if (gameState.hintsRevealed >= gameState.hints.length) {
                     endQuizAndShowAnswer();
                 } else {
                     feedbackMsg.textContent = "Incorrect. Try again!";
@@ -254,16 +270,20 @@ export async function initQuiz() {
         }
     }
 
-    function revealHint() {
-        if (hintsRevealed < hints.length) {
+    function revealHint(isManual = false) {
+        if (gameState.hintsRevealed < gameState.hints.length) {
             hintsContainer.style.display = 'block';
             const newHint = document.createElement('li');
-            newHint.textContent = hints[hintsRevealed];
+            newHint.textContent = gameState.hints[gameState.hintsRevealed];
             hintsList.appendChild(newHint);
-            hintsRevealed++;
+            gameState.hintsRevealed++;
+            if (isManual) {
+                gameState.hintsRequested++;
+                gameState.shareEvents.push('hint');
+            }
         }
 
-        if (hintsRevealed >= hints.length) {
+        if (gameState.hintsRevealed >= gameState.hints.length) {
             hintBtn.disabled = true;
             if (!submitBtn.disabled) {
                 feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
@@ -274,12 +294,14 @@ export async function initQuiz() {
 
     // NEW: Function to end the quiz and show the answer
     function endQuizAndShowAnswer() {
-        const formattedAnswer = correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
+        gameState.isComplete = true;
+        const formattedAnswer = gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
         feedbackMsg.innerHTML = `Sorry, the correct answer was ${formattedAnswer}.<p> <a href="${date}.html">Click here to learn more about ${formattedAnswer}</a>`;
         submitBtn.disabled = true;
         hintBtn.disabled = true;
         giveUpBtn.disabled = true;
         guessInputEl.disabled = true;
+        if (shareFailContainer) shareFailContainer.style.display = 'block';
         markPuzzleAsComplete();
     }
 
@@ -360,10 +382,78 @@ export async function initQuiz() {
         });
     }
 
+    function generateShareText(dateStr, state) {
+        const isWin = state.shareEvents.includes('hit');
+        const pointsEarned = isWin ? calculateScore(state.hintsRevealed, state.points) : 0;
+        
+        // Map events to emojis: hint=📘, miss=🟥, hit=🟩
+        const emojiMap = {
+            'hint': '📘',
+            'miss': '🟥',
+            'hit': '🟩'
+        };
+        const emojiGrid = state.shareEvents.map(event => emojiMap[event]).join('');
+
+        const shareText = `Name That Yankee - ${dateStr}\n` +
+            `⚾ Score: ${pointsEarned} pts\n` +
+            `💡 Hints used: ${state.hintsRequested}\n` +
+            `${emojiGrid}\n\n` +
+            `${window.location.href}`;
+        
+        return shareText;
+    }
+
+    async function copyShareText(btn, dateStr, state) {
+        const text = generateShareText(dateStr, state);
+        
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Name That Yankee',
+                    text: text,
+                    url: window.location.href
+                });
+                return; // Successfully shared using native dialog
+            } catch (err) {
+                // If user cancels the share dialog, it throws an AbortError.
+                // We shouldn't alert on cancellation, just silently return.
+                if (err.name === 'AbortError') return;
+                console.error('Native share failed, falling back to clipboard: ', err);
+                // Fall through to clipboard approach
+            }
+        }
+
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied! ✅';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+            alert('Could not copy to clipboard. Please try again.');
+        }
+    }
+
     submitBtn.addEventListener('click', checkGuess);
-    hintBtn.addEventListener('click', revealHint);
+    hintBtn.addEventListener('click', () => revealHint(true));
     giveUpBtn.addEventListener('click', endQuizAndShowAnswer); // New event listener
     showGuessesBtn.addEventListener('click', showIncorrectGuesses);
+    
+    // Get formatted date once for sharing
+    let formattedDate = '';
+    try {
+        const dateObj = new Date(date + 'T00:00:00');
+        formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    } catch (e) {
+        formattedDate = date;
+    }
+
+    shareBtnSuccess.addEventListener('click', () => copyShareText(shareBtnSuccess, formattedDate, gameState));
+    shareBtnFail.addEventListener('click', () => copyShareText(shareBtnFail, formattedDate, gameState));
 
 
     await loadQuizData();

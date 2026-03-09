@@ -223,7 +223,22 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Answer for {date_str} | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    
+    <!-- Meta tags for better social sharing -->
+    <meta property="og:title" content="Name That Yankee - {formatted_date}">
+    <meta property="og:description" content="Can you name this New York Yankee based on their career stats?">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Name That Yankee">
+    <meta property="og:image" content="images/clue-{date_str}.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Name That Yankee - {formatted_date}">
+    <meta name="twitter:description" content="Can you name this New York Yankee based on their career stats?">
+    <meta name="twitter:image" content="images/clue-{date_str}.webp">
+    
+    <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 </head>
 <body>
     <header>

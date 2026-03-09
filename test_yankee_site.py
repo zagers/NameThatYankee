@@ -61,6 +61,13 @@ def check_web_server():
         server_process.kill()
     print(f"\n🛑  Web server at {BASE_URL} stopped.")
 
+@pytest.fixture(scope="session")
+def browser_context_args(browser_context_args):
+    return {
+        **browser_context_args,
+        "permissions": ["clipboard-read", "clipboard-write"],
+    }
+
 # ============================================================================
 # 1. OVERALL SITE STRUCTURE TESTS
 # ============================================================================
@@ -322,6 +329,43 @@ class TestQuizFunctionality:
         guess_input.fill("A" * 100)
         guess_input.press("Enter")
         expect(feedback).to_be_visible()
+
+    def test_share_button_visibility(self, page: Page):
+        page.goto(BASE_URL)
+        page.evaluate("window.localStorage.clear();")
+        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        
+        # Mocking or using actual autocomplete would be better, but we just need a correct guess
+        guess_input = page.locator("#guess-input")
+        guess_input.fill("Fake Player")
+        guess_input.press("Enter")
+        
+        expect(page.locator("#success-area")).to_be_visible()
+        share_btn = page.locator("#share-btn-success")
+        expect(share_btn).to_be_visible()
+        
+        # Test actual sharing
+        share_btn.click()
+        clipboard_content = page.evaluate("navigator.clipboard.readText()")
+        assert "Name That Yankee" in clipboard_content
+        assert "Score: 10 pts" in clipboard_content
+        assert "🟩" in clipboard_content
+
+    def test_share_button_on_failure(self, page: Page):
+        page.goto(BASE_URL)
+        page.evaluate("window.localStorage.clear();")
+        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        
+        page.locator("#give-up-btn").click()
+        
+        share_container = page.locator("#share-fail-container")
+        expect(share_container).to_be_visible()
+        share_btn = page.locator("#share-btn-fail")
+        
+        # Test actual sharing
+        share_btn.click()
+        clipboard_content = page.evaluate("navigator.clipboard.readText()")
+        assert "Score: 0 pts" in clipboard_content
 
 # ============================================================================
 # 4. SECURITY TESTING
