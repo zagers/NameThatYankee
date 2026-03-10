@@ -7,6 +7,12 @@ echo "================================================="
 echo "🧪 STARTING NAME THAT YANKEE FULL TEST SUITE..."
 echo "================================================="
 
+# Sync fixtures with latest production files
+echo "🔄 Synchronizing test fixtures..."
+cp quiz.html tests/fixtures/www/quiz.html
+cp style.css tests/fixtures/www/style.css
+# (js/ is already symlinked in the fixture directory)
+
 # Run Python Unit Tests
 echo ""
 echo "▶️ [1/4] Running Python Backend Unit Tests..."
