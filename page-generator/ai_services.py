@@ -77,12 +77,13 @@ def get_player_info_from_image(image_path, api_key: str):
 
     ### STEP 2: SEARCH STRATEGY
     You MUST find the specific individual Baseball-Reference player profile.
-    1.  **Formulate Query**: Use the site operator and the specific anchor stat.
-    2.  **STRICT PATTERN**: `site:baseball-reference.com "[Anchor Stat]" [Recent Team] [Prior Team]`
-    3.  **Example**: `site:baseball-reference.com "4.97 ERA" Yankees Mets`
-    4.  **BANNED**: Do NOT include years (2025, 2024) or more than 2 teams. Excess keywords trigger "Team Aggregate" pages which you must avoid.
-    5.  **URL Validation**: Only audit results that are individual player pages (usually ending in `.shtml`). Ignore pages titled "Team Statistics" or "Leaders".
-    6.  **Extract Candidates**: List the Names and URLs of the first 3 results.
+    1.  **Select Anchor Stat**: Choose a high-leverage stat like ERA or W-L record.
+    2.  **STRICT RULE**: Do NOT use "Games", "GMS", "Games Started", or "GS" in your search query. These keywords trigger "Team Season" pages which you must avoid.
+    3.  **Formulate Query**: Use the site operator, the anchor stat, and the two most recent teams INCLUDING their final years on those teams.
+    4.  **STRICT PATTERN**: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
+    5.  **Example**: `site:baseball-reference.com 3.81 ERA 2016 Indians 2015 Tigers`
+    6.  **URL Validation**: Only audit results that are individual player pages (usually ending in `.shtml`). Ignore pages titled "Team Statistics" or "Leaders".
+    7.  **Extract Candidates**: List the Names and URLs of the first 3 results.
 
     ### STEP 3: SEQUENTIAL VERIFICATION (ADVERSARIAL AUDIT)
     You are a skeptic. Your default assumption is that the search engine is giving you the WRONG player.
@@ -120,6 +121,14 @@ def get_player_info_from_image(image_path, api_key: str):
             json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
             
             player_data = json.loads(json_text)
+
+            # Check if search returned zero results - if so, retry
+            reasoning = player_data.get('step_by_step_reasoning', {})
+            results = reasoning.get('top_3_search_results', [])
+            if not results and player_data.get('name') == 'Unknown':
+                print(f"  ⚠️ Search tool returned 0 results. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
 
             print(f"  ✅ Player identified as: {player_data['name']}")
             if player_data.get('step_by_step_reasoning'):
