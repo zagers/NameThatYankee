@@ -10,6 +10,7 @@ import time
 MAX_RETRIES = 5
 SLEEP_TIME = 30
 MODEL = 'gemini-2.5-flash'
+#MODEL = 'gemini-3.1-flash-lite-preview'
 
 # Simple in-process rate limiter to respect Free Tier limit
 # (5 requests per minute per model). We maintain at most one
@@ -51,7 +52,8 @@ def get_player_info_from_image(image_path, api_key: str):
     
     client = genai.Client(api_key=api_key)
     clue_image = Image.open(image_path)
-    current_date = "March 7, 2026"
+    from datetime import datetime
+    current_date = datetime.now().strftime("%B %d, %Y")
     generation_config = types.GenerateContentConfig(
         temperature=0.1,
         tools=[types.Tool(
@@ -74,18 +76,21 @@ def get_player_info_from_image(image_path, api_key: str):
     3.  **Team History**: Note the teams that the player played for (based on the logos shown) and the years that the player played for each team (e.g. Mets Logo over the numbers 2024-2025 means the player played for the mets in both 2024 and 2025).
 
     ### STEP 2: SEARCH STRATEGY (BASEBALL-REFERENCE)
-    1.  **Determine Anchor Stat**: Select a stat to anchor your search on (e.g., a specific ERA like 4.97).
-    2.  **Search Pattern**: Query **baseball-reference.com** using: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
-    3.  **Candidate Extraction**: Look at the FIRST THREE results returned by the search tool. List their titles and snippets. DO NOT skip to lower results because a name looks familiar.
+    1.  **Determine Anchor Stat**: Select a specific stat line (e.g., 4.97 ERA).
+    2.  **Search Query**: Query **baseball-reference.com** using: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
+    3.  **IMPORTANT**: Do NOT use double quotes in the search query. Quotes prevent the search tool from finding values inside data tables.
+    4.  **Fallback**: If your first search returns 0 results, you must try again. Try removing the older teams, or try using a different Anchor Stat entirely.
+    5.  **Extract Candidates**: List the Names and URLs of the first 3 results.
 
-    ### STEP 3: SEQUENTIAL VERIFICATION (ANTI-HALLUCINATION PROTOCOL)
-    Audit the top 3 candidates one-by-one. For each candidate, you MUST fill out this mental checklist:
-    1.  **URL**: What is the specific Baseball-Reference URL for this player?
-    2.  **Stat Comparison Table**: 
-        - [Stat Category] | [Card Value] | [Search/URL Value] | [Match?]
-        - Example: ERA | 4.97 | 4.20 | NO (REJECT PLAYER)
-    3.  **Strict Rule**: If ANY numeric value (ERA, W-L, G, GS) differs from the card by more than 0.01, you MUST mark it as a MISMATCH and move to the next candidate.
-    4.  **Final Decision**: Only if EVERY row in the Comparison Table is a "YES" can you identify the player.
+    ### STEP 3: SEQUENTIAL VERIFICATION (ADVERSARIAL AUDIT)
+    You are a skeptic. Your default assumption is that the search engine is giving you the WRONG player.
+    Audit the top 3 candidates one-by-one. For each candidate:
+    1.  **Identity**: What is the full name of the player?
+    2.  **Snippet Quote**: Quote the exact text from the search results that contains their stats. 
+    3.  **Audit Table**: 
+        - [Stat Category] | [Card Value] | [Candidate Value in Snippet] | [Match?]
+        - **CRITICAL ANTI-HALLUCINATION RULE**: If the exact number (e.g., 4.97) is NOT explicitly visible in the search snippet for that candidate, you MUST write "NOT FOUND" in the Candidate Value column and mark Match as "NO". Do NOT guess. Do NOT use your internal training data.
+    4.  **Final Decision**: Only if EVERY numeric value is found in the snippet and matches exactly can you identify the player.
     
     ### OUTPUT FORMAT
     Return ONLY a JSON object:
@@ -94,10 +99,10 @@ def get_player_info_from_image(image_path, api_key: str):
         "extracted_stats": "Markdown table of what you see on the card",
         "search_query_used": "The exact string used for the site: search",
         "top_3_search_results": [
-          {{"title": "...", "url": "..."}}
+          {{"name": "...", "url": "..."}}
         ],
-        "verification_table": "Markdown table comparing Card vs Candidate",
-        "final_audit_summary": "Why this specific player was accepted or rejected"
+        "verification_table": "Markdown table with the Snippet Quotes and Card vs Candidate comparisons",
+        "final_audit_summary": "Explanation of why the match was accepted or rejected"
       }},
       "name": "Full Player Name or 'Unknown'",
       "nickname": "Player's common nickname, or empty string"
@@ -111,16 +116,19 @@ def get_player_info_from_image(image_path, api_key: str):
             
             # This line will raise ValueError on an empty response
             json_text = (response.text or "").strip().replace("```json", "").replace("```", "").strip()
+            
             player_data = json.loads(json_text)
 
             print(f"  ✅ Player identified as: {player_data['name']}")
             if player_data.get('step_by_step_reasoning'):
                 reasoning = player_data['step_by_step_reasoning']
+                stats = reasoning.get('extracted_stats', 'No stats extracted')
                 query = reasoning.get('search_query_used', 'No query provided')
                 results = reasoning.get('top_3_search_results', 'No results listed')
                 audit = reasoning.get('verification_table', 'No table provided')
                 summary = reasoning.get('final_audit_summary', 'No summary provided')
                 
+                print(f"     Extracted Stats:\n{stats}\n")
                 print(f"     Search Query:  {query}")
                 print(f"     Top Results:   {results}")
                 print(f"     Audit Table:\n{audit}")
