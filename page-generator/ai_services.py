@@ -75,22 +75,24 @@ def get_player_info_from_image(image_path, api_key: str):
     2.  **Identify Stat Categories**: Determine what the stat column headers represent (e.g., ERA, HR, W-L, GMS/GS).
     3.  **Team History**: Note the teams that the player played for (based on the logos shown) and the years that the player played for each team (e.g. Mets Logo over the numbers 2024-2025 means the player played for the mets in both 2024 and 2025).
 
-    ### STEP 2: SEARCH STRATEGY (BASEBALL-REFERENCE)
-    1.  **Determine Anchor Stat**: Select a specific stat line (e.g., 4.97 ERA).
-    2.  **Search Query**: Query **baseball-reference.com** using: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
-    3.  **IMPORTANT**: Do NOT use double quotes in the search query. Quotes prevent the search tool from finding values inside data tables.
-    4.  **Fallback**: If your first search returns 0 results, you must try again. Try removing the older teams, or try using a different Anchor Stat entirely.
-    5.  **Extract Candidates**: List the Names and URLs of the first 3 results.
+    ### STEP 2: SEARCH STRATEGY
+    You MUST find the specific individual Baseball-Reference player profile.
+    1.  **Formulate Query**: Use the site operator and the specific anchor stat.
+    2.  **STRICT PATTERN**: `site:baseball-reference.com "[Anchor Stat]" [Recent Team] [Prior Team]`
+    3.  **Example**: `site:baseball-reference.com "4.97 ERA" Yankees Mets`
+    4.  **BANNED**: Do NOT include years (2025, 2024) or more than 2 teams. Excess keywords trigger "Team Aggregate" pages which you must avoid.
+    5.  **URL Validation**: Only audit results that are individual player pages (usually ending in `.shtml`). Ignore pages titled "Team Statistics" or "Leaders".
+    6.  **Extract Candidates**: List the Names and URLs of the first 3 results.
 
     ### STEP 3: SEQUENTIAL VERIFICATION (ADVERSARIAL AUDIT)
     You are a skeptic. Your default assumption is that the search engine is giving you the WRONG player.
     Audit the top 3 candidates one-by-one. For each candidate:
     1.  **Identity**: What is the full name of the player?
-    2.  **Snippet Quote**: Quote the exact text from the search results that contains their stats. 
+    2.  **Snippet Proof**: Quote the exact text from the search result that shows their career stats. 
     3.  **Audit Table**: 
         - [Stat Category] | [Card Value] | [Candidate Value in Snippet] | [Match?]
-        - **CRITICAL ANTI-HALLUCINATION RULE**: If the exact number (e.g., 4.97) is NOT explicitly visible in the search snippet for that candidate, you MUST write "NOT FOUND" in the Candidate Value column and mark Match as "NO". Do NOT guess. Do NOT use your internal training data.
-    4.  **Final Decision**: Only if EVERY numeric value is found in the snippet and matches exactly can you identify the player.
+        - **CRITICAL**: If the exact number (e.g., 4.97) is NOT explicitly visible in the snippet for that player, you MUST write "NOT FOUND" in the Candidate Value column and mark Match as "NO". 
+    4.  **Final Decision**: Only if EVERY numeric value matches exactly can you identify the player.
     
     ### OUTPUT FORMAT
     Return ONLY a JSON object:
