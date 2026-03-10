@@ -9,8 +9,9 @@ echo "================================================="
 
 # Sync fixtures with latest production files
 echo "🔄 Synchronizing test fixtures..."
-cp quiz.html tests/fixtures/www/quiz.html
-cp style.css tests/fixtures/www/style.css
+# Use || true to prevent script exit if files are identical
+cp quiz.html tests/fixtures/www/quiz.html || true
+cp style.css tests/fixtures/www/style.css || true
 # (js/ is already symlinked in the fixture directory)
 
 # Run Python Unit Tests
