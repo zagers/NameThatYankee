@@ -377,9 +377,12 @@ Options:
   --automated           Run without manual review prompts. The script will
                         skip the interactive stats/facts confirmation step.
 
+  --refresh-player-list
+                        Scrape all player names from Baseball-Reference.com
+                        to update the autocomplete list, then exit.
+
   --generate-player-list
-                        Generate a master list of all players from existing
-                        detail pages, then exit. Skips normal page generation.
+                        Legacy alias for --refresh-player-list.
 
   --id-only             Identify the player from each clue image and scrape
                         stats, but do not call Gemini for facts or follow-up
@@ -482,8 +485,8 @@ Notes:
         print("❌ Automation modules not available. Please check installation.")
         exit()
 
-    # NEW: Check for the --generate-player-list flag
-    if "--generate-player-list" in sys.argv:
+    # Check for player list refresh flags
+    if "--refresh-player-list" in sys.argv or "--generate-player-list" in sys.argv:
         prompt_message = "Enter the path to your website project folder to save the player list"
         if last_path:
             prompt_message += f" [Default: {last_path}]: "
@@ -535,11 +538,14 @@ Notes:
     images_dir.mkdir(exist_ok=True)
 
     # 3. Choose mode
-    mode = input("Enter a date (YYYY-MM-DD), a range (YYYY-MM-DD to YYYY-MM-DD), or 'ALL': ").strip()
+    mode = input("Enter a date (YYYY-MM-DD), a range (YYYY-MM-DD to YYYY-MM-DD), 'REFRESH', or 'ALL': ").strip()
 
     clue_files_to_process = []
 
-    if mode.upper() == 'ALL':
+    if mode.upper() == 'REFRESH':
+        scraper.generate_master_player_list(project_dir)
+        exit()
+    elif mode.upper() == 'ALL':
         clue_files_to_process = sorted(images_dir.glob("clue-*.webp"), reverse=True)
     elif " to " in mode:
         try:
