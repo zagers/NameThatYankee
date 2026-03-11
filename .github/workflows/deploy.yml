@@ -105,6 +105,8 @@ jobs:
   # The Deploy job
   deploy:
     needs: [build, security-scan]
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     permissions:
       pages: write
       id-token: write
