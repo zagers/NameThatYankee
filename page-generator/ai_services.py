@@ -9,8 +9,8 @@ import time
 # The number of times to retry the API call if it returns an empty response.
 MAX_RETRIES = 5
 SLEEP_TIME = 30
-MODEL = 'gemini-2.5-flash'
-#MODEL = 'gemini-3.1-flash-lite-preview'
+#MODEL = 'gemini-2.5-flash'
+MODEL = 'gemini-3.1-flash-lite-preview'
 
 # Simple in-process rate limiter to respect Free Tier limit
 # (5 requests per minute per model). We maintain at most one
@@ -77,23 +77,24 @@ def get_player_info_from_image(image_path, api_key: str):
 
     ### STEP 2: SEARCH STRATEGY
     You MUST find the specific individual Baseball-Reference player profile.
-    1.  **Select Anchor Stat**: Choose a high-leverage stat like ERA or W-L record.
+    1.  **Select Anchor Stat**: Choose a high-leverage stat. Favor Batting Average (e.g., .228 AVG) for hitters and ERA (e.g., 3.81 ERA) for pitchers.
     2.  **STRICT RULE**: Do NOT use "Games", "GMS", "Games Started", or "GS" in your search query. These keywords trigger "Team Season" pages which you must avoid.
-    3.  **Formulate Query**: Use the site operator, the anchor stat, and the two most recent teams INCLUDING their final years on those teams.
-    4.  **STRICT PATTERN**: `site:baseball-reference.com [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
-    5.  **Example**: `site:baseball-reference.com 3.81 ERA 2016 Indians 2015 Tigers`
-    6.  **URL Validation**: Only audit results that are individual player pages (usually ending in `.shtml`). Ignore pages titled "Team Statistics" or "Leaders".
+    3.  **Formulate Query**: Use the site operator, the anchor stat, and the two most recent teams.
+    4.  **Year Disambiguation**: Use the most recent year for the current team. For the prior team, use the year PRIOR to the current team's year (e.g., if Current Team is 2025 Yankees and Prior Team is Rays, use 2025 Yankees and 2024 Rays).
+    5.  **STRICT PATTERN**: `site:baseball-reference.com/players/ [Anchor Stat] [Recent Team Year] [Recent Team] [Prior Team Year] [Prior Team]`
+    6.  **Example**: `site:baseball-reference.com/players/ .228 AVG 2025 Yankees 2024 Rays`
     7.  **Extract Candidates**: List the Names and URLs of the first 3 results.
 
     ### STEP 3: SEQUENTIAL VERIFICATION (ADVERSARIAL AUDIT)
     You are a skeptic. Your default assumption is that the search engine is giving you the WRONG player.
     Audit the top 3 candidates one-by-one. For each candidate:
     1.  **Identity**: What is the full name of the player?
-    2.  **Snippet Proof**: Quote the exact text from the search result that shows their career stats. 
-    3.  **Audit Table**: 
+    2.  **STRICT NON-HALLUCINATION**: Do NOT use your internal knowledge about players. Rely ONLY on verbatim text from the search tool.
+    3.  **Snippet Proof**: Quote the exact verbatim text from the search result's snippet that shows their career stats. 
+    4.  **Audit Table**: 
         - [Stat Category] | [Card Value] | [Candidate Value in Snippet] | [Match?]
-        - **CRITICAL**: If the exact number (e.g., 4.97) is NOT explicitly visible in the snippet for that player, you MUST write "NOT FOUND" in the Candidate Value column and mark Match as "NO". 
-    4.  **Final Decision**: Only if EVERY numeric value matches exactly can you identify the player.
+        - **CRITICAL**: If the exact number (e.g., 4.97) is NOT explicitly visible in the snippet for that player, you MUST write "NOT FOUND" in the Candidate Value column and mark Match as "NO". Do NOT 'fill in' stats from memory.
+    5.  **Final Decision**: Only if EVERY numeric value matches exactly can you identify the player. It is better to return 'Unknown' than to provide a false positive.
     
     ### OUTPUT FORMAT
     Return ONLY a JSON object:
@@ -122,11 +123,11 @@ def get_player_info_from_image(image_path, api_key: str):
             
             player_data = json.loads(json_text)
 
-            # Check if search returned zero results - if so, retry
-            reasoning = player_data.get('step_by_step_reasoning', {})
-            results = reasoning.get('top_3_search_results', [])
-            if not results and player_data.get('name') == 'Unknown':
-                print(f"  ⚠️ Search tool returned 0 results. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+            # Check if player was identified - if not, retry
+            # We retry if name is 'Unknown' regardless of whether search returned results.
+            # This allows the model to try a different query if the previous results didn't contain a verified match.
+            if player_data.get('name') == 'Unknown':
+                print(f"  ⚠️ Player not identified. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
                 time.sleep(SLEEP_TIME)
                 continue
 

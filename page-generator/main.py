@@ -128,19 +128,24 @@ def handle_single_automation(workflow: AutomatedWorkflow):
     date_str = None
     
     try:
-        screenshot_index = sys.argv.index("--automate-workflow") + 1
-        if screenshot_index < len(sys.argv):
-            screenshot_path = Path(sys.argv[screenshot_index])
-            # Check if date is also provided
-            if screenshot_index + 1 < len(sys.argv):
-                potential_date = sys.argv[screenshot_index + 1]
-                # Validate if it's a date format (YYYY-MM-DD)
-                try:
-                    datetime.strptime(potential_date, "%Y-%m-%d")
-                    date_str = potential_date
-                except ValueError:
-                    # Not a date format, so it's not the date argument
-                    pass
+        idx = sys.argv.index("--automate-workflow")
+        path_parts = []
+        next_idx = idx + 1
+        while next_idx < len(sys.argv):
+            arg = sys.argv[next_idx]
+            if arg.startswith("--"):
+                break
+            try:
+                datetime.strptime(arg, "%Y-%m-%d")
+                if not date_str:
+                    date_str = arg
+                break
+            except ValueError:
+                path_parts.append(arg)
+            next_idx += 1
+            
+        if path_parts:
+            screenshot_path = Path(" ".join(path_parts))
     except (ValueError, IndexError):
         pass
     
@@ -185,8 +190,17 @@ def handle_identify_player(config: dict):
     screenshot_path = None
     try:
         idx = sys.argv.index("--identify-player")
-        if idx + 1 < len(sys.argv):
-            screenshot_path = Path(sys.argv[idx + 1])
+        path_parts = []
+        next_idx = idx + 1
+        while next_idx < len(sys.argv):
+            arg = sys.argv[next_idx]
+            if arg.startswith("--"):
+                break
+            path_parts.append(arg)
+            next_idx += 1
+            
+        if path_parts:
+            screenshot_path = Path(" ".join(path_parts))
     except (ValueError, IndexError):
         pass
         
@@ -237,15 +251,30 @@ def handle_find_image(config: dict):
                 direct_url = sys.argv[url_idx + 1]
         
         idx = sys.argv.index("--find-image")
-        if idx + 1 < len(sys.argv):
-            player_name = sys.argv[idx + 1]
-            if idx + 2 < len(sys.argv):
-                potential_date = sys.argv[idx + 2]
-                try:
-                    datetime.strptime(potential_date, "%Y-%m-%d")
-                    date_str = potential_date
-                except ValueError:
-                    pass
+        
+        # Collect all arguments after --find-image that are not flags and not dates
+        name_parts = []
+        next_idx = idx + 1
+        while next_idx < len(sys.argv):
+            arg = sys.argv[next_idx]
+            if arg.startswith("--"):
+                break
+            
+            # Check if it's a date
+            try:
+                datetime.strptime(arg, "%Y-%m-%d")
+                # If we haven't found a date yet, this is the date
+                if not date_str:
+                    date_str = arg
+                break
+            except ValueError:
+                # Not a date, add to name parts
+                name_parts.append(arg)
+            
+            next_idx += 1
+            
+        if name_parts:
+            player_name = " ".join(name_parts)
     except (ValueError, IndexError):
         pass
         

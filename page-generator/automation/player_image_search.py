@@ -181,8 +181,8 @@ class PlayerImageSearch:
         
         try:
             encoded_query = urllib.parse.quote_plus(search_term)
-            # Use udm=2 for the modern image search experience
-            search_url = f"https://www.google.com/search?q={encoded_query}&udm=2&gbv=2"
+            # Use a standard image search URL
+            search_url = f"https://www.google.com/search?q={encoded_query}&tbm=isch"
             logger.info(f"🔍 Searching Google Images: {search_url}")
             driver.get(search_url)
             
@@ -217,6 +217,7 @@ class PlayerImageSearch:
 
             # --- Method 2: Comprehensive Regex Parsing ---
             page_source = driver.page_source
+            self._last_page_source = page_source
             # Pattern for the standard data array
             patterns = [
                 r'\[0,"[^"]+",\["https?://encrypted-tbn\d+\.gstatic\.com/images\?q=tbn:[^"]+",\d+,\d+\],\["(https?://[^"]+)",(\d+),(\d+)\]',
@@ -251,6 +252,12 @@ class PlayerImageSearch:
                     unique_candidates.append(c)
             
             logger.info(f"Total unique candidates identified: {len(unique_candidates)}")
+            
+            # Fallback to Bing if Google returns nothing (often due to bot detection)
+            if not unique_candidates:
+                logger.info("⚠️ No candidates from Google. Attempting fallback to Bing...")
+                unique_candidates = self._try_bing_search(search_term, driver)
+
             if unique_candidates:
                 logger.info(f"Top candidate: {unique_candidates[0]['direct_url'][:80]}...")
                 
@@ -261,6 +268,49 @@ class PlayerImageSearch:
             return []
         finally:
             driver.quit()
+
+    def _try_bing_search(self, search_term: str, driver: webdriver.Chrome) -> List[dict]:
+        """Fallback image search using Bing."""
+        candidates = []
+        try:
+            encoded_query = urllib.parse.quote_plus(search_term)
+            search_url = f"https://www.bing.com/images/search?q={encoded_query}"
+            logger.info(f"🔍 Searching Bing Images: {search_url}")
+            driver.get(search_url)
+            time.sleep(5)
+            
+            # Scroll to trigger lazy loading
+            driver.execute_script("window.scrollBy(0, 1000);")
+            time.sleep(2)
+            
+            # Bing often uses 'm' attribute in 'iusc' class for image metadata
+            elements = driver.find_elements(By.CSS_SELECTOR, "a.iusc")
+            for el in elements:
+                try:
+                    m_data = el.get_attribute("m")
+                    if m_data:
+                        import json
+                        data = json.loads(m_data)
+                        img_url = data.get('murl')
+                        if img_url:
+                            candidates.append({'direct_url': img_url, 'source_page': img_url})
+                except:
+                    continue
+            
+            # Deduplicate
+            seen = set()
+            unique_candidates = []
+            for c in candidates:
+                url = c['direct_url']
+                if url not in seen:
+                    seen.add(url)
+                    unique_candidates.append(c)
+            
+            logger.info(f"Total unique candidates from Bing: {len(unique_candidates)}")
+            return unique_candidates
+        except Exception as e:
+            logger.error(f"Error extracting Bing Image results: {e}")
+            return []
 
     def _download_full_size_image(self, candidate: dict) -> Optional[Path]:
         """Downloads the full-size image, prioritizing the direct URL but falling back to page scraping."""
