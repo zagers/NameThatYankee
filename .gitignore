@@ -24,3 +24,6 @@ coverage/
 *.swp
 .pyre_configuration
 temp_player_images/
+
+# Gemini
+GEMINI.md
