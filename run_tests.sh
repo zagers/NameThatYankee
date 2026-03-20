@@ -32,11 +32,11 @@ echo "▶️ [3/4] Running Python E2E & Accessibility Tests..."
 echo "-------------------------------------------------"
 pytest test_yankee_site.py -v
 
-# Run JavaScript Tests (using npx vitest run to avoid watch mode)
+# Run JavaScript Tests (using npm test to include Firebase Emulator)
 echo ""
-echo "▶️ [4/4] Running JavaScript Frontend Tests..."
+echo "▶️ [4/4] Running JavaScript Frontend & Security Rules Tests..."
 echo "-------------------------------------------------"
-npx vitest run
+npm test
 
 echo ""
 echo "================================================="

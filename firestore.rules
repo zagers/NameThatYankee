@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /guesses/{document=**} {
+      
+      // Only allow creation if the data matches our expected schema
+      allow create: if 
+        // 1. Ensure all required fields exist and are correct types
+        request.resource.data.guessText is string &&
+        request.resource.data.puzzleDate is string &&
+        request.resource.data.timestamp is timestamp &&
+        
+        // 2. Prevent storage abuse (min/max length)
+        request.resource.data.guessText.size() > 0 &&
+        request.resource.data.guessText.size() < 100 &&
+        
+        // 3. Strict format check for the date (YYYY-MM-DD)
+        request.resource.data.puzzleDate.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$') &&
+        
+        // 4. SECURITY WIN: Do not allow any extra fields to be added
+        request.resource.data.keys().hasOnly(['guessText', 'puzzleDate', 'timestamp']);
+
+      // Required for the analytics charts to function
+      allow list: if true;
+
+      // Keep individual document access and modifications locked down
+      allow get, update, delete: if false;
+    }
+  }
+}

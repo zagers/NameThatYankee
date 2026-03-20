@@ -27,6 +27,7 @@ temp_player_images/
 
 # Gemini
 GEMINI.md
-
 .gemini/
+
+#Github App credentials
 gha-creds-*.json
