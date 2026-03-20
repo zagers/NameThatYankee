@@ -110,8 +110,21 @@ class PlayerImageSearch:
                     import ai_services
                     analysis = ai_services.analyze_player_image(temp_file, player_name, api_key)
                     priority = analysis.get('priority', 3)
+                    crop_box = analysis.get('crop_box')
                     
                     if priority in [1, 2]:
+                        # Perform smart crop if requested by AI
+                        if crop_box:
+                            if self.image_processor.crop_to_bounding_box(temp_file, crop_box):
+                                # Re-validate dimensions after crop
+                                img_info = self.image_processor.get_image_info(temp_file)
+                                if img_info:
+                                    w, h = img_info.get('width', 0), img_info.get('height', 0)
+                                    if w < 100 or h < 100: # Slightly more lenient after crop
+                                        logger.info(f"  ❌ Cropped image too small ({w}x{h}). Skipping.")
+                                        temp_file.unlink(missing_ok=True)
+                                        continue
+                        
                         logger.info(f"  ✨ Found High Priority Match (Level {priority})!")
                         candidate['temp_file'] = temp_file
                         candidate['priority'] = priority

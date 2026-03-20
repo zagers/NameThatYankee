@@ -358,38 +358,53 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     Focus ONLY on the uniform, the format (card vs photo), the text content, and the orientation.
 
     **CRITICAL REJECTION CRITERIA:**
-    1. **Orientation:** Reject or downgrade to Priority 3 any image that is in landscape orientation (width > height). The website ONLY supports portrait images.
-    2. **Transient Text:** Reject or downgrade to Priority 3 any image that contains "point-in-time" or transient text overlays (e.g., "HE'S BACK", "SIGNED", "BREAKING NEWS").
-    3. **Multi-Player/Collages:** Reject or downgrade to Priority 3 any image that shows more than one baseball card or more than one primary player (e.g., a 4-card collage or a group shot). Priority 1 and 2 MUST feature a SINGLE baseball card or a SINGLE player.
+    1. **Orientation:** REJECT (Priority 0) any image that is in landscape orientation (width > height). The website ONLY supports portrait images.
+    2. **Transient/Event Text:** REJECT (Priority 0) any image that contains "point-in-time" overlays (e.g., "HE'S BACK", "SIGNED") or promotional event text (e.g., "FANATICS FEST", "NATIONAL CONVENTION", "SPECIAL EDITION").
+    3. **Multi-Player/Collages:** REJECT (Priority 0) any image that shows more than one baseball card or more than one primary player.
+    4. **Non-Rectangular / Perspective:** REJECT (Priority 0) any baseball card that is die-cut, non-rectangular, OR is a photo of a card sitting on a surface/table. The card MUST be the full frame of the image (no visible backgrounds, shadows, or angled perspective). Standard rectangular cards only.
+    5. **Holders & Grading:** REJECT (Priority 0) any image that shows a card inside a plastic holder, protector, top-loader, or grading slab (e.g., PSA, Beckett/BGS, SGC).
+    6. **Card Backs:** REJECT (Priority 0) any image that shows the BACK of a baseball card (text-heavy, stats-only, or no player photo). Priority 1 MUST be the FRONT of the card showing the player's face.
+    7. **Unofficial Uniforms:** REJECT (Priority 0) if the player is in a generic pinstripe jersey without official Yankees branding or if it's a promotional/fantasy jersey.
 
     Rate the image based on the following priority levels:
 
-    **Priority 1: Single Portrait Baseball Card in Yankee Uniform**
-    - The image is a portrait-oriented physical or digital baseball card featuring ONE player.
-    - The player is clearly wearing a New York Yankees uniform.
-    - Contains NO transient/event-based text overlays and is NOT a collage of multiple cards.
+    **Priority 1: Front of Single Portrait Rectangular Baseball Card in Official Yankee Uniform**
+    - The image is a CLEAN DIGITAL SCAN or FULL-FRAME crop of the FRONT of a portrait-oriented, standard rectangular baseball card featuring ONE player.
+    - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform in the photo.
+    - Contains NO event/promotional text, NO backgrounds/surfaces, NO plastic holders/slabs, and is NOT a card back or a collage.
 
-    **Priority 2: Clean Single Portrait Photo in Yankee Uniform**
+    **Priority 2: Clean Single Portrait Photo in Official Yankee Uniform**
     - The image is a clean portrait-oriented action photo or portrait featuring ONE player.
-    - The player is clearly wearing a New York Yankees uniform.
-    - Contains NO transient/event-based text overlays, intrusive graphics, or multiple players.
+    - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform.
+    - Contains NO transient/event-based text, intrusive graphics, or multiple players.
 
-    **Priority 3: Any Other Image (Landscape, Collage, Non-Yankee, Ambiguous, or Graphic)**
-    - The image shows multiple cards or a collage.
-    - OR the image is in landscape orientation.
-    - OR the player is NOT in a Yankees uniform.
-    - OR the image contains transient text overlays.
+    **Priority 3: Any Other Image (Non-Yankee, Ambiguous, or Graphic)**
+    - The player is NOT in an official Yankees uniform.
+    - OR the image is otherwise clean but doesn't meet Priority 1 or 2.
+    - NOTE: Images meeting ANY Rejection Criteria above MUST be Priority 0, NOT Priority 3.
 
     Your response must be a valid JSON object with the following structure, and nothing else:
     {{
       "is_yankee_uniform": true/false,
+      "is_official_uniform": true/false,
       "is_baseball_card": true/false,
+      "is_front_of_card": true/false,
+      "is_rectangular": true/false,
+      "is_clean_scan": true/false,
+      "is_in_holder": true/false,
       "is_portrait": true/false,
+      "is_single_player": true/false,
       "has_transient_text": true/false,
-      "priority_level": 1 | 2 | 3,
+      "priority_level": 0 | 1 | 2 | 3,
+      "crop_box": [ymin, xmin, ymax, xmax],
       "confidence": "high/medium/low",
       "reasoning": "Brief explanation of your decision"
     }}
+
+    **CROP BOX INSTRUCTIONS:**
+    - If the image shows a single baseball card or player but it is NOT a clean digital scan (e.g., it has a visible background, table, or borders), provide the normalized coordinates [ymin, xmin, ymax, xmax] of the CARD or PLAYER area only. 
+    - Coordinates should be integers from 0 to 1000.
+    - If the image is already a clean full-frame scan, return [0, 0, 1000, 1000] or null.
     """
 
     for attempt in range(MAX_RETRIES):
@@ -404,21 +419,54 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             priority = data.get('priority_level', 3)
             confidence = data.get('confidence', 'low')
             reasoning = data.get('reasoning', 'No reasoning provided')
-            is_portrait = data.get('is_portrait', True) # Default to True to allow if not specified
+            crop_box = data.get('crop_box')
+            is_portrait = data.get('is_portrait', True)
+            is_single_player = data.get('is_single_player', True)
+            is_rectangular = data.get('is_rectangular', True)
+            is_clean_scan = data.get('is_clean_scan', True)
+            is_in_holder = data.get('is_in_holder', False)
+            is_front_of_card = data.get('is_front_of_card', True)
+            is_official_uniform = data.get('is_official_uniform', True)
+            has_transient_text = data.get('has_transient_text', False)
             
-            # Additional check based on AI's finding of portrait status
-            if not is_portrait:
-                priority = 3
-                reasoning = f"(AI identified as landscape): {reasoning}"
+            # Smart Crop Logic: If we have a crop box and it's otherwise a good image, 
+            # we can potentially promote it even if 'is_clean_scan' is false.
+            can_be_fixed_by_crop = crop_box and not is_clean_scan and is_portrait and is_single_player and not is_in_holder and not has_transient_text
+            
+            # Strict Enforcement of Rejection Criteria
+            if not is_portrait or not is_single_player or not is_rectangular or (not is_clean_scan and not can_be_fixed_by_crop) or is_in_holder or not is_front_of_card or not is_official_uniform or has_transient_text:
+                priority = 0
+                reasons = []
+                if not is_portrait: reasons.append("landscape")
+                if not is_single_player: reasons.append("multiple players/collage")
+                if not is_rectangular: reasons.append("non-rectangular/perspective")
+                if not is_clean_scan and not can_be_fixed_by_crop: reasons.append("not a clean scan")
+                if is_in_holder: reasons.append("in holder/slab")
+                if not is_front_of_card: reasons.append("card back")
+                if not is_official_uniform: reasons.append("unofficial uniform")
+                if has_transient_text: reasons.append("transient/event text")
+                reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
 
-            if priority > 0 and confidence in ['high', 'medium']:
+            # Handle Rejections First
+            if priority == 0:
+                print(f"  ❌ Image REJECTED: {reasoning}")
+                return {"success": True, "priority": 0, "reasoning": reasoning}
+
+            # Handle High/Medium Confidence Priority 1/2
+            if priority in [1, 2] and confidence in ['high', 'medium']:
+                # If it needs a crop, we'll signal that in the response
+                if can_be_fixed_by_crop:
+                    print(f"  ✂️ Image can be saved by cropping: {reasoning}")
+                    return {"success": True, "priority": priority, "reasoning": reasoning, "crop_box": crop_box}
+                
                 print(f"  ✅ Image Rated: Priority {priority} ({confidence} confidence)")
                 print(f"     Reasoning: {reasoning}")
                 return {"success": True, "priority": priority, "reasoning": reasoning}
             else:
-                # If confidence is low, we still treat it as Priority 3 rather than rejecting
-                print(f"  ⚠️ Low Confidence Match: Falling back to Priority 3")
-                return {"success": True, "priority": 3, "reasoning": f"Low confidence: {reasoning}"}
+                # If confidence is low or it's Priority 3, we treat it as Priority 3 fallback
+                msg = "Priority 3" if priority == 3 else f"Low confidence Priority {priority}"
+                print(f"  ⚠️ {msg}: Falling back to Priority 3")
+                return {"success": True, "priority": 3, "reasoning": f"{msg}: {reasoning}"}
 
         except Exception as e:
             print(f"  ⚠️ Error during image analysis: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")

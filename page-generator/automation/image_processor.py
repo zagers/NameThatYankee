@@ -200,3 +200,50 @@ class ImageProcessor:
         except Exception as e:
             logger.error(f"Error getting image info for {image_path}: {e}")
             return None
+
+    def crop_to_bounding_box(self, image_path: Path, crop_box: List[int]) -> bool:
+        """
+        Crop an image to a specific bounding box using normalized coordinates.
+        
+        Args:
+            image_path: Path to the image to crop (modifies in place)
+            crop_box: List of [ymin, xmin, ymax, xmax] in 0-1000 scale
+            
+        Returns:
+            True if crop was successful
+        """
+        if not crop_box or len(crop_box) != 4:
+            return False
+            
+        try:
+            with Image.open(image_path) as img:
+                width, height = img.size
+                
+                # Convert normalized coordinates to pixel coordinates
+                # crop_box is [ymin, xmin, ymax, xmax]
+                top = int((crop_box[0] / 1000) * height)
+                left = int((crop_box[1] / 1000) * width)
+                bottom = int((crop_box[2] / 1000) * height)
+                right = int((crop_box[3] / 1000) * width)
+                
+                # Ensure coordinates are within image bounds and valid
+                left = max(0, left)
+                top = max(0, top)
+                right = min(width, right)
+                bottom = min(height, bottom)
+                
+                if right <= left or bottom <= top:
+                    logger.warning(f"Invalid crop box for {image_path}: {crop_box}")
+                    return False
+                
+                # Perform crop
+                cropped_img = img.crop((left, top, right, bottom))
+                
+                # Save back to same path (maintain original format for now)
+                cropped_img.save(image_path)
+                logger.info(f"✂️ Successfully cropped image {image_path.name}")
+                return True
+                
+        except Exception as e:
+            logger.error(f"Error cropping {image_path}: {e}")
+            return False
