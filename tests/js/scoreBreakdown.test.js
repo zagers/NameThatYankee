@@ -277,5 +277,17 @@ describe('Score Breakdown Feature', () => {
             scoreDisplay.click();
             expect(scoreDisplay.classList.contains('is-active')).toBe(false);
         });
+
+        it('should remove is-active class when clicking outside', async () => {
+            await initIndex();
+            const scoreDisplay = document.getElementById('score-display');
+            
+            scoreDisplay.click();
+            expect(scoreDisplay.classList.contains('is-active')).toBe(true);
+            
+            // Click outside
+            document.body.click();
+            expect(scoreDisplay.classList.contains('is-active')).toBe(false);
+        });
     });
 });

@@ -10,7 +10,10 @@ export function initScoreDisplay() {
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
     totalScoreEl.textContent = totalScore;
+    
     scoreDisplay.setAttribute('title', 'Click to view score breakdown');
+    scoreDisplay.setAttribute('role', 'button');
+    scoreDisplay.setAttribute('tabindex', '0');
 
     function populateBreakdown() {
         let breakdown;
@@ -33,22 +36,29 @@ export function initScoreDisplay() {
             breakdownBody.appendChild(row);
         });
     }
+scoreDisplay.addEventListener('click', (e) => {
+    // Prevent toggling if clicking inside the table
+    if (e.target.closest('table')) return;
 
-    scoreDisplay.addEventListener('click', (e) => {
-        if (e.target.closest('table')) return;
+    const isHidden = breakdownContainer.style.display === 'none';
+    if (isHidden) {
+        populateBreakdown();
+        breakdownContainer.style.display = 'block';
+        scoreDisplay.classList.add('is-active');
+    } else {
+        breakdownContainer.style.display = 'none';
+        scoreDisplay.classList.remove('is-active');
+    }
+});
 
-        const isHidden = breakdownContainer.style.display === 'none';
-        if (isHidden) {
-            populateBreakdown();
-            breakdownContainer.style.display = 'block';
-            scoreDisplay.classList.add('is-active');
-        } else {
-            breakdownContainer.style.display = 'none';
-            scoreDisplay.classList.remove('is-active');
-        }
-    });
+scoreDisplay.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scoreDisplay.click();
+    }
+});
 
-    document.addEventListener('click', (e) => {
+document.addEventListener('click', (e) => {
         if (!scoreDisplay.contains(e.target) && breakdownContainer.style.display === 'block') {
             breakdownContainer.style.display = 'none';
             scoreDisplay.classList.remove('is-active');

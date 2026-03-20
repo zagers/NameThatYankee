@@ -250,7 +250,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <a href="instructions.html" class="instructions-link">How does this site work?</a>
             <div id="score-display">
                 Your Score: <span id="total-score">0</span>
-                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 <div id="score-breakdown-container" style="display: none;">
                     <div class="breakdown-header">Score Breakdown</div>
                     <table>
@@ -469,6 +469,11 @@ def rebuild_index_page(project_dir: Path):
             <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
             <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
         copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
+
+    # Update index chevron
+    index_chevron = soup.select_one('#score-display .chevron-icon')
+    if index_chevron:
+        index_chevron['aria-hidden'] = 'true'
 
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
