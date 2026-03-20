@@ -2,8 +2,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebas
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import { processTeamData, processDecadeData, processGuessesData, processToughestPuzzlesData } from "./analyticsData.js";
+import { initScoreDisplay } from "./scoreDisplay.js";
 
 export async function initAnalytics() {
+    initScoreDisplay();
     // --- Initialize Firebase and App Check with modern API ---
     console.log("Initializing Firebase with modern API...");
     const app = initializeApp(firebaseConfig);
@@ -16,10 +18,6 @@ export async function initAnalytics() {
 
     const loadingMessage = document.getElementById('loading-message');
     const analyticsContent = document.getElementById('analytics-content');
-    const totalScoreEl = document.getElementById('total-score');
-
-    let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
-    totalScoreEl.textContent = totalScore;
 
     try {
         console.log("Fetching player data...");

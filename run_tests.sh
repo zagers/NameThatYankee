@@ -10,7 +10,10 @@ echo "================================================="
 # Sync fixtures with latest production files
 echo "🔄 Synchronizing test fixtures..."
 # Use || true to prevent script exit if files are identical
+cp index.html tests/fixtures/www/index.html || true
 cp quiz.html tests/fixtures/www/quiz.html || true
+cp instructions.html tests/fixtures/www/instructions.html || true
+cp analytics.html tests/fixtures/www/analytics.html || true
 cp style.css tests/fixtures/www/style.css || true
 # (js/ is already symlinked in the fixture directory)
 

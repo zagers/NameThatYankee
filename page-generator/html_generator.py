@@ -243,7 +243,28 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 </head>
 <body>
     <header>
-        <h1>The answer for {formatted_date} is...</h1>
+        <div class="header-content">
+            <h1>The answer for {formatted_date} is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions.html" class="instructions-link">How does this site work?</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -280,6 +301,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         {search_data_html}
         {quiz_data_html}
     </main>
+    <script type="module" src="js/detail.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {{
         const container = document.getElementById('followup-section');
@@ -434,6 +456,18 @@ def rebuild_index_page(project_dir: Path):
         print("✅ Footer timestamp updated.")
     else:
         print("⚠️ Warning: Could not find footer element with id='last-updated' to update.")
+
+    copyright_p = soup.select_one('footer .copyright')
+    if copyright_p:
+        copyright_p.clear()
+        new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
+        copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
 
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())

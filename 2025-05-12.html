@@ -9,7 +9,28 @@
 </head>
 <body>
     <header>
-        <h1>The answer for May 12, 2025 is...</h1>
+        <div class="header-content">
+            <h1>The answer for May 12, 2025 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions.html" class="instructions-link">How does this site work?</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -188,11 +209,21 @@
         <div id="search-data" style="display:none;">{"teams": ["SEA", "NYY", "SFG"], "years": ["2001", "1997", "1996", "1994", "1995", "2000", "1998", "1999"]}</div>
         <div id="quiz-data" style="display:none;">{"answer": "Russ Davis", "hints": ["Hit 20 or more home runs in three consecutive seasons from 1996-1998.", "Set a Seattle Mariners single-season record for errors by a third baseman with 36 in 1996.", "Son, Braden, was drafted by the Baltimore Orioles in the 2022 MLB draft."]}</div>
     </main>
-    <footer>
-		<p class="disclaimer-footer">
-	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-	    </p>
-        <p>Last Updated: 17-Aug-2025</p>
+    <script type="module" src="js/detail.js"></script>
+            <footer>
+        <p class="disclaimer-footer">
+            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+        </p>
+        <p id="last-updated">Last Updated: 20-Mar-2026</p>
+        <p class="copyright">
+            <a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+        </p>
     </footer>    
 </body>
 </html>
