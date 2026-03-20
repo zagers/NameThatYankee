@@ -12,7 +12,12 @@ export function initScoreDisplay() {
     totalScoreEl.textContent = totalScore;
 
     function populateBreakdown() {
-        const breakdown = JSON.parse(localStorage.getItem('nameThatYankeeScoreBreakdown')) || { "0": 0, "1": 0, "2": 0, "3": 0 };
+        let breakdown;
+        try {
+            breakdown = JSON.parse(localStorage.getItem('nameThatYankeeScoreBreakdown')) || { "0": 0, "1": 0, "2": 0, "3": 0 };
+        } catch (e) {
+            breakdown = { "0": 0, "1": 0, "2": 0, "3": 0 };
+        }
         const pointValues = { "0": 10, "1": 7, "2": 4, "3": 1 };
         const clueLabels = { "0": "1st Clue", "1": "2nd Clue", "2": "3rd Clue", "3": "Last Clue" };
 

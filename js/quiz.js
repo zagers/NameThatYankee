@@ -94,7 +94,12 @@ export async function initQuiz() {
         localStorage.setItem('nameThatYankeeTotalScore', totalScore);
 
         if (pointsToAdd > 0) {
-            let breakdown = JSON.parse(localStorage.getItem('nameThatYankeeScoreBreakdown')) || { "0": 0, "1": 0, "2": 0, "3": 0 };
+            let breakdown;
+            try {
+                breakdown = JSON.parse(localStorage.getItem('nameThatYankeeScoreBreakdown')) || { "0": 0, "1": 0, "2": 0, "3": 0 };
+            } catch (e) {
+                breakdown = { "0": 0, "1": 0, "2": 0, "3": 0 };
+            }
             const bucket = hintsRevealed.toString();
             if (breakdown.hasOwnProperty(bucket)) {
                 breakdown[bucket] = (breakdown[bucket] || 0) + 1;

@@ -208,12 +208,7 @@ describe('Score Breakdown Feature', () => {
         it('should populate breakdown table with data from localStorage', async () => {
             const mockBreakdown = { "0": 1, "1": 2, "2": 3, "3": 4 };
             localStorage.setItem('nameThatYankeeScoreBreakdown', JSON.stringify(mockBreakdown));
-            localStorage.setItem('nameThatYankeeTotalScore', '46'); // (1*10 + 2*7 + 3*4 + 4*1) = 10+14+12+4 = 40. Wait, 46 is not 40. 
-            // 1*10 = 10
-            // 2*7 = 14
-            // 3*4 = 12
-            // 4*1 = 4
-            // Total = 40. 
+            localStorage.setItem('nameThatYankeeTotalScore', '40'); // (1*10 + 2*7 + 3*4 + 4*1) = 40. 
 
             await initIndex();
             const scoreDisplay = document.getElementById('score-display');
