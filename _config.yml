@@ -3,8 +3,28 @@
 # Exclude these files and folders from the final site
 # They will still be in your repository but not on the live website.
 exclude:
+  - node_modules
+  - .pytest_cache
+  - .venv
+  - .venv_pytest
+  - .pyre
+  - .zap
+  - coverage
+  - page-generator
+  - tests
+  - README_AUTOMATION.md
+  - AUTOMATION_SUMMARY.md
   - LICENSE
   - TEST_README.md
   - test_requirements.txt
-  - test_yankee.site.py
+  - test_yankee_site.py
+  - test_automation.py
   - test-data/
+  - pytest.ini
+  - run_tests.sh
+  - package.json
+  - package-lock.json
+  - requirements.txt
+  - firestore.rules
+  - firebase.json
+  - firebase-debug.log
