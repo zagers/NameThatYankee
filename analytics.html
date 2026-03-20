@@ -18,6 +18,19 @@
             <a href="instructions.html" class="instructions-link">How to Play</a>
             <div id="score-display">
                 Your Score: <span id="total-score">0</span>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </header>
@@ -65,25 +78,20 @@
         </div>
     </main>
 
-    <footer>
+            <footer>
         <p class="disclaimer-footer">
-            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League
-            Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
         </p>
-        <p>
-            Last Updated: August 15, 2025
+        <p id="last-updated">Last Updated: 20-Mar-2026</p>
+        <p class="copyright">
+            <a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">
         </p>
-        <p class="copyright"><a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2025 by <a
-                href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under <a
-                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><img
-                src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC"
-                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
-                src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY"
-                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
-                src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC"
-                style="max-width: 1em;max-height:1em;margin-left: .2em;"><img
-                src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA"
-                style="max-width: 1em;max-height:1em;margin-left: .2em;"></p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>

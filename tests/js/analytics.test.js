@@ -30,7 +30,14 @@ describe('Analytics DOM tests', () => {
         document.body.innerHTML = `
             <div id="loading-message">Loading...</div>
             <div id="analytics-content" class="hidden">
-                <div id="total-score">0</div>
+                <div id="score-display">
+                    Your Score: <span id="total-score">0</span>
+                    <div id="score-breakdown-container" style="display: none;">
+                        <table>
+                            <tbody id="breakdown-body"></tbody>
+                        </table>
+                    </div>
+                </div>
                 <canvas id="teamChart"></canvas>
                 <canvas id="decadeChart"></canvas>
                 <canvas id="guessesChart"></canvas>

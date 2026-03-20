@@ -16,7 +16,14 @@ import { initIndex } from '../../js/index.js';
 describe('Index DOM tests', () => {
     beforeEach(() => {
         document.body.innerHTML = `
-            <div id="total-score">0</div>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <div id="score-breakdown-container" style="display: none;">
+                    <table>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
             <input id="search-bar" type="text" />
             <input type="checkbox" id="unsolved-filter" />
             

@@ -657,6 +657,46 @@ tbody tr:hover {
     font-weight: 600;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 20;
+    cursor: pointer;
+    position: relative;
+}
+
+#score-breakdown-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    min-width: 250px;
+    margin-top: 0.5rem;
+    cursor: default;
+}
+
+.breakdown-header {
+    font-weight: bold;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
+    text-align: center;
+}
+
+#score-breakdown-container table {
+    width: 100%;
+    font-size: 0.85rem;
+}
+
+#score-breakdown-container th {
+    text-align: left;
+    padding: 0.25rem 0.5rem;
+}
+
+#score-breakdown-container td {
+    padding: 0.25rem 0.5rem;
 }
 
 .answer-photo {

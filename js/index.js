@@ -1,15 +1,13 @@
 import { shouldShowGalleryItem } from './galleryFilter.js';
+import { initScoreDisplay } from './scoreDisplay.js';
 
 export async function initIndex() {
+    initScoreDisplay();
     const searchBar = document.getElementById('search-bar');
     const unsolvedFilter = document.getElementById('unsolved-filter');
     const galleryGrid = document.getElementById('gallery-grid');
     const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
     const noResultsMessage = document.getElementById('no-results');
-    const totalScoreEl = document.getElementById('total-score');
-
-    let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
-    totalScoreEl.textContent = totalScore;
 
     let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
 

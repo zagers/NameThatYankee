@@ -16,7 +16,22 @@
         </div>
         <div class="header-controls">
             <a href="instructions.html" class="instructions-link">How to Play</a>
-            <div id="score-display">Your Score: <span id="total-score">0</span></div>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -25,32 +40,63 @@
 
         <div id="loading-message" class="text-center p-8">
             <p class="text-xl font-semibold">Loading analytics data...</p>
+            <p class="text-gray-600">This may take a moment.</p>
         </div>
 
         <div id="analytics-content" class="hidden">
             <div class="chart-grid">
+                <!-- Player Answer Analytics -->
                 <div class="chart-card">
                     <h2>Team Representation (Non-Yankees)</h2>
-                    <canvas id="teamChart"></canvas>
+                    <div class="chart-wrapper">
+                        <canvas id="teamChart" title="Click on a bar to filter puzzles by that team"></canvas>
+                    </div>
+                    <p class="chart-instruction">💡 Click on any bar to filter puzzles by that team</p>
                 </div>
                 <div class="chart-card">
                     <h2>Career Eras of Puzzle Players</h2>
-                    <canvas id="decadeChart"></canvas>
+                    <div class="chart-wrapper">
+                        <canvas id="decadeChart" title="Click on a bar to filter puzzles from that decade"></canvas>
+                    </div>
+                    <p class="chart-instruction">💡 Click on any bar to filter puzzles from that decade</p>
                 </div>
+                <!-- Quiz Taker Analytics -->
                 <div class="chart-card">
                     <h2>Most Common Incorrect Guesses</h2>
-                    <canvas id="guessesChart"></canvas>
+                    <div class="chart-wrapper">
+                        <canvas id="guessesChart"></canvas>
+                    </div>
                 </div>
                 <div class="chart-card">
                     <h2>Toughest Puzzles (Incorrect Guesses by Date)</h2>
-                    <canvas id="toughestPuzzlesChart"></canvas>
+                    <div class="chart-wrapper">
+                        <canvas id="toughestPuzzlesChart" title="Click on a bar to view that puzzle"></canvas>
+                    </div>
+                    <p class="chart-instruction">💡 Click on any bar to view that puzzle</p>
                 </div>
             </div>
         </div>
     </main>
 
+            <footer>
+        <p class="disclaimer-footer">
+            This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+        </p>
+        <p id="last-updated">Last Updated: 20-Mar-2026</p>
+        <p class="copyright">
+            <a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+        </p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
     <script src="firebase-config.js"></script>
+
     <script type="module" src="js/analytics.js"></script>
 </body>
 

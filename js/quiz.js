@@ -2,8 +2,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebas
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
 import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import { normalizeText, validateGuess, calculateScore, getAutocompleteSuggestions } from "./quizEngine.js";
+import { initScoreDisplay } from "./scoreDisplay.js";
 
 export async function initQuiz() {
+    initScoreDisplay();
     const app = initializeApp(firebaseConfig);
     const appCheck = initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
@@ -17,8 +19,9 @@ export async function initQuiz() {
     if (params.get('reset') === 'true') {
         localStorage.removeItem('nameThatYankeeTotalScore');
         localStorage.removeItem('nameThatYankeeCompletedPuzzles');
+        localStorage.removeItem('nameThatYankeeScoreBreakdown');
         alert('Your score and quiz history have been reset.');
-        window.location.href = 'index.html';
+        window.location.assign('index.html');
         return;
     }
 
@@ -86,9 +89,19 @@ export async function initQuiz() {
     let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
     totalScoreEl.textContent = totalScore;
 
-    function updateTotalScore(pointsToAdd) {
+    function updateTotalScore(pointsToAdd, hintsRevealed) {
         totalScore += pointsToAdd;
         localStorage.setItem('nameThatYankeeTotalScore', totalScore);
+
+        if (pointsToAdd > 0) {
+            let breakdown = JSON.parse(localStorage.getItem('nameThatYankeeScoreBreakdown')) || { "0": 0, "1": 0, "2": 0, "3": 0 };
+            const bucket = hintsRevealed.toString();
+            if (breakdown.hasOwnProperty(bucket)) {
+                breakdown[bucket] = (breakdown[bucket] || 0) + 1;
+                localStorage.setItem('nameThatYankeeScoreBreakdown', JSON.stringify(breakdown));
+            }
+        }
+
         totalScoreEl.textContent = totalScore;
     }
 
@@ -246,7 +259,7 @@ export async function initQuiz() {
             successHeader.textContent = `Correct! The answer is ${gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
             successPoints.textContent = `You earned ${pointsEarned} points!`;
             viewAnswerLink.href = `${date}.html`; // Set the link
-            updateTotalScore(pointsEarned);
+            updateTotalScore(pointsEarned, gameState.hintsRevealed);
             markPuzzleAsComplete();
             quizArea.style.display = 'none';
             successArea.style.display = 'block';

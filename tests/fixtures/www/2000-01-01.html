@@ -11,7 +11,28 @@
 
 <body>
     <header>
-        <h1>The answer for January 01, 2000 is...</h1>
+        <div class="header-content">
+            <h1>The answer for January 01, 2000 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions.html" class="instructions-link">How does this site work?</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </header>
 
     <main>
@@ -85,6 +106,7 @@
         <div id="quiz-data" style="display:none;">{"answer": "Fake Player", "hints": ["First hint.", "Second hint.",
             "Third hint."]}</div>
     </main>
+    <script type="module" src="js/detail.js"></script>
 </body>
 
 </html>
