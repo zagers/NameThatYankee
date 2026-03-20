@@ -21,7 +21,7 @@ export function shouldShowGalleryItem(searchTerms, isCompleted, searchQuery, dec
     if (useDecadeFilter) {
         const decadeStart = parseInt(decadeParam);
         if (!isNaN(decadeStart)) {
-            const decadeEnd = Math.min(decadeStart + 9, currentYear);
+            const decadeEnd = decadeStart + 9;
             const decadeYears = [];
             for (let year = decadeStart; year <= decadeEnd; year++) {
                 decadeYears.push(year.toString());
@@ -32,9 +32,10 @@ export function shouldShowGalleryItem(searchTerms, isCompleted, searchQuery, dec
                 return !isNaN(yearNum) && yearNum >= 1900 && yearNum <= 2100 && token.length === 4;
             });
 
-            const puzzleDateYear = currentYear.toString();
+            // The first year token is the puzzle year from the date (e.g., "March 19 2026")
+            // We slice it off to only filter by the player's career years.
             let playerYears = yearTokens;
-            if (yearTokens.length > 0 && yearTokens[0] === puzzleDateYear) {
+            if (yearTokens.length > 0) {
                 playerYears = yearTokens.slice(1);
             }
 

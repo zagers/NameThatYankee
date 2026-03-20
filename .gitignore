@@ -27,3 +27,6 @@ temp_player_images/
 
 # Gemini
 GEMINI.md
+
+.gemini/
+gha-creds-*.json
