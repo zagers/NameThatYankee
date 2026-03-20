@@ -150,15 +150,25 @@ def handle_single_automation(workflow: AutomatedWorkflow):
         pass
     
     if not screenshot_path:
-        default_path = Path.home() / "Downloads" / "nty.png"
-        prompt = f"Enter path to puzzle screenshot [Default: {default_path}]: "
+        default_dir = Path.home() / "Downloads"
+        prompt = f"Enter screenshot filename (looks in {default_dir}) or full path: "
         screenshot_str = input(prompt).strip().strip("'\"")
+        
         if not screenshot_str:
-            screenshot_path = default_path
+            # Fallback to nty.png if nothing entered
+            screenshot_path = default_dir / "nty.png"
         else:
-            screenshot_path = Path(screenshot_str)
+            provided_path = Path(screenshot_str)
+            if provided_path.is_absolute():
+                screenshot_path = provided_path
+            elif (default_dir / provided_path).exists():
+                screenshot_path = default_dir / provided_path
+            else:
+                screenshot_path = provided_path
     
     if not screenshot_path.exists():
+        # Last-ditch check: maybe they typed just the filename but it's not in Downloads?
+        # If we already tried that above, it will still fail here.
         print(f"❌ Screenshot not found: {screenshot_path}")
         exit()
     
@@ -205,15 +215,25 @@ def handle_identify_player(config: dict):
         pass
         
     if not screenshot_path:
-        default_path = Path.home() / "Downloads" / "nty.png"
-        prompt = f"Enter path to puzzle screenshot [Default: {default_path}]: "
+        default_dir = Path.home() / "Downloads"
+        prompt = f"Enter screenshot filename (looks in {default_dir}) or full path: "
         screenshot_str = input(prompt).strip().strip("'\"")
+        
         if not screenshot_str:
-            screenshot_path = default_path
+            # Fallback to nty.png if nothing entered
+            screenshot_path = default_dir / "nty.png"
         else:
-            screenshot_path = Path(screenshot_str)
+            provided_path = Path(screenshot_str)
+            if provided_path.is_absolute():
+                screenshot_path = provided_path
+            elif (default_dir / provided_path).exists():
+                screenshot_path = default_dir / provided_path
+            else:
+                screenshot_path = provided_path
     
     if not screenshot_path.exists():
+        # Last-ditch check: maybe they typed just the filename but it's not in Downloads?
+        # If we already tried that above, it will still fail here.
         print(f"❌ Screenshot not found: {screenshot_path}")
         exit()
         
