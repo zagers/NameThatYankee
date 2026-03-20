@@ -1,217 +1,97 @@
 # Name That Yankee - Test Suite
 
-This comprehensive test suite covers all major functionality of the Name That Yankee application.
+This project uses a multi-layered testing strategy to ensure reliability across the frontend, automation pipeline, and security configurations.
 
-## Test Categories
+## 🚀 The Master Test Runner
 
-### 1. Overall Site Structure Tests (`TestSiteStructure`)
-- **Purpose**: Ensures core site components load correctly
-- **Tests**: Main page layout, navigation links, gallery cards, responsive design
-- **Coverage**: Header, footer, search bar, gallery, navigation elements
+The primary entry point for running **all** tests locally is the master shell script:
 
-### 2. Search Functionality Tests (`TestSearchFunctionality`)
-- **Purpose**: Validates search and filtering capabilities
-- **Tests**: Date search, year search, team search, unsolved filter, no results handling
-- **Coverage**: Search bar, checkbox filter, results display
+```bash
+./run_tests.sh
+```
 
-### 3. Quiz Functionality Tests (`TestQuizFunctionality`)
-- **Purpose**: Tests quiz game mechanics and scoring
-- **Tests**: Quiz page loading, scoring system, hints, max guesses, input validation
-- **Coverage**: Quiz interface, scoring logic, hint system, guess limits
+**CRITICAL**: This script orchestrates the entire test lifecycle, including environment synchronization and multi-language test execution. 
+*   **Maintenance**: If you add new test files or categories (e.g., new Vitest files or Python unit tests), ensure `./run_tests.sh` is updated to include them.
+*   **Environment**: Always run this within your activated virtual environment (`source .venv/bin/activate`).
 
-### 4. Security Tests (`TestSecurity`)
-- **Purpose**: Identifies potential security vulnerabilities
-- **Tests**: XSS prevention, SQL injection prevention, localStorage security, input sanitization
-- **Coverage**: Input validation, data sanitization, secure storage
+---
 
-### 5. Analytics Page Tests (`TestAnalyticsPage`)
-- **Purpose**: Validates analytics page functionality
-- **Tests**: Page loading, chart rendering, data accuracy, navigation
-- **Coverage**: Analytics interface, chart display, data consistency
+## Test Layers
 
-### 6. Utility Tests (`TestUtilities`)
-- **Purpose**: Additional edge cases and compatibility
-- **Tests**: Browser compatibility, performance, accessibility
-- **Coverage**: Cross-browser support, performance metrics, accessibility standards
+### 1. Frontend & Security Tests (JavaScript/Vitest)
+- **Framework**: Vitest with JSDOM and Firebase Emulators.
+- **Location**: `tests/js/`
+- **Categories**:
+    - **Score Breakdown**: Logic for persistent score tracking and the Interactive Pill UI (`scoreBreakdown.test.js`).
+    - **Detail Pages**: Verification of score display on individual player pages (`detail.test.js`).
+    - **Core Engine**: Quiz mechanics, score calculation, and text normalization.
+    - **Security Rules**: Validation of Firestore security rules.
+- **Run Manually**: `npm test`
+
+### 2. E2E & Accessibility Tests (Python/Playwright)
+- **Framework**: Pytest with Playwright.
+- **Location**: Root directory (`test_yankee_site.py`).
+- **Categories**:
+    - **Site Structure**: Layout and responsive design validation.
+    - **Search & Filter**: Real-time gallery filtering and date searching.
+    - **Visual Regressions**: Screenshot-based layout validation.
+    - **Accessibility**: Automated Axe-core audits for WCAG compliance.
+- **Run Manually**: `pytest test_yankee_site.py`
+
+### 3. Automation Pipeline Unit Tests (Python/Pytest)
+- **Framework**: Pytest.
+- **Location**: `tests/unit/page_generator/`
+- **Purpose**: Validates the Python logic for scraping stats, processing images, and generating HTML.
+- **Run Manually**: `pytest tests/unit/`
+
+### 4. Integration Tests
+- **Location**: Root directory (`test_automation.py`).
+- **Purpose**: Verifies the end-to-end workflow of the page generation tools.
+
+---
 
 ## Setup Instructions
 
 ### Prerequisites
-1. **Python 3.8+** installed
-2. **Chrome browser** installed (for Selenium tests)
-3. **Local web server** running on port 8000
+1. **Node.js 20+** (for frontend tests)
+2. **Python 3.12+** (for automation and E2E tests)
+3. **Firebase CLI** (for security rule testing)
 
 ### Installation
 ```bash
-# Install test dependencies
+# 1. Install Node dependencies
+npm install
+
+# 2. Setup Python environment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 pip install -r test_requirements.txt
 
-# Start your local web server
-cd /path/to/your/NameThatYankee/project
-python -m http.server 8000
+# 3. Install Playwright browsers
+playwright install --with-deps
 ```
 
-### Required Web Server
-The test suite requires your local web server to be running:
-- **URL**: `http://localhost:8000/`
-- **Command**: `python -m http.server 8000`
-- **Directory**: Your NameThatYankee project root
-
-This allows Firebase and other external services to work properly during testing.
-
-## Running Tests
-
-### Run All Tests
-```bash
-pytest test_yankee_site.py -v
-```
-
-### Run Specific Test Categories
-```bash
-# Site structure tests only
-pytest test_yankee_site.py::TestSiteStructure -v
-
-# Search functionality tests only
-pytest test_yankee_site.py::TestSearchFunctionality -v
-
-# Quiz functionality tests only
-pytest test_yankee_site.py::TestQuizFunctionality -v
-
-# Security tests only
-pytest test_yankee_site.py::TestSecurity -v
-
-# Analytics tests only
-pytest test_yankee_site.py::TestAnalyticsPage -v
-```
-
-### Run Individual Tests
-```bash
-# Specific test
-pytest test_yankee_site.py::TestSiteStructure::test_main_page_loads_correctly -v
-
-# Tests matching a pattern
-pytest test_yankee_site.py -k "search" -v
-```
-
-### Advanced Options
-```bash
-# Run with detailed output
-pytest test_yankee_site.py -v -s
-
-# Run in parallel (requires pytest-xdist)
-pytest test_yankee_site.py -n auto
-
-# Generate HTML report
-pytest test_yankee_site.py --html=report.html --self-contained-html
-```
-
-## Test Configuration
-
-### Browser Options
-The test suite uses Chrome with these options:
-- `--no-sandbox` - Required for CI environments
-- `--disable-dev-shm-usage` - Prevents memory issues
-- `--disable-gpu` - Disables GPU acceleration
-- `--window-size=1920,1080` - Sets consistent window size
-
-### Wait Strategies
-- **Implicit wait**: 5 seconds for element location
-- **Explicit wait**: 10 seconds for specific conditions
-- **Sleep delays**: Used for dynamic content loading
-
-## Test Data Requirements
-
-### For Quiz Tests
-- Quiz pages must have proper URL parameters (`?date=YYYY-MM-DD`)
-- Quiz data must be embedded in the page (quiz-data div)
-- Correct answers must be available for validation
-
-### For Search Tests
-- Gallery containers must have proper `data-search-terms` attributes
-- Search functionality must be implemented in JavaScript
-- Filter checkboxes must be functional
-
-### For Analytics Tests
-- Analytics page must load Firebase and Chart.js
-- Chart containers must be present
-- Loading states must be properly handled
+---
 
 ## Troubleshooting
 
 ### Common Issues
 
-1. **Chrome Driver Issues**
-   ```bash
-   # Update webdriver-manager
-   pip install --upgrade webdriver-manager
-   ```
-
-2. **Web Server Not Running**
-   ```bash
-   # Start the web server in your project directory
-   cd /path/to/NameThatYankee
-   python -m http.server 8000
+1. **Firebase Emulator Failure**:
+   Ensure no other process is using the emulator ports (default 9150 for Firestore).
    
-   # In another terminal, run tests
-   pytest test_yankee_site.py -v
-   ```
+2. **Playwright Timeout**:
+   E2E tests require the local server to be responsive. `run_tests.sh` handles this automatically by spinning up a background server on port 8001.
 
-3. **Timeout Issues**
-   - Increase wait times in test configuration
-   - Check for slow loading elements
-   - Verify test data files are accessible
+3. **Missing Fixtures**:
+   If test images or pages are missing, `run_tests.sh` will attempt to sync them from the root directory to `tests/fixtures/www/`.
 
-4. **Element Not Found**
-   - Verify HTML structure matches test expectations
-   - Check for dynamic content loading
-   - Ensure proper element IDs and classes
-
-### Debug Mode
-```bash
-# Run with browser visible (not headless)
-pytest test_yankee_site.py -v -s --headed
-
-# Pause on failures
-pytest test_yankee_site.py -v -s --pdb
-```
-
-## Continuous Integration
-
-### GitHub Actions Example
-```yaml
-name: Test Suite
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Install dependencies
-      run: |
-        pip install -r test_requirements.txt
-    - name: Run tests
-      run: |
-        pytest test_yankee_site.py -v
-```
+---
 
 ## Contributing
 
-When adding new tests:
-1. Follow the existing class structure
-2. Add descriptive docstrings
-3. Use appropriate wait strategies
-4. Include both positive and negative test cases
-5. Update this README if adding new test categories
-
-## Test Coverage Goals
-
-- **Site Structure**: 100% of core elements
-- **Search Functionality**: All search types and filters
-- **Quiz Functionality**: All game mechanics and edge cases
-- **Security**: Common vulnerability vectors
-- **Analytics**: Chart rendering and data display
-- **Utilities**: Performance and accessibility basics
+When adding new features:
+1. **TDD Pattern**: Write a failing test in the appropriate layer before implementing.
+2. **Update Runner**: If you create a new test *file type* or a new directory of tests, update `./run_tests.sh`.
+3. **Update Documentation**: Ensure this README reflects any new major categories or prerequisites.

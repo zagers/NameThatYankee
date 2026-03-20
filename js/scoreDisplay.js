@@ -10,6 +10,7 @@ export function initScoreDisplay() {
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
     totalScoreEl.textContent = totalScore;
+    scoreDisplay.setAttribute('title', 'Click to view score breakdown');
 
     function populateBreakdown() {
         let breakdown;
@@ -40,14 +41,17 @@ export function initScoreDisplay() {
         if (isHidden) {
             populateBreakdown();
             breakdownContainer.style.display = 'block';
+            scoreDisplay.classList.add('is-active');
         } else {
             breakdownContainer.style.display = 'none';
+            scoreDisplay.classList.remove('is-active');
         }
     });
 
     document.addEventListener('click', (e) => {
         if (!scoreDisplay.contains(e.target) && breakdownContainer.style.display === 'block') {
             breakdownContainer.style.display = 'none';
+            scoreDisplay.classList.remove('is-active');
         }
     });
 }

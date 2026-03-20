@@ -250,6 +250,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <a href="instructions.html" class="instructions-link">How does this site work?</a>
             <div id="score-display">
                 Your Score: <span id="total-score">0</span>
+                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 <div id="score-breakdown-container" style="display: none;">
                     <div class="breakdown-header">Score Breakdown</div>
                     <table>

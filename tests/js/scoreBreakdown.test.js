@@ -45,6 +45,7 @@ describe('Score Breakdown Feature', () => {
                 <div class="header-controls">
                     <div id="score-display">
                         Your Score: <span id="total-score">0</span>
+                        <svg class="chevron-icon"></svg>
                         <div id="score-breakdown-container" style="display: none;">
                             <table>
                                 <tbody id="breakdown-body"></tbody>
@@ -171,6 +172,7 @@ describe('Score Breakdown Feature', () => {
                 <div class="header-controls">
                     <div id="score-display">
                         Your Score: <span id="total-score">0</span>
+                        <svg class="chevron-icon"></svg>
                         <div id="score-breakdown-container" style="display: none;">
                             <table>
                                 <tbody id="breakdown-body"></tbody>
@@ -224,6 +226,56 @@ describe('Score Breakdown Feature', () => {
             expect(rows[0].textContent).toContain('1');
             // Row 1 (7 pts) should have count 2
             expect(rows[1].textContent).toContain('2');
+        });
+    });
+
+    describe('Score Pill Visual Affordance', () => {
+        beforeEach(() => {
+            document.body.innerHTML = `
+                <div class="header-controls">
+                    <div id="score-display">
+                        Your Score: <span id="total-score">0</span>
+                        <svg class="chevron-icon"></svg>
+                        <div id="score-breakdown-container" style="display: none;">
+                            <table>
+                                <tbody id="breakdown-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <input id="search-bar" type="text" />
+                <input type="checkbox" id="unsolved-filter" />
+                <div id="gallery-grid"></div>
+                <div id="no-results" style="display: none;"></div>
+            `;
+            global.localStorage.clear();
+            window.firebaseConfig = {};
+        });
+
+        it('should have a title attribute for accessibility', async () => {
+            await initIndex();
+            const scoreDisplay = document.getElementById('score-display');
+            expect(scoreDisplay.getAttribute('title')).toBe('Click to view score breakdown');
+        });
+
+        it('should contain a chevron icon', async () => {
+            await initIndex();
+            const scoreDisplay = document.getElementById('score-display');
+            const chevron = scoreDisplay.querySelector('svg.chevron-icon');
+            expect(chevron).not.toBeNull();
+        });
+
+        it('should toggle is-active class when clicked', async () => {
+            await initIndex();
+            const scoreDisplay = document.getElementById('score-display');
+            
+            expect(scoreDisplay.classList.contains('is-active')).toBe(false);
+            
+            scoreDisplay.click();
+            expect(scoreDisplay.classList.contains('is-active')).toBe(true);
+            
+            scoreDisplay.click();
+            expect(scoreDisplay.classList.contains('is-active')).toBe(false);
         });
     });
 });

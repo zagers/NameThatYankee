@@ -659,6 +659,31 @@ tbody tr:hover {
     z-index: 20;
     cursor: pointer;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+#score-display:hover {
+    filter: brightness(95%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    transform: translateY(-1px);
+}
+
+#score-display:active {
+    transform: translateY(0);
+}
+
+.chevron-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+#score-display.is-active .chevron-icon {
+    transform: rotate(180deg);
 }
 
 #score-breakdown-container {
