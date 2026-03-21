@@ -37,10 +37,12 @@ export function initScoreDisplay() {
             breakdownBody.appendChild(row);
         });
     }
+
     scoreDisplay.addEventListener('click', (e) => {
         // Prevent toggling if clicking inside the table
         if (e.target.closest('table')) return;
 
+        const isHidden = breakdownContainer.style.display === 'none';
         if (isHidden) {
             populateBreakdown();
             breakdownContainer.style.display = 'block';
@@ -50,7 +52,6 @@ export function initScoreDisplay() {
             breakdownContainer.style.display = 'none';
             scoreDisplay.classList.remove('is-active');
             scoreDisplay.setAttribute('aria-expanded', 'false');
-        }
         }
     });
 
@@ -62,10 +63,10 @@ export function initScoreDisplay() {
     });
 
     document.addEventListener('click', (e) => {
+        if (!scoreDisplay.contains(e.target) && breakdownContainer.style.display === 'block') {
             breakdownContainer.style.display = 'none';
             scoreDisplay.classList.remove('is-active');
             scoreDisplay.setAttribute('aria-expanded', 'false');
-        }
         }
     });
 }
