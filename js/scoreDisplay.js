@@ -59,9 +59,10 @@ export function initScoreDisplay() {
     });
 
     document.addEventListener('click', (e) => {
-        if (!scoreDisplay.contains(e.target) && breakdownContainer.style.display === 'block') {
             breakdownContainer.style.display = 'none';
             scoreDisplay.classList.remove('is-active');
+            scoreDisplay.setAttribute('aria-expanded', 'false');
+        }
         }
     });
 }
