@@ -40,14 +40,16 @@ export function initScoreDisplay() {
         // Prevent toggling if clicking inside the table
         if (e.target.closest('table')) return;
 
-        const isHidden = breakdownContainer.style.display === 'none';
         if (isHidden) {
             populateBreakdown();
             breakdownContainer.style.display = 'block';
             scoreDisplay.classList.add('is-active');
+            scoreDisplay.setAttribute('aria-expanded', 'true');
         } else {
             breakdownContainer.style.display = 'none';
             scoreDisplay.classList.remove('is-active');
+            scoreDisplay.setAttribute('aria-expanded', 'false');
+        }
         }
     });
 
