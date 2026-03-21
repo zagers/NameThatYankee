@@ -290,4 +290,19 @@ describe('Score Breakdown Feature', () => {
             expect(scoreDisplay.classList.contains('is-active')).toBe(false);
         });
     });
+
+    it('should toggle is-active class on Enter or Space key press', async () => {
+        await initIndex();
+        const scoreDisplay = document.getElementById('score-display');
+        
+        expect(scoreDisplay.classList.contains('is-active')).toBe(false);
+        
+        const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
+        scoreDisplay.dispatchEvent(enterEvent);
+        expect(scoreDisplay.classList.contains('is-active')).toBe(true);
+        
+        const spaceEvent = new KeyboardEvent('keydown', { key: ' ' });
+        scoreDisplay.dispatchEvent(spaceEvent);
+        expect(scoreDisplay.classList.contains('is-active')).toBe(false);
+    });
 });
