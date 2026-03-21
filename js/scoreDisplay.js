@@ -14,6 +14,7 @@ export function initScoreDisplay() {
     scoreDisplay.setAttribute('title', 'Click to view score breakdown');
     scoreDisplay.setAttribute('role', 'button');
     scoreDisplay.setAttribute('tabindex', '0');
+    scoreDisplay.setAttribute('aria-expanded', 'false');
 
     function populateBreakdown() {
         let breakdown;
