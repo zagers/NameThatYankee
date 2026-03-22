@@ -92,4 +92,4 @@ See [TEST_README.md](TEST_README.md) for more details.
 
 ## License
 
-This project is licensed under the ISC License.
+Name That Yankee Quiz © 2025 by Scott Zager is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
