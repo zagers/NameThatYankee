@@ -29,5 +29,10 @@ temp_player_images/
 GEMINI.md
 .gemini/
 
+# Firebase/Firestore Logs
+*-debug.log
+firebase-debug-*.log
+firestore-debug-*.log
+
 #Github App credentials
 gha-creds-*.json
