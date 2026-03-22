@@ -247,7 +247,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "Name That Yankee Answer for {formatted_date}",
-      "description": "The player revealed for this New York Yankees trivia puzzle is {name.replace('"', '\\"')}.",
+      "description": {json.dumps(f"The player revealed for this New York Yankees trivia puzzle is {name}.")},
       "image": "https://namethatyankeequiz.com/images/clue-{date_str}.webp",
       "author": {{
         "@type": "Person",

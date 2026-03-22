@@ -69,8 +69,8 @@ def test_json_ld_with_quoted_name(sample_player_data):
     assert data["description"] == 'The player revealed for this New York Yankees trivia puzzle is Babe "The Bambino" Ruth.'
 
 def test_robots_txt_existence():
-    # This assumes the file was created in the current working directory during the implementation
-    robots_path = Path("robots.txt")
+    # Resolving path relative to the test file for robustness across environments
+    robots_path = Path(__file__).resolve().parent.parent.parent.parent / "robots.txt"
     assert robots_path.exists()
     
     content = robots_path.read_text()
