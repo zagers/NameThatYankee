@@ -226,6 +226,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}.html">
     
     <!-- Meta tags for better social sharing -->
     <meta property="og:title" content="Name That Yankee - {formatted_date}">
@@ -240,6 +241,29 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <meta name="twitter:image" content="images/clue-{date_str}.webp">
     
     <meta name="apple-mobile-web-app-title" content="NameThatYankee">
+
+    <script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Name That Yankee Answer for {formatted_date}",
+      "description": {json.dumps(f"The player revealed for this New York Yankees trivia puzzle is {name}.")},
+      "image": "https://namethatyankeequiz.com/images/clue-{date_str}.webp",
+      "author": {{
+        "@type": "Person",
+        "name": "Scott Zager"
+      }},
+      "publisher": {{
+        "@type": "Organization",
+        "name": "Name That Yankee",
+        "logo": {{
+          "@type": "ImageObject",
+          "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
+        }}
+      }},
+      "datePublished": "{date_str}"
+    }}
+    </script>
 </head>
 <body>
     <header>
