@@ -1,0 +1,5 @@
+# robots.txt for https://namethatyankeequiz.com
+User-agent: *
+Allow: /
+
+Sitemap: https://namethatyankeequiz.com/sitemap.xml
