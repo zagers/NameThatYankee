@@ -1,6 +1,7 @@
 import pytest
 from bs4 import BeautifulSoup
 import os
+import json
 from pathlib import Path
 import html_generator
 
@@ -44,13 +45,28 @@ def test_json_ld_in_detail_page(sample_player_data):
     script_tag = soup.find("script", type="application/ld+json")
     assert script_tag is not None
     
-    import json
     data = json.loads(script_tag.string)
     assert data["@context"] == "https://schema.org"
     assert data["@type"] == "Article"
     assert data["headline"] == f"Name That Yankee Answer for {formatted_date}"
     assert "Derek Jeter" in data["description"]
     assert data["datePublished"] == date_str
+
+def test_json_ld_with_quoted_name(sample_player_data):
+    # Test that a name with quotes is properly escaped in JSON-LD
+    sample_player_data["name"] = 'Babe "The Bambino" Ruth'
+    date_str = "1923-04-18"
+    formatted_date = "April 18, 1923"
+    
+    html_content = html_generator.build_detail_page_html(sample_player_data, date_str, formatted_date)
+    soup = BeautifulSoup(html_content, "html.parser")
+    
+    script_tag = soup.find("script", type="application/ld+json")
+    assert script_tag is not None
+    
+    # This should be valid JSON
+    data = json.loads(script_tag.string)
+    assert data["description"] == 'The player revealed for this New York Yankees trivia puzzle is Babe "The Bambino" Ruth.'
 
 def test_robots_txt_existence():
     # This assumes the file was created in the current working directory during the implementation
