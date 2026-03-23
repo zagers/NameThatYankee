@@ -401,13 +401,19 @@ class PlayerImageSearch:
         # --- Archive old candidates ---
         # We do this first to ensure a clean slate for new candidates
         old_dir = staging_dir / "old"
-        old_dir.mkdir(exist_ok=True)
-        for old_file in staging_dir.glob("*.webp"):
+        if old_dir.exists():
+            # Clear previous "old" candidates to avoid accumulation
+            for old_file in old_dir.glob("*.webp"):
+                old_file.unlink(missing_ok=True)
+        else:
+            old_dir.mkdir(exist_ok=True)
+            
+        for current_file in staging_dir.glob("*.webp"):
             try:
                 import shutil
-                shutil.move(str(old_file), str(old_dir / old_file.name))
+                shutil.move(str(current_file), str(old_dir / current_file.name))
             except Exception as e:
-                logger.debug(f"Could not archive {old_file.name}: {e}")
+                logger.debug(f"Could not archive {current_file.name}: {e}")
 
         results = self.find_first_yankee_image(player_name, api_key)
         

@@ -71,6 +71,34 @@ def test_analyze_player_image_rejection_multiple_players(mock_genai_client, mock
     assert result["priority"] == 0
     assert "REJECTED due to multiple players/collage" in result["reasoning"]
 
+def test_analyze_player_image_rejection_autograph(mock_genai_client, mocker):
+    mocker.patch("ai_services.Image.open")
+    
+    # Gemini returns priority 1, but says it's autographed
+    mock_response = MagicMock()
+    mock_response.text = json.dumps({
+        "is_yankee_uniform": True,
+        "is_official_uniform": True,
+        "is_baseball_card": True,
+        "is_front_of_card": True,
+        "is_rectangular": True,
+        "is_clean_scan": True,
+        "is_in_holder": False,
+        "is_autographed": True, # Autographed!
+        "is_portrait": True,
+        "is_single_player": True,
+        "has_transient_text": False,
+        "priority_level": 1,
+        "confidence": "high",
+        "reasoning": "Great card but it is signed by the player."
+    })
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake.jpg", "Jeter", "key")
+    
+    assert result["priority"] == 0
+    assert "REJECTED due to autographed" in result["reasoning"]
+
 def test_analyze_player_image_priority_3_fallback(mock_genai_client, mocker):
     mocker.patch("ai_services.Image.open")
     
