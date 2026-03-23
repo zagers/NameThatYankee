@@ -426,10 +426,11 @@ export async function initQuiz() {
         
         if (navigator.share) {
             try {
+                // On iOS Safari, providing a 'title' or 'url' alongside 'text' that contains a URL 
+                // often causes the browser to ignore the 'text' field entirely.
+                // Omitting 'title' and 'url' ensures the full "Wordle-style" text block is shared.
                 await navigator.share({
-                    title: 'Name That Yankee',
-                    text: text,
-                    url: window.location.href
+                    text: text
                 });
                 return; // Successfully shared using native dialog
             } catch (err) {

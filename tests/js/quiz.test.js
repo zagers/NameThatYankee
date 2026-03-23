@@ -262,12 +262,13 @@ describe('Quiz DOM tests', () => {
         const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
         const sharedText = sharedData.text;
         
-        expect(sharedData.title).toBe('Name That Yankee');
-        expect(sharedData.url).toContain('quiz.html?date=2025-07-11');
+        expect(sharedData.title).toBeUndefined();
+        expect(sharedData.url).toBeUndefined();
         expect(sharedText).toContain('Name That Yankee');
         expect(sharedText).toContain('Score: 4 pts');
         expect(sharedText).toContain('Hints used: 1');
         expect(sharedText).toContain('🟥📘🟩'); // Chronological: miss, hint, hit
+        expect(sharedText).toContain('quiz.html?date=2025-07-11');
     });
 
     it('should show share button on failure', async () => {
@@ -289,6 +290,7 @@ describe('Quiz DOM tests', () => {
         const sharedData = vi.mocked(navigator.share).mock.calls[0][0];
         const sharedText = sharedData.text;
         expect(sharedText).toContain('Score: 0 pts');
+        expect(sharedData.url).toBeUndefined();
     });
 
     it('should fallback to clipboard if navigator.share fails', async () => {
