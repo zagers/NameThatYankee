@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
   schedule:
     - cron: '0 0 * * *' # Every night at midnight
   workflow_dispatch:
@@ -110,6 +113,7 @@ jobs:
 
   # The Deploy job
   deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: [build, security-scan]
     permissions:
       pages: write
