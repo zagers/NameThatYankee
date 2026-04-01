@@ -43,6 +43,14 @@ describe('quizEngine', () => {
             expect(validateGuess('aaron judge', correctAnswer, normalizedPlayers)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
         });
 
+        it('should handle diacritics when checking if a player is in the list', () => {
+            const allPlayersWithDiacritics = ['Aaron Judge', 'Derek Jeter', 'Mariano Rivera', 'José Altuve'];
+            const normalizedPlayersWithDiacritics = allPlayersWithDiacritics.map(p => normalizeText(p));
+            
+            expect(validateGuess('Jose Altuve', correctAnswer, normalizedPlayersWithDiacritics)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
+            expect(validateGuess('josé altuve', correctAnswer, normalizedPlayersWithDiacritics)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
+        });
+
         it('should return INVALID_PLAYER when guess is not in player list', () => {
             expect(validateGuess('LeBron James', correctAnswer, normalizedPlayers)).toEqual({ status: 'INVALID_PLAYER' });
         });
