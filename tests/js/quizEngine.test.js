@@ -17,19 +17,42 @@ describe('quizEngine', () => {
 
     describe('validateGuess', () => {
         const allPlayers = ['Aaron Judge', 'Derek Jeter', 'Mariano Rivera'];
+        const normalizedPlayers = allPlayers.map(p => normalizeText(p));
         const correctAnswer = 'derek jeter';
+        const nickname = 'the captain';
 
         it('should return CORRECT when guess matches answer', () => {
-            expect(validateGuess('Derek Jeter', correctAnswer, allPlayers)).toEqual({ status: 'CORRECT' });
-            expect(validateGuess('derek jeter', correctAnswer, allPlayers)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('Derek Jeter', correctAnswer, normalizedPlayers)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('derek jeter', correctAnswer, normalizedPlayers)).toEqual({ status: 'CORRECT' });
+        });
+
+        it('should return CORRECT when guess matches nickname', () => {
+            expect(validateGuess('The Captain', correctAnswer, normalizedPlayers, nickname)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('the captain', correctAnswer, normalizedPlayers, nickname)).toEqual({ status: 'CORRECT' });
+        });
+
+        it('should handle diacritics and special characters in answer, guess, and nickname', () => {
+            const diacriticsAnswer = 'José Altuve';
+            const diacriticsNickname = 'Tuve';
+            expect(validateGuess('Jose Altuve', diacriticsAnswer, normalizedPlayers)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('josé altuve', diacriticsAnswer, normalizedPlayers)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('tuve', diacriticsAnswer, normalizedPlayers, diacriticsNickname)).toEqual({ status: 'CORRECT' });
         });
 
         it('should return INCORRECT_VALID_PLAYER when guess is wrong but valid', () => {
-            expect(validateGuess('aaron judge', correctAnswer, allPlayers)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
+            expect(validateGuess('aaron judge', correctAnswer, normalizedPlayers)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
+        });
+
+        it('should handle diacritics when checking if a player is in the list', () => {
+            const allPlayersWithDiacritics = ['Aaron Judge', 'Derek Jeter', 'Mariano Rivera', 'José Altuve'];
+            const normalizedPlayersWithDiacritics = allPlayersWithDiacritics.map(p => normalizeText(p));
+            
+            expect(validateGuess('Jose Altuve', correctAnswer, normalizedPlayersWithDiacritics)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
+            expect(validateGuess('josé altuve', correctAnswer, normalizedPlayersWithDiacritics)).toEqual({ status: 'INCORRECT_VALID_PLAYER' });
         });
 
         it('should return INVALID_PLAYER when guess is not in player list', () => {
-            expect(validateGuess('LeBron James', correctAnswer, allPlayers)).toEqual({ status: 'INVALID_PLAYER' });
+            expect(validateGuess('LeBron James', correctAnswer, normalizedPlayers)).toEqual({ status: 'INVALID_PLAYER' });
         });
     });
 

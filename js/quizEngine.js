@@ -7,17 +7,19 @@ export function normalizeText(text) {
 }
 
 /**
- * Validates a user's guess against the correct answer and the list of all players.
+ * Validates a user's guess against the correct answer and a list of normalized player names.
  * Returns an object indicating the result.
  */
-export function validateGuess(userGuess, correctAnswer, allPlayers) {
-    const normalizedGuess = userGuess.trim().toLowerCase();
+export function validateGuess(userGuess, correctAnswer, normalizedPlayers, nickname = "") {
+    const normalizedGuess = normalizeText(userGuess).trim();
+    const normalizedAnswer = normalizeText(correctAnswer).trim();
+    const normalizedNickname = normalizeText(nickname).trim();
 
-    if (normalizedGuess === correctAnswer.toLowerCase()) {
+    if (normalizedGuess === normalizedAnswer || (normalizedNickname && normalizedGuess === normalizedNickname)) {
         return { status: 'CORRECT' };
     }
 
-    const isPlayerInList = allPlayers.map(p => p.toLowerCase()).includes(normalizedGuess);
+    const isPlayerInList = normalizedPlayers.includes(normalizedGuess);
 
     if (isPlayerInList) {
         return { status: 'INCORRECT_VALID_PLAYER' };

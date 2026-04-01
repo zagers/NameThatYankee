@@ -81,7 +81,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         search_data = {'teams': list(all_teams), 'years': list(all_years)}
         search_data_html = f'<div id="search-data" style="display:none;">{json.dumps(search_data)}</div>'
 
-        quiz_data = {"answer": name, "hints": facts}
+        quiz_data = {"answer": name, "nickname": nickname, "hints": facts}
         quiz_data_html = f'<div id="quiz-data" style="display:none;">{json.dumps(quiz_data)}</div>'
 
         chart_html = f"""
