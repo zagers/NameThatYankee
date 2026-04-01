@@ -7,10 +7,10 @@ export function normalizeText(text) {
 }
 
 /**
- * Validates a user's guess against the correct answer and the list of all players.
+ * Validates a user's guess against the correct answer and a list of normalized player names.
  * Returns an object indicating the result.
  */
-export function validateGuess(userGuess, correctAnswer, allPlayers, nickname = "") {
+export function validateGuess(userGuess, correctAnswer, normalizedPlayers, nickname = "") {
     const normalizedGuess = normalizeText(userGuess).trim();
     const normalizedAnswer = normalizeText(correctAnswer).trim();
     const normalizedNickname = normalizeText(nickname).trim();
@@ -19,7 +19,7 @@ export function validateGuess(userGuess, correctAnswer, allPlayers, nickname = "
         return { status: 'CORRECT' };
     }
 
-    const isPlayerInList = allPlayers.some(p => normalizeText(p) === normalizedGuess);
+    const isPlayerInList = normalizedPlayers.includes(normalizedGuess);
 
     if (isPlayerInList) {
         return { status: 'INCORRECT_VALID_PLAYER' };

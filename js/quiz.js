@@ -84,6 +84,7 @@ export async function initQuiz() {
     //let allPlayers = [];
     //Initialize the local variable with the global one from all_players.js
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
+    const normalizedPlayers = allPlayers.map(p => normalizeText(p));
     let highlightedIndex = -1; // For keyboard navigation
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
@@ -144,8 +145,8 @@ export async function initQuiz() {
             const quizDataEl = doc.getElementById('quiz-data');
             if (quizDataEl) {
                 const data = JSON.parse(quizDataEl.textContent);
-                gameState.correctAnswer = data.answer.toLowerCase();
-                gameState.nickname = data.nickname ? data.nickname.toLowerCase() : '';
+                gameState.correctAnswer = data.answer;
+                gameState.nickname = data.nickname || '';
                 gameState.hints = data.hints;
             } else {
                 throw new Error('Quiz data not found on detail page.');
@@ -256,7 +257,7 @@ export async function initQuiz() {
             return;
         }
 
-        const validation = validateGuess(userGuess, gameState.correctAnswer, allPlayers, gameState.nickname);
+        const validation = validateGuess(userGuess, gameState.correctAnswer, normalizedPlayers, gameState.nickname);
 
         if (validation.status === 'CORRECT') {
             gameState.shareEvents.push('hit');
