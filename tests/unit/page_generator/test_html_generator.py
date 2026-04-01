@@ -50,3 +50,12 @@ def test_build_detail_page_html(sample_player_data):
     assert "71.3" in stats_container.text
     assert "260" in stats_container.text
 
+    # Check quiz-data exists and contains correct JSON with nickname
+    quiz_data_div = soup.find(id="quiz-data")
+    assert quiz_data_div is not None
+    import json
+    quiz_data = json.loads(quiz_data_div.string)
+    assert quiz_data["answer"] == "Derek Jeter"
+    assert quiz_data["nickname"] == "The Captain"
+    assert "Hit a home run for his 3000th hit" in quiz_data["hints"]
+

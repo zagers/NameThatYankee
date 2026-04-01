@@ -72,6 +72,7 @@ export async function initQuiz() {
     // Consolidated Game State
     const gameState = {
         correctAnswer: '',
+        nickname: '',
         hints: [],
         hintsRevealed: 0,
         hintsRequested: 0,
@@ -144,6 +145,7 @@ export async function initQuiz() {
             if (quizDataEl) {
                 const data = JSON.parse(quizDataEl.textContent);
                 gameState.correctAnswer = data.answer.toLowerCase();
+                gameState.nickname = data.nickname ? data.nickname.toLowerCase() : '';
                 gameState.hints = data.hints;
             } else {
                 throw new Error('Quiz data not found on detail page.');
@@ -254,7 +256,7 @@ export async function initQuiz() {
             return;
         }
 
-        const validation = validateGuess(userGuess, gameState.correctAnswer, allPlayers);
+        const validation = validateGuess(userGuess, gameState.correctAnswer, allPlayers, gameState.nickname);
 
         if (validation.status === 'CORRECT') {
             gameState.shareEvents.push('hit');

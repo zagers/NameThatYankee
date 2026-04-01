@@ -18,10 +18,24 @@ describe('quizEngine', () => {
     describe('validateGuess', () => {
         const allPlayers = ['Aaron Judge', 'Derek Jeter', 'Mariano Rivera'];
         const correctAnswer = 'derek jeter';
+        const nickname = 'the captain';
 
         it('should return CORRECT when guess matches answer', () => {
             expect(validateGuess('Derek Jeter', correctAnswer, allPlayers)).toEqual({ status: 'CORRECT' });
             expect(validateGuess('derek jeter', correctAnswer, allPlayers)).toEqual({ status: 'CORRECT' });
+        });
+
+        it('should return CORRECT when guess matches nickname', () => {
+            expect(validateGuess('The Captain', correctAnswer, allPlayers, nickname)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('the captain', correctAnswer, allPlayers, nickname)).toEqual({ status: 'CORRECT' });
+        });
+
+        it('should handle diacritics and special characters in answer, guess, and nickname', () => {
+            const diacriticsAnswer = 'José Altuve';
+            const diacriticsNickname = 'Tuve';
+            expect(validateGuess('Jose Altuve', diacriticsAnswer, allPlayers)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('josé altuve', diacriticsAnswer, allPlayers)).toEqual({ status: 'CORRECT' });
+            expect(validateGuess('tuve', diacriticsAnswer, allPlayers, diacriticsNickname)).toEqual({ status: 'CORRECT' });
         });
 
         it('should return INCORRECT_VALID_PLAYER when guess is wrong but valid', () => {
