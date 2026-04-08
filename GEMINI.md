@@ -1,0 +1,69 @@
+# Name That Yankee - Project Context
+
+"Name That Yankee" is a web-based trivia game where users test their knowledge of New York Yankees players based on career statistics and highlights. The project includes a public-facing website and an automated pipeline for generating new trivia puzzles.
+
+## Project Overview
+
+*   **Purpose:** A daily trivia game for New York Yankees fans, providing an archive of historical puzzles and a playable quiz interface.
+*   **Architecture:**
+    *   **Frontend:** A static website built with HTML, CSS, and Vanilla JavaScript.
+    *   **Data Layer:** Player data and archives are managed through JS files (`all_players.js`) and individual HTML pages for each trivia date.
+    *   **Automation (Page Generator):** A Python-based toolset that automates the creation of new puzzle pages, including scraping stats, processing images, and generating HTML.
+*   **Deployment:** Hostable as a static site (e.g., GitHub Pages). `sitemap.xml` is automatically generated during the GitHub Actions deployment process.
+
+## Technology Stack
+
+*   **Frontend:** HTML5, CSS3, JavaScript (ES Modules).
+*   **Automation (Python):** Python 3.x, Selenium (web scraping/search), Pillow (image processing), Pydantic (config validation), Beautiful Soup 4 (HTML parsing).
+*   **Testing:** 
+    *   **Frontend:** Vitest (with jsdom).
+    *   **Automation:** Pytest.
+*   **CI/CD:** GitHub Actions (configured in `.github/workflows/`).
+
+## Key Files & Directories
+
+*   `index.html`: The main archives page and entry point for the site.
+*   `quiz.html`: The interactive quiz interface.
+*   `all_players.js`: Central data file containing player information and historical records.
+*   `style.css`: Primary stylesheet for the entire application.
+*   `page-generator/`: Root directory for the Python automation suite.
+    *   `main.py`: Entry point for the automation CLI.
+    *   `automation/`: Modules for image processing, player search, and git integration.
+    *   `html_generator.py`: Logic for generating new trivia page HTML.
+*   `images/`: Contains puzzle clues (webp) and player images.
+*   `automation_config.json`: Persistent settings for the automation pipeline.
+
+## Building and Running
+
+### Website
+The website is static and can be served by any web server or opened directly in a browser.
+*   **Local Development:** You can use a simple server like `npx serve .` or Python's `python3 -m http.server`.
+
+### Automation (Page Generator)
+To use the puzzle generation tools:
+1.  **Set up environment:**
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    ```
+2.  **Run automation:**
+    ```bash
+    # Standard workflow
+    python page-generator/main.py --automate-workflow [screenshot_path]
+
+    # Configure automation
+    python page-generator/main.py --config
+    ```
+
+### Testing
+*   **Run all tests:** `./run_tests.sh`
+*   **Frontend only:** `npm test`
+*   **Automation only:** `pytest`
+
+## Development Conventions
+
+*   **HTML Generation:** New puzzles are generated as individual HTML files named `YYYY-MM-DD.html`. These are automatically linked in `index.html` by the page generator.
+*   **Images:** Puzzle clues should be in WEBP format and named `clue-YYYY-MM-DD.webp`. Player images follow a similar naming convention or are referenced in `all_players.js`.
+*   **Testing:** All new automation features must be accompanied by tests in `test_automation.py` or the `tests/` directory. Frontend logic should be tested using Vitest.
+*   **State Management:** The frontend uses `localStorage` to track scores and solved puzzles (see `index.html` and `quiz.html` scripts).

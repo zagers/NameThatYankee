@@ -26,7 +26,6 @@ coverage/
 temp_player_images/
 
 # Gemini
-GEMINI.md
 .gemini/
 
 # Firebase/Firestore Logs
