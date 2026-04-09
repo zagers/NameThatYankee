@@ -67,6 +67,7 @@ To use the puzzle generation tools:
 *   **Images:** Puzzle clues should be in WEBP format and named `clue-YYYY-MM-DD.webp`. Player images follow a similar naming convention or are referenced in `all_players.js`.
 *   **Testing:** All new automation features must be accompanied by tests in `test_automation.py` or the `tests/` directory. Frontend logic should be tested using Vitest.
 *   **Security & Dependency Updates:** All security and dependency updates (including Dependabot fixes) MUST be performed on dedicated branches to allow for Pull Request review. Do not commit these changes directly to `master`. If a Dependabot branch already exists for the update, use that branch. Always verify changes with the full test suite (`./run_tests.sh`) before pushing to the branch.
+*   **PR Workflow:** ALL changes made by Gemini CLI (including documentation and code) MUST be performed on dedicated branches. The agent MUST NOT merge its own changes into `master`; the user will perform all Pull Request reviews and merges.
 *   **State Management:** The frontend uses `localStorage` to track scores and solved puzzles (see `index.html` and `quiz.html` scripts).
 
 ## TODO
