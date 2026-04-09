@@ -67,3 +67,12 @@ To use the puzzle generation tools:
 *   **Images:** Puzzle clues should be in WEBP format and named `clue-YYYY-MM-DD.webp`. Player images follow a similar naming convention or are referenced in `all_players.js`.
 *   **Testing:** All new automation features must be accompanied by tests in `test_automation.py` or the `tests/` directory. Frontend logic should be tested using Vitest.
 *   **State Management:** The frontend uses `localStorage` to track scores and solved puzzles (see `index.html` and `quiz.html` scripts).
+
+## TODO
+
+### SEO Improvements (Google Indexing)
+Address the Search Console "Duplicate, Google chose different canonical than user" error by:
+*   **Clean URLs:** Update all `rel="canonical"` tags across `.html` files to point to clean URLs (e.g., `https://namethatyankeequiz.com/2026-04-03` instead of `.../2026-04-03.html`).
+*   **Internal Links:** Update gallery links and navigation in `index.html` to use extensionless URLs.
+*   **Unique Meta Descriptions:** Ensure each puzzle page has a unique `<meta name="description">` (e.g., including the player's name or the formatted date) to prevent Google from seeing them as duplicates.
+*   **Automation Update:** Modify `page-generator/html_generator.py` to ensure all future generated pages follow these standards.
