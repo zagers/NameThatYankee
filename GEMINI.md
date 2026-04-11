@@ -63,6 +63,7 @@ To use the puzzle generation tools:
 
 ## Development Conventions
 
+*   **Primary Branch:** The primary development branch is named `master`. Always ensure you are on `master` before creating new feature branches or performing synchronization.
 *   **HTML Generation:** New puzzles are generated as individual HTML files named `YYYY-MM-DD.html`. These are automatically linked in `index.html` by the page generator.
 *   **Images:** Puzzle clues should be in WEBP format and named `clue-YYYY-MM-DD.webp`. Player images follow a similar naming convention or are referenced in `all_players.js`.
 *   **Testing:** All new automation features must be accompanied by tests in `test_automation.py` or the `tests/` directory. Frontend logic should be tested using Vitest.
