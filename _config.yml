@@ -1,5 +1,8 @@
 # _config.yml
 
+# Use clean URLs (remove .html extension)
+permalink: /:basename
+
 # Exclude these files and folders from the final site
 # They will still be in your repository but not on the live website.
 exclude:

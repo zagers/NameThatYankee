@@ -15,7 +15,7 @@ from axe_playwright_python.sync_playwright import Axe  # pyre-ignore[21]
 PROJECT_ROOT = Path(__file__).parent
 TEST_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "www"
 BASE_URL = "http://localhost:8001/"
-DETAIL_PAGE_URL = "http://localhost:8001/2000-01-01.html"
+DETAIL_PAGE_URL = "http://localhost:8001/2000-01-01"
 QUIZ_URL = "http://localhost:8001/quiz.html"
 ANALYTICS_URL = "http://localhost:8001/analytics.html"
 
@@ -30,10 +30,11 @@ def check_web_server():
     result = sock.connect_ex(('127.0.0.1', 8001))
     sock.close()
     
-    # Start the server
+    # Start the server using our custom serve.py which supports clean URLs
+    # We copy serve.py to the fixture dir or just run it from root pointing to fixture dir
     server_process = subprocess.Popen(
-        ["python3", "-m", "http.server", "8001", "--bind", "127.0.0.1"],
-        cwd=str(TEST_FIXTURE_DIR),
+        ["python3", str(PROJECT_ROOT / "serve.py")],
+        env={**os.environ, "PORT": "8001", "DIRECTORY": str(TEST_FIXTURE_DIR)},
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
@@ -108,6 +109,43 @@ class TestSiteStructure:
         page.goto(BASE_URL)
         page.locator(".analytics-link").click()
         expect(page.locator("h1")).to_contain_text("Site Analytics", timeout=10000)
+
+class TestCleanURLNavigation:
+    def test_gallery_item_navigation(self, page: Page):
+        page.goto(BASE_URL)
+        # Find the first gallery item link
+        gallery_item = page.locator(".gallery-item").first
+        href = gallery_item.get_attribute("href")
+        
+        # Ensure it is a clean URL (no .html)
+        assert ".html" not in href, f"Gallery link '{href}' should not have .html extension"
+        
+        # Navigate directly to the clean URL to verify server mapping
+        page.goto(f"{BASE_URL}{href}")
+        page.wait_for_load_state("networkidle")
+        
+        # URL should be the clean URL
+        expect(page).to_have_url(re.compile(f".*/{href}$"))
+        # Page should have loaded successfully (check for h1/content)
+        expect(page.locator("h1")).to_be_visible()
+        expect(page.locator("h1")).to_contain_text("The answer for")
+
+    def test_reveal_link_navigation(self, page: Page):
+        page.goto(BASE_URL)
+        # Find the first reveal link
+        reveal_link = page.locator(".reveal-link").first
+        href = reveal_link.get_attribute("href")
+        
+        # Ensure it is a clean URL
+        assert ".html" not in href, f"Reveal link '{href}' should not have .html extension"
+        
+        # Navigate directly to verify server mapping
+        page.goto(f"{BASE_URL}{href}")
+        page.wait_for_load_state("networkidle")
+        
+        # URL should be the clean URL
+        expect(page).to_have_url(re.compile(f".*/{href}$"))
+        expect(page.locator("h1")).to_contain_text("The answer for")
 
     def test_gallery_cards_have_required_elements(self, page: Page):
         page.goto(BASE_URL)
