@@ -66,6 +66,34 @@ describe('Index DOM tests', () => {
         expect(containers[1].classList.contains('completed')).toBe(false);
     });
 
+    it('should correctly mark completed puzzles with extensionless URLs', async () => {
+        // Mock a gallery with one extensionless and one .html link
+        document.body.innerHTML = `
+            <div id="gallery-grid">
+                <div class="gallery-container">
+                    <a class="reveal-link" href="2026-04-12">Reveal</a>
+                    <a class="quiz-link" href="quiz.html?date=2026-04-12">Quiz</a>
+                </div>
+                <div class="gallery-container">
+                    <a class="reveal-link" href="2025-05-15.html">Reveal</a>
+                    <a class="quiz-link" href="quiz.html?date=2025-05-15">Quiz</a>
+                </div>
+            </div>
+            <input id="search-bar" type="text" />
+            <input type="checkbox" id="unsolved-filter" />
+        `;
+
+        global.localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(['2026-04-12', '2025-05-15']));
+
+        await initIndex();
+
+        const containers = document.querySelectorAll('.gallery-container');
+        // Extensionless link (2026-04-12) should be marked completed
+        expect(containers[0].classList.contains('completed')).toBe(true);
+        // Traditional link (2025-05-15.html) should be marked completed
+        expect(containers[1].classList.contains('completed')).toBe(true);
+    });
+
     it('should filter items when search bar is typed into', async () => {
         await initIndex();
 
