@@ -470,6 +470,17 @@ class TestSecurity:
         content = page.content().lower()
         assert "name that yankee archives" in content or "404" in content or "not found" in content
 
+    def test_path_traversal_prevention(self, page: Page):
+        """Verify that the custom server rejects path traversal attempts (CWE-22)."""
+        # Try to access a file outside the directory using ../
+        # Note: Playwright/Browsers might normalize this, so we check the response
+        response = page.goto(f"{BASE_URL}../../package.json")
+        # The server should either return 403 Forbidden or 404 (if normalized to /package.json which doesn't exist in fixtures)
+        assert response.status in [403, 404]
+        
+        if response.status == 403:
+            expect(page.locator("body")).to_contain_text("Forbidden")
+
 # ============================================================================
 # 5. ANALYTICS PAGE TESTS
 # ============================================================================
