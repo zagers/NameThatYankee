@@ -226,9 +226,10 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}.html">
+    <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}">
     
     <!-- Meta tags for better social sharing -->
+    <meta name="description" content="The player revealed for this New York Yankees trivia puzzle is {name}.">
     <meta property="og:title" content="Name That Yankee - {formatted_date}">
     <meta property="og:description" content="Can you name this New York Yankee based on their career stats?">
     <meta property="og:type" content="website">
@@ -440,13 +441,13 @@ def rebuild_index_page(project_dir: Path):
 
                 # THE FIX: Add specific classes to the links
                 snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
-                <a href="{date_str}.html" class="gallery-item">
+                <a href="{date_str}" class="gallery-item">
                     <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}">
                 </a>
                 <div class="p-4">
                     <p class="gallery-date">Trivia Date: {formatted_date}</p>
                     <div class="action-links">
-                        <a href="{date_str}.html" class="action-link reveal-link">
+                        <a href="{date_str}" class="action-link reveal-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                             <span>Reveal</span>
                         </a>
