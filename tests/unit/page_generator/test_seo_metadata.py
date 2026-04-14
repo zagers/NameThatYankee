@@ -33,7 +33,18 @@ def test_canonical_tag_in_detail_page(sample_player_data):
     
     canonical_link = soup.find("link", rel="canonical")
     assert canonical_link is not None
-    assert canonical_link["href"] == f"https://namethatyankeequiz.com/{date_str}.html"
+    assert canonical_link["href"] == f"https://namethatyankeequiz.com/{date_str}"
+
+def test_meta_description_in_detail_page(sample_player_data):
+    date_str = "1999-05-15"
+    formatted_date = "May 15, 1999"
+    
+    html_content = html_generator.build_detail_page_html(sample_player_data, date_str, formatted_date)
+    soup = BeautifulSoup(html_content, "html.parser")
+    
+    meta_desc = soup.find("meta", attrs={"name": "description"})
+    assert meta_desc is not None
+    assert meta_desc["content"] == "The player revealed for this New York Yankees trivia puzzle is Derek Jeter."
 
 def test_json_ld_in_detail_page(sample_player_data):
     date_str = "1999-05-15"

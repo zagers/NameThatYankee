@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "scripts": {
+    "start": "python3 serve.py",
     "test": "firebase emulators:exec --project demo-no-project \"vitest run\"",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
