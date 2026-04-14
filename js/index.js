@@ -28,7 +28,11 @@ export async function initIndex() {
         galleryItems.forEach(item => {
             const revealLink = item.querySelector('.reveal-link');
             if (revealLink) {
-                const date = revealLink.getAttribute('href').replace('.html', '');
+                // The date is YYYY-MM-DD. Handle both "YYYY-MM-DD.html" and "YYYY-MM-DD"
+                const href = revealLink.getAttribute('href');
+                const dateMatch = href.match(/(\d{4}-\d{2}-\d{2})/);
+                const date = dateMatch ? dateMatch[1] : href.replace('.html', '');
+                
                 if (completedPuzzles.includes(date)) {
                     item.classList.add('completed');
                     const quizLink = item.querySelector('.quiz-link');
@@ -41,7 +45,10 @@ export async function initIndex() {
     }
 
     function markAsCompleted(linkElement) {
-        const date = linkElement.getAttribute('href').replace('.html', '');
+        const href = linkElement.getAttribute('href');
+        const dateMatch = href.match(/(\d{4}-\d{2}-\d{2})/);
+        const date = dateMatch ? dateMatch[1] : href.replace('.html', '');
+        
         if (!completedPuzzles.includes(date)) {
             completedPuzzles.push(date);
             localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
