@@ -229,7 +229,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}">
     
     <!-- Meta tags for better social sharing -->
-    <meta name="description" content="The player revealed for this New York Yankees trivia puzzle is {name}.">
+    <meta name="description" content="Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.">
     <meta property="og:title" content="Name That Yankee - {formatted_date}">
     <meta property="og:description" content="Can you name this New York Yankee based on their career stats?">
     <meta property="og:type" content="website">
@@ -248,7 +248,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "Name That Yankee Answer for {formatted_date}",
-      "description": {json.dumps(f"The player revealed for this New York Yankees trivia puzzle is {name}.")},
+      "description": {json.dumps(f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.")},
       "image": "https://namethatyankeequiz.com/images/clue-{date_str}.webp",
       "author": {{
         "@type": "Person",
