@@ -24,3 +24,9 @@ def scrub_and_inject(html_content, player_name, date):
         html_content = re.sub(viewport_pattern, r'\1' + canonical_tag + description_tag, html_content)
         
     return html_content
+
+def normalize_links(html_content):
+    # Replace href="YYYY-MM-DD.html" with href="YYYY-MM-DD"
+    # Matches href="2025-03-29.html" -> href="2025-03-29"
+    pattern = r'href="(\d{4}-\d{2}-\d{2})\.html"'
+    return re.sub(pattern, r'href="\1"', html_content)
