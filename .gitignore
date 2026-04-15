@@ -35,3 +35,4 @@ firestore-debug-*.log
 
 #Github App credentials
 gha-creds-*.json
+.worktrees/
