@@ -27,6 +27,7 @@ temp_player_images/
 
 # Gemini
 .gemini/
+.superpowers/
 
 # Firebase/Firestore Logs
 *-debug.log
