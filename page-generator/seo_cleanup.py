@@ -5,10 +5,14 @@ import argparse
 
 def extract_metadata(html_content):
     # Regex to find <title> tag content: [Player Name] Answer - [Date] | Name That Yankee
-    match = re.search(r'<title>(.*?) Answer - (.*?) \| Name That Yankee</title>', html_content)
+    # Added re.DOTALL and flexible whitespace to handle multiline <title> tags
+    match = re.search(r'<title>\s*(.*?)\s*Answer - \s*(.*?)\s*\| Name That Yankee\s*</title>', html_content, re.DOTALL)
     if match:
         player_name = match.group(1).strip()
         date = match.group(2).strip()
+        # Handle cases where there might be newlines inside the captured groups
+        player_name = " ".join(player_name.split())
+        date = " ".join(date.split())
         return player_name, date
     return None, None
 
