@@ -272,7 +272,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <h1>The answer for {formatted_date} is...</h1>
         </div>
         <div class="header-controls">
-            <a href="instructions.html" class="instructions-link">New Features!</a>
+            <a href="instructions" class="instructions-link">New Features!</a>
             <div id="score-display">
                 Your Score: <span id="total-score">0</span>
                 <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -294,7 +294,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     </header>
 
     <main>
-        <a href="index.html" class="back-link">← Back to All Questions</a>
+        <a href="./" class="back-link">← Back to All Questions</a>
 
         <div class="detail-layout">
             <div class="left-column">
@@ -451,7 +451,7 @@ def rebuild_index_page(project_dir: Path):
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                             <span>Reveal</span>
                         </a>
-                        <a href="quiz.html?date={date_str}" class="action-link quiz-link">
+                        <a href="quiz?date={date_str}" class="action-link quiz-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
                             <span>Quiz</span>
                         </a>
