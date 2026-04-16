@@ -73,9 +73,17 @@ To use the puzzle generation tools:
 
 ## TODO
 
-### SEO Improvements (Google Indexing)
-Address the Search Console "Duplicate, Google chose different canonical than user" error by:
-*   **Clean URLs:** Update all `rel="canonical"` tags across `.html` files to point to clean URLs (e.g., `https://namethatyankeequiz.com/2026-04-03` instead of `.../2026-04-03.html`).
-*   **Internal Links:** Update gallery links and navigation in `index.html` to use extensionless URLs.
-*   **Unique Meta Descriptions:** Ensure each puzzle page has a unique `<meta name="description">` (e.g., including the player's name or the formatted date) to prevent Google from seeing them as duplicates.
-*   **Automation Update:** Modify `page-generator/html_generator.py` to ensure all future generated pages follow these standards.
+### SEO Improvements (Google Indexing) - COMPLETED 2026-04-15
+*   **Clean URLs:** Updated all `rel="canonical"` tags across 160+ historical `.html` files to point to clean URLs.
+*   **Internal Links:** Normalized all site-wide navigation (gallery, header, analytics) to use extensionless URLs.
+*   **Unique Meta Descriptions:** Standardized all historical pages with unique, player-specific meta descriptions.
+*   **Automation Update:** Modified `page-generator/html_generator.py` to automate these standards for all future puzzles.
+
+## Journal
+
+### 2026-04-15: SEO Finalization & Link Normalization
+*   **Batch Metadata Cleanup:** Implemented `page-generator/seo_cleanup.py` (BeautifulSoup-based) and standardized 164 historical trivia pages. Every page now has a unique meta description and a clean canonical URL.
+*   **Automation Synchronization:** Updated the permanent `html_generator.py` pipeline to ensure new puzzles automatically follow SEO best practices.
+*   **Site-wide Link Normalization:** Audited and updated `index.html`, `quiz.html`, `instructions.html`, `analytics.html`, and all JavaScript-driven links to remove `.html` extensions from internal navigation.
+*   **Infrastructure:** Updated `.gitignore` to exclude session-specific metadata and committed design documentation to the `docs/` directory for architectural transparency.
+*   **Verification:** Confirmed 100% pass rate across the full 288-test suite (Unit, Automation, E2E, and JS).
