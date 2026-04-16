@@ -44,7 +44,7 @@ def test_meta_description_in_detail_page(sample_player_data):
     
     meta_desc = soup.find("meta", attrs={"name": "description"})
     assert meta_desc is not None
-    assert meta_desc["content"] == "The player revealed for this New York Yankees trivia puzzle is Derek Jeter."
+    assert meta_desc["content"] == f"Discover the career highlights and statistics for Derek Jeter, the featured New York Yankee for the {formatted_date} trivia puzzle."
 
 def test_json_ld_in_detail_page(sample_player_data):
     date_str = "1999-05-15"
@@ -77,7 +77,7 @@ def test_json_ld_with_quoted_name(sample_player_data):
     
     # This should be valid JSON
     data = json.loads(script_tag.string)
-    assert data["description"] == 'The player revealed for this New York Yankees trivia puzzle is Babe "The Bambino" Ruth.'
+    assert data["description"] == f'Discover the career highlights and statistics for Babe "The Bambino" Ruth, the featured New York Yankee for the {formatted_date} trivia puzzle.'
 
 def test_robots_txt_existence():
     # Resolving path relative to the test file for robustness across environments

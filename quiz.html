@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://namethatyankeequiz.com/quiz.html">
+    <link rel="canonical" href="https://namethatyankeequiz.com/quiz">
     <title>Name That Yankee - Quiz</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -31,9 +31,9 @@
             const canonical = document.createElement('link');
             canonical.rel = 'canonical';
             if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                canonical.href = 'https://namethatyankeequiz.com/quiz.html?date=' + date;
+                canonical.href = 'https://namethatyankeequiz.com/quiz?date=' + date;
             } else {
-                canonical.href = 'https://namethatyankeequiz.com/quiz.html';
+                canonical.href = 'https://namethatyankeequiz.com/quiz';
             }
             document.head.appendChild(canonical);
         })();
@@ -46,7 +46,7 @@
             <h1 id="quiz-title">Name That Yankee Quiz</h1>
         </div>
         <div class="header-controls">
-            <a href="instructions.html" class="instructions-link">New Features!</a>
+            <a href="instructions" class="instructions-link">New Features!</a>
             <div id="score-display">
                 Your Score: <span id="total-score">0</span>
                 <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -68,7 +68,7 @@
     </header>
 
     <main>
-        <a href="index.html" class="back-link">← Back to All Questions</a>
+        <a href="./" class="back-link">← Back to All Questions</a>
 
         <div class="quiz-layout">
             <div class="left-column">
