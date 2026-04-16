@@ -90,3 +90,4 @@ To use the puzzle generation tools:
 *   **Site-wide Link Normalization:** Audited and updated `index.html`, `quiz.html`, `instructions.html`, `analytics.html`, and all JavaScript-driven links to remove `.html` extensions from internal navigation.
 *   **Infrastructure:** Updated `.gitignore` to exclude session-specific metadata and committed design documentation to the `docs/` directory for architectural transparency.
 *   **Verification:** Confirmed 100% pass rate across the full 288-test suite (Unit, Automation, E2E, and JS).
+*   **Local Development Fix:** Refactored `serve.py` to support extensionless URLs locally, resolving 404 errors encountered when navigating to clean paths like `/quiz` or `/analytics` during development.
