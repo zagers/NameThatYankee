@@ -73,6 +73,9 @@ To use the puzzle generation tools:
 
 ## TODO
 
+### Performance Optimization
+*   **Lazy Loading:** Implement lazy loading for the archive gallery in `index.html` to improve initial load times as the puzzle collection grows.
+
 ### SEO Improvements (Google Indexing) - COMPLETED 2026-04-15
 *   **Clean URLs:** Updated all `rel="canonical"` tags across 160+ historical `.html` files to point to clean URLs.
 *   **Internal Links:** Normalized all site-wide navigation (gallery, header, analytics) to use extensionless URLs.
