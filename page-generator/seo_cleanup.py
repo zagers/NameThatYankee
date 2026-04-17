@@ -1,3 +1,5 @@
+# ABOUTME: Performs systematic metadata cleanup on historical puzzle files.
+# ABOUTME: Normalizes internal links and canonical URLs for search optimization.
 import re
 import os
 import glob

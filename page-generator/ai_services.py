@@ -1,3 +1,5 @@
+# ABOUTME: Integrates with external AI APIs to generate player summaries and hints.
+# ABOUTME: Provides natural language clues for trivia puzzles.
 from google import genai  # type: ignore
 from google.genai import types, errors  # type: ignore
 from PIL import Image  # type: ignore

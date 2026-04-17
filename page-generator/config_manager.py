@@ -1,3 +1,5 @@
+# ABOUTME: Manages persistent configuration and user settings for the automation pipeline.
+# ABOUTME: Validates and loads properties from automation_config.json.
 import json
 from pathlib import Path
 

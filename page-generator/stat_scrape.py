@@ -1,3 +1,5 @@
+# ABOUTME: Specialized tool for extracting granular MLB career statistics.
+# ABOUTME: Formats raw scraping data into the required JSON format for all_players.js.
 import requests
 from bs4 import BeautifulSoup, Comment # Import Comment
 import os

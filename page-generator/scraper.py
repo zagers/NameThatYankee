@@ -1,3 +1,5 @@
+# ABOUTME: Fetches and extracts player statistics and details from web sources.
+# ABOUTME: Uses Selenium and BeautifulSoup to gather accurate career data.
 from bs4 import BeautifulSoup, Comment
 import time
 import urllib.parse
