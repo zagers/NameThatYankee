@@ -33,32 +33,48 @@
 *   `images/`: Contains puzzle clues (webp) and player images.
 *   `automation_config.json`: Persistent settings for the automation pipeline.
 
-## Prerequisites
+## Building and Running
 
-*   **Node.js 20+** (for frontend tests)
-*   **Python 3.12+** (for automation and E2E tests)
-*   **Firebase CLI** (for security rule testing)
+### Development Environment Setup
+To set up a new environment (e.g., a new laptop) for full development and testing:
 
-## Getting Started
+1.  **System Dependencies:**
+    *   **Java 21+:** Required for the Firebase/Firestore emulator.
+    *   **Python 3.11+ & venv:** Required for the automation pipeline and backend tests.
+    *   **Node.js 20+:** Required for frontend tests and development server.
+
+2.  **Initialize Environment:**
+    ```bash
+    # 1. Create and activate Python virtual environment
+    python3 -m venv .venv
+    source .venv/bin/activate
+
+    # 2. Install Python dependencies
+    pip install -r requirements.txt -r test_requirements.txt
+
+    # 3. Install Node.js dependencies
+    npm install
+
+    # 4. Install Playwright browsers (for UI tests)
+    playwright install chromium --with-deps
+    ```
+
+### Troubleshooting New Environments
+*   **Java 21 Errors:** If `npm test` fails with a Java version error, ensure you have Java 21 installed. If you have a local JDK (e.g., the Microsoft build for ARM64), run: `export JAVA_HOME=/path/to/jdk && export PATH=$JAVA_HOME/bin:$PATH` before running tests.
+*   **python3-venv missing:** On some Linux systems, you may need to run `sudo apt install python3-venv` if the bootstrap script fails to create the `.venv`.
+*   **Playwright Dependencies:** If UI tests fail to launch the browser, run `npx playwright install-deps` to ensure all system-level libraries are present.
 
 ### Website
-The website is static and can be served by any web server.
+The website is static and can be served by any web server or opened directly in a browser.
 *   **Local Development:** You can use a simple server like `npx serve .` or Python's `python3 -m http.server`.
 
 ### Automation (Page Generator)
 To use the puzzle generation tools:
-1.  **Set up environment:**
+1.  **Activate environment:**
     ```bash
-    python3 -m venv .venv
     source .venv/bin/activate
-    pip install -r requirements.txt
-    pip install -r test_requirements.txt
     ```
-2.  **Install Playwright browsers:**
-    ```bash
-    playwright install --with-deps
-    ```
-3.  **Run automation:**
+2.  **Run automation:**
     ```bash
     # Standard workflow
     python page-generator/main.py --automate-workflow [screenshot_path]
@@ -66,11 +82,12 @@ To use the puzzle generation tools:
     # Configure automation
     python page-generator/main.py --config
     ```
+
 For more detailed information on the automation workflow, see [README_AUTOMATION.md](README_AUTOMATION.md) and [AUTOMATION_SUMMARY.md](AUTOMATION_SUMMARY.md).
 
 ## Testing
 
-This project uses a multi-layered testing strategy. The primary entry point for running all tests is:
+Always ensure your environment is fully set up before running tests. The primary entry point for running all tests is:
 
 ```bash
 ./run_tests.sh
