@@ -98,7 +98,9 @@ When asked to do something, just do it - including obvious follow-up actions nee
 - YOU MUST STOP and ask how to handle uncommitted changes or untracked files when starting work.  Suggest committing existing work first.
 - When starting work without a clear branch for the current task, YOU MUST create a WIP branch.
 - YOU MUST TRACK All non-trivial changes in git.
-- YOU MUST commit frequently throughout the development process, even if your high-level tasks are not yet done. Commit your journal entries.
+- YOU MUST commit frequently throughout the development process, even if your high-level tasks are not yet done.
+- Journal updates and documentation MUST be committed to the active feature branch.
+- NEVER push journal updates or any other changes directly to master.
 - NEVER SKIP, EVADE OR DISABLE A PRE-COMMIT HOOK
 - NEVER use `git add -A` unless you've just done a `git status` - Don't add random test files to the repo.
 

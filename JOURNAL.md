@@ -2,6 +2,11 @@
 
 ## Journal
 
+### 2026-04-17: Workflow Refinement - PR Mandate
+*   **Codification:** Updated `GEMINI.md` to explicitly forbid direct commits to `master` for journal entries or any documentation.
+*   **Process:** Agreed to keep journal updates on the active feature branch to ensure they are reviewed as part of the PR.
+*   **Memory:** Saved this preference to project-specific memory.
+
 ### 2026-04-17: Identity PASS & Evergreen Pass
 *   **Identity PASS Implementation:** Added required 2-line `ABOUTME: ` headers to 197 files, including root-level scripts, configurations, JavaScript modules, Python automation suite, and all historical puzzle pages.
 *   **Evergreen Pass Cleanup:** Systematically removed temporal language ("NEW", "improved", "fixed") from all internal developer comments and internal documentation (`AUTOMATION_SUMMARY.md`, `quiz.html`, etc.).
