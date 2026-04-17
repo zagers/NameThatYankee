@@ -144,7 +144,7 @@ def search_and_scrape_player(player_name, automated=False):
     if name_for_search != player_name.strip():
         print(f"  (Note: Removed Roman numerals. Using '{name_for_search}' for search)")
 
-    # The existing cleaning step is still valuable for other characters. Apply it to the new name.
+    # The existing cleaning step is still valuable for other characters. Apply it to the name.
     cleaned_name = re.sub(r'[^\w\s]', '', name_for_search)
     print(f"  (Using cleaned name for search: '{cleaned_name}')")
     
