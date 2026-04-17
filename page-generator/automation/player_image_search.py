@@ -398,8 +398,8 @@ class PlayerImageSearch:
         staging_dir = self.images_dir.parent / "temp_player_images"
         staging_dir.mkdir(exist_ok=True)
         
-        # --- Archive old candidates ---
-        # We do this first to ensure a clean slate for new candidates
+        # --- Archive existing candidates ---
+        # Reset state to ensure a clean slate for search candidates
         old_dir = staging_dir / "old"
         if old_dir.exists():
             # Clear previous "old" candidates to avoid accumulation

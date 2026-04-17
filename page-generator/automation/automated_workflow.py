@@ -231,7 +231,7 @@ class AutomatedWorkflow:
     def _perform_git_operations(self, date_str: str) -> bool:
         """Perform git operations (add, commit, push)."""
         try:
-            # Add new files
+            # Stage generated files
             files_to_add = [
                 f"images/clue-{date_str}.webp",
                 f"images/answer-{date_str}.webp",
@@ -260,7 +260,7 @@ class AutomatedWorkflow:
                 logger.info(f"Git operations completed for {date_str}")
                 return True
             else:
-                logger.warning("No new files to commit")
+                logger.warning("No staged files to commit")
                 return False
                 
         except Exception as e:

@@ -12,7 +12,7 @@ import sys
 import time
 import urllib.parse
 
-# Import functions from our new modules
+# Import core functional modules
 import config_manager
 import ai_services
 import scraper
