@@ -1,3 +1,5 @@
+# ABOUTME: Generates individual trivia puzzle HTML files from player data.
+# ABOUTME: Applies SEO standards, canonical tags, and structured data templates.
 import json
 from bs4 import BeautifulSoup  # type: ignore
 from datetime import datetime

@@ -1,3 +1,5 @@
+# ABOUTME: Performs systematic metadata cleanup on historical puzzle files.
+# ABOUTME: Normalizes internal links and canonical URLs for search optimization.
 import re
 import os
 import glob
@@ -53,7 +55,7 @@ def extract_metadata(soup, date_stem=None):
 
 def scrub_and_inject(soup, player_name, date):
     """
-    Remove existing description and canonical tags and inject new ones.
+    Remove existing description and canonical tags and inject updated ones.
     """
     # Remove existing description and canonical tags
     for tag in soup.find_all('meta', attrs={'name': 'description'}):
@@ -61,7 +63,7 @@ def scrub_and_inject(soup, player_name, date):
     for tag in soup.find_all('link', attrs={'rel': 'canonical'}):
         tag.decompose()
     
-    # Create new tags
+    # Create metadata tags
     new_canonical = soup.new_tag('link', rel='canonical', href=f'https://namethatyankeequiz.com/{date}')
     description_content = f'Discover the career highlights and statistics for {player_name}, the featured New York Yankee for the {date} trivia puzzle.'
     new_description = soup.new_tag('meta', attrs={'name': 'description', 'content': description_content})

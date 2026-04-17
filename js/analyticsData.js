@@ -1,3 +1,6 @@
+// ABOUTME: Extracts and processes puzzle data for statistical reporting.
+// ABOUTME: Provides structured access to historical game results and outcomes.
+
 /**
  * Processes player data to get team counts.
  * Returns an object with 'labels' and 'data'.

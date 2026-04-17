@@ -1,3 +1,6 @@
+// ABOUTME: Core game mechanics for processing trivia answers and clues.
+// ABOUTME: Handles score calculations and validation of user guesses.
+
 /**
  * Normalizes text by removing diacritics and converting to lowercase.
  */

@@ -1,3 +1,6 @@
+// ABOUTME: Configuration for Vitest frontend testing framework.
+// ABOUTME: Sets up JSDOM and test coverage reporting for JavaScript modules.
+
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({

@@ -1,3 +1,6 @@
+// ABOUTME: Entry point for the main landing page and archive navigation.
+// ABOUTME: Initializes the archive gallery and site-wide UI behaviors.
+
 import { shouldShowGalleryItem } from './galleryFilter.js';
 import { initScoreDisplay } from './scoreDisplay.js';
 

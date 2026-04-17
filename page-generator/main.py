@@ -1,3 +1,5 @@
+# ABOUTME: CLI entry point for the Python-based puzzle automation pipeline.
+# ABOUTME: Dispatches tasks for scraping, image processing, and HTML generation.
 import os
 from PIL import Image
 from pathlib import Path
@@ -10,7 +12,7 @@ import sys
 import time
 import urllib.parse
 
-# Import functions from our new modules
+# Import core functional modules
 import config_manager
 import ai_services
 import scraper

@@ -1,3 +1,6 @@
+// ABOUTME: Provides interactive filtering and search logic for the puzzle archives.
+// ABOUTME: Allows users to browse historical puzzles by player name or date.
+
 /**
  * Determines if a gallery item should be visible based on search and filter criteria.
  */

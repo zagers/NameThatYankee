@@ -1,3 +1,5 @@
+# ABOUTME: Handles CLI prompts and user input during the automation workflow.
+# ABOUTME: Provides interactive configuration and override options.
 import json
 from pathlib import Path
 import subprocess

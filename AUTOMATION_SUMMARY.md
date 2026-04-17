@@ -60,18 +60,18 @@ The comprehensive puzzle workflow automation has been successfully implemented a
 
 ## 🛠️ Technical Implementation
 
-### New Modules Created
+### Core Automation Modules
 - `automation/image_processor.py` - Image conversion and optimization
 - `automation/player_image_search.py` - Automated player image discovery
 - `automation/automated_workflow.py` - Master workflow orchestrator
 - `automation/git_integration.py` - Git operations automation
 - `config/automation_config.py` - Configuration management
 
-### Enhanced Files
+### Modified System Files
 - `page-generator/main.py` - Added automation CLI flags and helper functions
 - `requirements.txt` - Added requests dependency
 
-### New CLI Commands
+### Core CLI Commands
 ```bash
 # Single puzzle automation
 python page-generator/main.py --automate-workflow [screenshot_path]
@@ -101,7 +101,7 @@ All automation modules tested successfully:
 
 ## 📁 Files Created/Modified
 
-### New Files (9)
+### Project Files
 - `README_AUTOMATION.md` - Comprehensive documentation
 - `test_automation.py` - Test suite for automation modules
 - `page-generator/automation/__init__.py`

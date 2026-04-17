@@ -1,3 +1,6 @@
+// ABOUTME: Manages the display of scores and progression feedback to the user.
+// ABOUTME: Updates the UI elements related to total points and solved status.
+
 export function initScoreDisplay() {
     const totalScoreEl = document.getElementById('total-score');
     const scoreDisplay = document.getElementById('score-display');

@@ -81,7 +81,7 @@ class ImageProcessor:
         if img.width <= self.max_width and img.height <= self.max_height:
             return img
         
-        # Calculate new dimensions maintaining aspect ratio
+        # Calculate target dimensions maintaining aspect ratio
         ratio = min(self.max_width / img.width, self.max_height / img.height)
         new_width = int(img.width * ratio)
         new_height = int(img.height * ratio)
