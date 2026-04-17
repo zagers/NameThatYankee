@@ -2,6 +2,18 @@
 
 ## Journal
 
+### 2026-04-16: Security & Dependency Maintenance
+*   **Transitive Vulnerability Remediation:** Identified and resolved 3 JS vulnerabilities on `master`.
+    *   **Hono:** Bumped from `4.12.12` to `4.12.14` (merged via PR #69).
+    *   **basic-ftp:** Updated from `5.2.2` to `5.3.0` (DoS fix).
+    *   **protobufjs:** Updated from `7.5.4` to `7.5.5` (Critical ACE fix).
+*   **Branch Sanitization:** Permanently deleted 4 stale local/remote branches:
+    *   `dependabot/pip/pip-489ca64b8d`
+    *   `seo-improvements`
+    *   `seo-final-fixes`
+    *   `feature/seo-finalization`
+*   **Verification:** Confirmed 0 remaining JS or Python vulnerabilities using `npm audit` and `pip-audit`. Verified full system integrity with a successful 288-test suite pass.
+
 ### 2026-04-15: SEO Finalization & Link Normalization
 *   **Batch Metadata Cleanup:** Implemented `page-generator/seo_cleanup.py` (BeautifulSoup-based) and standardized 164 historical trivia pages. Every page now has a unique meta description and a clean canonical URL.
 *   **Automation Synchronization:** Updated the permanent `html_generator.py` pipeline to ensure new puzzles automatically follow SEO best practices.
