@@ -302,7 +302,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}">
+                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}" loading="lazy" decoding="async">
                     </div>
                     <div class="player-info">
                         <h2>{display_name}</h2>
@@ -321,7 +321,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <div class="right-column">
                 <div class="original-card">
                     <h3>The Original Clue</h3>
-                    <img src="images/clue-{date_str}.webp" alt="Original trivia card">
+                    <img src="images/clue-{date_str}.webp" alt="Original trivia card" loading="lazy" decoding="async">
                 </div>
                 {chart_html}
             </div>
@@ -444,7 +444,7 @@ def rebuild_index_page(project_dir: Path):
                 # THE FIX: Add specific classes to the links
                 snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
                 <a href="{date_str}" class="gallery-item">
-                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}">
+                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" loading="lazy" decoding="async">
                 </a>
                 <div class="p-4">
                     <p class="gallery-date">Trivia Date: {formatted_date}</p>

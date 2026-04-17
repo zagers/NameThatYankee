@@ -7,6 +7,11 @@
 *   **Process:** Agreed to keep journal updates on the active feature branch to ensure they are reviewed as part of the PR.
 *   **Memory:** Saved this preference to project-specific memory.
 
+### 2026-04-17: Gallery Performance Optimization
+*   **Lazy Loading:** Added `loading="lazy"` and `decoding="async"` to all 165+ archive gallery images and the Python generation template.
+*   **Rendering Optimization:** Implemented `content-visibility: auto` and `contain-intrinsic-size` for gallery containers to reduce DOM weight and skip rendering of off-screen cards.
+*   **Verification:** Verified via Vitest that all gallery images in `index.html` now include performance attributes.
+
 ### 2026-04-17: Identity PASS & Evergreen Pass
 *   **Identity PASS Implementation:** Added required 2-line `ABOUTME: ` headers to 197 files, including root-level scripts, configurations, JavaScript modules, Python automation suite, and all historical puzzle pages.
 *   **Evergreen Pass Cleanup:** Systematically removed temporal language ("NEW", "improved", "fixed") from all internal developer comments and internal documentation (`AUTOMATION_SUMMARY.md`, `quiz.html`, etc.).
