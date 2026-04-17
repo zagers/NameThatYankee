@@ -1,3 +1,6 @@
+// ABOUTME: Central data repository for New York Yankees player statistics and hints.
+// ABOUTME: Serves as the primary source of truth for the puzzle engine and search.
+
 const ALL_PLAYERS = [
   "David Aardsma",
   "Henry Aaron",

@@ -1,3 +1,6 @@
+// ABOUTME: Manages the logic for the site-wide analytics and performance dashboard.
+// ABOUTME: Handles data visualization and summary statistics for trivia puzzles.
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
