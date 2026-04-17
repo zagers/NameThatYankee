@@ -165,6 +165,10 @@ footer {
     overflow: hidden;
     position: relative;
     height: fit-content;
+    /* Skip rendering when off-screen */
+    content-visibility: auto;
+    /* Maintain scrollbar stability (standard card height) */
+    contain-intrinsic-size: auto 450px;
 }
 
 .gallery-container.completed .gallery-item::after {
