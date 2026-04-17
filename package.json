@@ -1,4 +1,8 @@
 {
+  "_comment": [
+    "ABOUTME: Defines Node.js dependencies and scripts for frontend testing and linting.",
+    "ABOUTME: Configures the Vitest test runner for JSDOM-based environment."
+  ],
   "name": "namethatyankee",
   "version": "1.0.0",
   "description": "",

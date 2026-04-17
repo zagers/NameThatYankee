@@ -1,4 +1,8 @@
 {
+  "_comment": [
+    "ABOUTME: Firebase hosting and configuration settings for deployment.",
+    "ABOUTME: Defines rewrite rules and hosting directory structure."
+  ],
   "firestore": {
     "rules": "firestore.rules"
   },

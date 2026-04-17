@@ -1,4 +1,6 @@
 #!/bin/bash
+# ABOUTME: Orchestrates the end-to-end puzzle generation and deployment workflow.
+# ABOUTME: Provides a single entry point for daily automation tasks.
 
 # automate.sh - Helper script to run the Name That Yankee automated workflow
 

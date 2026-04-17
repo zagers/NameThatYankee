@@ -1,3 +1,6 @@
+# ABOUTME: Local development server with support for extensionless URLs.
+# ABOUTME: Handles routing for static assets and HTML files without .html suffixes.
+
 import http.server
 import socketserver
 import os

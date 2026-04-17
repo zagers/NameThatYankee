@@ -1,3 +1,6 @@
+// ABOUTME: Client-side Firebase configuration and initialization.
+// ABOUTME: Provides access to Firebase services like Hosting and Firestore.
+
 //Firebase credentials
 const firebaseConfig = {
   apiKey: "AIzaSyDCnTBnMVDbsZbgUHNn0og_NbSiW3HTOi8",
