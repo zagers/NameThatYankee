@@ -27,4 +27,35 @@ describe('QuizEngine', () => {
             expect(engine.calculateScore(4)).toBe(0);
         });
     });
+
+    describe('submitGuess', () => {
+        const allPlayers = ["Derek Jeter", "Alex Rodriguez", "Mariano Rivera"];
+
+        it('should return CORRECT for a match', () => {
+            const result = engine.submitGuess("Derek Jeter", allPlayers);
+            expect(result.status).toBe('CORRECT');
+            expect(result.score).toBe(10);
+            expect(engine.isComplete).toBe(true);
+        });
+
+        it('should return INCORRECT_VALID_PLAYER for a wrong but valid player', () => {
+            const result = engine.submitGuess("Alex Rodriguez", allPlayers);
+            expect(result.status).toBe('INCORRECT_VALID_PLAYER');
+            expect(engine.currentClueIndex).toBe(1);
+            expect(engine.isComplete).toBe(false);
+        });
+
+        it('should return INVALID_PLAYER for a name not in the list', () => {
+            const result = engine.submitGuess("Not A Player", allPlayers);
+            expect(result.status).toBe('INVALID_PLAYER');
+            expect(engine.currentClueIndex).toBe(0); // No penalty
+        });
+
+        it('should return DUPLICATE_GUESS for repeated wrong answers', () => {
+            engine.submitGuess("Alex Rodriguez", allPlayers);
+            const result = engine.submitGuess("Alex Rodriguez", allPlayers);
+            expect(result.status).toBe('DUPLICATE_GUESS');
+            expect(engine.currentClueIndex).toBe(1); // No double penalty
+        });
+    });
 });
