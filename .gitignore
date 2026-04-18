@@ -4,6 +4,12 @@ __pycache__/
 chromedriver
 DEVILS_MIGRATION_GUIDE.md
 
+# Screenshots and Feedback
+Screenshot*
+*.png
+*.jpg
+*.jpeg
+
 # Node/JavaScript
 node_modules/
 coverage/
@@ -14,6 +20,7 @@ coverage/
 *.pyc
 *.pyo
 .coverage
+get-pip.py
 
 # Tools & Editors
 .vscode/
@@ -24,6 +31,8 @@ coverage/
 *.swp
 .pyre_configuration
 temp_player_images/
+jdk-*/
+*.tar.gz*
 
 # Gemini
 .gemini/
