@@ -77,11 +77,10 @@ export async function initQuiz() {
         correctAnswer: '',
         nickname: '',
         hints: [],
-        hintsRevealed: 0,
         hintsRequested: 0,
         shareEvents: [], // 'hint', 'miss', 'hit'
         isComplete: false,
-        points: [10, 7, 4, 1, 0]
+        finalScore: 0
     };
 
     //let allPlayers = [];
@@ -267,13 +266,13 @@ export async function initQuiz() {
         if (result.status === 'CORRECT') {
             gameState.shareEvents.push('hit');
             gameState.isComplete = true;
-            gameState.hintsRevealed = engine.currentClueIndex;
+            gameState.finalScore = result.score;
             const pointsEarned = result.score;
             answerImageEl.src = `images/answer-${date}.webp`;
             successHeader.textContent = `Correct! The answer is ${gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
             successPoints.textContent = `You earned ${pointsEarned} points!`;
             viewAnswerLink.href = `${date}.html`; // Set the link
-            updateTotalScore(pointsEarned, gameState.hintsRevealed);
+            updateTotalScore(pointsEarned, result.clueIndex);
             markPuzzleAsComplete();
             quizArea.style.display = 'none';
             successArea.style.display = 'block';
@@ -286,7 +285,7 @@ export async function initQuiz() {
                 feedbackMsg.textContent = "Incorrect. Try again!";
                 feedbackMsg.className = 'incorrect';
                 guessInputEl.value = '';
-                revealHint(); // This will increment gameState.hintsRevealed and engine.currentClueIndex is already incremented
+                revealHint();
             }
         } else if (result.status === 'DUPLICATE_GUESS') {
             feedbackMsg.textContent = "You already guessed that player!";
@@ -299,20 +298,21 @@ export async function initQuiz() {
     }
 
     function revealHint(isManual = false) {
-        if (gameState.hintsRevealed < gameState.hints.length) {
-            hintsContainer.style.display = 'block';
-            const newHint = document.createElement('li');
-            newHint.textContent = gameState.hints[gameState.hintsRevealed];
-            hintsList.appendChild(newHint);
-            gameState.hintsRevealed++;
-            if (isManual) {
-                engine.currentClueIndex++;
-                gameState.hintsRequested++;
-                gameState.shareEvents.push('hint');
-            }
+        if (isManual) {
+            engine.currentClueIndex++;
+            gameState.hintsRequested++;
+            gameState.shareEvents.push('hint');
         }
 
-        if (gameState.hintsRevealed >= gameState.hints.length) {
+        const indexToShow = engine.currentClueIndex - 1;
+        if (indexToShow >= 0 && indexToShow < gameState.hints.length) {
+            hintsContainer.style.display = 'block';
+            const newHint = document.createElement('li');
+            newHint.textContent = gameState.hints[indexToShow];
+            hintsList.appendChild(newHint);
+        }
+
+        if (engine.currentClueIndex >= gameState.hints.length) {
             hintBtn.disabled = true;
             if (!submitBtn.disabled) {
                 feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
@@ -413,7 +413,7 @@ export async function initQuiz() {
 
     function generateShareText(dateStr, state) {
         const isWin = state.shareEvents.includes('hit');
-        const pointsEarned = isWin ? calculateScore(state.hintsRevealed, state.points) : 0;
+        const pointsEarned = isWin ? state.finalScore : 0;
         
         // Map events to emojis: hint=📘, miss=🟥, hit=🟩
         const emojiMap = {

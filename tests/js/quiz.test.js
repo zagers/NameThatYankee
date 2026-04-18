@@ -44,7 +44,7 @@ vi.mock('../../js/quizEngine.js', () => {
                 const a = this.answer.toLowerCase().trim();
                 const n = this.nickname ? this.nickname.toLowerCase().trim() : '';
                 if (g === a || (n && g === n)) {
-                    return { status: 'CORRECT', score: calculateScore(this.currentClueIndex), gameOver: true };
+                    return { status: 'CORRECT', score: calculateScore(this.currentClueIndex), clueIndex: this.currentClueIndex, gameOver: true };
                 }
                 // For testing purposes, treat specific names as valid even if normalizedPlayerSet is empty in JSDOM
                 if (g === 'babe ruth' || g === 'bernie williams' || g === 'mariano rivera' || normalizedPlayerSet.has(g)) {

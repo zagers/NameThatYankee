@@ -83,7 +83,7 @@ export class QuizEngine {
         }
 
         if (this.previousGuesses.has(normalizedGuess)) {
-            return { status: 'DUPLICATE_GUESS', clueIndex: this.currentClueIndex };
+            return { status: 'DUPLICATE_GUESS', clueIndex: this.currentClueIndex, gameOver: false };
         }
 
         if (normalizedPlayerSet.has(normalizedGuess)) {
@@ -99,6 +99,6 @@ export class QuizEngine {
             };
         }
 
-        return { status: 'INVALID_PLAYER', clueIndex: this.currentClueIndex };
+        return { status: 'INVALID_PLAYER', clueIndex: this.currentClueIndex, gameOver: false };
     }
 }
