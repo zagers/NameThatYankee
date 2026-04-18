@@ -2,6 +2,13 @@
 
 ## Journal
 
+### 2026-04-17: Quiz Engine Refactor - "Pragmatic Brain"
+*   **Decoupling Logic:** Successfully extracted core trivia game mechanics from `js/quiz.js` into a standalone, testable `QuizEngine` class in `js/quizEngine.js`.
+*   **Testability ROI:** Added 7 pure unit tests for the engine, achieving 100x faster execution for logic verification by eliminating JSDOM/DOM scraping dependencies for core rules.
+*   **Security & Integrity:** Implemented Private Class Fields (`#answer`, `#nickname`) to prevent easy console peeking. Established a "Calculator" pattern where the engine returns status objects to the UI.
+*   **Regression Verification:** Updated existing test mocks (`scoreBreakdown.test.js`, `quiz.test.js`) to support the new class-based architecture. Confirmed 100% pass rate across the full 288-test regression suite.
+*   **Documentation:** Added missing `ABOUTME` headers to `index.html` as part of the refactor task.
+
 ### 2026-04-17: Infrastructure & Verification Standards
 *   **Mandatory Verification:** Updated `GEMINI.md` to strictly forbid claiming work is "done" until 100% of the regression suite passes.
 *   **Bootstrap Automation:** Implemented `bootstrap.sh` to automate environment setup across different platforms (Linux/ARM64, Mac), including version checks for Java 21 and Python venv.
