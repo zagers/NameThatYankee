@@ -23,15 +23,35 @@ vi.mock('https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js', () =>
 }));
 
 // Mock the quizEngine imports
-vi.mock('../../js/quizEngine.js', () => ({
-    normalizeText: vi.fn(),
-    validateGuess: vi.fn((guess, answer) => {
-        if (guess.toLowerCase() === answer.toLowerCase()) return { status: 'CORRECT' };
-        return { status: 'INCORRECT_VALID_PLAYER' };
-    }),
-    calculateScore: vi.fn((hints) => [10, 7, 4, 1, 0][hints]),
-    getAutocompleteSuggestions: vi.fn(() => [])
-}));
+vi.mock('../../js/quizEngine.js', () => {
+    const calculateScore = (hints) => [10, 7, 4, 1, 0][hints];
+    return {
+        normalizeText: vi.fn(text => text ? text.toLowerCase().trim() : ''),
+        calculateScore: vi.fn(calculateScore),
+        getAutocompleteSuggestions: vi.fn(() => []),
+        QuizEngine: class {
+            constructor(answer, clues, nickname = "") {
+                this.answer = answer;
+                this.clues = clues;
+                this.nickname = nickname;
+                this.currentClueIndex = 0;
+            }
+            submitGuess(guess, allPlayers) {
+                const g = guess.toLowerCase().trim();
+                const a = this.answer.toLowerCase().trim();
+                const n = this.nickname ? this.nickname.toLowerCase().trim() : '';
+                if (g === a || (n && g === n)) {
+                    return { status: 'CORRECT', score: calculateScore(this.currentClueIndex), gameOver: true };
+                }
+                if (allPlayers.map(p => p.toLowerCase()).includes(g)) {
+                    this.currentClueIndex++;
+                    return { status: 'INCORRECT_VALID_PLAYER', gameOver: this.currentClueIndex >= this.clues.length };
+                }
+                return { status: 'INVALID_PLAYER', gameOver: false };
+            }
+        }
+    };
+});
 
 import { initQuiz } from '../../js/quiz.js';
 import { initIndex } from '../../js/index.js';
