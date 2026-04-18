@@ -2,10 +2,21 @@
 
 ## Journal
 
+### 2026-04-17: Infrastructure & Verification Standards
+*   **Mandatory Verification:** Updated `GEMINI.md` to strictly forbid claiming work is "done" until 100% of the regression suite passes.
+*   **Bootstrap Automation:** Implemented `bootstrap.sh` to automate environment setup across different platforms (Linux/ARM64, Mac), including version checks for Java 21 and Python venv.
+*   **Cross-Platform Testing:** Enhanced `package.json` to handle environment-specific `JAVA_HOME` injection, ensuring the Firestore Emulator runs successfully on headless ARM64 environments without breaking macOS or CI/CD pipelines.
+*   **Verification:** Achieved 100% pass rate (259 tests) on the new laptop environment after resolving system-level dependencies.
+
 ### 2026-04-17: Workflow Refinement - PR Mandate
 *   **Codification:** Updated `GEMINI.md` to explicitly forbid direct commits to `master` for journal entries or any documentation.
 *   **Process:** Agreed to keep journal updates on the active feature branch to ensure they are reviewed as part of the PR.
 *   **Memory:** Saved this preference to project-specific memory.
+
+### 2026-04-17: Gallery Performance Optimization
+*   **Lazy Loading:** Added `loading="lazy"` and `decoding="async"` to all 165+ archive gallery images and the Python generation template.
+*   **Rendering Optimization:** Implemented `content-visibility: auto` and `contain-intrinsic-size` for gallery containers to reduce DOM weight and skip rendering of off-screen cards.
+*   **Verification:** Verified via Vitest that all gallery images in `index.html` now include performance attributes.
 
 ### 2026-04-17: Identity PASS & Evergreen Pass
 *   **Identity PASS Implementation:** Added required 2-line `ABOUTME: ` headers to 197 files, including root-level scripts, configurations, JavaScript modules, Python automation suite, and all historical puzzle pages.

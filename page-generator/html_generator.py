@@ -302,7 +302,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}">
+                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}" decoding="async">
                     </div>
                     <div class="player-info">
                         <h2>{display_name}</h2>
@@ -321,7 +321,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <div class="right-column">
                 <div class="original-card">
                     <h3>The Original Clue</h3>
-                    <img src="images/clue-{date_str}.webp" alt="Original trivia card">
+                    <img src="images/clue-{date_str}.webp" alt="Original trivia card" decoding="async">
                 </div>
                 {chart_html}
             </div>
@@ -380,6 +380,32 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
         f.write(html_content)
     print(f"  ✅ Detail page saved successfully.")
 
+def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
+    """
+    Generates a single gallery card snippet with LCP-aware image loading.
+    """
+    # Only lazy load items below the fold (index > 5)
+    loading_attr = 'loading="lazy"' if i > 5 else ''
+    
+    return f"""<div class="gallery-container" data-search-terms="{search_terms}">
+                <a href="{date_str}" class="gallery-item">
+                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
+                </a>
+                <div class="p-4">
+                    <p class="gallery-date">Trivia Date: {formatted_date}</p>
+                    <div class="action-links">
+                        <a href="{date_str}" class="action-link reveal-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <span>Reveal</span>
+                        </a>
+                        <a href="quiz?date={date_str}" class="action-link quiz-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                            <span>Quiz</span>
+                        </a>
+                    </div>
+                </div>
+            </div>"""
+
 def rebuild_index_page(project_dir: Path):
     print("\n✍️ Rebuilding and re-sorting index.html from all available clues...")
     index_path = project_dir / "index.html"
@@ -412,7 +438,7 @@ def rebuild_index_page(project_dir: Path):
         'WSN': 'washington nationals', 'MON': 'montreal expos'
     }
 
-    for clue_file in all_clue_files:
+    for i, clue_file in enumerate(all_clue_files):
         match = date_pattern.search(clue_file.name)
         if match:
             date_str = match.group(1)
@@ -441,25 +467,8 @@ def rebuild_index_page(project_dir: Path):
                             if team_abbr in team_name_map:
                                 search_terms = f"{search_terms} {team_name_map.get(team_abbr, '')}"
 
-                # THE FIX: Add specific classes to the links
-                snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
-                <a href="{date_str}" class="gallery-item">
-                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}">
-                </a>
-                <div class="p-4">
-                    <p class="gallery-date">Trivia Date: {formatted_date}</p>
-                    <div class="action-links">
-                        <a href="{date_str}" class="action-link reveal-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                            <span>Reveal</span>
-                        </a>
-                        <a href="quiz?date={date_str}" class="action-link quiz-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-                            <span>Quiz</span>
-                        </a>
-                    </div>
-                </div>
-            </div>"""
+                # Generate the gallery card snippet
+                snippet = generate_gallery_snippet(i, date_str, formatted_date, search_terms)
                 gallery_tiles.append(snippet)
             except ValueError:
                 print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
