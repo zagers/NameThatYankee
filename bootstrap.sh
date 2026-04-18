@@ -11,21 +11,21 @@ echo "================================================="
 # 1. System Check
 echo "🔍 Checking system dependencies..."
 if ! command -v java &> /dev/null; then
-    echo "❌ Java not found. Please install Java 21+ (e.g., sudo apt install openjdk-21-jre-headless)"
+    echo "❌ Java not found. Please install Java 21+ for your distribution (e.g., via apt, brew, or manual download)."
     exit 1
 fi
 
 JAVA_VER=$(java -version 2>&1 | head -n 1 | awk -F '"' '{print $2}' | awk -F '.' '{print $1}')
 if [ "$JAVA_VER" -lt 21 ]; then
     echo "⚠️ Warning: Found Java version $JAVA_VER. Firebase Emulator requires Java 21+."
-    echo "   If you have a local JDK, set JAVA_HOME before running tests."
+    echo "   Please update your Java version or set JAVA_HOME to a compatible JDK."
 fi
 
 # 2. Python venv
 echo "🐍 Setting up Python virtual environment..."
 if [ ! -d ".venv" ]; then
     if ! python3 -m venv .venv 2>/dev/null; then
-        echo "❌ python3-venv is not installed. Please run: sudo apt install python3-venv"
+        echo "❌ python3-venv is not installed. Please install the python3-venv package for your distribution."
         exit 1
     fi
 fi

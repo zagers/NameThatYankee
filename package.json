@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "python3 serve.py",
-    "test": "if [ -d \"/home/scottzager/jdk-21.0.3+9\" ]; then export JAVA_HOME=/home/scottzager/jdk-21.0.3+9 && export PATH=$JAVA_HOME/bin:$PATH; fi && firebase emulators:exec --project demo-no-project \"vitest run\"",
+    "test": "firebase emulators:exec --project demo-no-project \"vitest run\"",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",

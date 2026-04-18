@@ -60,8 +60,8 @@ To set up a new environment (e.g., a new laptop) for full development and testin
     ```
 
 ### Troubleshooting New Environments
-*   **Java 21 Errors:** If `npm test` fails with a Java version error, ensure you have Java 21 installed. If you have a local JDK (e.g., the Microsoft build for ARM64), run: `export JAVA_HOME=/path/to/jdk && export PATH=$JAVA_HOME/bin:$PATH` before running tests.
-*   **python3-venv missing:** On some Linux systems, you may need to run `sudo apt install python3-venv` if the bootstrap script fails to create the `.venv`.
+*   **Java 21 Errors:** If `npm test` fails with a Java version error, ensure you have Java 21 installed. If you have a local compatible JDK, run: `export JAVA_HOME=/path/to/your/jdk && export PATH=$JAVA_HOME/bin:$PATH` before running tests.
+*   **python3-venv missing:** On some Linux systems, you may need to install the `python3-venv` package manually if the bootstrap script fails to create the `.venv`.
 *   **Playwright Dependencies:** If UI tests fail to launch the browser, run `npx playwright install-deps` to ensure all system-level libraries are present.
 
 ### Website
