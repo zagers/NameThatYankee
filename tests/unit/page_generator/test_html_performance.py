@@ -17,5 +17,6 @@ def test_build_detail_page_includes_performance_attributes():
     }
     html = build_detail_page_html(player_data, "2020-01-01", "January 01, 2020")
     
-    assert 'loading="lazy"' in html
+    # Detail pages should eager load (no loading="lazy")
+    assert 'loading="lazy"' not in html
     assert 'decoding="async"' in html

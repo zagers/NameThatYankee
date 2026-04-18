@@ -302,7 +302,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <div class="left-column">
                 <div class="player-profile">
                     <div class="player-photo">
-                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}" loading="lazy" decoding="async">
+                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}" decoding="async">
                     </div>
                     <div class="player-info">
                         <h2>{display_name}</h2>
@@ -321,7 +321,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             <div class="right-column">
                 <div class="original-card">
                     <h3>The Original Clue</h3>
-                    <img src="images/clue-{date_str}.webp" alt="Original trivia card" loading="lazy" decoding="async">
+                    <img src="images/clue-{date_str}.webp" alt="Original trivia card" decoding="async">
                 </div>
                 {chart_html}
             </div>
@@ -412,7 +412,7 @@ def rebuild_index_page(project_dir: Path):
         'WSN': 'washington nationals', 'MON': 'montreal expos'
     }
 
-    for clue_file in all_clue_files:
+    for i, clue_file in enumerate(all_clue_files):
         match = date_pattern.search(clue_file.name)
         if match:
             date_str = match.group(1)
@@ -441,10 +441,11 @@ def rebuild_index_page(project_dir: Path):
                             if team_abbr in team_name_map:
                                 search_terms = f"{search_terms} {team_name_map.get(team_abbr, '')}"
 
-                # THE FIX: Add specific classes to the links
+                # Only lazy load items below the fold (index > 5)
+                loading_attr = 'loading="lazy"' if i > 5 else ''
                 snippet = f"""<div class="gallery-container" data-search-terms="{search_terms}">
                 <a href="{date_str}" class="gallery-item">
-                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" loading="lazy" decoding="async">
+                    <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
                 </a>
                 <div class="p-4">
                     <p class="gallery-date">Trivia Date: {formatted_date}</p>
