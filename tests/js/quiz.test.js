@@ -23,19 +23,39 @@ vi.mock('https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js', () =>
 }));
 
 // Mock the quizEngine imports
-vi.mock('../../js/quizEngine.js', () => ({
-    normalizeText: vi.fn(),
-    validateGuess: vi.fn((guess, answer) => {
-        if (guess.toLowerCase() === answer.toLowerCase()) return { status: 'CORRECT' };
-        if (guess.toLowerCase() === 'babe ruth') return { status: 'INCORRECT_VALID_PLAYER' };
-        return { status: 'INVALID_PLAYER' };
-    }),
-    calculateScore: vi.fn((hints) => [10, 7, 4, 1, 0][hints]),
-    getAutocompleteSuggestions: vi.fn((input) => {
-        if (input.toLowerCase() === 'de') return ['Derek Jeter', 'Dennis Rasmussen'];
-        return [];
-    })
-}));
+vi.mock('../../js/quizEngine.js', () => {
+    const calculateScore = (hints) => [10, 7, 4, 1, 0][hints];
+    return {
+        normalizeText: vi.fn(text => text ? text.toLowerCase().trim() : ''),
+        calculateScore: vi.fn(calculateScore),
+        getAutocompleteSuggestions: vi.fn((input) => {
+            if (input.toLowerCase() === 'de') return ['Derek Jeter', 'Dennis Rasmussen'];
+            return [];
+        }),
+        QuizEngine: class {
+            constructor(answer, clues, nickname = "") {
+                this.answer = answer;
+                this.clues = clues;
+                this.nickname = nickname;
+                this.currentClueIndex = 0;
+            }
+            submitGuess(guess, normalizedPlayerSet) {
+                const g = guess.toLowerCase().trim();
+                const a = this.answer.toLowerCase().trim();
+                const n = this.nickname ? this.nickname.toLowerCase().trim() : '';
+                if (g === a || (n && g === n)) {
+                    return { status: 'CORRECT', score: calculateScore(this.currentClueIndex), clueIndex: this.currentClueIndex, gameOver: true };
+                }
+                // For testing purposes, treat specific names as valid even if normalizedPlayerSet is empty in JSDOM
+                if (g === 'babe ruth' || g === 'bernie williams' || g === 'mariano rivera' || normalizedPlayerSet.has(g)) {
+                    this.currentClueIndex++;
+                    return { status: 'INCORRECT_VALID_PLAYER', gameOver: this.currentClueIndex >= this.clues.length };
+                }
+                return { status: 'INVALID_PLAYER' };
+            }
+        }
+    };
+});
 
 import { initQuiz } from '../../js/quiz.js';
 

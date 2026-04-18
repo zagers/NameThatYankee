@@ -4,7 +4,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
 import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { normalizeText, validateGuess, calculateScore, getAutocompleteSuggestions } from "./quizEngine.js";
+import { QuizEngine, normalizeText, getAutocompleteSuggestions, calculateScore } from "./quizEngine.js";
 import { initScoreDisplay } from "./scoreDisplay.js";
 
 export async function initQuiz() {
@@ -77,18 +77,18 @@ export async function initQuiz() {
         correctAnswer: '',
         nickname: '',
         hints: [],
-        hintsRevealed: 0,
         hintsRequested: 0,
         shareEvents: [], // 'hint', 'miss', 'hit'
         isComplete: false,
-        points: [10, 7, 4, 1, 0]
+        finalScore: 0
     };
 
     //let allPlayers = [];
     //Initialize the local variable with the global one from all_players.js
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
-    const normalizedPlayers = allPlayers.map(p => normalizeText(p));
+    const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
     let highlightedIndex = -1; // For keyboard navigation
+    let engine;
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
     let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
@@ -151,6 +151,7 @@ export async function initQuiz() {
                 gameState.correctAnswer = data.answer;
                 gameState.nickname = data.nickname || '';
                 gameState.hints = data.hints;
+                engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
             } else {
                 throw new Error('Quiz data not found on detail page.');
             }
@@ -260,54 +261,58 @@ export async function initQuiz() {
             return;
         }
 
-        const validation = validateGuess(userGuess, gameState.correctAnswer, normalizedPlayers, gameState.nickname);
+        const result = engine.submitGuess(userGuess, normalizedPlayerSet);
 
-        if (validation.status === 'CORRECT') {
+        if (result.status === 'CORRECT') {
             gameState.shareEvents.push('hit');
             gameState.isComplete = true;
-            const pointsEarned = calculateScore(gameState.hintsRevealed, gameState.points);
+            gameState.finalScore = result.score;
+            const pointsEarned = result.score;
             answerImageEl.src = `images/answer-${date}.webp`;
             successHeader.textContent = `Correct! The answer is ${gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
             successPoints.textContent = `You earned ${pointsEarned} points!`;
             viewAnswerLink.href = `${date}.html`; // Set the link
-            updateTotalScore(pointsEarned, gameState.hintsRevealed);
+            updateTotalScore(pointsEarned, result.clueIndex);
             markPuzzleAsComplete();
             quizArea.style.display = 'none';
             successArea.style.display = 'block';
-        } else {
-            if (validation.status === 'INCORRECT_VALID_PLAYER') {
-                gameState.shareEvents.push('miss');
-                saveIncorrectGuess(userGuess.trim().toLowerCase());
-                if (gameState.hintsRevealed >= gameState.hints.length) {
-                    endQuizAndShowAnswer();
-                } else {
-                    feedbackMsg.textContent = "Incorrect. Try again!";
-                    feedbackMsg.className = 'incorrect';
-                    guessInputEl.value = '';
-                    revealHint();
-                }
+        } else if (result.status === 'INCORRECT_VALID_PLAYER') {
+            gameState.shareEvents.push('miss');
+            saveIncorrectGuess(userGuess.trim().toLowerCase());
+            if (result.gameOver) {
+                endQuizAndShowAnswer();
             } else {
-                feedbackMsg.textContent = "That is not a valid MLB player, guess again";
+                feedbackMsg.textContent = "Incorrect. Try again!";
                 feedbackMsg.className = 'incorrect';
                 guessInputEl.value = '';
+                revealHint();
             }
+        } else if (result.status === 'DUPLICATE_GUESS') {
+            feedbackMsg.textContent = "You already guessed that player!";
+            feedbackMsg.className = 'incorrect';
+        } else if (result.status === 'INVALID_PLAYER') {
+            feedbackMsg.textContent = "That is not a valid MLB player, guess again";
+            feedbackMsg.className = 'incorrect';
+            guessInputEl.value = '';
         }
     }
 
     function revealHint(isManual = false) {
-        if (gameState.hintsRevealed < gameState.hints.length) {
-            hintsContainer.style.display = 'block';
-            const newHint = document.createElement('li');
-            newHint.textContent = gameState.hints[gameState.hintsRevealed];
-            hintsList.appendChild(newHint);
-            gameState.hintsRevealed++;
-            if (isManual) {
-                gameState.hintsRequested++;
-                gameState.shareEvents.push('hint');
-            }
+        if (isManual) {
+            engine.currentClueIndex++;
+            gameState.hintsRequested++;
+            gameState.shareEvents.push('hint');
         }
 
-        if (gameState.hintsRevealed >= gameState.hints.length) {
+        const indexToShow = engine.currentClueIndex - 1;
+        if (indexToShow >= 0 && indexToShow < gameState.hints.length) {
+            hintsContainer.style.display = 'block';
+            const newHint = document.createElement('li');
+            newHint.textContent = gameState.hints[indexToShow];
+            hintsList.appendChild(newHint);
+        }
+
+        if (engine.currentClueIndex >= gameState.hints.length) {
             hintBtn.disabled = true;
             if (!submitBtn.disabled) {
                 feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
@@ -408,7 +413,7 @@ export async function initQuiz() {
 
     function generateShareText(dateStr, state) {
         const isWin = state.shareEvents.includes('hit');
-        const pointsEarned = isWin ? calculateScore(state.hintsRevealed, state.points) : 0;
+        const pointsEarned = isWin ? state.finalScore : 0;
         
         // Map events to emojis: hint=📘, miss=🟥, hit=🟩
         const emojiMap = {
