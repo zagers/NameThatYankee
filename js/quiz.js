@@ -87,6 +87,7 @@ export async function initQuiz() {
     //let allPlayers = [];
     //Initialize the local variable with the global one from all_players.js
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
+    const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
     let highlightedIndex = -1; // For keyboard navigation
     let engine;
 
@@ -261,7 +262,7 @@ export async function initQuiz() {
             return;
         }
 
-        const result = engine.submitGuess(userGuess, allPlayers);
+        const result = engine.submitGuess(userGuess, normalizedPlayerSet);
 
         if (result.status === 'CORRECT') {
             gameState.shareEvents.push('hit');

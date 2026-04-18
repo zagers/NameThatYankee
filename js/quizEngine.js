@@ -59,7 +59,13 @@ export class QuizEngine {
         return calculateScore(index);
     }
 
-    submitGuess(guess, allPlayers) {
+    /**
+     * Validates a guess and updates the internal state.
+     * @param {string} guess - The user's guess.
+     * @param {Set<string>} normalizedPlayerSet - A pre-normalized Set of valid player names for O(1) lookups.
+     * @returns {Object} The result of the guess.
+     */
+    submitGuess(guess, normalizedPlayerSet) {
         if (this.isComplete) return { status: 'LOCKED' };
 
         const normalizedGuess = this.normalize(guess);
@@ -80,8 +86,7 @@ export class QuizEngine {
             return { status: 'DUPLICATE_GUESS', clueIndex: this.currentClueIndex };
         }
 
-        const normalizedPlayers = allPlayers.map(p => this.normalize(p));
-        if (normalizedPlayers.includes(normalizedGuess)) {
+        if (normalizedPlayerSet.has(normalizedGuess)) {
             this.previousGuesses.add(normalizedGuess);
             this.currentClueIndex++;
             const gameOver = this.currentClueIndex > this.clues.length;

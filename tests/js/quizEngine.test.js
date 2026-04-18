@@ -1,10 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { QuizEngine } from '../../js/quizEngine.js';
+import { QuizEngine, normalizeText } from '../../js/quizEngine.js';
 
 describe('QuizEngine', () => {
     let engine;
     const answer = "Derek Jeter";
     const clues = ["Clue 1", "Clue 2", "Clue 3"];
+    const allPlayers = ["Derek Jeter", "Alex Rodriguez", "Mariano Rivera"];
+    const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
 
     beforeEach(() => {
         engine = new QuizEngine(answer, clues);
@@ -29,31 +31,29 @@ describe('QuizEngine', () => {
     });
 
     describe('submitGuess', () => {
-        const allPlayers = ["Derek Jeter", "Alex Rodriguez", "Mariano Rivera"];
-
         it('should return CORRECT for a match', () => {
-            const result = engine.submitGuess("Derek Jeter", allPlayers);
+            const result = engine.submitGuess("Derek Jeter", normalizedPlayerSet);
             expect(result.status).toBe('CORRECT');
             expect(result.score).toBe(10);
             expect(engine.isComplete).toBe(true);
         });
 
         it('should return INCORRECT_VALID_PLAYER for a wrong but valid player', () => {
-            const result = engine.submitGuess("Alex Rodriguez", allPlayers);
+            const result = engine.submitGuess("Alex Rodriguez", normalizedPlayerSet);
             expect(result.status).toBe('INCORRECT_VALID_PLAYER');
             expect(engine.currentClueIndex).toBe(1);
             expect(engine.isComplete).toBe(false);
         });
 
         it('should return INVALID_PLAYER for a name not in the list', () => {
-            const result = engine.submitGuess("Not A Player", allPlayers);
+            const result = engine.submitGuess("Not A Player", normalizedPlayerSet);
             expect(result.status).toBe('INVALID_PLAYER');
             expect(engine.currentClueIndex).toBe(0); // No penalty
         });
 
         it('should return DUPLICATE_GUESS for repeated wrong answers', () => {
-            engine.submitGuess("Alex Rodriguez", allPlayers);
-            const result = engine.submitGuess("Alex Rodriguez", allPlayers);
+            engine.submitGuess("Alex Rodriguez", normalizedPlayerSet);
+            const result = engine.submitGuess("Alex Rodriguez", normalizedPlayerSet);
             expect(result.status).toBe('DUPLICATE_GUESS');
             expect(engine.currentClueIndex).toBe(1); // No double penalty
         });

@@ -36,14 +36,15 @@ vi.mock('../../js/quizEngine.js', () => {
                 this.nickname = nickname;
                 this.currentClueIndex = 0;
             }
-            submitGuess(guess, allPlayers) {
+            submitGuess(guess, normalizedPlayerSet) {
                 const g = guess.toLowerCase().trim();
                 const a = this.answer.toLowerCase().trim();
                 const n = this.nickname ? this.nickname.toLowerCase().trim() : '';
                 if (g === a || (n && g === n)) {
                     return { status: 'CORRECT', score: calculateScore(this.currentClueIndex), gameOver: true };
                 }
-                if (allPlayers.map(p => p.toLowerCase()).includes(g)) {
+                // Mock behavior for testing: allow specific names or use Set if available
+                if (g === 'bernie williams' || g === 'mariano rivera' || normalizedPlayerSet.has(g)) {
                     this.currentClueIndex++;
                     return { status: 'INCORRECT_VALID_PLAYER', gameOver: this.currentClueIndex >= this.clues.length };
                 }
