@@ -53,22 +53,17 @@ describe('Analytics DOM tests', () => {
             this.config = config;
         });
 
-        // Mock fetch for scraping index.html and puzzle pages
+        // Mock fetch for statistics summary
         global.fetch = vi.fn((url) => {
-            if (url === 'index.html') {
+            if (url === 'stats_summary.json') {
                 return Promise.resolve({
-                    text: () => Promise.resolve(`
-                        <div class="gallery-item" href="2025-05-15.html"></div>
-                    `)
-                });
-            } else if (url === '2025-05-15.html') {
-                return Promise.resolve({
-                    text: () => Promise.resolve(`
-                        <div id="search-data">{"teams": ["NYY"], "years": [1995, 2000]}</div>
-                    `)
+                    ok: true,
+                    json: () => Promise.resolve([
+                        { teams: ["NYY"], years: [1995, 2000], date: '2025-05-15', name: 'Derek Jeter' }
+                    ])
                 });
             }
-            return Promise.resolve({ text: () => Promise.resolve('') });
+            return Promise.resolve({ ok: true, text: () => Promise.resolve('') });
         });
     });
 
@@ -86,8 +81,7 @@ describe('Analytics DOM tests', () => {
         expect(global.Chart).toHaveBeenCalledTimes(4);
 
         // Let's verify standard fetch behavior
-        expect(global.fetch).toHaveBeenCalledWith('index.html');
-        expect(global.fetch).toHaveBeenCalledWith('2025-05-15.html');
+        expect(global.fetch).toHaveBeenCalledWith('stats_summary.json');
     });
 
     it('should show error message if fetch fails', async () => {
