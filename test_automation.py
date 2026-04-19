@@ -179,5 +179,44 @@ def main():
     print("\n" + "=" * 50)
     print("🏁 Testing completed!")
 
+import json
+import html_generator
+
+def test_rebuild_index_generates_stats_summary(tmp_path):
+    # Setup mock project structure
+    project_dir = tmp_path / "project"
+    project_dir.mkdir()
+    images_dir = project_dir / "images"
+    images_dir.mkdir()
+    
+    # Create a dummy index.html
+    (project_dir / "index.html").write_text('<div class="gallery"></div><footer id="last-updated"></footer>', encoding='utf-8')
+    
+    # Create a dummy clue and puzzle page
+    date_str = "2026-04-18"
+    (images_dir / f"clue-{date_str}.webp").write_text("fake image data")
+    puzzle_html = f'''
+    <html>
+        <body>
+            <h2>Fran Healy</h2>
+            <div id="search-data">{{"teams": ["NYY", "KCR"], "years": ["1971", "1972"]}}</div>
+        </body>
+    </html>
+    '''
+    (project_dir / f"{date_str}.html").write_text(puzzle_html, encoding='utf-8')
+    
+    html_generator.rebuild_index_page(project_dir)
+    
+    stats_file = project_dir / "stats_summary.json"
+    assert stats_file.exists()
+    
+    with open(stats_file, 'r') as f:
+        data = json.load(f)
+    
+    assert len(data) == 1
+    assert data[0]['date'] == date_str
+    assert data[0]['name'] == "Fran Healy"
+    assert "NYY" in data[0]['teams']
+
 if __name__ == "__main__":
     main()
