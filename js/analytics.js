@@ -23,16 +23,19 @@ export async function initAnalytics() {
     const analyticsContent = document.getElementById('analytics-content');
 
     try {
-        console.log("Fetching player statistics summary...");
-        const response = await fetch('stats_summary.json');
-        if (!response.ok) {
-            throw new Error(`Failed to fetch stats_summary.json: ${response.statusText}`);
+        console.log("Fetching player data and guess statistics...");
+        const [statsResponse, guessesSnapshot] = await Promise.all([
+            fetch('stats_summary.json'),
+            getDocs(collection(db, 'guesses'))
+        ]);
+
+        if (!statsResponse.ok) {
+            throw new Error(`Failed to fetch stats_summary.json: ${statsResponse.statusText}`);
         }
-        const allPlayerData = await response.json();
+        
+        const allPlayerData = await statsResponse.json();
         console.log(`Successfully loaded ${allPlayerData.length} players from summary.`);
 
-        console.log("Fetching guess data...");
-        const guessesSnapshot = await getDocs(collection(db, 'guesses'));
         const allGuesses = guessesSnapshot.docs.map(doc => doc.data());
         console.log("Guess data processed.");
 

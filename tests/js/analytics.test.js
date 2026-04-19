@@ -82,6 +82,10 @@ describe('Analytics DOM tests', () => {
 
         // Let's verify standard fetch behavior
         expect(global.fetch).toHaveBeenCalledWith('stats_summary.json');
+        
+        // Ensure index.html is NO LONGER fetched
+        const calls = global.fetch.mock.calls.map(c => c[0]);
+        expect(calls).not.toContain('index.html');
     });
 
     it('should show error message if fetch fails', async () => {
