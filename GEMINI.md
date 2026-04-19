@@ -201,11 +201,11 @@ To use the puzzle generation tools:
 
 ## TODO
 
-### Performance Optimization
-*   **Lazy Loading:** Implement lazy loading for the archive gallery in `index.html` to improve initial load times as the puzzle collection grows.
+### Analytics Optimization
+*   **Analytics Optimization:** Pre-generate a `stats_summary.json` to avoid the browser scraping 160+ HTML files on every load.
 
-### SEO Improvements (Google Indexing) - COMPLETED 2026-04-15
-*   **Clean URLs:** Updated all `rel="canonical"` tags across 160+ historical `.html` files to point to clean URLs.
-*   **Internal Links:** Normalized all site-wide navigation (gallery, header, analytics) to use extensionless URLs.
-*   **Unique Meta Descriptions:** Standardized all historical pages with unique, player-specific meta descriptions.
-*   **Automation Update:** Modified `page-generator/html_generator.py` to automate these standards for all future puzzles.
+### Search Improvement
+*   **Search Improvement:** Utilize `stats_summary.json` to replace the current attribute-based gallery search on the main page with a faster, name-aware search.
+
+### Quiz Refactor (Part 2)
+*   **Quiz Refactor:** Split `quiz.js` into `UI` and `Share` modules.
