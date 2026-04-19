@@ -23,28 +23,19 @@ export async function initAnalytics() {
     const analyticsContent = document.getElementById('analytics-content');
 
     try {
-        console.log("Fetching player data...");
-        const indexResponse = await fetch('index.html');
-        const indexHtml = await indexResponse.text();
-        const parser = new DOMParser();
-        const indexDoc = parser.parseFromString(indexHtml, 'text/html');
+        console.log("Fetching player data and guess statistics...");
+        const [statsResponse, guessesSnapshot] = await Promise.all([
+            fetch('stats_summary.json'),
+            getDocs(collection(db, 'guesses'))
+        ]);
 
-        const detailPageLinks = Array.from(indexDoc.querySelectorAll('.gallery-item')).map(a => a.getAttribute('href'));
-
-        const allPlayerData = [];
-        for (const link of detailPageLinks) {
-            const detailResponse = await fetch(link);
-            const detailHtml = await detailResponse.text();
-            const detailDoc = parser.parseFromString(detailHtml, 'text/html');
-            const searchDataEl = detailDoc.getElementById('search-data');
-            if (searchDataEl) {
-                allPlayerData.push(JSON.parse(searchDataEl.textContent));
-            }
+        if (!statsResponse.ok) {
+            throw new Error(`Failed to fetch stats_summary.json: ${statsResponse.statusText}`);
         }
-        console.log("Player data processed.");
+        
+        const allPlayerData = await statsResponse.json();
+        console.log(`Successfully loaded ${allPlayerData.length} players from summary.`);
 
-        console.log("Fetching guess data...");
-        const guessesSnapshot = await getDocs(collection(db, 'guesses'));
         const allGuesses = guessesSnapshot.docs.map(doc => doc.data());
         console.log("Guess data processed.");
 

@@ -422,6 +422,7 @@ def rebuild_index_page(project_dir: Path):
         return
 
     gallery_tiles = []
+    stats_summary = []
     date_pattern = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.webp")
     
     team_name_map = {
@@ -449,10 +450,20 @@ def rebuild_index_page(project_dir: Path):
                 detail_page_path = project_dir / f"{date_str}.html"
                 search_terms: str = formatted_date.lower().replace(',', '') 
 
+                # Metadata for stats_summary
+                player_name = "Unknown"
+                teams = []
+                years = []
+
                 if detail_page_path.exists():
                     with open(detail_page_path, 'r', encoding='utf-8') as detail_f:
                         detail_soup = BeautifulSoup(detail_f, 'html.parser')
                     
+                    # Extract name from <h2>
+                    h2_el = detail_soup.find('h2')
+                    if h2_el:
+                        player_name = h2_el.get_text(strip=True)
+
                     search_data_div = detail_soup.find('div', id='search-data')
                     if search_data_div:
                         search_data_str = search_data_div.string or "{}"
@@ -466,6 +477,14 @@ def rebuild_index_page(project_dir: Path):
                         for team_abbr in teams:
                             if team_abbr in team_name_map:
                                 search_terms = f"{search_terms} {team_name_map.get(team_abbr, '')}"
+
+                # Collect into stats_summary
+                stats_summary.append({
+                    'date': date_str,
+                    'name': player_name,
+                    'teams': teams,
+                    'years': years
+                })
 
                 # Generate the gallery card snippet
                 snippet = generate_gallery_snippet(i, date_str, formatted_date, search_terms)
@@ -515,3 +534,9 @@ def rebuild_index_page(project_dir: Path):
         f.write(soup.prettify())
         
     print("✅ index.html rebuilt successfully.")
+
+    # Save the consolidated stats
+    stats_path = project_dir / "stats_summary.json"
+    with open(stats_path, 'w', encoding='utf-8') as f:
+        json.dump(stats_summary, f, indent=2)
+    print(f"✅ stats_summary.json generated with {len(stats_summary)} entries.")
