@@ -201,7 +201,7 @@ To use the puzzle generation tools:
 
 ## TODO
 
-### Analytics Optimization
+### Analytics Optimization (COMPLETED 2026-04-19)
 *   **Analytics Optimization:** Pre-generate a `stats_summary.json` to avoid the browser scraping 160+ HTML files on every load.
 
 ### Search Improvement
