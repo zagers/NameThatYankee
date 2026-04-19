@@ -2,7 +2,14 @@
 
 ## Journal
 
-### 2026-04-17: Quiz Engine Refactor - "Pragmatic Brain"
+### 2026-04-19: Analytics Optimization & Data Pre-generation - \"Instant Pulse\"
+*   **Performance Breakthrough:** Eliminated runtime scraping of 167+ HTML files. The analytics dashboard now loads from a single `stats_summary.json` file generated during the automated build process.
+*   **Data Aggregation:** Updated `html_generator.py` to extract player names, teams, and years during the `rebuild_index_page` loop. This consolidated metadata is saved as `stats_summary.json` in the root.
+*   **Parallel Fetching:** Refactored `js/analytics.js` to fetch player data and Firebase guess data in parallel using `Promise.all`, further reducing perceived latency.
+*   **Search Foundation:** Included player names in the JSON summary to support future, higher-performance search improvements on the archive gallery.
+*   **Verification:** Verified the fix with 288+ green tests across all layers (Python, JS, E2E, Automation).
+
+### 2026-04-17: Quiz Engine Refactor - \"Pragmatic Brain\"
 *   **Decoupling Logic:** Successfully extracted core trivia game mechanics from `js/quiz.js` into a standalone, testable `QuizEngine` class in `js/quizEngine.js`.
 *   **Testability ROI:** Added 7 pure unit tests for the engine, achieving 100x faster execution for logic verification by eliminating JSDOM/DOM scraping dependencies for core rules.
 *   **Security & Integrity:** Implemented Private Class Fields (`#answer`, `#nickname`) to prevent easy console peeking. Established a "Calculator" pattern where the engine returns status objects to the UI.
