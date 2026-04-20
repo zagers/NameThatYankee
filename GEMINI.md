@@ -204,8 +204,8 @@ To use the puzzle generation tools:
 ### Analytics Optimization (COMPLETED 2026-04-19)
 *   **Analytics Optimization:** Pre-generate a `stats_summary.json` to avoid the browser scraping 160+ HTML files on every load.
 
-### Search Improvement
-*   **Search Improvement:** Utilize `stats_summary.json` to replace the current attribute-based gallery search on the main page with a faster, name-aware search.
+### Search Improvement (COMPLETED 2026-04-20)
+*   **Search Improvement:** Utilized `stats_summary.json` to replace the current attribute-based gallery search on the main page with a faster, name-aware search.
 
 ### Quiz Refactor (Part 2)
 *   **Quiz Refactor:** Split `quiz.js` into `UI` and `Share` modules.
