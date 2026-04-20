@@ -10,57 +10,7 @@ import requests  # pyre-ignore[21]
 from urllib.parse import urlparse
 from pathlib import Path
 from axe_playwright_python.sync_playwright import Axe  # pyre-ignore[21]
-
-# --- Test Configuration ---
-PROJECT_ROOT = Path(__file__).parent
-TEST_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "www"
-BASE_URL = "http://localhost:8001/"
-DETAIL_PAGE_URL = "http://localhost:8001/2000-01-01"
-QUIZ_URL = "http://localhost:8001/quiz.html"
-ANALYTICS_URL = "http://localhost:8001/analytics.html"
-
-# --- Test Setup (Fixture) ---
-@pytest.fixture(scope="session", autouse=True)
-def check_web_server():
-    """Starts the web server before running tests and stops it after."""
-    import socket
-    
-    # Check if port is already in use
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    result = sock.connect_ex(('127.0.0.1', 8001))
-    sock.close()
-    
-    # Start the server using our custom serve.py which supports clean URLs
-    # We copy serve.py to the fixture dir or just run it from root pointing to fixture dir
-    server_process = subprocess.Popen(
-        ["python3", str(PROJECT_ROOT / "serve.py")],
-        env={**os.environ, "PORT": "8001", "DIRECTORY": str(TEST_FIXTURE_DIR)},
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-
-    # Wait up to 15 seconds for the server to become responsive
-    for _ in range(30):
-        try:
-            response = requests.get(BASE_URL, timeout=1)
-            if response.status_code == 200:
-                print(f"\n✅  Web server running at {BASE_URL}")
-                break
-        except requests.exceptions.RequestException:
-            pass
-        time.sleep(0.5)
-    else:
-        server_process.kill()
-        pytest.fail(f"❌  Web server failed to start at {BASE_URL}")
-
-    yield
-
-    server_process.terminate()
-    try:
-        server_process.wait(timeout=5)
-    except subprocess.TimeoutExpired:
-        server_process.kill()
-    print(f"\n🛑  Web server at {BASE_URL} stopped.")
+from tests.test_config import BASE_URL, DETAIL_PAGE_URL, QUIZ_URL, ANALYTICS_URL
 
 @pytest.fixture(scope="session")
 def browser_context_args(browser_context_args):
@@ -114,7 +64,7 @@ class TestCleanURLNavigation:
     def test_gallery_item_navigation(self, page: Page):
         # Instead of clicking whatever is first (which might be a real date not in fixtures)
         # We navigate directly to our stable test fixture clean URL
-        test_slug = "2000-01-01"
+        test_slug = "2026-04-19"
         page.goto(f"{BASE_URL}{test_slug}")
         page.wait_for_load_state("networkidle")
         
@@ -125,7 +75,7 @@ class TestCleanURLNavigation:
         expect(page.locator("h1")).to_contain_text("The answer for")
 
     def test_reveal_link_navigation(self, page: Page):
-        test_slug = "2000-01-01"
+        test_slug = "2026-04-19"
         # Verify mapping for another clean URL
         page.goto(f"{BASE_URL}{test_slug}")
         page.wait_for_load_state("networkidle")
@@ -255,7 +205,7 @@ class TestSearchFunctionality:
 
 class TestQuizFunctionality:
     def test_quiz_page_loads_correctly(self, page: Page):
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         expect(page.locator("#clue-image")).to_be_visible()
         expect(page.locator("#guess-input")).to_be_visible()
@@ -265,7 +215,7 @@ class TestQuizFunctionality:
     def test_quiz_scoring_system(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         total_score_locator = page.locator("#total-score")
         initial_score = int(total_score_locator.inner_text())
@@ -286,7 +236,7 @@ class TestQuizFunctionality:
     def test_hint_system(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         page.locator("#request-hint").click()
         
@@ -299,7 +249,7 @@ class TestQuizFunctionality:
     def test_max_guesses_limit(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         guess_input = page.locator("#guess-input")
         wrong_guesses = ["Aaron Judge", "Derek Jeter", "Babe Ruth", "Lou Gehrig"]
@@ -322,7 +272,7 @@ class TestQuizFunctionality:
     def test_incorrect_guesses_chart(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         page.locator("#show-guesses-btn").click()
         
@@ -339,7 +289,7 @@ class TestQuizFunctionality:
     def test_input_validation(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         guess_input = page.locator("#guess-input")
         guess_input.fill("")
@@ -357,7 +307,7 @@ class TestQuizFunctionality:
     def test_share_button_visibility(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         # Mocking or using actual autocomplete would be better, but we just need a correct guess
         guess_input = page.locator("#guess-input")
@@ -378,7 +328,7 @@ class TestQuizFunctionality:
     def test_share_button_on_failure(self, page: Page):
         page.goto(BASE_URL)
         page.evaluate("window.localStorage.clear();")
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
         page.locator("#give-up-btn").click()
         
@@ -580,7 +530,7 @@ class TestUtilities:
     def test_accessibility_basic(self, page: Page):
         urls_to_test = [
             BASE_URL,
-            f"{QUIZ_URL}?date=2000-01-01",
+            f"{QUIZ_URL}?date=2026-04-19",
             ANALYTICS_URL
         ]
         
@@ -634,7 +584,7 @@ class TestVisualRegressions:
         assert_screenshot(page, "homepage.png")
 
     def test_quiz_visual(self, page: Page):
-        page.goto(f"{QUIZ_URL}?date=2000-01-01")
+        page.goto(f"{QUIZ_URL}?date=2026-04-19")
         page.wait_for_timeout(2000)
         assert_screenshot(page, "quiz-page.png")
         
