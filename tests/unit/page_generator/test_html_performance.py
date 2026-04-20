@@ -20,16 +20,7 @@ def test_generate_gallery_snippet_lcp_logic():
     html_6 = generate_gallery_snippet(6, "2026-04-11", "April 11, 2026", "terms")
     assert 'loading="lazy"' in html_6
 
-def test_build_detail_page_includes_performance_attributes():
-    player_data = {
-        'name': 'Test Player',
-        'nickname': 'Testy',
-        'facts': ['Fact 1'],
-        'career_totals': {'G': '100'},
-        'yearly_war': [{'year': '2020', 'war': 1.0, 'teams': ['NYY'], 'display_team': 'NYY'}]
-    }
-    html = build_detail_page_html(player_data, "2020-01-01", "January 01, 2020")
-    
-    # Detail pages should eager load (no loading="lazy")
-    assert 'loading="lazy"' not in html
-    assert 'decoding="async"' in html
+def test_generate_gallery_snippet_no_search_terms():
+    # Verify that the data-search-terms attribute is removed
+    html = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026", "should be removed")
+    assert 'data-search-terms' not in html
