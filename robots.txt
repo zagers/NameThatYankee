@@ -1,5 +1,6 @@
 # robots.txt for https://namethatyankeequiz.com
 User-agent: *
 Allow: /
+Disallow: /*?date=
 
 Sitemap: https://namethatyankeequiz.com/sitemap.xml
