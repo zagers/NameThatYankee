@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="canonical" href="https://namethatyankeequiz.com/quiz">
     <title>Name That Yankee - Quiz</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
@@ -31,7 +30,13 @@
             const canonical = document.createElement('link');
             canonical.rel = 'canonical';
             if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
-                canonical.href = 'https://namethatyankeequiz.com/quiz?date=' + date;
+                // Point canonical to the Reveal page
+                canonical.href = 'https://namethatyankeequiz.com/' + date;
+                // Add noindex for dated quiz pages
+                const meta = document.createElement('meta');
+                meta.name = 'robots';
+                meta.content = 'noindex';
+                document.head.appendChild(meta);
             } else {
                 canonical.href = 'https://namethatyankeequiz.com/quiz';
             }
