@@ -1,7 +1,8 @@
 [
   {
     "date": "2026-04-19",
-    "name": "Lou Piniella \"Sweet Lou\"",
+    "name": "Lou Piniella",
+    "nickname": "Sweet Lou",
     "teams": [
       "NYY",
       "BAL",
@@ -32,6 +33,7 @@
   {
     "date": "2026-04-18",
     "name": "Fran Healy",
+    "nickname": "",
     "teams": [
       "NYY",
       "KCR",
@@ -52,6 +54,7 @@
   {
     "date": "2026-04-17",
     "name": "Larry Gura",
+    "nickname": "",
     "teams": [
       "NYY",
       "KCR",
@@ -79,6 +82,7 @@
   {
     "date": "2026-04-16",
     "name": "Mike Witt",
+    "nickname": "",
     "teams": [
       "NYY",
       "CAL"
@@ -100,7 +104,8 @@
   },
   {
     "date": "2026-04-15",
-    "name": "Mickey Rivers \"Mick the Quick\"",
+    "name": "Mickey Rivers",
+    "nickname": "Mick the Quick",
     "teams": [
       "TEX",
       "CAL",
@@ -126,7 +131,8 @@
   },
   {
     "date": "2026-04-14",
-    "name": "Don Baylor \"Groove\"",
+    "name": "Don Baylor",
+    "nickname": "Groove",
     "teams": [
       "MIN",
       "CAL",
@@ -159,7 +165,8 @@
   },
   {
     "date": "2026-04-13",
-    "name": "Reggie Jackson \"Mr. October\"",
+    "name": "Reggie Jackson",
+    "nickname": "Mr. October",
     "teams": [
       "NYY",
       "KCA",
@@ -193,7 +200,8 @@
   },
   {
     "date": "2026-04-12",
-    "name": "Shelley Duncan \"Shelley\"",
+    "name": "Shelley Duncan",
+    "nickname": "Shelley",
     "teams": [
       "CLE",
       "NYY",
@@ -212,6 +220,7 @@
   {
     "date": "2026-04-10",
     "name": "Bubba Trammell",
+    "nickname": "",
     "teams": [
       "NYM",
       "DET",
@@ -232,6 +241,7 @@
   {
     "date": "2026-04-09",
     "name": "Randy Velarde",
+    "nickname": "",
     "teams": [
       "CAL",
       "NYY",
@@ -260,7 +270,8 @@
   },
   {
     "date": "2026-04-08",
-    "name": "Jos\u00e9 Canseco \"The Chemist\"",
+    "name": "Jos\u00e9 Canseco",
+    "nickname": "The Chemist",
     "teams": [
       "OAK",
       "TOR",
@@ -292,7 +303,8 @@
   },
   {
     "date": "2026-04-07",
-    "name": "Rickey Henderson \"Man of Steal\"",
+    "name": "Rickey Henderson",
+    "nickname": "Man of Steal",
     "teams": [
       "OAK",
       "ANA",
@@ -335,6 +347,7 @@
   {
     "date": "2026-04-05",
     "name": "Austin Slater",
+    "nickname": "",
     "teams": [
       "CIN",
       "NYY",
@@ -360,6 +373,7 @@
   {
     "date": "2026-04-04",
     "name": "Mark Hutton",
+    "nickname": "",
     "teams": [
       "CIN",
       "COL",
@@ -376,7 +390,8 @@
   },
   {
     "date": "2026-04-03",
-    "name": "Jon Berti \"Birdman\"",
+    "name": "Jon Berti",
+    "nickname": "Birdman",
     "teams": [
       "NYY",
       "MIA",
@@ -396,7 +411,8 @@
   },
   {
     "date": "2026-04-01",
-    "name": "Mike Morgan \"The Nomad\"",
+    "name": "Mike Morgan",
+    "nickname": "The Nomad",
     "teams": [
       "OAK",
       "LAD",
@@ -439,6 +455,7 @@
   {
     "date": "2026-03-31",
     "name": "Ken Clay",
+    "nickname": "",
     "teams": [
       "SEA",
       "NYY",
@@ -454,7 +471,8 @@
   },
   {
     "date": "2026-03-30",
-    "name": "David Weathers \"Stormy\"",
+    "name": "David Weathers",
+    "nickname": "Stormy",
     "teams": [
       "TOR",
       "NYY",
@@ -490,7 +508,8 @@
   },
   {
     "date": "2026-03-27",
-    "name": "Joe DiMaggio \"Joltin' Joe, The Yankee Clipper\"",
+    "name": "Joe DiMaggio",
+    "nickname": "Joltin' Joe, The Yankee Clipper",
     "teams": [
       "NYY"
     ],
@@ -513,6 +532,7 @@
   {
     "date": "2026-03-22",
     "name": "Aaron Boone",
+    "nickname": "",
     "teams": [
       "WSN",
       "FLA",
@@ -538,7 +558,8 @@
   },
   {
     "date": "2026-03-19",
-    "name": "Paul Goldschmidt \"Goldy\"",
+    "name": "Paul Goldschmidt",
+    "nickname": "Goldy",
     "teams": [
       "STL",
       "NYY",
@@ -565,6 +586,7 @@
   {
     "date": "2026-03-18",
     "name": "Fernando Cruz",
+    "nickname": "",
     "teams": [
       "NYY",
       "CIN"
@@ -578,7 +600,8 @@
   },
   {
     "date": "2026-03-15",
-    "name": "Trent Grisham \"Grish\"",
+    "name": "Trent Grisham",
+    "nickname": "Grish",
     "teams": [
       "NYY",
       "MIL",
@@ -597,6 +620,7 @@
   {
     "date": "2026-03-11",
     "name": "Jos\u00e9 Caballero",
+    "nickname": "",
     "teams": [
       "TBR",
       "NYY",
@@ -611,6 +635,7 @@
   {
     "date": "2026-03-06",
     "name": "Paul Blackburn",
+    "nickname": "",
     "teams": [
       "NYM",
       "OAK",
@@ -631,6 +656,7 @@
   {
     "date": "2026-03-05",
     "name": "Duke Ellis",
+    "nickname": "",
     "teams": [
       "NYY",
       "CHW"
@@ -642,6 +668,7 @@
   {
     "date": "2026-02-28",
     "name": "Amed Rosario",
+    "nickname": "",
     "teams": [
       "WSN",
       "NYM",
@@ -667,6 +694,7 @@
   {
     "date": "2025-09-28",
     "name": "Zach Britton",
+    "nickname": "",
     "teams": [
       "NYY",
       "BAL"
@@ -688,7 +716,8 @@
   },
   {
     "date": "2025-09-27",
-    "name": "Bobby Shantz \"The Little Lefty\"",
+    "name": "Bobby Shantz",
+    "nickname": "The Little Lefty",
     "teams": [
       "NYY",
       "STL",
@@ -720,7 +749,8 @@
   },
   {
     "date": "2025-09-26",
-    "name": "Gene Woodling \"Old Faithful\"",
+    "name": "Gene Woodling",
+    "nickname": "Old Faithful",
     "teams": [
       "CLE",
       "NYY",
@@ -752,6 +782,7 @@
   {
     "date": "2025-09-25",
     "name": "Richard Dotson",
+    "nickname": "",
     "teams": [
       "NYY",
       "KCR",
@@ -775,6 +806,7 @@
   {
     "date": "2025-09-24",
     "name": "Joel Skinner",
+    "nickname": "",
     "teams": [
       "NYY",
       "CLE",
@@ -794,7 +826,8 @@
   },
   {
     "date": "2025-09-23",
-    "name": "Nick Swisher \"Swish\"",
+    "name": "Nick Swisher",
+    "nickname": "Swish",
     "teams": [
       "NYY",
       "CLE",
@@ -819,7 +852,8 @@
   },
   {
     "date": "2025-09-21",
-    "name": "Mike Mussina \"Moose\"",
+    "name": "Mike Mussina",
+    "nickname": "Moose",
     "teams": [
       "NYY",
       "BAL"
@@ -848,6 +882,7 @@
   {
     "date": "2025-09-20",
     "name": "Elliott Maddox",
+    "nickname": "",
     "teams": [
       "TEX",
       "NYY",
@@ -872,7 +907,8 @@
   },
   {
     "date": "2025-09-19",
-    "name": "Paul Blair \"Motormouth\"",
+    "name": "Paul Blair",
+    "nickname": "Motormouth",
     "teams": [
       "NYY",
       "BAL",
@@ -900,7 +936,8 @@
   },
   {
     "date": "2025-09-17",
-    "name": "Vernon Gomez \"Lefty\"",
+    "name": "Vernon Gomez",
+    "nickname": "Lefty",
     "teams": [
       "WSH",
       "NYY"
@@ -924,7 +961,8 @@
   },
   {
     "date": "2025-09-16",
-    "name": "Ron Davis \"The Vulture\"",
+    "name": "Ron Davis",
+    "nickname": "The Vulture",
     "teams": [
       "SFG",
       "LAD",
@@ -949,6 +987,7 @@
   {
     "date": "2025-09-15",
     "name": "Roy Smalley III",
+    "nickname": "",
     "teams": [
       "NYY",
       "CHW",
@@ -973,7 +1012,8 @@
   },
   {
     "date": "2025-09-13",
-    "name": "Bill Monbouquette \"Monbo\"",
+    "name": "Bill Monbouquette",
+    "nickname": "Monbo",
     "teams": [
       "DET",
       "BOS",
@@ -996,7 +1036,8 @@
   },
   {
     "date": "2025-09-10",
-    "name": "Cecil Fielder \"Big Daddy\"",
+    "name": "Cecil Fielder",
+    "nickname": "Big Daddy",
     "teams": [
       "TOR",
       "DET",
@@ -1022,7 +1063,8 @@
   },
   {
     "date": "2025-09-09",
-    "name": "Joba Chamberlain \"Joba\"",
+    "name": "Joba Chamberlain",
+    "nickname": "Joba",
     "teams": [
       "DET",
       "CLE",
@@ -1044,7 +1086,8 @@
   },
   {
     "date": "2025-09-07",
-    "name": "Don Mattingly \"Donnie Baseball\"",
+    "name": "Don Mattingly",
+    "nickname": "Donnie Baseball",
     "teams": [
       "NYY"
     ],
@@ -1068,6 +1111,7 @@
   {
     "date": "2025-09-06",
     "name": "Bob MacDonald",
+    "nickname": "",
     "teams": [
       "DET",
       "NYM",
@@ -1086,6 +1130,7 @@
   {
     "date": "2025-09-05",
     "name": "Alberto Castillo",
+    "nickname": "",
     "teams": [
       "NYM",
       "NYY",
@@ -1113,7 +1158,8 @@
   },
   {
     "date": "2025-09-04",
-    "name": "Jim Bouton \"Bulldog\"",
+    "name": "Jim Bouton",
+    "nickname": "Bulldog",
     "teams": [
       "SEP",
       "HOU",
@@ -1135,7 +1181,8 @@
   },
   {
     "date": "2025-09-03",
-    "name": "Lance Berkman \"Big Puma\"",
+    "name": "Lance Berkman",
+    "nickname": "Big Puma",
     "teams": [
       "HOU",
       "TEX",
@@ -1163,6 +1210,7 @@
   {
     "date": "2025-09-02",
     "name": "Marwin Gonz\u00e1lez",
+    "nickname": "",
     "teams": [
       "HOU",
       "MIN",
@@ -1185,7 +1233,8 @@
   },
   {
     "date": "2025-08-31",
-    "name": "Orlando Hern\u00e1ndez \"El Duque\"",
+    "name": "Orlando Hern\u00e1ndez",
+    "nickname": "El Duque",
     "teams": [
       "CHW",
       "ARI",
@@ -1206,7 +1255,8 @@
   },
   {
     "date": "2025-08-30",
-    "name": "Andrew Arthur Carey \"Handy Andy\"",
+    "name": "Andrew Arthur Carey",
+    "nickname": "Handy Andy",
     "teams": [
       "NYY",
       "KCA",
@@ -1229,7 +1279,8 @@
   },
   {
     "date": "2025-08-29",
-    "name": "Ron Kittle \"Kitty\"",
+    "name": "Ron Kittle",
+    "nickname": "Kitty",
     "teams": [
       "CLE",
       "NYY",
@@ -1252,6 +1303,7 @@
   {
     "date": "2025-08-28",
     "name": "Dan Pasqua",
+    "nickname": "",
     "teams": [
       "NYY",
       "CHW"
@@ -1271,7 +1323,8 @@
   },
   {
     "date": "2025-08-27",
-    "name": "Graig Nettles \"Puff\"",
+    "name": "Graig Nettles",
+    "nickname": "Puff",
     "teams": [
       "ATL",
       "MIN",
@@ -1308,6 +1361,7 @@
   {
     "date": "2025-08-26",
     "name": "Ricky Bones",
+    "nickname": "",
     "teams": [
       "SDP",
       "NYY",
@@ -1333,7 +1387,8 @@
   },
   {
     "date": "2025-08-25",
-    "name": "Tim Raines \"Rock\"",
+    "name": "Tim Raines",
+    "nickname": "Rock",
     "teams": [
       "MON",
       "BAL",
@@ -1371,6 +1426,7 @@
   {
     "date": "2025-08-23",
     "name": "Danny Cater",
+    "nickname": "",
     "teams": [
       "BOS",
       "STL",
@@ -1397,7 +1453,8 @@
   },
   {
     "date": "2025-08-22",
-    "name": "Luis Tiant \"El Tiante\"",
+    "name": "Luis Tiant",
+    "nickname": "El Tiante",
     "teams": [
       "BOS",
       "NYY",
@@ -1431,6 +1488,7 @@
   {
     "date": "2025-08-20",
     "name": "Phil Linz",
+    "nickname": "",
     "teams": [
       "NYM",
       "NYY",
@@ -1449,6 +1507,7 @@
   {
     "date": "2025-08-19",
     "name": "Bobby Richardson",
+    "nickname": "",
     "teams": [
       "NYY"
     ],
@@ -1470,6 +1529,7 @@
   {
     "date": "2025-08-17",
     "name": "Bill White",
+    "nickname": "",
     "teams": [
       "STL",
       "PHI",
@@ -1494,7 +1554,8 @@
   },
   {
     "date": "2025-08-15",
-    "name": "Lindy McDaniel \"Lindy\"",
+    "name": "Lindy McDaniel",
+    "nickname": "Lindy",
     "teams": [
       "CHC",
       "SFG",
@@ -1528,7 +1589,8 @@
   },
   {
     "date": "2025-08-13",
-    "name": "Jeff Reardon \"The Terminator\"",
+    "name": "Jeff Reardon",
+    "nickname": "The Terminator",
     "teams": [
       "MIN",
       "CIN",
@@ -1560,6 +1622,7 @@
   {
     "date": "2025-08-12",
     "name": "Kevin Maas",
+    "nickname": "",
     "teams": [
       "MIN",
       "NYY"
@@ -1575,6 +1638,7 @@
   {
     "date": "2025-08-11",
     "name": "Phil Hughes",
+    "nickname": "",
     "teams": [
       "MIN",
       "NYY",
@@ -1597,7 +1661,8 @@
   },
   {
     "date": "2025-08-10",
-    "name": "Andy Pettitte \"Petey\"",
+    "name": "Andy Pettitte",
+    "nickname": "Petey",
     "teams": [
       "HOU",
       "NYY"
@@ -1625,7 +1690,8 @@
   },
   {
     "date": "2025-08-09",
-    "name": "Bob Watson \"The Bull\"",
+    "name": "Bob Watson",
+    "nickname": "The Bull",
     "teams": [
       "HOU",
       "BOS",
@@ -1657,6 +1723,7 @@
   {
     "date": "2025-08-06",
     "name": "Mark Leiter",
+    "nickname": "",
     "teams": [
       "SFG",
       "DET",
@@ -1684,6 +1751,7 @@
   {
     "date": "2025-08-05",
     "name": "Wayne Tolleson",
+    "nickname": "",
     "teams": [
       "TOR",
       "BAL",
@@ -1699,6 +1767,7 @@
   {
     "date": "2025-08-04",
     "name": "Billy Sample",
+    "nickname": "",
     "teams": [
       "NYY",
       "ATL",
@@ -1718,7 +1787,8 @@
   },
   {
     "date": "2025-08-03",
-    "name": "Jorge Posada \"Jorgie\"",
+    "name": "Jorge Posada",
+    "nickname": "Jorgie",
     "teams": [
       "NYY"
     ],
@@ -1745,6 +1815,7 @@
   {
     "date": "2025-08-02",
     "name": "Randy Choate",
+    "nickname": "",
     "teams": [
       "LAD",
       "FLA",
@@ -1775,6 +1846,7 @@
   {
     "date": "2025-08-01",
     "name": "Mike Lowell",
+    "nickname": "",
     "teams": [
       "NYY",
       "BOS",
@@ -1799,6 +1871,7 @@
   {
     "date": "2025-07-31",
     "name": "Sam Militello",
+    "nickname": "",
     "teams": [
       "NYY"
     ],
@@ -1810,6 +1883,7 @@
   {
     "date": "2025-07-30",
     "name": "Rey S\u00e1nchez",
+    "nickname": "",
     "teams": [
       "SEA",
       "TBD",
@@ -1842,6 +1916,7 @@
   {
     "date": "2025-07-29",
     "name": "Randy Choate",
+    "nickname": "",
     "teams": [
       "LAD",
       "FLA",
@@ -1872,6 +1947,7 @@
   {
     "date": "2025-07-28",
     "name": "Roy White",
+    "nickname": "",
     "teams": [
       "NYY"
     ],
@@ -1895,7 +1971,8 @@
   },
   {
     "date": "2025-07-27",
-    "name": "Ronald Torreyes \"Toe\"",
+    "name": "Ronald Torreyes",
+    "nickname": "Toe",
     "teams": [
       "NYY",
       "PHI",
@@ -1914,7 +1991,8 @@
   },
   {
     "date": "2025-07-26",
-    "name": "Al Holland \"Mr. T\"",
+    "name": "Al Holland",
+    "nickname": "Mr. T",
     "teams": [
       "SFG",
       "NYY",
@@ -1939,6 +2017,7 @@
   {
     "date": "2025-07-23",
     "name": "Dale Murray",
+    "nickname": "",
     "teams": [
       "MON",
       "NYM",
@@ -1965,6 +2044,7 @@
   {
     "date": "2025-07-22",
     "name": "Brandon Drury",
+    "nickname": "",
     "teams": [
       "ARI",
       "LAA",
@@ -1990,6 +2070,7 @@
   {
     "date": "2025-07-21",
     "name": "Vernon Wells",
+    "nickname": "",
     "teams": [
       "NYY",
       "TOR",
@@ -2016,6 +2097,7 @@
   {
     "date": "2025-07-20",
     "name": "Clete Boyer",
+    "nickname": "",
     "teams": [
       "NYY",
       "ATL",
@@ -2043,6 +2125,7 @@
   {
     "date": "2025-07-19",
     "name": "Paul Zuvella",
+    "nickname": "",
     "teams": [
       "NYY",
       "ATL",
@@ -2064,6 +2147,7 @@
   {
     "date": "2025-07-18",
     "name": "Mark Wohlers",
+    "nickname": "",
     "teams": [
       "NYY",
       "CIN",
@@ -2087,7 +2171,8 @@
   },
   {
     "date": "2025-07-13",
-    "name": "Joe Pepitone \"Pepi\"",
+    "name": "Joe Pepitone",
+    "nickname": "Pepi",
     "teams": [
       "NYY",
       "CHC",
@@ -2112,6 +2197,7 @@
   {
     "date": "2025-07-12",
     "name": "Jay Johnstone",
+    "nickname": "",
     "teams": [
       "PHI",
       "LAD",
@@ -2146,7 +2232,8 @@
   },
   {
     "date": "2025-07-11",
-    "name": "Rick Reuschel \"Big Daddy\"",
+    "name": "Rick Reuschel",
+    "nickname": "Big Daddy",
     "teams": [
       "NYY",
       "CHC",
@@ -2178,6 +2265,7 @@
   {
     "date": "2025-07-10",
     "name": "Luis Sojo",
+    "nickname": "",
     "teams": [
       "SEA",
       "CAL",
@@ -2204,6 +2292,7 @@
   {
     "date": "2025-07-09",
     "name": "Jim Beattie",
+    "nickname": "",
     "teams": [
       "NYY",
       "SEA"
@@ -2222,7 +2311,8 @@
   },
   {
     "date": "2025-07-08",
-    "name": "Jay Buhner \"Bone\"",
+    "name": "Jay Buhner",
+    "nickname": "Bone",
     "teams": [
       "NYY",
       "SEA"
@@ -2247,7 +2337,8 @@
   },
   {
     "date": "2025-07-06",
-    "name": "Darryl Strawberry \"Straw\"",
+    "name": "Darryl Strawberry",
+    "nickname": "Straw",
     "teams": [
       "LAD",
       "NYY",
@@ -2277,6 +2368,7 @@
   {
     "date": "2025-07-05",
     "name": "Daryl Boston",
+    "nickname": "",
     "teams": [
       "NYY",
       "CHW",
@@ -2300,6 +2392,7 @@
   {
     "date": "2025-07-04",
     "name": "Neil Allen",
+    "nickname": "",
     "teams": [
       "NYM",
       "STL",
@@ -2324,6 +2417,7 @@
   {
     "date": "2025-07-03",
     "name": "Lyle Overbay",
+    "nickname": "",
     "teams": [
       "ARI",
       "PIT",
@@ -2350,6 +2444,7 @@
   {
     "date": "2025-07-02",
     "name": "Jesse Barfield",
+    "nickname": "",
     "teams": [
       "NYY",
       "TOR"
@@ -2371,7 +2466,8 @@
   },
   {
     "date": "2025-07-01",
-    "name": "Paul Quantrill \"Q\"",
+    "name": "Paul Quantrill",
+    "nickname": "Q",
     "teams": [
       "PHI",
       "LAD",
@@ -2401,7 +2497,8 @@
   },
   {
     "date": "2025-06-30",
-    "name": "Roger Clemens \"Rocket\"",
+    "name": "Roger Clemens",
+    "nickname": "Rocket",
     "teams": [
       "NYY",
       "TOR",
@@ -2438,6 +2535,7 @@
   {
     "date": "2025-06-29",
     "name": "Steve Sax",
+    "nickname": "",
     "teams": [
       "NYY",
       "CHW",
@@ -2464,6 +2562,7 @@
   {
     "date": "2025-06-28",
     "name": "Al Downing",
+    "nickname": "",
     "teams": [
       "LAD",
       "NYY",
@@ -2492,7 +2591,8 @@
   },
   {
     "date": "2025-06-27",
-    "name": "Greg Cadaret \"The Caddy\"",
+    "name": "Greg Cadaret",
+    "nickname": "The Caddy",
     "teams": [
       "OAK",
       "ANA",
@@ -2519,6 +2619,7 @@
   {
     "date": "2025-06-25",
     "name": "Ken Griffey Sr.",
+    "nickname": "",
     "teams": [
       "NYY",
       "CIN",
@@ -2550,6 +2651,7 @@
   {
     "date": "2025-06-24",
     "name": "Mariano Duncan",
+    "nickname": "",
     "teams": [
       "PHI",
       "NYY",
@@ -2574,7 +2676,8 @@
   },
   {
     "date": "2025-06-23",
-    "name": "Paul O'Neill \"The Warrior\"",
+    "name": "Paul O'Neill",
+    "nickname": "The Warrior",
     "teams": [
       "NYY",
       "CIN"
@@ -2600,7 +2703,8 @@
   },
   {
     "date": "2025-06-21",
-    "name": "George Stirnweiss \"Snuffy\"",
+    "name": "George Stirnweiss",
+    "nickname": "Snuffy",
     "teams": [
       "NYY",
       "SLB",
@@ -2621,7 +2725,8 @@
   },
   {
     "date": "2025-06-20",
-    "name": "Eddie Lopat \"The Junkman\"",
+    "name": "Eddie Lopat",
+    "nickname": "The Junkman",
     "teams": [
       "NYY",
       "CHW",
@@ -2645,6 +2750,7 @@
   {
     "date": "2025-06-19",
     "name": "Jim Abbott",
+    "nickname": "",
     "teams": [
       "CAL",
       "CHW",
@@ -2667,6 +2773,7 @@
   {
     "date": "2025-06-18",
     "name": "Andrew Heaney",
+    "nickname": "",
     "teams": [
       "LAD",
       "LAA",
@@ -2692,7 +2799,8 @@
   },
   {
     "date": "2025-06-17",
-    "name": "Aaron Hicks \"A-A-Ron\"",
+    "name": "Aaron Hicks",
+    "nickname": "A-A-Ron",
     "teams": [
       "NYY",
       "LAA",
@@ -2717,6 +2825,7 @@
   {
     "date": "2025-06-16",
     "name": "Austin Romine",
+    "nickname": "",
     "teams": [
       "CIN",
       "2TM",
@@ -2743,6 +2852,7 @@
   {
     "date": "2025-06-15",
     "name": "Clay Bellinger",
+    "nickname": "",
     "teams": [
       "ANA",
       "NYY"
@@ -2756,7 +2866,8 @@
   },
   {
     "date": "2025-06-13",
-    "name": "George Scott \"The Boomer\"",
+    "name": "George Scott",
+    "nickname": "The Boomer",
     "teams": [
       "NYY",
       "MIL",
@@ -2783,6 +2894,7 @@
   {
     "date": "2025-06-12",
     "name": "Don Slaught",
+    "nickname": "",
     "teams": [
       "CAL",
       "CHW",
@@ -2814,6 +2926,7 @@
   {
     "date": "2025-06-11",
     "name": "Dick Howser",
+    "nickname": "",
     "teams": [
       "NYY",
       "CLE",
@@ -2832,7 +2945,8 @@
   },
   {
     "date": "2025-06-10",
-    "name": "Johnny Damon \"Caveman\"",
+    "name": "Johnny Damon",
+    "nickname": "Caveman",
     "teams": [
       "BOS",
       "KCR",
@@ -2865,7 +2979,8 @@
   },
   {
     "date": "2025-06-06",
-    "name": "Charles Herbert Ruffing \"Red\"",
+    "name": "Charles Herbert Ruffing",
+    "nickname": "Red",
     "teams": [
       "CHW",
       "BOS",
@@ -2898,7 +3013,8 @@
   },
   {
     "date": "2025-06-05",
-    "name": "Walt Williams \"No-Neck\"",
+    "name": "Walt Williams",
+    "nickname": "No-Neck",
     "teams": [
       "CLE",
       "CHW",
@@ -2921,6 +3037,7 @@
   {
     "date": "2025-06-04",
     "name": "Ron Hassey",
+    "nickname": "",
     "teams": [
       "CLE",
       "NYY",
@@ -2948,7 +3065,8 @@
   },
   {
     "date": "2025-06-03",
-    "name": "CC Sabathia \"CC\"",
+    "name": "CC Sabathia",
+    "nickname": "CC",
     "teams": [
       "MIL",
       "NYY",
@@ -2978,7 +3096,8 @@
   },
   {
     "date": "2025-05-28",
-    "name": "John Candelaria \"The Candy Man\"",
+    "name": "John Candelaria",
+    "nickname": "The Candy Man",
     "teams": [
       "LAD",
       "MIN",
@@ -3013,7 +3132,8 @@
   },
   {
     "date": "2025-05-27",
-    "name": "Mike Heath \"Heater\"",
+    "name": "Mike Heath",
+    "nickname": "Heater",
     "teams": [
       "OAK",
       "STL",
@@ -3040,7 +3160,8 @@
   },
   {
     "date": "2025-05-26",
-    "name": "Whitey Ford \"The Chairman of the Board\"",
+    "name": "Whitey Ford",
+    "nickname": "The Chairman of the Board",
     "teams": [
       "NYY"
     ],
@@ -3065,7 +3186,8 @@
   },
   {
     "date": "2025-05-25",
-    "name": "Phil Rizzuto \"The Scooter\"",
+    "name": "Phil Rizzuto",
+    "nickname": "The Scooter",
     "teams": [
       "NYY"
     ],
@@ -3087,7 +3209,8 @@
   },
   {
     "date": "2025-05-24",
-    "name": "Ralph Houk \"The Major\"",
+    "name": "Ralph Houk",
+    "nickname": "The Major",
     "teams": [
       "NYY"
     ],
@@ -3103,7 +3226,8 @@
   },
   {
     "date": "2025-05-23",
-    "name": "Jerry Coleman \"The Colonel\"",
+    "name": "Jerry Coleman",
+    "nickname": "The Colonel",
     "teams": [
       "NYY"
     ],
@@ -3121,7 +3245,8 @@
   },
   {
     "date": "2025-05-22",
-    "name": "George Medich \"Doc\"",
+    "name": "George Medich",
+    "nickname": "Doc",
     "teams": [
       "SEA",
       "NYY",
@@ -3149,6 +3274,7 @@
   {
     "date": "2025-05-21",
     "name": "Mike Stanley",
+    "nickname": "",
     "teams": [
       "TOR",
       "BOS",
@@ -3177,6 +3303,7 @@
   {
     "date": "2025-05-20",
     "name": "Willie Calhoun",
+    "nickname": "",
     "teams": [
       "LAA",
       "NYY",
@@ -3197,6 +3324,7 @@
   {
     "date": "2025-05-16",
     "name": "Kevin Elster",
+    "nickname": "",
     "teams": [
       "NYY",
       "PIT",
@@ -3224,6 +3352,7 @@
   {
     "date": "2025-05-14",
     "name": "Larry Milbourne",
+    "nickname": "",
     "teams": [
       "CLE",
       "NYY",
@@ -3249,6 +3378,7 @@
   {
     "date": "2025-05-13",
     "name": "Henry Cotto",
+    "nickname": "",
     "teams": [
       "NYY",
       "SEA",
@@ -3271,6 +3401,7 @@
   {
     "date": "2025-05-12",
     "name": "Russ Davis",
+    "nickname": "",
     "teams": [
       "SEA",
       "NYY",
@@ -3289,7 +3420,8 @@
   },
   {
     "date": "2025-05-11",
-    "name": "Jim Hunter \"Catfish\"",
+    "name": "Jim Hunter",
+    "nickname": "Catfish",
     "teams": [
       "OAK",
       "NYY",
@@ -3316,6 +3448,7 @@
   {
     "date": "2025-05-10",
     "name": "Stan Javier",
+    "nickname": "",
     "teams": [
       "LAD",
       "PHI",
@@ -3349,6 +3482,7 @@
   {
     "date": "2025-05-07",
     "name": "Andy Hawkins",
+    "nickname": "",
     "teams": [
       "NYY",
       "SDP",
@@ -3369,7 +3503,8 @@
   },
   {
     "date": "2025-05-06",
-    "name": "Kerry Wood \"Kid K\"",
+    "name": "Kerry Wood",
+    "nickname": "Kid K",
     "teams": [
       "CHC",
       "NYY",
@@ -3394,7 +3529,8 @@
   },
   {
     "date": "2025-05-05",
-    "name": "Dave Winfield \"Mr. May\"",
+    "name": "Dave Winfield",
+    "nickname": "Mr. May",
     "teams": [
       "CAL",
       "TOR",
@@ -3430,7 +3566,8 @@
   },
   {
     "date": "2025-05-04",
-    "name": "Wade Boggs \"Chicken Man\"",
+    "name": "Wade Boggs",
+    "nickname": "Chicken Man",
     "teams": [
       "BOS",
       "NYY",
@@ -3460,6 +3597,7 @@
   {
     "date": "2025-05-03",
     "name": "Reid Brignac",
+    "nickname": "",
     "teams": [
       "PHI",
       "TBR",
@@ -3483,6 +3621,7 @@
   {
     "date": "2025-05-02",
     "name": "Shane Spencer",
+    "nickname": "",
     "teams": [
       "CLE",
       "TEX",
@@ -3501,7 +3640,8 @@
   },
   {
     "date": "2025-04-30",
-    "name": "Gus Triandos \"The Big Bear\"",
+    "name": "Gus Triandos",
+    "nickname": "The Big Bear",
     "teams": [
       "BAL",
       "NYY",
@@ -3527,7 +3667,8 @@
   },
   {
     "date": "2025-04-29",
-    "name": "Sidney Ponson \"The Count\"",
+    "name": "Sidney Ponson",
+    "nickname": "The Count",
     "teams": [
       "NYY",
       "MIN",
@@ -3554,7 +3695,8 @@
   },
   {
     "date": "2025-04-28",
-    "name": "Brian Roberts \"B-Rob\"",
+    "name": "Brian Roberts",
+    "nickname": "B-Rob",
     "teams": [
       "NYY",
       "BAL"
@@ -3579,6 +3721,7 @@
   {
     "date": "2025-04-27",
     "name": "Bill Dickey",
+    "nickname": "",
     "teams": [
       "NYY"
     ],
@@ -3605,6 +3748,7 @@
   {
     "date": "2025-04-25",
     "name": "Ted Lilly",
+    "nickname": "",
     "teams": [
       "CHC",
       "MON",
@@ -3633,7 +3777,8 @@
   },
   {
     "date": "2025-04-23",
-    "name": "Joe Gordon \"Flash\"",
+    "name": "Joe Gordon",
+    "nickname": "Flash",
     "teams": [
       "CLE",
       "NYY"
@@ -3654,7 +3799,8 @@
   },
   {
     "date": "2025-04-22",
-    "name": "Fred Stanley \"Chicken\"",
+    "name": "Fred Stanley",
+    "nickname": "Chicken",
     "teams": [
       "CHC",
       "LAD",
@@ -3688,6 +3834,7 @@
   {
     "date": "2025-04-21",
     "name": "Enrique Wilson",
+    "nickname": "",
     "teams": [
       "CLE",
       "PIT",
@@ -3708,7 +3855,8 @@
   },
   {
     "date": "2025-04-20",
-    "name": "David Robertson \"D-Rob\"",
+    "name": "David Robertson",
+    "nickname": "D-Rob",
     "teams": [
       "CHC",
       "MIA",
@@ -3742,6 +3890,7 @@
   {
     "date": "2025-04-19",
     "name": "Richard Monteleone",
+    "nickname": "",
     "teams": [
       "NYY",
       "CAL",
@@ -3764,6 +3913,7 @@
   {
     "date": "2025-04-18",
     "name": "Dioner Navarro",
+    "nickname": "",
     "teams": [
       "TBR",
       "TBD",
@@ -3793,6 +3943,7 @@
   {
     "date": "2025-04-17",
     "name": "Ji-Man Choi",
+    "nickname": "",
     "teams": [
       "PIT",
       "SDP",
@@ -3814,7 +3965,8 @@
   },
   {
     "date": "2025-04-15",
-    "name": "John Mayberry \"Big John\"",
+    "name": "John Mayberry",
+    "nickname": "Big John",
     "teams": [
       "NYY",
       "HOU",
@@ -3841,7 +3993,8 @@
   },
   {
     "date": "2025-04-14",
-    "name": "Chris Chambliss \"Champ\"",
+    "name": "Chris Chambliss",
+    "nickname": "Champ",
     "teams": [
       "NYY",
       "CLE",
@@ -3869,7 +4022,8 @@
   },
   {
     "date": "2025-04-13",
-    "name": "Bob Melvin \"BoMel\"",
+    "name": "Bob Melvin",
+    "nickname": "BoMel",
     "teams": [
       "BOS",
       "SFG",
@@ -3894,7 +4048,8 @@
   },
   {
     "date": "2025-04-12",
-    "name": "Santos Alomar \"Sandy\"",
+    "name": "Santos Alomar",
+    "nickname": "Sandy",
     "teams": [
       "NYM",
       "MLN",
@@ -3925,6 +4080,7 @@
   {
     "date": "2025-04-11",
     "name": "Nick Johnson",
+    "nickname": "",
     "teams": [
       "MON",
       "WSN",
@@ -3948,6 +4104,7 @@
   {
     "date": "2025-04-09",
     "name": "Tom Tresh",
+    "nickname": "",
     "teams": [
       "NYY",
       "DET"
@@ -3966,7 +4123,8 @@
   },
   {
     "date": "2025-04-08",
-    "name": "Tony Clark \"Tony the Tiger\"",
+    "name": "Tony Clark",
+    "nickname": "Tony the Tiger",
     "teams": [
       "SDP",
       "BOS",
@@ -3995,7 +4153,8 @@
   },
   {
     "date": "2025-04-07",
-    "name": "Iv\u00e1n Nova \"Supernova\"",
+    "name": "Iv\u00e1n Nova",
+    "nickname": "Supernova",
     "teams": [
       "DET",
       "CHW",
@@ -4019,6 +4178,7 @@
   {
     "date": "2025-04-06",
     "name": "Ralph Terry",
+    "nickname": "",
     "teams": [
       "CLE",
       "NYM",
@@ -4042,7 +4202,8 @@
   },
   {
     "date": "2025-04-05",
-    "name": "Tim Foli \"Crazy Horse\"",
+    "name": "Tim Foli",
+    "nickname": "Crazy Horse",
     "teams": [
       "PIT",
       "CAL",
@@ -4073,6 +4234,7 @@
   {
     "date": "2025-04-04",
     "name": "Tony Kubek",
+    "nickname": "",
     "teams": [
       "NYY"
     ],
@@ -4091,6 +4253,7 @@
   {
     "date": "2025-04-03",
     "name": "Todd Greene",
+    "nickname": "",
     "teams": [
       "COL",
       "SFG",
@@ -4116,7 +4279,8 @@
   },
   {
     "date": "2025-04-02",
-    "name": "Ramiro Mendoza \"El Brujo\"",
+    "name": "Ramiro Mendoza",
+    "nickname": "El Brujo",
     "teams": [
       "BOS",
       "NYY"
@@ -4137,6 +4301,7 @@
   {
     "date": "2025-04-01",
     "name": "Scott Brosius",
+    "nickname": "",
     "teams": [
       "NYY",
       "OAK"
@@ -4157,7 +4322,8 @@
   },
   {
     "date": "2025-03-30",
-    "name": "Tony Lazzeri \"Poosh 'Em Up Tony\"",
+    "name": "Tony Lazzeri",
+    "nickname": "Poosh 'Em Up Tony",
     "teams": [
       "NYG",
       "CHC",
@@ -4183,7 +4349,8 @@
   },
   {
     "date": "2025-03-29",
-    "name": "James Edward Key \"Jimmy\"",
+    "name": "James Edward Key",
+    "nickname": "Jimmy",
     "teams": [
       "NYY",
       "TOR",
