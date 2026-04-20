@@ -1,3 +1,5 @@
+# ABOUTME: Global pytest configuration and shared fixtures for the Name That Yankee test suite.
+# ABOUTME: Manages the local web server lifecycle for E2E and integration tests.
 import sys
 import os
 import subprocess

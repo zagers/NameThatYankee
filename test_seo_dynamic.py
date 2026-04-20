@@ -1,3 +1,5 @@
+# ABOUTME: E2E tests for dynamic SEO metadata injection on the quiz page.
+# ABOUTME: Validates canonical tag redirection and robots noindex behavior for dated quizzes.
 import pytest
 from playwright.sync_api import Page, expect
 import re
