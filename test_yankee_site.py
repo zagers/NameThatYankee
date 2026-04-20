@@ -10,14 +10,7 @@ import requests  # pyre-ignore[21]
 from urllib.parse import urlparse
 from pathlib import Path
 from axe_playwright_python.sync_playwright import Axe  # pyre-ignore[21]
-
-# --- Test Configuration ---
-PROJECT_ROOT = Path(__file__).parent
-TEST_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "www"
-BASE_URL = "http://localhost:8001/"
-DETAIL_PAGE_URL = "http://localhost:8001/2026-04-19"
-QUIZ_URL = "http://localhost:8001/quiz.html"
-ANALYTICS_URL = "http://localhost:8001/analytics.html"
+from tests.test_config import BASE_URL, DETAIL_PAGE_URL, QUIZ_URL, ANALYTICS_URL
 
 @pytest.fixture(scope="session")
 def browser_context_args(browser_context_args):

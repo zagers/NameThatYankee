@@ -6,13 +6,12 @@ import subprocess
 import requests
 import time
 import pytest
+import socket
 from pathlib import Path
+from tests.test_config import PROJECT_ROOT, TEST_FIXTURE_DIR, BASE_URL
 
 # Provide access to the `page-generator` python modules during tests
-PROJECT_ROOT = Path(__file__).parent
 PAGE_GEN_DIR = PROJECT_ROOT / "page-generator"
-TEST_FIXTURE_DIR = PROJECT_ROOT / "tests" / "fixtures" / "www"
-BASE_URL = "http://localhost:8001/"
 
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PAGE_GEN_DIR))
@@ -21,12 +20,14 @@ sys.path.insert(0, str(PAGE_GEN_DIR))
 @pytest.fixture(scope="session", autouse=True)
 def check_web_server():
     """Starts the web server before running tests and stops it after."""
-    import socket
     
     # Check if port is already in use
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = sock.connect_ex(('127.0.0.1', 8001))
     sock.close()
+    
+    if result == 0:
+        pytest.fail("❌ Error: Port 8001 is already in use. Please stop any running web servers before running tests.")
     
     # Start the server using our custom serve.py which supports clean URLs
     server_process = subprocess.Popen(

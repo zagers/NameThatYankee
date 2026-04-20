@@ -4,11 +4,7 @@ import pytest
 from playwright.sync_api import Page, expect
 import re
 from pathlib import Path
-
-# Reuse the setup from test_yankee_site.py if possible, or just use the same port
-# Since we are in the same repo, we can probably just run it.
-
-BASE_URL = "http://localhost:8001"
+from tests.test_config import BASE_URL
 
 @pytest.mark.usefixtures("check_web_server")
 class TestDynamicSEO:
