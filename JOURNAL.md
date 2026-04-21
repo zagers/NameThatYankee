@@ -2,6 +2,12 @@
 
 ## Journal
 
+### 2026-04-20: Authority Funnel Smart Search - \"Identity Logic\"
+*   **Performance Optimization:** Replaced DOM-based search attributes with a 57KB `stats_summary.json` data layer. This reduced `index.html` size by 12% (~30KB) and consolidated all search metadata into a structured, easily maintainable format.
+*   **Smarter Filtering:** Implemented a tokenized search engine in `galleryFilter.js`. It now supports multi-category \"AND\" searches (e.g., \"April NYY\") and intelligent date matching (matching month names like \"July\" against numeric date strings).
+*   **Spoiler Protection:** Designed a conditional search logic that only matches player names and nicknames if the specific puzzle is marked as `completed` in `localStorage`. This allows the archive to serve as a searchable collection for solved puzzles without ruining the game for new ones.
+*   **Infrastructure:** Updated the Python generator to automatically extract nicknames and rebuild the site index with the new search-ready schema.
+*   **Verification:** Transitioned the test suite from legacy `data-search-terms` testing to a unified JSON-aware verification model. Achieved a 100% pass rate across 229 tests (including 5 new search logic E2E tests).
 ### 2026-04-20: CI/CD Optimization - \"Turn Expansion\"
 *   **Workflow Hardening:** Increased `maxSessionTurns` from 25 to 100 in `.github/workflows/gemini-review.yml`. This addresses the `FatalTurnLimitedError` encountered during automated reviews of large PRs (e.g., when hundreds of files are regenerated), allowing the AI reviewer more bandwidth to complete its analysis.
 

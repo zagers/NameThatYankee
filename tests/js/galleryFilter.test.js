@@ -1,44 +1,67 @@
 import { describe, it, expect } from 'vitest';
-import { shouldShowGalleryItem } from '../../js/galleryFilter.js';
+import { checkMatch } from '../../js/galleryFilter.js';
 
 describe('galleryFilter', () => {
-    describe('shouldShowGalleryItem', () => {
-        const currentYear = 2025;
+    describe('checkMatch', () => {
+        const samplePuzzle = {
+            date: "2026-04-19",
+            name: "Lou Piniella",
+            nickname: "Sweet Lou",
+            teams: ["NYY", "BAL", "KCR", "CLE"],
+            years: ["1970", "1980", "1978"]
+        };
 
-        it('should show all when no filters applied', () => {
-            expect(shouldShowGalleryItem('NYY, 2015', false, '', null, false, currentYear)).toBe(true);
+        it('should show all when no search tokens', () => {
+            expect(checkMatch(samplePuzzle, false, [])).toBe(true);
         });
 
-        it('should filter by completion status', () => {
-            const searchTerms = 'NYY, 2015';
-            expect(shouldShowGalleryItem(searchTerms, true, '', null, true, currentYear)).toBe(false);
-            expect(shouldShowGalleryItem(searchTerms, false, '', null, true, currentYear)).toBe(true);
+        it('should filter by team abbreviation', () => {
+            expect(checkMatch(samplePuzzle, false, ['nyy'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['oak'])).toBe(false);
         });
 
-        it('should filter by search query (single word)', () => {
-            const searchTerms = 'Jeter NYY 1995 2014';
-            expect(shouldShowGalleryItem(searchTerms, false, 'jeter', null, false, currentYear)).toBe(true);
-            expect(shouldShowGalleryItem(searchTerms, false, 'aaron', null, false, currentYear)).toBe(false);
+        it('should filter by team full name', () => {
+            expect(checkMatch(samplePuzzle, false, ['yankees'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['baltimore'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['dodgers'])).toBe(false);
+        });
+
+        it('should filter by year', () => {
+            expect(checkMatch(samplePuzzle, false, ['1970'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['2024'])).toBe(false);
+        });
+
+        it('should filter by decade (90s)', () => {
+            const ninetyPuzzle = { ...samplePuzzle, years: ["1995", "1998"] };
+            expect(checkMatch(ninetyPuzzle, false, ['90s'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['90s'])).toBe(false);
+        });
+
+        it('should filter by long decade (1990s)', () => {
+            const ninetyPuzzle = { ...samplePuzzle, years: ["1995", "1998"] };
+            expect(checkMatch(ninetyPuzzle, false, ['1990s'])).toBe(true);
+        });
+
+        it('should filter by month name', () => {
+            expect(checkMatch(samplePuzzle, false, ['april'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['june'])).toBe(false);
         });
 
         it('should require all tokens in search query (AND logic)', () => {
-            const searchTerms = 'Jeter NYY 1995 2014';
-            expect(shouldShowGalleryItem(searchTerms, false, 'jeter nyy', null, false, currentYear)).toBe(true);
-            expect(shouldShowGalleryItem(searchTerms, false, 'jeter judge', null, false, currentYear)).toBe(false);
+            expect(checkMatch(samplePuzzle, false, ['nyy', '1980'])).toBe(true);
+            expect(checkMatch(samplePuzzle, false, ['nyy', '1999'])).toBe(false);
         });
 
-        it('should filter by decade param with format from index.html', () => {
-            const searchTerms = "march 19 2026 stl nyy ari 2016 2017 2021 2013 2015 2018 2024 2025 2014 2022 2023 2020 2011 2019 2012 st louis cardinals new york yankees arizona diamondbacks";
-            const currentYear = 2026;
-            
-            // Should match 2010s
-            expect(shouldShowGalleryItem(searchTerms, false, '', '2010', false, currentYear)).toBe(true);
-            
-            // Should match 2020s
-            expect(shouldShowGalleryItem(searchTerms, false, '', '2020', false, currentYear)).toBe(true);
-            
-            // Should NOT match 1980s
-            expect(shouldShowGalleryItem(searchTerms, false, '', '1980', false, currentYear)).toBe(false);
+        it('should protect spoilers (no name match if unsolved)', () => {
+            expect(checkMatch(samplePuzzle, false, ['lou'])).toBe(false);
+            expect(checkMatch(samplePuzzle, false, ['piniella'])).toBe(false);
+            expect(checkMatch(samplePuzzle, false, ['sweet'])).toBe(false);
+        });
+
+        it('should allow name/nickname match if solved', () => {
+            expect(checkMatch(samplePuzzle, true, ['lou'])).toBe(true);
+            expect(checkMatch(samplePuzzle, true, ['piniella'])).toBe(true);
+            expect(checkMatch(samplePuzzle, true, ['sweet lou'])).toBe(true);
         });
     });
 });

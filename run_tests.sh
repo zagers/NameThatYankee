@@ -15,6 +15,7 @@ cp quiz.html tests/fixtures/www/quiz.html || true
 cp instructions.html tests/fixtures/www/instructions.html || true
 cp analytics.html tests/fixtures/www/analytics.html || true
 cp style.css tests/fixtures/www/style.css || true
+cp stats_summary.json tests/fixtures/www/stats_summary.json || true
 # (js/ is already symlinked in the fixture directory)
 
 # Use local venv pytest if available, otherwise fall back to global

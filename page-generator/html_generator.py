@@ -387,7 +387,7 @@ def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
     # Only lazy load items below the fold (index > 5)
     loading_attr = 'loading="lazy"' if i > 5 else ''
     
-    return f"""<div class="gallery-container" data-search-terms="{search_terms}">
+    return f"""<div class="gallery-container">
                 <a href="{date_str}" class="gallery-item">
                     <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
                 </a>
@@ -452,6 +452,7 @@ def rebuild_index_page(project_dir: Path):
 
                 # Metadata for stats_summary
                 player_name = "Unknown"
+                player_nickname = ""
                 teams = []
                 years = []
 
@@ -459,10 +460,17 @@ def rebuild_index_page(project_dir: Path):
                     with open(detail_page_path, 'r', encoding='utf-8') as detail_f:
                         detail_soup = BeautifulSoup(detail_f, 'html.parser')
                     
-                    # Extract name from <h2>
+                    # Extract name and nickname from <h2>
                     h2_el = detail_soup.find('h2')
                     if h2_el:
-                        player_name = h2_el.get_text(strip=True)
+                        full_title = h2_el.get_text(strip=True)
+                        # Name format is "Name "Nickname""
+                        if '"' in full_title:
+                            parts = full_title.split('"')
+                            player_name = parts[0].strip()
+                            player_nickname = parts[1].strip()
+                        else:
+                            player_name = full_title
 
                     search_data_div = detail_soup.find('div', id='search-data')
                     if search_data_div:
@@ -482,6 +490,7 @@ def rebuild_index_page(project_dir: Path):
                 stats_summary.append({
                     'date': date_str,
                     'name': player_name,
+                    'nickname': player_nickname,
                     'teams': teams,
                     'years': years
                 })

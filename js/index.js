@@ -1,7 +1,7 @@
 // ABOUTME: Entry point for the main landing page and archive navigation.
 // ABOUTME: Initializes the archive gallery and site-wide UI behaviors.
 
-import { shouldShowGalleryItem } from './galleryFilter.js';
+import { checkMatch } from './galleryFilter.js';
 import { initScoreDisplay } from './scoreDisplay.js';
 
 export async function initIndex() {
@@ -9,50 +9,54 @@ export async function initIndex() {
     const searchBar = document.getElementById('search-bar');
     const unsolvedFilter = document.getElementById('unsolved-filter');
     const galleryGrid = document.getElementById('gallery-grid');
-    const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
     const noResultsMessage = document.getElementById('no-results');
 
     let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+    let puzzleData = [];
+
+    // Fetch the pre-generated stats summary for fast searching
+    try {
+        const response = await fetch('stats_summary.json');
+        puzzleData = await response.json();
+    } catch (err) {
+        console.error('Failed to load search data:', err);
+    }
+
+    // Populate a map for quick DOM access during filtering
+    const itemMap = new Map();
+    const galleryItems = galleryGrid.querySelectorAll('.gallery-container');
+    galleryItems.forEach(item => {
+        const href = item.querySelector('.reveal-link')?.getAttribute('href') || '';
+        const date = href.match(/(\d{4}-\d{2}-\d{2})/)?.[1] || href.replace('.html', '');
+        if (date) itemMap.set(date, item);
+    });
 
     // Read URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     const decadeParam = urlParams.get('decade');
 
-    // Populate search bar if search parameter is present
-    // Clear search bar if decade parameter is present (decade takes precedence)
     if (decadeParam) {
-        searchBar.value = '';
+        searchBar.value = decadeParam.endsWith('s') ? decadeParam : decadeParam + 's';
     } else if (searchParam) {
         searchBar.value = searchParam;
     }
 
     function updateCompletedUI() {
-        galleryItems.forEach(item => {
-            const revealLink = item.querySelector('.reveal-link');
-            if (revealLink) {
-                // The date is YYYY-MM-DD. Handle both "YYYY-MM-DD.html" and "YYYY-MM-DD"
-                const href = revealLink.getAttribute('href');
-                const dateMatch = href.match(/(\d{4}-\d{2}-\d{2})/);
-                const date = dateMatch ? dateMatch[1] : href.replace('.html', '');
-                
-                if (completedPuzzles.includes(date)) {
-                    item.classList.add('completed');
-                    const quizLink = item.querySelector('.quiz-link');
-                    if (quizLink) {
-                        quizLink.classList.add('disabled');
-                    }
-                }
+        itemMap.forEach((item, date) => {
+            if (completedPuzzles.includes(date)) {
+                item.classList.add('completed');
+                const quizLink = item.querySelector('.quiz-link');
+                if (quizLink) quizLink.classList.add('disabled');
             }
         });
     }
 
     function markAsCompleted(linkElement) {
         const href = linkElement.getAttribute('href');
-        const dateMatch = href.match(/(\d{4}-\d{2}-\d{2})/);
-        const date = dateMatch ? dateMatch[1] : href.replace('.html', '');
+        const date = href.match(/(\d{4}-\d{2}-\d{2})/)?.[1] || href.replace('.html', '');
         
-        if (!completedPuzzles.includes(date)) {
+        if (date && !completedPuzzles.includes(date)) {
             completedPuzzles.push(date);
             localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
             updateCompletedUI();
@@ -65,33 +69,32 @@ export async function initIndex() {
         link.addEventListener('click', () => markAsCompleted(link));
     });
 
-    // Removed click listeners for gallery images - images are no longer clickable
-
-    // Initial UI update on page load
+    // Initial UI update
     updateCompletedUI();
 
-    // --- Combined Filtering Function ---
+    // --- High-Performance Filtering Logic ---
     function filterGallery() {
-        // Check for decade parameter from URL (only use if search bar is empty)
-        const urlParams = new URLSearchParams(window.location.search);
-        const decadeParam = urlParams.get('decade');
-
         const searchQuery = searchBar.value.toLowerCase().trim();
-        const searchTokens = searchQuery.split(' ').filter(token => token.length > 0);
+        const searchTokens = searchQuery.split(/\s+/).filter(t => t.length > 0);
         const showUnsolvedOnly = unsolvedFilter.checked;
 
-        // Only use decade parameter if search bar is empty (user typing takes precedence)
-        const useDecadeFilter = decadeParam && searchQuery.length === 0;
-
-        const currentYear = new Date().getFullYear();
         let visibleCount = 0;
 
-        galleryItems.forEach(item => {
-            const isCompleted = item.classList.contains('completed');
-            const searchTerms = item.dataset.searchTerms || '';
-            const match = shouldShowGalleryItem(searchTerms, isCompleted, searchQuery, decadeParam, showUnsolvedOnly, currentYear);
+        // If we failed to load JSON, fall back to showing everything (or implement DOM fallback)
+        if (puzzleData.length === 0) {
+            galleryItems.forEach(item => item.style.display = '');
+            return;
+        }
 
-            if (match) {
+        puzzleData.forEach(puzzle => {
+            const item = itemMap.get(puzzle.date);
+            if (!item) return;
+
+            const isCompleted = completedPuzzles.includes(puzzle.date);
+            const unsolvedFilterMatch = !showUnsolvedOnly || !isCompleted;
+            const searchMatch = checkMatch(puzzle, isCompleted, searchTokens);
+
+            if (unsolvedFilterMatch && searchMatch) {
                 item.style.display = '';
                 visibleCount++;
             } else {
@@ -99,19 +102,14 @@ export async function initIndex() {
             }
         });
 
-        if (visibleCount === 0 && (searchQuery || decadeParam)) {
-            noResultsMessage.style.display = 'block';
-        } else {
-            noResultsMessage.style.display = 'none';
-        }
+        noResultsMessage.style.display = (visibleCount === 0 && searchQuery) ? 'block' : 'none';
     }
 
-    // Add event listeners to both the search bar and the checkbox
     searchBar.addEventListener('input', filterGallery);
     unsolvedFilter.addEventListener('change', filterGallery);
 
-    // Trigger filter on page load if URL parameters are present
-    if (searchParam || decadeParam) {
+    // Initial filter
+    if (searchBar.value || unsolvedFilter.checked) {
         filterGallery();
     }
 }
