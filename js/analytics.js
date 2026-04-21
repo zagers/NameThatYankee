@@ -25,7 +25,7 @@ export async function initAnalytics() {
     try {
         console.log("Fetching player data and guess statistics...");
         const [statsResponse, guessesSnapshot] = await Promise.all([
-            fetch('stats_summary.json'),
+            fetch(`stats_summary.json?v=${new Date().getTime()}`),
             getDocs(collection(db, 'guesses'))
         ]);
 

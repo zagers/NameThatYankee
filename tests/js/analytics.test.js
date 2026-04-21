@@ -55,11 +55,11 @@ describe('Analytics DOM tests', () => {
 
         // Mock fetch for statistics summary
         global.fetch = vi.fn((url) => {
-            if (url === 'stats_summary.json') {
+            if (url.includes('stats_summary.json')) {
                 return Promise.resolve({
                     ok: true,
                     json: () => Promise.resolve([
-                        { teams: ["NYY"], years: [1995, 2000], date: '2025-05-15', name: 'Derek Jeter' }
+                        { teams: ["NYY"], years: ["1995", "2000"], date: '2025-05-15', name: 'Derek Jeter' }
                     ])
                 });
             }
@@ -81,7 +81,7 @@ describe('Analytics DOM tests', () => {
         expect(global.Chart).toHaveBeenCalledTimes(4);
 
         // Let's verify standard fetch behavior
-        expect(global.fetch).toHaveBeenCalledWith('stats_summary.json');
+        expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('stats_summary.json'));
         
         // Ensure index.html is NO LONGER fetched
         const calls = global.fetch.mock.calls.map(c => c[0]);

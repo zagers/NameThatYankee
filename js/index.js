@@ -11,12 +11,21 @@ export async function initIndex() {
     const galleryGrid = document.getElementById('gallery-grid');
     const noResultsMessage = document.getElementById('no-results');
 
-    let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
+    let completedPuzzles = [];
+    try {
+        const stored = localStorage.getItem('nameThatYankeeCompletedPuzzles');
+        completedPuzzles = stored ? JSON.parse(stored) : [];
+        if (!Array.isArray(completedPuzzles)) completedPuzzles = [];
+    } catch (e) {
+        console.warn('Malformed completion data in localStorage, resetting.', e);
+        completedPuzzles = [];
+    }
     let puzzleData = [];
 
     // Fetch the pre-generated stats summary for fast searching
     try {
-        const response = await fetch('stats_summary.json');
+        const response = await fetch(`stats_summary.json?v=${new Date().getTime()}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         puzzleData = await response.json();
     } catch (err) {
         console.error('Failed to load search data:', err);
