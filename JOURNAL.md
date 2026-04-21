@@ -2,6 +2,9 @@
 
 ## Journal
 
+### 2026-04-20: CI/CD Optimization - \"Turn Expansion\"
+*   **Workflow Hardening:** Increased `maxSessionTurns` from 25 to 100 in `.github/workflows/gemini-review.yml`. This addresses the `FatalTurnLimitedError` encountered during automated reviews of large PRs (e.g., when hundreds of files are regenerated), allowing the AI reviewer more bandwidth to complete its analysis.
+
 ### 2026-04-20: SEO Optimization & Canonical Consolidation - \"Authority Funnel\"
 *   **Conflict Resolution:** Identified and resolved a critical canonical conflict on `quiz.html` where static and dynamic tags were confusing Google.
 *   **Authority Funneling:** Implemented a script-driven SEO strategy. Interactive quiz pages with date parameters now explicitly point their `canonical` link to the corresponding content-rich \"Reveal\" page (e.g., `/2025-07-23`).
