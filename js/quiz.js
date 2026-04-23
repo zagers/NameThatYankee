@@ -24,7 +24,7 @@ export async function initQuiz() {
         localStorage.removeItem('nameThatYankeeCompletedPuzzles');
         localStorage.removeItem('nameThatYankeeScoreBreakdown');
         alert('Your score and quiz history have been reset.');
-        window.location.assign('index.html');
+        window.location.assign('/');
         return;
     }
 
