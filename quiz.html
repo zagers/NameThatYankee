@@ -23,6 +23,10 @@
     <meta name="twitter:image" content="images/clue-2026-03-06.webp">
     
     <meta name="apple-mobile-web-app-title" content="NameThatYankee">
+    
+    <!-- Do not index interactive quiz states -->
+    <meta name="robots" content="noindex">
+    
     <script>
         (function() {
             const params = new URLSearchParams(window.location.search);
@@ -32,11 +36,6 @@
             if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
                 // Point canonical to the Reveal page
                 canonical.href = 'https://namethatyankeequiz.com/' + date;
-                // Add noindex for dated quiz pages
-                const meta = document.createElement('meta');
-                meta.name = 'robots';
-                meta.content = 'noindex';
-                document.head.appendChild(meta);
             } else {
                 canonical.href = 'https://namethatyankeequiz.com/quiz';
             }
