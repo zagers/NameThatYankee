@@ -91,7 +91,7 @@ function generateTeamChart(playerData) {
                 if (elements.length > 0) {
                     const clickedIndex = elements[0].index;
                     const teamAbbreviation = labels[clickedIndex];
-                    window.location.href = `index.html?search=${teamAbbreviation}`;
+                    window.location.href = `/?search=${encodeURIComponent(teamAbbreviation)}`;
                 }
             }
         }
@@ -128,7 +128,7 @@ function generateDecadeChart(playerData) {
                 if (elements.length > 0) {
                     const clickedIndex = elements[0].index;
                     const decade = originalDecades[clickedIndex]; // e.g., 1980
-                    window.location.href = `index.html?decade=${decade}`;
+                    window.location.href = `/?decade=${encodeURIComponent(decade)}`;
                 }
             }
         }

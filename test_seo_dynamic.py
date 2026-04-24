@@ -15,9 +15,9 @@ class TestDynamicSEO:
         canonical = page.locator('link[rel="canonical"]')
         expect(canonical).to_have_attribute("href", "https://namethatyankeequiz.com/quiz")
         
-        # Should NOT have noindex
+        # Should have noindex (we now static noindex all quiz pages)
         noindex = page.locator('meta[name="robots"][content="noindex"]')
-        expect(noindex).to_have_count(0)
+        expect(noindex).to_have_count(1)
 
     def test_quiz_canonical_with_date(self, page: Page):
         test_date = "2025-07-23"

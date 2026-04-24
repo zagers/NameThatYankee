@@ -223,7 +223,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Answer for {date_str} | Name That Yankee</title>
+    <title>{html.escape(display_name)} Answer - {formatted_date} | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
