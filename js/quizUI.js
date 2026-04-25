@@ -179,20 +179,23 @@ export class QuizUI {
         }
 
         // Images & Links
-        if (this.elements.clueImage && state.date) {
-            const newSrc = `images/clue-${state.date}.webp`;
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        const safeDate = (typeof state.date === 'string' && dateRegex.test(state.date)) ? state.date : null;
+
+        if (this.elements.clueImage && safeDate) {
+            const newSrc = `images/clue-${safeDate}.webp`;
             if (this.elements.clueImage.getAttribute('src') !== newSrc) {
                 this.elements.clueImage.src = newSrc;
             }
         }
-        if (this.elements.answerImage && state.date && isWin) {
-            const newSrc = `images/answer-${state.date}.webp`;
+        if (this.elements.answerImage && safeDate && isWin) {
+            const newSrc = `images/answer-${safeDate}.webp`;
             if (this.elements.answerImage.getAttribute('src') !== newSrc) {
                 this.elements.answerImage.src = newSrc;
             }
         }
-        if (this.elements.viewAnswerLink && state.date) {
-            const newHref = `${state.date}.html`;
+        if (this.elements.viewAnswerLink && safeDate) {
+            const newHref = `${safeDate}.html`;
             if (this.elements.viewAnswerLink.getAttribute('href') !== newHref) {
                 this.elements.viewAnswerLink.href = newHref;
             }
