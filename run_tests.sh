@@ -9,6 +9,15 @@ echo "================================================="
 
 # Sync fixtures with latest production files
 echo "🔄 Synchronizing test fixtures..."
+mkdir -p tests/fixtures/www/
+
+# Ensure required assets are linked or copied
+[ ! -L tests/fixtures/www/js ] && ln -s ../../../js tests/fixtures/www/js
+[ ! -L tests/fixtures/www/images ] && ln -s ../../../images tests/fixtures/www/images
+[ ! -L tests/fixtures/www/firebase-config.js ] && ln -s ../../../firebase-config.js tests/fixtures/www/firebase-config.js
+[ ! -L tests/fixtures/www/all_players.js ] && ln -s ../../../all_players.js tests/fixtures/www/all_players.js
+
+# Copy core pages and a representative historical page for E2E tests
 # Use || true to prevent script exit if files are identical
 cp index.html tests/fixtures/www/index.html || true
 cp quiz.html tests/fixtures/www/quiz.html || true
@@ -16,7 +25,7 @@ cp instructions.html tests/fixtures/www/instructions.html || true
 cp analytics.html tests/fixtures/www/analytics.html || true
 cp style.css tests/fixtures/www/style.css || true
 cp stats_summary.json tests/fixtures/www/stats_summary.json || true
-# (js/ is already symlinked in the fixture directory)
+cp 2026-04-19.html tests/fixtures/www/2026-04-19.html || true
 
 # Use local venv pytest if available, otherwise fall back to global
 if [ -f .venv/bin/pytest ]; then
