@@ -309,9 +309,9 @@ class TestQuizFunctionality:
         page.evaluate("window.localStorage.clear();")
         page.goto(f"{QUIZ_URL}?date=2026-04-19")
         
-        # Mocking or using actual autocomplete would be better, but we just need a correct guess
+        # We need the correct answer to see the success area
         guess_input = page.locator("#guess-input")
-        guess_input.fill("Fake Player")
+        guess_input.fill("Lou Piniella")
         guess_input.press("Enter")
         
         expect(page.locator("#success-area")).to_be_visible()
