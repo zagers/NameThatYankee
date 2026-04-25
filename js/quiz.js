@@ -165,6 +165,15 @@ export async function initQuiz() {
     const params = new URLSearchParams(window.location.search);
     const date = params.get('date');
 
+    const ui = new QuizUI([], {
+        onSuggestionClick: (match) => {
+            ui.elements.guessInput.value = match;
+            dispatch({ type: 'UPDATE_SUGGESTIONS', payload: [] });
+        }
+    });
+
+    let gameState = createInitialState(date);
+
     if (params.get('reset') === 'true') {
         localStorage.removeItem('nameThatYankeeTotalScore');
         localStorage.removeItem('nameThatYankeeCompletedPuzzles');
@@ -176,21 +185,24 @@ export async function initQuiz() {
 
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!date || !dateRegex.test(date)) {
-        document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
+        if (ui.elements.quizArea) {
+            ui.elements.quizArea.innerHTML = '<h2>Error: A valid date was not provided.</h2>';
+        }
         return;
     }
 
-    const quizTitle = document.getElementById('quiz-title');
     try {
         const dateObj = new Date(date + 'T00:00:00');
         const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        quizTitle.textContent = `Quiz for ${formattedDate}`;
+        if (ui.elements.quizTitle) {
+            ui.elements.quizTitle.textContent = `Quiz for ${formattedDate}`;
+        }
     } catch (e) {
-        quizTitle.textContent = 'Name That Yankee Quiz';
+        if (ui.elements.quizTitle) {
+            ui.elements.quizTitle.textContent = 'Name That Yankee Quiz';
+        }
     }
 
-    let gameState = createInitialState(date);
-    let ui = null;
     let engine;
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
     const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
@@ -200,7 +212,7 @@ export async function initQuiz() {
 
     function dispatch(action) {
         gameState = reducer(gameState, action);
-        if (ui) ui.render(gameState);
+        ui.render(gameState);
     }
 
     dispatch({ type: 'UPDATE_TOTAL_SCORE', payload: totalScore });
@@ -325,6 +337,10 @@ export async function initQuiz() {
             if (quizDataEl) {
                 const data = JSON.parse(quizDataEl.textContent);
                 const formattedName = data.answer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
+                
+                // Update UI clues
+                ui.clues = data.hints;
+                
                 dispatch({ 
                     type: 'INIT_DATA', 
                     payload: { 
@@ -333,13 +349,6 @@ export async function initQuiz() {
                     } 
                 });
                 engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
-                ui = new QuizUI(data.hints, {
-                    onSuggestionClick: (match) => {
-                        ui.elements.guessInput.value = match;
-                        dispatch({ type: 'UPDATE_SUGGESTIONS', payload: [] });
-                    }
-                });
-                ui.render(gameState);
                 setupEventListeners();
             } else {
                 throw new Error('Quiz data not found on detail page.');

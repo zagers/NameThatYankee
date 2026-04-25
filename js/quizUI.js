@@ -27,6 +27,7 @@ export class QuizUI {
             hintBtn: document.getElementById('request-hint'),
             giveUpBtn: document.getElementById('give-up-btn'),
             totalScore: document.getElementById('total-score'),
+            quizTitle: document.getElementById('quiz-title'),
             successHeader: document.getElementById('success-header'),
             successPoints: document.getElementById('success-points'),
             clueImage: document.getElementById('clue-image'),
