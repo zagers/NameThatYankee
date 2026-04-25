@@ -234,17 +234,19 @@ describe('Quiz DOM tests', () => {
         const arrowDownEvent = new window.KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true });
         guessInput.dispatchEvent(arrowDownEvent);
 
-        const items = suggestionsContainer.querySelectorAll('.suggestion-item');
+        let items = suggestionsContainer.querySelectorAll('.suggestion-item');
         expect(items[0].classList.contains('highlighted')).toBe(true);
 
         // Arrow down again
         guessInput.dispatchEvent(arrowDownEvent);
+        items = suggestionsContainer.querySelectorAll('.suggestion-item');
         expect(items[0].classList.contains('highlighted')).toBe(false);
         expect(items[1].classList.contains('highlighted')).toBe(true);
 
         // Arrow up
         const arrowUpEvent = new window.KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true });
         guessInput.dispatchEvent(arrowUpEvent);
+        items = suggestionsContainer.querySelectorAll('.suggestion-item');
         expect(items[0].classList.contains('highlighted')).toBe(true);
 
         // Enter should submit Highlighted Item

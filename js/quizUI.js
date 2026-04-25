@@ -4,9 +4,11 @@
 export class QuizUI {
     /**
      * @param {string[]} clues - Array of clue strings for the current puzzle.
+     * @param {Object} callbacks - Map of callback functions for UI interactions.
      */
-    constructor(clues = []) {
+    constructor(clues = [], callbacks = {}) {
         this.clues = clues;
+        this.callbacks = callbacks;
         this.cacheElements();
     }
 
@@ -67,19 +69,62 @@ export class QuizUI {
 
         // Feedback messaging
         if (this.elements.feedbackMessage) {
+            this.elements.feedbackMessage.textContent = ''; // Clear
             if (state.error) {
                 this.elements.feedbackMessage.textContent = state.error;
                 this.elements.feedbackMessage.className = 'incorrect';
                 this.elements.feedbackMessage.style.display = 'block';
             } else if (state.feedback) {
-                this.elements.feedbackMessage.innerHTML = state.feedback; // Allow HTML for answer link
+                this.elements.feedbackMessage.textContent = state.feedback;
+                if (state.feedbackLink) {
+                    const p = document.createElement('p');
+                    const link = document.createElement('a');
+                    link.href = state.feedbackLink.url;
+                    link.textContent = state.feedbackLink.text;
+                    p.appendChild(link);
+                    this.elements.feedbackMessage.appendChild(p);
+                }
                 this.elements.feedbackMessage.className = state.feedbackClass || '';
                 this.elements.feedbackMessage.style.display = 'block';
             } else {
-                this.elements.feedbackMessage.textContent = '';
                 this.elements.feedbackMessage.className = '';
                 // Keep visible but empty if game is active
                 this.elements.feedbackMessage.style.display = state.status === 'active' ? 'block' : 'none';
+            }
+        }
+
+        // Autocomplete suggestions
+        if (this.elements.suggestionsContainer) {
+            this.elements.suggestionsContainer.innerHTML = '';
+            if (state.suggestions && state.suggestions.length > 0) {
+                state.suggestions.forEach((match, index) => {
+                    const item = document.createElement('div');
+                    item.textContent = match;
+                    item.classList.add('suggestion-item');
+                    if (index === state.highlightedIndex) {
+                        item.classList.add('highlighted');
+                    }
+                    item.addEventListener('click', () => {
+                        if (this.callbacks.onSuggestionClick) {
+                            this.callbacks.onSuggestionClick(match);
+                        }
+                    });
+                    this.elements.suggestionsContainer.appendChild(item);
+                });
+                this.elements.suggestionsContainer.style.display = 'block';
+                
+                // Ensure highlighted item is visible
+                const highlighted = this.elements.suggestionsContainer.children[state.highlightedIndex];
+                if (highlighted) {
+                    const container = this.elements.suggestionsContainer;
+                    if (highlighted.offsetTop + highlighted.offsetHeight > container.scrollTop + container.clientHeight) {
+                        container.scrollTop = highlighted.offsetTop + highlighted.offsetHeight - container.clientHeight;
+                    } else if (highlighted.offsetTop < container.scrollTop) {
+                        container.scrollTop = highlighted.offsetTop;
+                    }
+                }
+            } else {
+                this.elements.suggestionsContainer.style.display = 'none';
             }
         }
 
