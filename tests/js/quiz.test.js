@@ -234,17 +234,19 @@ describe('Quiz DOM tests', () => {
         const arrowDownEvent = new window.KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true });
         guessInput.dispatchEvent(arrowDownEvent);
 
-        const items = suggestionsContainer.querySelectorAll('.suggestion-item');
+        let items = suggestionsContainer.querySelectorAll('.suggestion-item');
         expect(items[0].classList.contains('highlighted')).toBe(true);
 
         // Arrow down again
         guessInput.dispatchEvent(arrowDownEvent);
+        items = suggestionsContainer.querySelectorAll('.suggestion-item');
         expect(items[0].classList.contains('highlighted')).toBe(false);
         expect(items[1].classList.contains('highlighted')).toBe(true);
 
         // Arrow up
         const arrowUpEvent = new window.KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true });
         guessInput.dispatchEvent(arrowUpEvent);
+        items = suggestionsContainer.querySelectorAll('.suggestion-item');
         expect(items[0].classList.contains('highlighted')).toBe(true);
 
         // Enter should submit Highlighted Item
@@ -286,8 +288,8 @@ describe('Quiz DOM tests', () => {
         expect(sharedData.url).toBeUndefined();
         expect(sharedText).toContain('Name That Yankee');
         expect(sharedText).toContain('Score: 4 pts');
-        expect(sharedText).toContain('Hints used: 1');
-        expect(sharedText).toContain('🟥📘🟩'); // Chronological: miss, hint, hit
+        expect(sharedText).toContain('Hints used: 2');
+        expect(sharedText).toContain('🟥📘📘🟩'); // Chronological: miss, hint(auto), hint(manual), hit
         expect(sharedText).toContain('quiz.html?date=2025-07-11');
     });
 
