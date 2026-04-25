@@ -7,6 +7,86 @@ import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestam
 import { QuizEngine, normalizeText, getAutocompleteSuggestions, calculateScore } from "./quizEngine.js";
 import { initScoreDisplay } from "./scoreDisplay.js";
 
+export function createInitialState(date) {
+    return {
+        status: 'loading',
+        date: date,
+        playerIdentity: '',
+        guesses: [],
+        score: 100,
+        hintsRequested: 0,
+        shareEvents: [],
+        isComplete: false,
+        finalScore: 0,
+        error: null,
+        isProcessing: false
+    };
+}
+
+export function reducer(state, action) {
+    switch (action.type) {
+        case 'INIT_DATA':
+            return {
+                ...state,
+                status: 'active',
+                playerIdentity: action.payload.playerIdentity,
+            };
+        case 'GUESS_RESULT': {
+            const { status, score, guess, gameOver } = action.payload;
+            const newGuesses = [...state.guesses, guess];
+            const newShareEvents = [...state.shareEvents];
+            
+            if (status === 'CORRECT') {
+                newShareEvents.push('hit');
+                return {
+                    ...state,
+                    status: 'complete',
+                    guesses: newGuesses,
+                    shareEvents: newShareEvents,
+                    isComplete: true,
+                    finalScore: score
+                };
+            } else if (status === 'INCORRECT_VALID_PLAYER') {
+                newShareEvents.push('miss');
+                if (gameOver) {
+                    return {
+                        ...state,
+                        status: 'complete',
+                        guesses: newGuesses,
+                        shareEvents: newShareEvents,
+                        isComplete: true,
+                        finalScore: 0
+                    };
+                }
+                return {
+                    ...state,
+                    guesses: newGuesses,
+                    shareEvents: newShareEvents
+                };
+            }
+            return state;
+        }
+        case 'REVEAL_HINT':
+            return {
+                ...state,
+                hintsRequested: state.hintsRequested + 1,
+                shareEvents: [...state.shareEvents, 'hint']
+            };
+        case 'SET_ERROR':
+            return {
+                ...state,
+                error: action.payload
+            };
+        case 'SET_PROCESSING':
+            return {
+                ...state,
+                isProcessing: action.payload
+            };
+        default:
+            return state;
+    }
+}
+
 export async function initQuiz() {
     initScoreDisplay();
     const app = initializeApp(firebaseConfig);
