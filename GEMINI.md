@@ -95,8 +95,9 @@ When asked to do something, just do it - including obvious follow-up actions nee
 ## Version Control
 
 - If the project isn't in a git repo, STOP and ask permission to initialize one.
-- YOU MUST STOP and ask how to handle uncommitted changes or untracked files when starting work.  Suggest committing existing work first.
-- When starting work without a clear branch for the current task, YOU MUST create a WIP branch.
+- YOU MUST STOP and ask how to handle uncommitted changes or untracked files when starting work. Suggest committing existing work first.
+- When starting work, YOU MUST create a new working branch separate from `master`. 
+- Follow the standard `Category/Description` naming convention for branches (e.g., `feature/name`, `fix/name`, `refactor/name`, `docs/name`, `chore/name`).
 - YOU MUST TRACK All non-trivial changes in git.
 - YOU MUST commit frequently throughout the development process, even if your high-level tasks are not yet done.
 - Journal updates and documentation MUST be committed to the active feature branch.
@@ -207,5 +208,9 @@ To use the puzzle generation tools:
 ### Search Improvement (COMPLETED 2026-04-20)
 *   **Search Improvement:** Utilized `stats_summary.json` to replace the current attribute-based gallery search on the main page with a faster, name-aware search.
 
-### Quiz Refactor (Part 2)
-*   **Quiz Refactor:** Split `quiz.js` into `UI` and `Share` modules.
+### SEO Remediation (COMPLETED 2026-04-23)
+*   **SEO Remediation:** Resolved indexing errors by adding static noindex to quiz pages, normalizing internal links to the root domain, and generating rich titles for historical pages.
+
+### Quiz Refactor (Part 2) (COMPLETED 2026-04-24)
+*   **Quiz Refactor:** Split `quiz.js` into `Orchestrator`, `UI`, and `Share` modules using a state-driven architecture.
+
