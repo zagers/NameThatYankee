@@ -18,6 +18,7 @@ export function createInitialState(date) {
         guesses: [],
         score: 100,
         hintsRequested: 0,
+        clues: [],
         shareEvents: [],
         isComplete: false,
         finalScore: 0,
@@ -40,6 +41,7 @@ export function reducer(state, action) {
                 ...state,
                 status: 'active',
                 playerIdentity: action.payload.playerIdentity,
+                clues: action.payload.clues || []
             };
         case 'GUESS_RESULT': {
             const { status, score, guess, gameOver } = action.payload;
@@ -64,6 +66,11 @@ export function reducer(state, action) {
                 if (status === 'INCORRECT_VALID_PLAYER') newShareEvents.push('miss');
                 
                 if (gameOver) {
+                    let feedback = '';
+                    if (status === 'GAVE_UP' || status === 'GIVE_UP') {
+                        feedback = `Sorry, the correct answer was ${state.playerIdentity}.`;
+                    }
+
                     return {
                         ...state,
                         status: 'complete',
@@ -71,6 +78,7 @@ export function reducer(state, action) {
                         shareEvents: newShareEvents,
                         isComplete: true,
                         finalScore: 0,
+                        feedback: feedback || state.feedback,
                         error: null,
                         suggestions: [],
                         highlightedIndex: -1
@@ -317,7 +325,13 @@ export async function initQuiz() {
             if (quizDataEl) {
                 const data = JSON.parse(quizDataEl.textContent);
                 const formattedName = data.answer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
-                dispatch({ type: 'INIT_DATA', payload: { playerIdentity: formattedName } });
+                dispatch({ 
+                    type: 'INIT_DATA', 
+                    payload: { 
+                        playerIdentity: formattedName,
+                        clues: data.hints 
+                    } 
+                });
                 engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
                 ui = new QuizUI(data.hints, {
                     onSuggestionClick: (match) => {
@@ -370,10 +384,8 @@ export async function initQuiz() {
     function revealHint(isManual = false) {
         if (isManual) {
             engine.currentClueIndex++;
-            dispatch({ type: 'REVEAL_HINT' });
-        } else {
-            dispatch({ type: 'SYNC_HINTS', payload: engine.currentClueIndex });
         }
+        dispatch({ type: 'REVEAL_HINT' });
     }
 
     function endQuizAndShowAnswer() {
@@ -431,24 +443,32 @@ export async function initQuiz() {
         
         ui.elements.shareBtnSuccess.addEventListener('click', async () => {
             const originalText = ui.elements.shareBtnSuccess.textContent;
-            await copyShareText(formattedDate, gameState);
-            ui.elements.shareBtnSuccess.textContent = 'Copied! ✅';
-            ui.elements.shareBtnSuccess.classList.add('copied');
-            setTimeout(() => {
-                ui.elements.shareBtnSuccess.textContent = originalText;
-                ui.elements.shareBtnSuccess.classList.remove('copied');
-            }, 2000);
+            try {
+                await copyShareText(formattedDate, gameState);
+                ui.elements.shareBtnSuccess.textContent = 'Copied! ✅';
+                ui.elements.shareBtnSuccess.classList.add('copied');
+                setTimeout(() => {
+                    ui.elements.shareBtnSuccess.textContent = originalText;
+                    ui.elements.shareBtnSuccess.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy share text. Please try again.');
+            }
         });
 
         ui.elements.shareBtnFail.addEventListener('click', async () => {
             const originalText = ui.elements.shareBtnFail.textContent;
-            await copyShareText(formattedDate, gameState);
-            ui.elements.shareBtnFail.textContent = 'Copied! ✅';
-            ui.elements.shareBtnFail.classList.add('copied');
-            setTimeout(() => {
-                ui.elements.shareBtnFail.textContent = originalText;
-                ui.elements.shareBtnFail.classList.remove('copied');
-            }, 2000);
+            try {
+                await copyShareText(formattedDate, gameState);
+                ui.elements.shareBtnFail.textContent = 'Copied! ✅';
+                ui.elements.shareBtnFail.classList.add('copied');
+                setTimeout(() => {
+                    ui.elements.shareBtnFail.textContent = originalText;
+                    ui.elements.shareBtnFail.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy share text. Please try again.');
+            }
         });
     }
 

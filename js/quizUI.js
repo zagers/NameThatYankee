@@ -139,12 +139,13 @@ export class QuizUI {
         // Hints
         if (this.elements.hintsList && this.elements.hintsContainer) {
             this.elements.hintsList.innerHTML = '';
+            const cluesToUse = state.clues && state.clues.length > 0 ? state.clues : this.clues;
             if (state.hintsRequested > 0) {
                 this.elements.hintsContainer.style.display = 'block';
                 for (let i = 0; i < state.hintsRequested; i++) {
-                    if (this.clues[i]) {
+                    if (cluesToUse[i]) {
                         const li = document.createElement('li');
-                        li.textContent = this.clues[i];
+                        li.textContent = cluesToUse[i];
                         this.elements.hintsList.appendChild(li);
                     }
                 }
@@ -160,7 +161,7 @@ export class QuizUI {
         if (this.elements.hintBtn) this.elements.hintBtn.disabled = shouldDisable;
         if (this.elements.giveUpBtn) this.elements.giveUpBtn.disabled = shouldDisable;
 
-        if (this.elements.hintBtn && state.hintsRequested >= this.clues.length) {
+        if (this.elements.hintBtn && state.hintsRequested >= (state.clues ? state.clues.length : this.clues.length)) {
             this.elements.hintBtn.disabled = true;
             if (!shouldDisable && !state.feedback && state.status !== 'complete') {
                 if (this.elements.feedbackMessage) {
@@ -178,13 +179,22 @@ export class QuizUI {
 
         // Images & Links
         if (this.elements.clueImage && state.date) {
-            this.elements.clueImage.src = `images/clue-${state.date}.webp`;
+            const newSrc = `images/clue-${state.date}.webp`;
+            if (this.elements.clueImage.getAttribute('src') !== newSrc) {
+                this.elements.clueImage.src = newSrc;
+            }
         }
         if (this.elements.answerImage && state.date && isWin) {
-            this.elements.answerImage.src = `images/answer-${state.date}.webp`;
+            const newSrc = `images/answer-${state.date}.webp`;
+            if (this.elements.answerImage.getAttribute('src') !== newSrc) {
+                this.elements.answerImage.src = newSrc;
+            }
         }
         if (this.elements.viewAnswerLink && state.date) {
-            this.elements.viewAnswerLink.href = `${state.date}.html`;
+            const newHref = `${state.date}.html`;
+            if (this.elements.viewAnswerLink.getAttribute('href') !== newHref) {
+                this.elements.viewAnswerLink.href = newHref;
+            }
         }
     }
 }

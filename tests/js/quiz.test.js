@@ -289,7 +289,7 @@ describe('Quiz DOM tests', () => {
         expect(sharedText).toContain('Name That Yankee');
         expect(sharedText).toContain('Score: 4 pts');
         expect(sharedText).toContain('Hints used: 2');
-        expect(sharedText).toContain('🟥📘🟩'); // Chronological: miss, hint, hit
+        expect(sharedText).toContain('🟥📘📘🟩'); // Chronological: miss, hint(auto), hint(manual), hit
         expect(sharedText).toContain('quiz.html?date=2025-07-11');
     });
 
