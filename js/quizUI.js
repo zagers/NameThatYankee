@@ -4,9 +4,11 @@
 export class QuizUI {
     /**
      * @param {string[]} clues - Array of clue strings for the current puzzle.
+     * @param {Object} callbacks - Map of callback functions for UI interactions.
      */
-    constructor(clues = []) {
+    constructor(clues = [], callbacks = {}) {
         this.clues = clues;
+        this.callbacks = callbacks;
         this.cacheElements();
     }
 
@@ -25,6 +27,7 @@ export class QuizUI {
             hintBtn: document.getElementById('request-hint'),
             giveUpBtn: document.getElementById('give-up-btn'),
             totalScore: document.getElementById('total-score'),
+            quizTitle: document.getElementById('quiz-title'),
             successHeader: document.getElementById('success-header'),
             successPoints: document.getElementById('success-points'),
             clueImage: document.getElementById('clue-image'),
@@ -67,19 +70,62 @@ export class QuizUI {
 
         // Feedback messaging
         if (this.elements.feedbackMessage) {
+            this.elements.feedbackMessage.textContent = ''; // Clear
             if (state.error) {
                 this.elements.feedbackMessage.textContent = state.error;
                 this.elements.feedbackMessage.className = 'incorrect';
                 this.elements.feedbackMessage.style.display = 'block';
             } else if (state.feedback) {
-                this.elements.feedbackMessage.innerHTML = state.feedback; // Allow HTML for answer link
+                this.elements.feedbackMessage.textContent = state.feedback;
+                if (state.feedbackLink) {
+                    const p = document.createElement('p');
+                    const link = document.createElement('a');
+                    link.href = state.feedbackLink.url;
+                    link.textContent = state.feedbackLink.text;
+                    p.appendChild(link);
+                    this.elements.feedbackMessage.appendChild(p);
+                }
                 this.elements.feedbackMessage.className = state.feedbackClass || '';
                 this.elements.feedbackMessage.style.display = 'block';
             } else {
-                this.elements.feedbackMessage.textContent = '';
                 this.elements.feedbackMessage.className = '';
                 // Keep visible but empty if game is active
                 this.elements.feedbackMessage.style.display = state.status === 'active' ? 'block' : 'none';
+            }
+        }
+
+        // Autocomplete suggestions
+        if (this.elements.suggestionsContainer) {
+            this.elements.suggestionsContainer.innerHTML = '';
+            if (state.suggestions && state.suggestions.length > 0) {
+                state.suggestions.forEach((match, index) => {
+                    const item = document.createElement('div');
+                    item.textContent = match;
+                    item.classList.add('suggestion-item');
+                    if (index === state.highlightedIndex) {
+                        item.classList.add('highlighted');
+                    }
+                    item.addEventListener('click', () => {
+                        if (this.callbacks.onSuggestionClick) {
+                            this.callbacks.onSuggestionClick(match);
+                        }
+                    });
+                    this.elements.suggestionsContainer.appendChild(item);
+                });
+                this.elements.suggestionsContainer.style.display = 'block';
+                
+                // Ensure highlighted item is visible
+                const highlighted = this.elements.suggestionsContainer.children[state.highlightedIndex];
+                if (highlighted) {
+                    const container = this.elements.suggestionsContainer;
+                    if (highlighted.offsetTop + highlighted.offsetHeight > container.scrollTop + container.clientHeight) {
+                        container.scrollTop = highlighted.offsetTop + highlighted.offsetHeight - container.clientHeight;
+                    } else if (highlighted.offsetTop < container.scrollTop) {
+                        container.scrollTop = highlighted.offsetTop;
+                    }
+                }
+            } else {
+                this.elements.suggestionsContainer.style.display = 'none';
             }
         }
 
@@ -94,12 +140,13 @@ export class QuizUI {
         // Hints
         if (this.elements.hintsList && this.elements.hintsContainer) {
             this.elements.hintsList.innerHTML = '';
+            const cluesToUse = state.clues && state.clues.length > 0 ? state.clues : this.clues;
             if (state.hintsRequested > 0) {
                 this.elements.hintsContainer.style.display = 'block';
                 for (let i = 0; i < state.hintsRequested; i++) {
-                    if (this.clues[i]) {
+                    if (cluesToUse[i]) {
                         const li = document.createElement('li');
-                        li.textContent = this.clues[i];
+                        li.textContent = cluesToUse[i];
                         this.elements.hintsList.appendChild(li);
                     }
                 }
@@ -115,7 +162,7 @@ export class QuizUI {
         if (this.elements.hintBtn) this.elements.hintBtn.disabled = shouldDisable;
         if (this.elements.giveUpBtn) this.elements.giveUpBtn.disabled = shouldDisable;
 
-        if (this.elements.hintBtn && state.hintsRequested >= this.clues.length) {
+        if (this.elements.hintBtn && state.hintsRequested >= (state.clues ? state.clues.length : this.clues.length)) {
             this.elements.hintBtn.disabled = true;
             if (!shouldDisable && !state.feedback && state.status !== 'complete') {
                 if (this.elements.feedbackMessage) {
@@ -132,14 +179,26 @@ export class QuizUI {
         }
 
         // Images & Links
-        if (this.elements.clueImage && state.date) {
-            this.elements.clueImage.src = `images/clue-${state.date}.webp`;
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        const safeDate = (typeof state.date === 'string' && dateRegex.test(state.date)) ? state.date : null;
+
+        if (this.elements.clueImage && safeDate) {
+            const newSrc = `images/clue-${safeDate}.webp`;
+            if (this.elements.clueImage.getAttribute('src') !== newSrc) {
+                this.elements.clueImage.src = newSrc;
+            }
         }
-        if (this.elements.answerImage && state.date && isWin) {
-            this.elements.answerImage.src = `images/answer-${state.date}.webp`;
+        if (this.elements.answerImage && safeDate && isWin) {
+            const newSrc = `images/answer-${safeDate}.webp`;
+            if (this.elements.answerImage.getAttribute('src') !== newSrc) {
+                this.elements.answerImage.src = newSrc;
+            }
         }
-        if (this.elements.viewAnswerLink && state.date) {
-            this.elements.viewAnswerLink.href = `${state.date}.html`;
+        if (this.elements.viewAnswerLink && safeDate) {
+            const newHref = `${safeDate}.html`;
+            if (this.elements.viewAnswerLink.getAttribute('href') !== newHref) {
+                this.elements.viewAnswerLink.href = newHref;
+            }
         }
     }
 }

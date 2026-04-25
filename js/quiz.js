@@ -18,15 +18,19 @@ export function createInitialState(date) {
         guesses: [],
         score: 100,
         hintsRequested: 0,
+        clues: [],
         shareEvents: [],
         isComplete: false,
         finalScore: 0,
         error: null,
         feedback: '',
         feedbackClass: '',
+        feedbackLink: null, // { url: string, text: string }
         isProcessing: false,
         totalScore: 0,
-        showChart: false
+        showChart: false,
+        suggestions: [],
+        highlightedIndex: -1
     };
 }
 
@@ -37,6 +41,7 @@ export function reducer(state, action) {
                 ...state,
                 status: 'active',
                 playerIdentity: action.payload.playerIdentity,
+                clues: action.payload.clues || []
             };
         case 'GUESS_RESULT': {
             const { status, score, guess, gameOver } = action.payload;
@@ -53,12 +58,19 @@ export function reducer(state, action) {
                     isComplete: true,
                     finalScore: score,
                     feedback: '',
-                    error: null
+                    error: null,
+                    suggestions: [],
+                    highlightedIndex: -1
                 };
             } else if (status === 'INCORRECT_VALID_PLAYER' || status === 'GIVE_UP' || status === 'ALREADY_COMPLETE') {
                 if (status === 'INCORRECT_VALID_PLAYER') newShareEvents.push('miss');
                 
                 if (gameOver) {
+                    let feedback = '';
+                    if (status === 'GAVE_UP' || status === 'GIVE_UP') {
+                        feedback = `Sorry, the correct answer was ${state.playerIdentity}.`;
+                    }
+
                     return {
                         ...state,
                         status: 'complete',
@@ -66,7 +78,10 @@ export function reducer(state, action) {
                         shareEvents: newShareEvents,
                         isComplete: true,
                         finalScore: 0,
-                        error: null
+                        feedback: feedback || state.feedback,
+                        error: null,
+                        suggestions: [],
+                        highlightedIndex: -1
                     };
                 }
                 return {
@@ -85,17 +100,25 @@ export function reducer(state, action) {
                 shareEvents: [...state.shareEvents, 'hint'],
                 error: null
             };
+        case 'SYNC_HINTS':
+            return {
+                ...state,
+                hintsRequested: action.payload,
+                error: null
+            };
         case 'SET_ERROR':
             return {
                 ...state,
                 error: action.payload,
-                feedback: ''
+                feedback: '',
+                feedbackLink: null
             };
         case 'UPDATE_FEEDBACK':
             return {
                 ...state,
                 feedback: action.payload.message,
                 feedbackClass: action.payload.className,
+                feedbackLink: action.payload.link || null,
                 error: null
             };
         case 'SET_PROCESSING':
@@ -112,6 +135,17 @@ export function reducer(state, action) {
             return {
                 ...state,
                 showChart: true
+            };
+        case 'UPDATE_SUGGESTIONS':
+            return {
+                ...state,
+                suggestions: action.payload,
+                highlightedIndex: -1
+            };
+        case 'SET_HIGHLIGHT':
+            return {
+                ...state,
+                highlightedIndex: action.payload
             };
         default:
             return state;
@@ -131,6 +165,15 @@ export async function initQuiz() {
     const params = new URLSearchParams(window.location.search);
     const date = params.get('date');
 
+    const ui = new QuizUI([], {
+        onSuggestionClick: (match) => {
+            ui.elements.guessInput.value = match;
+            dispatch({ type: 'UPDATE_SUGGESTIONS', payload: [] });
+        }
+    });
+
+    let gameState = createInitialState(date);
+
     if (params.get('reset') === 'true') {
         localStorage.removeItem('nameThatYankeeTotalScore');
         localStorage.removeItem('nameThatYankeeCompletedPuzzles');
@@ -142,32 +185,34 @@ export async function initQuiz() {
 
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!date || !dateRegex.test(date)) {
-        document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
+        if (ui.elements.quizArea) {
+            ui.elements.quizArea.innerHTML = '<h2>Error: A valid date was not provided.</h2>';
+        }
         return;
     }
 
-    const quizTitle = document.getElementById('quiz-title');
     try {
         const dateObj = new Date(date + 'T00:00:00');
         const formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        quizTitle.textContent = `Quiz for ${formattedDate}`;
+        if (ui.elements.quizTitle) {
+            ui.elements.quizTitle.textContent = `Quiz for ${formattedDate}`;
+        }
     } catch (e) {
-        quizTitle.textContent = 'Name That Yankee Quiz';
+        if (ui.elements.quizTitle) {
+            ui.elements.quizTitle.textContent = 'Name That Yankee Quiz';
+        }
     }
 
-    let gameState = createInitialState(date);
-    let ui = null;
     let engine;
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
     const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
-    let highlightedIndex = -1;
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
     let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
 
     function dispatch(action) {
         gameState = reducer(gameState, action);
-        if (ui) ui.render(gameState);
+        ui.render(gameState);
     }
 
     dispatch({ type: 'UPDATE_TOTAL_SCORE', payload: totalScore });
@@ -292,10 +337,18 @@ export async function initQuiz() {
             if (quizDataEl) {
                 const data = JSON.parse(quizDataEl.textContent);
                 const formattedName = data.answer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
-                dispatch({ type: 'INIT_DATA', payload: { playerIdentity: formattedName } });
+                
+                // Update UI clues
+                ui.clues = data.hints;
+                
+                dispatch({ 
+                    type: 'INIT_DATA', 
+                    payload: { 
+                        playerIdentity: formattedName,
+                        clues: data.hints 
+                    } 
+                });
                 engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
-                ui = new QuizUI(data.hints);
-                ui.render(gameState);
                 setupEventListeners();
             } else {
                 throw new Error('Quiz data not found on detail page.');
@@ -340,18 +393,21 @@ export async function initQuiz() {
     function revealHint(isManual = false) {
         if (isManual) {
             engine.currentClueIndex++;
-            dispatch({ type: 'REVEAL_HINT' });
-        } else {
-            gameState.hintsRequested = engine.currentClueIndex;
-            ui.render(gameState);
         }
+        dispatch({ type: 'REVEAL_HINT' });
     }
 
     function endQuizAndShowAnswer() {
         markPuzzleAsComplete();
         const formattedAnswer = gameState.playerIdentity;
-        const feedback = `Sorry, the correct answer was ${formattedAnswer}.<p> <a href="${date}.html">Click here to learn more about ${formattedAnswer}</a>`;
-        dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: feedback, className: '' } });
+        dispatch({ 
+            type: 'UPDATE_FEEDBACK', 
+            payload: { 
+                message: `Sorry, the correct answer was ${formattedAnswer}.`, 
+                className: '',
+                link: { url: `${date}.html`, text: `Click here to learn more about ${formattedAnswer}` }
+            } 
+        });
         dispatch({ type: 'GUESS_RESULT', payload: { status: 'GIVE_UP', score: 0, guess: 'Gave Up', gameOver: true } });
     }
 
@@ -362,91 +418,66 @@ export async function initQuiz() {
         ui.elements.showGuessesBtn.addEventListener('click', showIncorrectGuesses);
 
         ui.elements.guessInput.addEventListener('input', () => {
-            ui.elements.suggestionsContainer.innerHTML = '';
             const matches = getAutocompleteSuggestions(ui.elements.guessInput.value, allPlayers);
-            if (matches.length > 0) {
-                matches.forEach(match => {
-                    const item = document.createElement('div');
-                    item.textContent = match;
-                    item.classList.add('suggestion-item');
-                    item.addEventListener('click', () => {
-                        ui.elements.guessInput.value = match;
-                        ui.elements.suggestionsContainer.innerHTML = '';
-                        ui.elements.suggestionsContainer.style.display = 'none';
-                    });
-                    ui.elements.suggestionsContainer.appendChild(item);
-                });
-                ui.elements.suggestionsContainer.style.display = 'block';
-            } else {
-                ui.elements.suggestionsContainer.style.display = 'none';
-            }
+            dispatch({ type: 'UPDATE_SUGGESTIONS', payload: matches });
         });
 
         ui.elements.guessInput.addEventListener('keydown', (e) => {
-            const suggestions = ui.elements.suggestionsContainer.querySelectorAll('.suggestion-item');
+            const suggestions = gameState.suggestions;
             if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (suggestions.length > 0) {
-                    highlightedIndex = (highlightedIndex + 1) % suggestions.length;
-                    updateHighlight(suggestions);
+                    const newIndex = (gameState.highlightedIndex + 1) % suggestions.length;
+                    dispatch({ type: 'SET_HIGHLIGHT', payload: newIndex });
                 }
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 if (suggestions.length > 0) {
-                    highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
-                    updateHighlight(suggestions);
+                    const newIndex = (gameState.highlightedIndex - 1 + suggestions.length) % suggestions.length;
+                    dispatch({ type: 'SET_HIGHLIGHT', payload: newIndex });
                 }
             } else if (e.key === 'Enter') {
                 e.preventDefault();
-                if (highlightedIndex > -1 && suggestions[highlightedIndex]) {
-                    ui.elements.guessInput.value = suggestions[highlightedIndex].textContent;
-                    ui.elements.suggestionsContainer.innerHTML = '';
-                    ui.elements.suggestionsContainer.style.display = 'none';
+                if (gameState.highlightedIndex > -1 && suggestions[gameState.highlightedIndex]) {
+                    ui.elements.guessInput.value = suggestions[gameState.highlightedIndex];
+                    dispatch({ type: 'UPDATE_SUGGESTIONS', payload: [] });
                     checkGuess();
                 } else {
                     checkGuess();
                 }
             }
         });
-
-        function updateHighlight(suggestions) {
-            suggestions.forEach((item, index) => {
-                if (index === highlightedIndex) {
-                    item.classList.add('highlighted');
-                    const container = ui.elements.suggestionsContainer;
-                    if (item.offsetTop + item.offsetHeight > container.scrollTop + container.clientHeight) {
-                        container.scrollTop = item.offsetTop + item.offsetHeight - container.clientHeight;
-                    } else if (item.offsetTop < container.scrollTop) {
-                        container.scrollTop = item.offsetTop;
-                    }
-                } else {
-                    item.classList.remove('highlighted');
-                }
-            });
-        }
 
         const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         
         ui.elements.shareBtnSuccess.addEventListener('click', async () => {
             const originalText = ui.elements.shareBtnSuccess.textContent;
-            await copyShareText(formattedDate, gameState);
-            ui.elements.shareBtnSuccess.textContent = 'Copied! ✅';
-            ui.elements.shareBtnSuccess.classList.add('copied');
-            setTimeout(() => {
-                ui.elements.shareBtnSuccess.textContent = originalText;
-                ui.elements.shareBtnSuccess.classList.remove('copied');
-            }, 2000);
+            try {
+                await copyShareText(formattedDate, gameState);
+                ui.elements.shareBtnSuccess.textContent = 'Copied! ✅';
+                ui.elements.shareBtnSuccess.classList.add('copied');
+                setTimeout(() => {
+                    ui.elements.shareBtnSuccess.textContent = originalText;
+                    ui.elements.shareBtnSuccess.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy share text. Please try again.');
+            }
         });
 
         ui.elements.shareBtnFail.addEventListener('click', async () => {
             const originalText = ui.elements.shareBtnFail.textContent;
-            await copyShareText(formattedDate, gameState);
-            ui.elements.shareBtnFail.textContent = 'Copied! ✅';
-            ui.elements.shareBtnFail.classList.add('copied');
-            setTimeout(() => {
-                ui.elements.shareBtnFail.textContent = originalText;
-                ui.elements.shareBtnFail.classList.remove('copied');
-            }, 2000);
+            try {
+                await copyShareText(formattedDate, gameState);
+                ui.elements.shareBtnFail.textContent = 'Copied! ✅';
+                ui.elements.shareBtnFail.classList.add('copied');
+                setTimeout(() => {
+                    ui.elements.shareBtnFail.textContent = originalText;
+                    ui.elements.shareBtnFail.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy share text. Please try again.');
+            }
         });
     }
 
