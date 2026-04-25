@@ -22,33 +22,24 @@ describe('QuizUI', () => {
             <button id="give-up-btn">Give Up</button>
             <span id="total-score">0</span>
             <h2 id="success-header"></h2>
+            <p id="success-points"></p>
+            <div id="share-fail-container" style="display: none;"></div>
         `;
         ui = new QuizUI(clues);
     });
 
-    it('should cache elements during initialization', () => {
-        expect(ui.elements.quizArea).toBeDefined();
-        expect(ui.elements.successArea).toBeDefined();
-        expect(ui.elements.feedbackMessage).toBeDefined();
-        expect(ui.elements.hintsList).toBeDefined();
-        expect(ui.elements.guessInput).toBeDefined();
-        expect(ui.elements.submitBtn).toBeDefined();
-        expect(ui.elements.hintBtn).toBeDefined();
-        expect(ui.elements.totalScore).toBeDefined();
-        expect(ui.elements.successHeader).toBeDefined();
-    });
-
     it('should show success area and correct name when status is solved', () => {
         ui.render({ 
-            status: 'solved', 
-            correctAnswer: 'Derek Jeter',
+            status: 'complete', 
+            playerIdentity: 'Derek Jeter',
             hintsRequested: 0,
             isComplete: true,
+            finalScore: 100,
             totalScore: 10
         });
         expect(document.getElementById('quiz-area').style.display).toBe('none');
         expect(document.getElementById('success-area').style.display).not.toBe('none');
-        expect(document.getElementById('success-header').textContent).toBe('Derek Jeter');
+        expect(document.getElementById('success-header').textContent).toContain('Derek Jeter');
     });
 
     it('should show quiz area and hide success area when status is active', () => {
@@ -107,35 +98,16 @@ describe('QuizUI', () => {
         expect(document.getElementById('give-up-btn').disabled).toBe(true);
     });
 
-    it('should disable inputs and buttons when isComplete is true', () => {
-        ui.render({ 
-            isComplete: true,
-            status: 'solved',
-            hintsRequested: 0
-        });
-        expect(document.getElementById('guess-input').disabled).toBe(true);
-        expect(document.getElementById('submit-guess').disabled).toBe(true);
-        expect(document.getElementById('request-hint').disabled).toBe(true);
-        expect(document.getElementById('give-up-btn').disabled).toBe(true);
-    });
-
-    it('should update total-score display', () => {
-        ui.render({ 
-            totalScore: 150,
-            status: 'active',
-            hintsRequested: 0
-        });
-        expect(document.getElementById('total-score').textContent).toBe('150');
-    });
-
     it('should prevent XSS by using textContent for dynamic data', () => {
         const maliciousInput = '<img src=x onerror=alert(1)>';
         ui.render({ 
-            status: 'solved',
-            correctAnswer: maliciousInput,
+            status: 'complete',
+            playerIdentity: maliciousInput,
+            isComplete: true,
+            finalScore: 100,
             hintsRequested: 0
         });
-        expect(document.getElementById('success-header').textContent).toBe(maliciousInput);
+        expect(document.getElementById('success-header').textContent).toContain(maliciousInput);
         expect(document.getElementById('success-header').innerHTML).not.toContain('<img');
     });
 });

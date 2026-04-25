@@ -1,11 +1,14 @@
-// ABOUTME: Entry point for the interactive quiz interface logic.
-// ABOUTME: Orchestrates UI updates, user input handling, and game state management.
+/* global Chart */
+// ABOUTME: Orchestrator for the interactive quiz interface.
+// ABOUTME: Manages state transitions and coordinates between logic, UI, and sharing modules.
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app-check.js";
-import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { QuizEngine, normalizeText, getAutocompleteSuggestions, calculateScore } from "./quizEngine.js";
+import { getFirestore, collection, addDoc, query, where, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { QuizEngine, normalizeText, getAutocompleteSuggestions } from "./quizEngine.js";
 import { initScoreDisplay } from "./scoreDisplay.js";
+import { QuizUI } from "./quizUI.js";
+import { copyShareText } from "./quizShare.js";
 
 export function createInitialState(date) {
     return {
@@ -19,7 +22,11 @@ export function createInitialState(date) {
         isComplete: false,
         finalScore: 0,
         error: null,
-        isProcessing: false
+        feedback: '',
+        feedbackClass: '',
+        isProcessing: false,
+        totalScore: 0,
+        showChart: false
     };
 }
 
@@ -33,7 +40,7 @@ export function reducer(state, action) {
             };
         case 'GUESS_RESULT': {
             const { status, score, guess, gameOver } = action.payload;
-            const newGuesses = [...state.guesses, guess];
+            const newGuesses = guess ? [...state.guesses, guess] : state.guesses;
             const newShareEvents = [...state.shareEvents];
             
             if (status === 'CORRECT') {
@@ -44,10 +51,13 @@ export function reducer(state, action) {
                     guesses: newGuesses,
                     shareEvents: newShareEvents,
                     isComplete: true,
-                    finalScore: score
+                    finalScore: score,
+                    feedback: '',
+                    error: null
                 };
-            } else if (status === 'INCORRECT_VALID_PLAYER') {
-                newShareEvents.push('miss');
+            } else if (status === 'INCORRECT_VALID_PLAYER' || status === 'GIVE_UP' || status === 'ALREADY_COMPLETE') {
+                if (status === 'INCORRECT_VALID_PLAYER') newShareEvents.push('miss');
+                
                 if (gameOver) {
                     return {
                         ...state,
@@ -55,13 +65,15 @@ export function reducer(state, action) {
                         guesses: newGuesses,
                         shareEvents: newShareEvents,
                         isComplete: true,
-                        finalScore: 0
+                        finalScore: 0,
+                        error: null
                     };
                 }
                 return {
                     ...state,
                     guesses: newGuesses,
-                    shareEvents: newShareEvents
+                    shareEvents: newShareEvents,
+                    error: null
                 };
             }
             return state;
@@ -70,17 +82,36 @@ export function reducer(state, action) {
             return {
                 ...state,
                 hintsRequested: state.hintsRequested + 1,
-                shareEvents: [...state.shareEvents, 'hint']
+                shareEvents: [...state.shareEvents, 'hint'],
+                error: null
             };
         case 'SET_ERROR':
             return {
                 ...state,
-                error: action.payload
+                error: action.payload,
+                feedback: ''
+            };
+        case 'UPDATE_FEEDBACK':
+            return {
+                ...state,
+                feedback: action.payload.message,
+                feedbackClass: action.payload.className,
+                error: null
             };
         case 'SET_PROCESSING':
             return {
                 ...state,
                 isProcessing: action.payload
+            };
+        case 'UPDATE_TOTAL_SCORE':
+            return {
+                ...state,
+                totalScore: action.payload
+            };
+        case 'SHOW_CHART':
+            return {
+                ...state,
+                showChart: true
             };
         default:
             return state;
@@ -90,14 +121,15 @@ export function reducer(state, action) {
 export async function initQuiz() {
     initScoreDisplay();
     const app = initializeApp(firebaseConfig);
-    const appCheck = initializeAppCheck(app, {
+    initializeAppCheck(app, {
         provider: new ReCaptchaV3Provider('6LdhapkrAAAAAIRnXSVdsYXLDC7XThYHEAdEp0Wf'),
         isTokenAutoRefreshEnabled: true
     });
     const db = getFirestore(app);
-    const guessesCollection = collection(db, 'guesses')
+    const guessesCollection = collection(db, 'guesses');
 
     const params = new URLSearchParams(window.location.search);
+    const date = params.get('date');
 
     if (params.get('reset') === 'true') {
         localStorage.removeItem('nameThatYankeeTotalScore');
@@ -108,15 +140,9 @@ export async function initQuiz() {
         return;
     }
 
-    const date = params.get('date');
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!date || !dateRegex.test(date)) {
         document.getElementById('quiz-area').innerHTML = '<h2>Error: A valid date was not provided.</h2>';
-        return; // Stop execution if the date is invalid
-    }
-
-    if (!date) {
-        document.getElementById('quiz-area').innerHTML = '<h2>Error: No date provided for the quiz.</h2>';
         return;
     }
 
@@ -129,50 +155,22 @@ export async function initQuiz() {
         quizTitle.textContent = 'Name That Yankee Quiz';
     }
 
-    const clueImageEl = document.getElementById('clue-image');
-    const guessInputEl = document.getElementById('guess-input');
-    const submitBtn = document.getElementById('submit-guess');
-    const hintBtn = document.getElementById('request-hint');
-    const giveUpBtn = document.getElementById('give-up-btn'); // New button
-    const feedbackMsg = document.getElementById('feedback-message');
-    const hintsContainer = document.getElementById('hints-container');
-    const hintsList = document.getElementById('hints-list');
-    const quizArea = document.getElementById('quiz-area');
-    const successArea = document.getElementById('success-area');
-    const answerImageEl = document.getElementById('answer-image');
-    const successHeader = document.getElementById('success-header');
-    const successPoints = document.getElementById('success-points');
-    const viewAnswerLink = document.getElementById('view-answer-link'); // New link reference
-    const totalScoreEl = document.getElementById('total-score');
-    const showGuessesBtn = document.getElementById('show-guesses-btn');
-    const guessesChartContainer = document.getElementById('guesses-chart-container');
-    const guessesChartCanvas = document.getElementById('guessesChart');
-    const suggestionsContainer = document.getElementById('suggestions-container');
-    const shareBtnSuccess = document.getElementById('share-btn-success');
-    const shareBtnFail = document.getElementById('share-btn-fail');
-    const shareFailContainer = document.getElementById('share-fail-container');
-
-    // Consolidated Game State
-    const gameState = {
-        correctAnswer: '',
-        nickname: '',
-        hints: [],
-        hintsRequested: 0,
-        shareEvents: [], // 'hint', 'miss', 'hit'
-        isComplete: false,
-        finalScore: 0
-    };
-
-    //let allPlayers = [];
-    //Initialize the local variable with the global one from all_players.js
+    let gameState = createInitialState(date);
+    let ui = null;
+    let engine;
     let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
     const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
-    let highlightedIndex = -1; // For keyboard navigation
-    let engine;
+    let highlightedIndex = -1;
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
     let completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles')) || [];
-    totalScoreEl.textContent = totalScore;
+
+    function dispatch(action) {
+        gameState = reducer(gameState, action);
+        if (ui) ui.render(gameState);
+    }
+
+    dispatch({ type: 'UPDATE_TOTAL_SCORE', payload: totalScore });
 
     function updateTotalScore(pointsToAdd, hintsRevealed) {
         totalScore += pointsToAdd;
@@ -191,53 +189,13 @@ export async function initQuiz() {
                 localStorage.setItem('nameThatYankeeScoreBreakdown', JSON.stringify(breakdown));
             }
         }
-
-        totalScoreEl.textContent = totalScore;
+        dispatch({ type: 'UPDATE_TOTAL_SCORE', payload: totalScore });
     }
 
     function markPuzzleAsComplete() {
         if (!completedPuzzles.includes(date)) {
             completedPuzzles.push(date);
             localStorage.setItem('nameThatYankeeCompletedPuzzles', JSON.stringify(completedPuzzles));
-        }
-    }
-
-    async function loadQuizData() {
-        clueImageEl.src = `images/clue-${date}.webp`;
-
-        if (completedPuzzles.includes(date)) {
-            feedbackMsg.textContent = "You have already completed this puzzle.";
-            submitBtn.disabled = true;
-            hintBtn.disabled = true;
-            giveUpBtn.disabled = true;
-            guessInputEl.disabled = true;
-            shareBtnSuccess.style.display = 'none';
-            if (shareFailContainer) shareFailContainer.style.display = 'none';
-            gameState.isComplete = true;
-        }
-
-        try {
-            //     const playerListResponse = await fetch('all_players.json');
-            //     allPlayers = (await playerListResponse.json()).map(p => p.toLowerCase());
-
-            const response = await fetch(`${date}.html`);
-            const htmlText = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(htmlText, 'text/html');
-
-            const quizDataEl = doc.getElementById('quiz-data');
-            if (quizDataEl) {
-                const data = JSON.parse(quizDataEl.textContent);
-                gameState.correctAnswer = data.answer;
-                gameState.nickname = data.nickname || '';
-                gameState.hints = data.hints;
-                engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
-            } else {
-                throw new Error('Quiz data not found on detail page.');
-            }
-        } catch (error) {
-            console.error("Failed to load quiz data:", error);
-            quizArea.innerHTML = '<h2>Error: Could not load quiz data.</h2>';
         }
     }
 
@@ -253,28 +211,18 @@ export async function initQuiz() {
         }
     }
 
-    function sanitizeHTML(text) {
-        const temp = document.createElement('div');
-        if (text) { // Ensure text is not null or undefined
-            temp.textContent = text;
-        }
-        return temp.innerHTML;
-    }
-
     async function showIncorrectGuesses() {
-        showGuessesBtn.disabled = true;
-        showGuessesBtn.textContent = "Loading...";
-
+        dispatch({ type: 'SET_PROCESSING', payload: true });
+        dispatch({ type: 'SHOW_CHART' }); // Show container early
+        
         try {
             const q = query(guessesCollection, where("puzzleDate", "==", date));
             const querySnapshot = await getDocs(q);
             const guesses = querySnapshot.docs.map(doc => doc.data().guessText.toLowerCase());
 
-            showGuessesBtn.textContent = "See Common Incorrect Guesses";
-
             if (guesses.length === 0) {
-                guessesChartContainer.innerHTML = '<p>No incorrect guesses have been submitted yet.</p>';
-                guessesChartContainer.style.display = 'block';
+                dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: "No incorrect guesses have been submitted yet.", className: '' } });
+                dispatch({ type: 'SET_PROCESSING', payload: false });
                 return;
             }
 
@@ -288,283 +236,219 @@ export async function initQuiz() {
                 .slice(0, 5);
 
             const labels = sortedGuesses.map(entry =>
-                sanitizeHTML(entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' '))
+                entry[0].split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')
             );
             const data = sortedGuesses.map(entry => entry[1]);
 
-            guessesChartContainer.style.display = 'block';
-
-            new Chart(guessesChartCanvas, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Number of Guesses',
-                        data: data,
-                        backgroundColor: 'rgba(12, 35, 64, 0.8)',
-                    }]
-                },
-                options: {
-                    indexAxis: 'y',
-                    plugins: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: 'Most Common Incorrect Guesses'
-                        }
+            if (window.Chart) {
+                new Chart(ui.elements.guessesChartCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Number of Guesses',
+                            data: data,
+                            backgroundColor: 'rgba(12, 35, 64, 0.8)',
+                        }]
                     },
-                    scales: {
-                        x: {
-                            ticks: { beginAtZero: true, stepSize: 1 }
-                        }
-                    },
-                    layout: {
-                        padding: {
-                            left: 25
+                    options: {
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Most Common Incorrect Guesses'
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { beginAtZero: true, stepSize: 1 }
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
 
         } catch (error) {
             console.error("Error getting guesses: ", error);
-            guessesChartContainer.innerHTML = '<p>Could not load guess data.</p>';
-            guessesChartContainer.style.display = 'block';
+            dispatch({ type: 'SET_ERROR', payload: "Could not load guess data." });
+        }
+        dispatch({ type: 'SET_PROCESSING', payload: false });
+    }
+
+    async function loadQuizData() {
+        if (completedPuzzles.includes(date)) {
+            dispatch({ type: 'SET_ERROR', payload: "You have already completed this puzzle." });
+            dispatch({ type: 'GUESS_RESULT', payload: { status: 'ALREADY_COMPLETE', score: 0, guess: '', gameOver: true } });
+        }
+
+        try {
+            const response = await fetch(`${date}.html`);
+            const htmlText = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlText, 'text/html');
+
+            const quizDataEl = doc.getElementById('quiz-data');
+            if (quizDataEl) {
+                const data = JSON.parse(quizDataEl.textContent);
+                const formattedName = data.answer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
+                dispatch({ type: 'INIT_DATA', payload: { playerIdentity: formattedName } });
+                engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
+                ui = new QuizUI(data.hints);
+                ui.render(gameState);
+                setupEventListeners();
+            } else {
+                throw new Error('Quiz data not found on detail page.');
+            }
+        } catch (error) {
+            console.error("Failed to load quiz data:", error);
+            document.getElementById('quiz-area').innerHTML = '<h2>Error: Could not load quiz data.</h2>';
         }
     }
 
     function checkGuess() {
-        const userGuess = guessInputEl.value;
+        const userGuess = ui.elements.guessInput.value;
         if (!userGuess.trim()) {
-            feedbackMsg.textContent = "Please enter a valid guess.";
-            feedbackMsg.className = 'incorrect';
+            dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: "Please enter a valid guess.", className: 'incorrect' } });
             return;
         }
 
         const result = engine.submitGuess(userGuess, normalizedPlayerSet);
 
         if (result.status === 'CORRECT') {
-            gameState.shareEvents.push('hit');
-            gameState.isComplete = true;
-            gameState.finalScore = result.score;
-            const pointsEarned = result.score;
-            answerImageEl.src = `images/answer-${date}.webp`;
-            successHeader.textContent = `Correct! The answer is ${gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ')}.`;
-            successPoints.textContent = `You earned ${pointsEarned} points!`;
-            viewAnswerLink.href = `${date}.html`; // Set the link
-            updateTotalScore(pointsEarned, result.clueIndex);
+            dispatch({ type: 'GUESS_RESULT', payload: { status: result.status, score: result.score, guess: userGuess, gameOver: result.gameOver } });
+            updateTotalScore(result.score, result.clueIndex);
             markPuzzleAsComplete();
-            quizArea.style.display = 'none';
-            successArea.style.display = 'block';
         } else if (result.status === 'INCORRECT_VALID_PLAYER') {
-            gameState.shareEvents.push('miss');
             saveIncorrectGuess(userGuess.trim().toLowerCase());
             if (result.gameOver) {
                 endQuizAndShowAnswer();
             } else {
-                feedbackMsg.textContent = "Incorrect. Try again!";
-                feedbackMsg.className = 'incorrect';
-                guessInputEl.value = '';
+                dispatch({ type: 'GUESS_RESULT', payload: { status: result.status, score: result.score, guess: userGuess, gameOver: result.gameOver } });
+                dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: "Incorrect. Try again!", className: 'incorrect' } });
+                ui.elements.guessInput.value = '';
                 revealHint();
             }
         } else if (result.status === 'DUPLICATE_GUESS') {
-            feedbackMsg.textContent = "You already guessed that player!";
-            feedbackMsg.className = 'incorrect';
+            dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: "You already guessed that player!", className: 'incorrect' } });
         } else if (result.status === 'INVALID_PLAYER') {
-            feedbackMsg.textContent = "That is not a valid MLB player, guess again";
-            feedbackMsg.className = 'incorrect';
-            guessInputEl.value = '';
+            dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: "That is not a valid MLB player, guess again", className: 'incorrect' } });
+            ui.elements.guessInput.value = '';
         }
     }
 
     function revealHint(isManual = false) {
         if (isManual) {
             engine.currentClueIndex++;
-            gameState.hintsRequested++;
-            gameState.shareEvents.push('hint');
-        }
-
-        const indexToShow = engine.currentClueIndex - 1;
-        if (indexToShow >= 0 && indexToShow < gameState.hints.length) {
-            hintsContainer.style.display = 'block';
-            const newHint = document.createElement('li');
-            newHint.textContent = gameState.hints[indexToShow];
-            hintsList.appendChild(newHint);
-        }
-
-        if (engine.currentClueIndex >= gameState.hints.length) {
-            hintBtn.disabled = true;
-            if (!submitBtn.disabled) {
-                feedbackMsg.textContent = 'All hints revealed! One guess remaining.';
-                feedbackMsg.className = '';
-            }
-        }
-    }
-
-    // NEW: Function to end the quiz and show the answer
-    function endQuizAndShowAnswer() {
-        gameState.isComplete = true;
-        const formattedAnswer = gameState.correctAnswer.split(' ').map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(' ');
-        feedbackMsg.innerHTML = `Sorry, the correct answer was ${formattedAnswer}.<p> <a href="${date}.html">Click here to learn more about ${formattedAnswer}</a>`;
-        submitBtn.disabled = true;
-        hintBtn.disabled = true;
-        giveUpBtn.disabled = true;
-        guessInputEl.disabled = true;
-        if (shareFailContainer) shareFailContainer.style.display = 'block';
-        markPuzzleAsComplete();
-    }
-
-    // --- Autocomplete Logic ---
-    guessInputEl.addEventListener('input', () => {
-        suggestionsContainer.innerHTML = '';
-
-        const matches = getAutocompleteSuggestions(guessInputEl.value, allPlayers);
-
-        if (matches.length > 0) {
-            matches.forEach(match => {
-                const suggestionItem = document.createElement('div');
-                suggestionItem.textContent = match;
-                suggestionItem.classList.add('suggestion-item');
-                suggestionItem.addEventListener('click', () => {
-                    guessInputEl.value = match;
-                    suggestionsContainer.innerHTML = '';
-                    suggestionsContainer.style.display = 'none';
-                });
-                suggestionsContainer.appendChild(suggestionItem);
-            });
-            suggestionsContainer.style.display = 'block';
+            dispatch({ type: 'REVEAL_HINT' });
         } else {
-            suggestionsContainer.style.display = 'none';
+            gameState.hintsRequested = engine.currentClueIndex;
+            ui.render(gameState);
         }
-    });
+    }
 
-    // --- UPDATED: Keyboard Navigation Logic ---
-    guessInputEl.addEventListener('keydown', (e) => {
-        const suggestions = suggestionsContainer.querySelectorAll('.suggestion-item');
+    function endQuizAndShowAnswer() {
+        markPuzzleAsComplete();
+        const formattedAnswer = gameState.playerIdentity;
+        const feedback = `Sorry, the correct answer was ${formattedAnswer}.<p> <a href="${date}.html">Click here to learn more about ${formattedAnswer}</a>`;
+        dispatch({ type: 'UPDATE_FEEDBACK', payload: { message: feedback, className: '' } });
+        dispatch({ type: 'GUESS_RESULT', payload: { status: 'GIVE_UP', score: 0, guess: 'Gave Up', gameOver: true } });
+    }
 
-        if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (suggestions.length > 0) {
-                highlightedIndex = (highlightedIndex + 1) % suggestions.length;
-                updateHighlight(suggestions);
-            }
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (suggestions.length > 0) {
-                highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
-                updateHighlight(suggestions);
-            }
-        } else if (e.key === 'Enter') {
-            e.preventDefault(); // Always prevent default on Enter
-            if (highlightedIndex > -1 && suggestions[highlightedIndex]) {
-                // A suggestion is highlighted, so select it and submit
-                guessInputEl.value = suggestions[highlightedIndex].textContent;
-                suggestionsContainer.innerHTML = '';
-                suggestionsContainer.style.display = 'none';
-                checkGuess(); // Submit the guess
+    function setupEventListeners() {
+        ui.elements.submitBtn.addEventListener('click', checkGuess);
+        ui.elements.hintBtn.addEventListener('click', () => revealHint(true));
+        ui.elements.giveUpBtn.addEventListener('click', endQuizAndShowAnswer);
+        ui.elements.showGuessesBtn.addEventListener('click', showIncorrectGuesses);
+
+        ui.elements.guessInput.addEventListener('input', () => {
+            ui.elements.suggestionsContainer.innerHTML = '';
+            const matches = getAutocompleteSuggestions(ui.elements.guessInput.value, allPlayers);
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    const item = document.createElement('div');
+                    item.textContent = match;
+                    item.classList.add('suggestion-item');
+                    item.addEventListener('click', () => {
+                        ui.elements.guessInput.value = match;
+                        ui.elements.suggestionsContainer.innerHTML = '';
+                        ui.elements.suggestionsContainer.style.display = 'none';
+                    });
+                    ui.elements.suggestionsContainer.appendChild(item);
+                });
+                ui.elements.suggestionsContainer.style.display = 'block';
             } else {
-                // No suggestion is highlighted, just submit the current text
-                checkGuess();
-            }
-        }
-    });
-
-    function updateHighlight(suggestions) {
-        suggestions.forEach((item, index) => {
-            if (index === highlightedIndex) {
-                item.classList.add('highlighted');
-                // THE FIX: Manually control the container's scroll position
-                const container = suggestionsContainer;
-                const itemTop = item.offsetTop;
-                const itemBottom = itemTop + item.offsetHeight;
-                const containerTop = container.scrollTop;
-                const containerBottom = containerTop + container.clientHeight;
-
-                if (itemBottom > containerBottom) {
-                    container.scrollTop = itemBottom - container.clientHeight;
-                } else if (itemTop < containerTop) {
-                    container.scrollTop = itemTop;
-                }
-            } else {
-                item.classList.remove('highlighted');
+                ui.elements.suggestionsContainer.style.display = 'none';
             }
         });
-    }
 
-    function generateShareText(dateStr, state) {
-        const isWin = state.shareEvents.includes('hit');
-        const pointsEarned = isWin ? state.finalScore : 0;
-        
-        // Map events to emojis: hint=📘, miss=🟥, hit=🟩
-        const emojiMap = {
-            'hint': '📘',
-            'miss': '🟥',
-            'hit': '🟩'
-        };
-        const emojiGrid = state.shareEvents.map(event => emojiMap[event]).join('');
-
-        const shareText = `Name That Yankee - ${dateStr}\n` +
-            `⚾ Score: ${pointsEarned} pts\n` +
-            `💡 Hints used: ${state.hintsRequested}\n` +
-            `${emojiGrid}\n\n` +
-            `${window.location.href}`;
-        
-        return shareText;
-    }
-
-    async function copyShareText(btn, dateStr, state) {
-        const text = generateShareText(dateStr, state);
-        
-        if (navigator.share) {
-            try {
-                // On iOS Safari, providing a 'title' or 'url' alongside 'text' that contains a URL 
-                // often causes the browser to ignore the 'text' field entirely.
-                // Omitting 'title' and 'url' ensures the full "Wordle-style" text block is shared.
-                await navigator.share({
-                    text: text
-                });
-                return; // Successfully shared using native dialog
-            } catch (err) {
-                // If user cancels the share dialog, it throws an AbortError.
-                // We shouldn't alert on cancellation, just silently return.
-                if (err.name === 'AbortError') return;
-                console.error('Native share failed, falling back to clipboard: ', err);
-                // Fall through to clipboard approach
+        ui.elements.guessInput.addEventListener('keydown', (e) => {
+            const suggestions = ui.elements.suggestionsContainer.querySelectorAll('.suggestion-item');
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (suggestions.length > 0) {
+                    highlightedIndex = (highlightedIndex + 1) % suggestions.length;
+                    updateHighlight(suggestions);
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (suggestions.length > 0) {
+                    highlightedIndex = (highlightedIndex - 1 + suggestions.length) % suggestions.length;
+                    updateHighlight(suggestions);
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (highlightedIndex > -1 && suggestions[highlightedIndex]) {
+                    ui.elements.guessInput.value = suggestions[highlightedIndex].textContent;
+                    ui.elements.suggestionsContainer.innerHTML = '';
+                    ui.elements.suggestionsContainer.style.display = 'none';
+                    checkGuess();
+                } else {
+                    checkGuess();
+                }
             }
+        });
+
+        function updateHighlight(suggestions) {
+            suggestions.forEach((item, index) => {
+                if (index === highlightedIndex) {
+                    item.classList.add('highlighted');
+                    const container = ui.elements.suggestionsContainer;
+                    if (item.offsetTop + item.offsetHeight > container.scrollTop + container.clientHeight) {
+                        container.scrollTop = item.offsetTop + item.offsetHeight - container.clientHeight;
+                    } else if (item.offsetTop < container.scrollTop) {
+                        container.scrollTop = item.offsetTop;
+                    }
+                } else {
+                    item.classList.remove('highlighted');
+                }
+            });
         }
 
-        try {
-            await navigator.clipboard.writeText(text);
-            const originalText = btn.textContent;
-            btn.textContent = 'Copied! ✅';
-            btn.classList.add('copied');
+        const formattedDate = new Date(date + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        ui.elements.shareBtnSuccess.addEventListener('click', async () => {
+            const originalText = ui.elements.shareBtnSuccess.textContent;
+            await copyShareText(formattedDate, gameState);
+            ui.elements.shareBtnSuccess.textContent = 'Copied! ✅';
+            ui.elements.shareBtnSuccess.classList.add('copied');
             setTimeout(() => {
-                btn.textContent = originalText;
-                btn.classList.remove('copied');
+                ui.elements.shareBtnSuccess.textContent = originalText;
+                ui.elements.shareBtnSuccess.classList.remove('copied');
             }, 2000);
-        } catch (err) {
-            console.error('Failed to copy: ', err);
-            alert('Could not copy to clipboard. Please try again.');
-        }
+        });
+
+        ui.elements.shareBtnFail.addEventListener('click', async () => {
+            const originalText = ui.elements.shareBtnFail.textContent;
+            await copyShareText(formattedDate, gameState);
+            ui.elements.shareBtnFail.textContent = 'Copied! ✅';
+            ui.elements.shareBtnFail.classList.add('copied');
+            setTimeout(() => {
+                ui.elements.shareBtnFail.textContent = originalText;
+                ui.elements.shareBtnFail.classList.remove('copied');
+            }, 2000);
+        });
     }
-
-    submitBtn.addEventListener('click', checkGuess);
-    hintBtn.addEventListener('click', () => revealHint(true));
-    giveUpBtn.addEventListener('click', endQuizAndShowAnswer); // New event listener
-    showGuessesBtn.addEventListener('click', showIncorrectGuesses);
-    
-    // Get formatted date once for sharing
-    let formattedDate = '';
-    try {
-        const dateObj = new Date(date + 'T00:00:00');
-        formattedDate = dateObj.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    } catch (e) {
-        formattedDate = date;
-    }
-
-    shareBtnSuccess.addEventListener('click', () => copyShareText(shareBtnSuccess, formattedDate, gameState));
-    shareBtnFail.addEventListener('click', () => copyShareText(shareBtnFail, formattedDate, gameState));
-
 
     await loadQuizData();
 }
