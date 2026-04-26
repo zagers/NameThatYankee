@@ -212,7 +212,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
       "@type": "Article",
       "headline": "Name That Yankee Answer for {formatted_date}",
       "description": {json.dumps(f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.")},
-      "image": "https://namethatyankeequiz.com/images/clue-{date_str}.webp",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
       "author": {{
         "@type": "Person",
         "name": "Scott Zager"
