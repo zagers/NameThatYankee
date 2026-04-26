@@ -18,7 +18,8 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     career_totals_data = player_data.get('career_totals', {})
     yearly_war_data = player_data.get('yearly_war', [])
     
-    display_name = f'{name} "{nickname}"' if nickname else name
+    # Escape name and nickname for HTML safety
+    display_name = html.escape(f'{name} "{nickname}"' if nickname else name)
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
 
     followup_section_html = ""
@@ -30,9 +31,9 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             if not question or not answer:
                 continue
             item_html = f"""
-                        <div class=\"followup-item\">
-                            <button class=\"followup-btn\" data-answer=\"{answer}\">{question}</button>
-                            <div class=\"followup-answer\" style=\"display:none;\"></div>
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="{answer}">{question}</button>
+                            <div class="followup-answer" style="display:none;"></div>
                         </div>
             """
             items_html_parts.append(item_html)
@@ -40,9 +41,9 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         if items_html_parts:
             items_html = "\n".join(items_html_parts)
             followup_section_html = f"""
-                <div class=\"followup-section\" id=\"followup-section\">
+                <div class="followup-section" id="followup-section">
                     <h3>Would you like to find out more about {html.escape(name)}?</h3>
-                    <div class=\"followup-buttons\">
+                    <div class="followup-buttons">
 {items_html}
                     </div>
                 </div>
@@ -69,7 +70,6 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     chart_html = ""
     search_data_html = ""
     quiz_data_html = ""
-    script_run_date: str = date.today().strftime("%d-%b-%Y")
     if yearly_war_data:
         years = json.dumps([item['year'] for item in yearly_war_data])
         war_data = json.dumps([item['war'] for item in yearly_war_data])
@@ -95,51 +95,12 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
         <script>
             const years = {years};
             const warData = {war_data};
             const teamsByYear = {teams_by_year};
-
-            const teamColors = {{
-                'ARI': {{ bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' }},
-                'ATL': {{ bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' }},
-                'BAL': {{ bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' }},
-                'BOS': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' }},
-                'CHC': {{ bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' }},
-                'CHW': {{ bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' }},
-                'CIN': {{ bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' }},
-                'CLE': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' }},
-                'COL': {{ bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' }},
-                'DET': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' }},
-                'HOU': {{ bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' }},
-                'KCR': {{ bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' }},
-                'LAA': {{ bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' }},
-                'LAD': {{ bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' }},
-                'MIA': {{ bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' }},
-                'MIL': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' }},
-                'MIN': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' }},
-                'NYM': {{ bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' }},
-                'NYY': {{ bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' }},
-                'OAK': {{ bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' }},
-                'PHI': {{ bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' }},
-                'PIT': {{ bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' }},
-                'SDP': {{ bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' }},
-                'SFG': {{ bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' }},
-                'SEA': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' }},
-                'STL': {{ bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' }},
-                'TBR': {{ bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' }},
-                'TEX': {{ bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' }},
-                'TOR': {{ bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' }},
-                'WSN': {{ bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' }},
-                'MON': {{ bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' }},
-                'CAL': {{ bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' }},
-                'FLA': {{ bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' }},
-                'BRO': {{ bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' }},
-                'SLB': {{ bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' }},
-                '2TM': {{ bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' }},
-                'Total': {{ bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' }},
-                'Default': {{ bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }}
-            }};
+            const teamColors = window.TEAM_COLORS;
 
             const waterfallData = [];
             let cumulativeTotal = 0;
@@ -223,7 +184,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(display_name)} Answer - {formatted_date} | Name That Yankee</title>
+    <title>{display_name} Answer - {formatted_date} | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
@@ -236,12 +197,12 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <meta property="og:description" content="Can you name this New York Yankee based on their career stats?">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Name That Yankee">
-    <meta property="og:image" content="images/clue-{date_str}.webp">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/clue-{date_str}.webp">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Name That Yankee - {formatted_date}">
     <meta name="twitter:description" content="Can you name this New York Yankee based on their career stats?">
-    <meta name="twitter:image" content="images/clue-{date_str}.webp">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/clue-{date_str}.webp">
     
     <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
@@ -354,6 +315,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
                 }} else {{
                     answerBox.style.display = 'none';
                 }}
+
             }});
         }});
     }});
@@ -362,7 +324,6 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: {script_run_date}</p>
     </footer>    
 </body>
 </html>"""
@@ -387,7 +348,7 @@ def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
     # Only lazy load items below the fold (index > 5)
     loading_attr = 'loading="lazy"' if i > 5 else ''
     
-    return f"""<div class="gallery-container">
+    return f"""<div class="gallery-container" data-search-terms="{html.escape(search_terms)}">
                 <a href="{date_str}" class="gallery-item">
                     <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
                 </a>
@@ -513,15 +474,7 @@ def rebuild_index_page(project_dir: Path):
         gallery_div.append(tile_soup)
         gallery_div.append('\n')
     
-    # Find the specific paragraph with the ID 'last-updated'
-    update_p = soup.select_one('footer #last-updated')
-    if update_p:
-        script_run_date = date.today().strftime("%d-%b-%Y")
-        update_p.string = f"Last Updated: {script_run_date}"
-        print("✅ Footer timestamp updated.")
-    else:
-        print("⚠️ Warning: Could not find footer element with id='last-updated' to update.")
-
+    # Update index.html copyright and chevron
     copyright_p = soup.select_one('footer .copyright')
     if copyright_p:
         copyright_p.clear()
@@ -539,13 +492,14 @@ def rebuild_index_page(project_dir: Path):
     if index_chevron:
         index_chevron['aria-hidden'] = 'true'
 
+    # Save index.html
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(soup.prettify())
         
     print("✅ index.html rebuilt successfully.")
 
-    # Save the consolidated stats
-    stats_path = project_dir / "stats_summary.json"
-    with open(stats_path, 'w', encoding='utf-8') as f:
-        json.dump(stats_summary, f, indent=2)
-    print(f"✅ stats_summary.json generated with {len(stats_summary)} entries.")
+    # Save the consolidated stats for search
+    stats_file = project_dir / "stats_summary.json"
+    with open(stats_file, 'w', encoding='utf-8') as f:
+        json.dump(stats_summary, f, indent=4)
+    print(f"✅ {stats_file.name} updated with {len(stats_summary)} entries.")
