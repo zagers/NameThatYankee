@@ -316,14 +316,15 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
                 const answer = btn.getAttribute('data-answer') || '';
                 if (!answer) return;
 
-                # Toggle visibility
+                // Toggle visibility
                 const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
-                if (isHidden) {{
+                if (isHidden) {
                     answerBox.textContent = answer;
                     answerBox.style.display = 'block';
-                }} else {{
+                } else {
                     answerBox.style.display = 'none';
-                }}
+                }
+
             }});
         }});
     }});
@@ -482,60 +483,29 @@ def rebuild_index_page(project_dir: Path):
         gallery_div.append(tile_soup)
         gallery_div.append('\n')
     
-    # Update the 'Last Updated' timestamp in the footer of all core pages
-    script_run_date = date.today().strftime("%d-%b-%Y")
-    core_files = ['index.html', 'quiz.html', 'analytics.html', 'instructions.html']
-    
-    for filename in core_files:
-        file_path = project_dir / filename
-        if not file_path.exists():
-            continue
-            
-        try:
-            # Use current soup for index.html, read others fresh
-            if filename == 'index.html':
-                f_soup = soup
-            else:
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    f_soup = BeautifulSoup(f, 'html.parser')
-            
-            if filename == 'index.html':
-                gallery_div = f_soup.select_one('.gallery')
-                if gallery_div:
-                    gallery_div.clear()
-                    for tile_html in gallery_tiles:
-                        tile_soup = BeautifulSoup(tile_html, 'html.parser')
-                        gallery_div.append(tile_soup)
-                        gallery_div.append('\n')
-                else:
-                    print(f"❌ Could not find insertion point in {filename}.")
+    # Update index.html copyright and chevron
+    copyright_p = soup.select_one('footer .copyright')
+    if copyright_p:
+        copyright_p.clear()
+        new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
+        copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
 
-                copyright_p = f_soup.select_one('footer .copyright')
-                if copyright_p:
-                    copyright_p.clear()
-                    new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
-                        <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
-                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
-                    copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
+    # Update index chevron
+    index_chevron = soup.select_one('#score-display .chevron-icon')
+    if index_chevron:
+        index_chevron['aria-hidden'] = 'true'
 
-                # Update index chevron
-                index_chevron = f_soup.select_one('#score-display .chevron-icon')
-                if index_chevron:
-                    index_chevron['aria-hidden'] = 'true'
-
-            # Save the file
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(f_soup.prettify())
-            
-            print(f"✅ {filename} updated successfully.")
-        except Exception as e:
-            print(f"⚠️ Error updating {filename}: {e}")
+    # Save index.html
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(soup.prettify())
         
-    print("✅ rebuild_index_page sequence complete.")
+    print("✅ index.html rebuilt successfully.")
 
     # Save the consolidated stats for search
     stats_file = project_dir / "stats_summary.json"
