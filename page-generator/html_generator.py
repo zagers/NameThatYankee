@@ -194,15 +194,15 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <!-- Meta tags for better social sharing -->
     <meta name="description" content="Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.">
     <meta property="og:title" content="Name That Yankee - {formatted_date}">
-    <meta property="og:description" content="Can you name this New York Yankee based on their career stats?">
+    <meta property="og:description" content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Name That Yankee">
-    <meta property="og:image" content="https://namethatyankeequiz.com/images/clue-{date_str}.webp">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Name That Yankee - {formatted_date}">
-    <meta name="twitter:description" content="Can you name this New York Yankee based on their career stats?">
-    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/clue-{date_str}.webp">
+    <meta name="twitter:description" content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
     
     <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
@@ -212,7 +212,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
       "@type": "Article",
       "headline": "Name That Yankee Answer for {formatted_date}",
       "description": {json.dumps(f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.")},
-      "image": "https://namethatyankeequiz.com/images/clue-{date_str}.webp",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
       "author": {{
         "@type": "Person",
         "name": "Scott Zager"
