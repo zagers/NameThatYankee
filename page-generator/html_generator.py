@@ -17,6 +17,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     followup_qa = player_data.get('followup_qa', [])
     career_totals_data = player_data.get('career_totals', {})
     yearly_war_data = player_data.get('yearly_war', [])
+    script_run_date = date.today().strftime("%d-%b-%Y")
     
     display_name = f'{name} "{nickname}"' if nickname else name
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
@@ -30,9 +31,9 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             if not question or not answer:
                 continue
             item_html = f"""
-                        <div class=\"followup-item\">
-                            <button class=\"followup-btn\" data-answer=\"{answer}\">{question}</button>
-                            <div class=\"followup-answer\" style=\"display:none;\"></div>
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="{answer}">{question}</button>
+                            <div class="followup-answer" style="display:none;"></div>
                         </div>
             """
             items_html_parts.append(item_html)
@@ -40,109 +41,67 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         if items_html_parts:
             items_html = "\n".join(items_html_parts)
             followup_section_html = f"""
-                <div class=\"followup-section\" id=\"followup-section\">
+                <div class="followup-section" id="followup-section">
                     <h3>Would you like to find out more about {html.escape(name)}?</h3>
-                    <div class=\"followup-buttons\">
+                    <div class="followup-buttons">
 {items_html}
                     </div>
                 </div>
             """
-    
-    stats_table_html = ""
-    if career_totals_data and any(career_totals_data.values()):
-        headers = career_totals_data.keys()
-        header_html = "".join([f"<th>{h}</th>" for h in headers])
-        row_html = "".join([f"<td>{career_totals_data.get(h, '')}</td>" for h in headers])
-        stats_table_html = f"""
-        <div class="stats-table-container">
-            <h3>Career Totals</h3>
-            <div class="table-wrapper">
-                <table>
-                    <thead><tr>{header_html}</tr></thead>
-                    <tbody><tr>{row_html}</tr></tbody>
-                </table>
-            </div>
-            <p class="citation">Statistics via Baseball-Reference.com</p>
-        </div>
-        """
 
-    chart_html = ""
-    search_data_html = ""
-    quiz_data_html = ""
-    script_run_date: str = date.today().strftime("%d-%b-%Y")
+    # Generate Chart.js initialization script if yearly WAR data is present
+    career_arc_script = ""
     if yearly_war_data:
-        years = json.dumps([item['year'] for item in yearly_war_data])
-        war_data = json.dumps([item['war'] for item in yearly_war_data])
-        teams_by_year = json.dumps([item['display_team'] for item in yearly_war_data])
+        years = [entry['year'] for entry in yearly_war_data]
+        war_data = [entry['war'] for entry in yearly_war_data]
+        teams_by_year = [entry['team'] for entry in yearly_war_data]
         
-        all_teams = set()
-        for item in yearly_war_data:
-            for team in item['teams']:
-                all_teams.add(team)
-        all_years = {item['year'] for item in yearly_war_data}
-        search_data = {'teams': list(all_teams), 'years': list(all_years)}
-        search_data_html = f'<div id="search-data" style="display:none;">{json.dumps(search_data)}</div>'
+        # Color mapping for common MLB teams (Yankees-centric)
+        team_colors_json = json.dumps({
+            "NYY": {"bg": "rgba(12, 35, 64, 0.7)", "border": "rgba(12, 35, 64, 1)", "name": "NY Yankees"},
+            "BAL": {"bg": "rgba(223, 70, 27, 0.7)", "border": "rgba(223, 70, 27, 1)", "name": "Baltimore"},
+            "BOS": {"bg": "rgba(189, 48, 57, 0.7)", "border": "rgba(189, 48, 57, 1)", "name": "Boston"},
+            "TOR": {"bg": "rgba(19, 74, 142, 0.7)", "border": "rgba(19, 74, 142, 1)", "name": "Toronto"},
+            "TBR": {"bg": "rgba(9, 44, 92, 0.7)", "border": "rgba(9, 44, 92, 1)", "name": "Tampa Bay"},
+            "LAA": {"bg": "rgba(186, 0, 33, 0.7)", "border": "rgba(186, 0, 33, 1)", "name": "LA Angels"},
+            "HOU": {"bg": "rgba(235, 110, 31, 0.7)", "border": "rgba(235, 110, 31, 1)", "name": "Houston"},
+            "OAK": {"bg": "rgba(0, 56, 49, 0.7)", "border": "rgba(0, 56, 49, 1)", "name": "Oakland"},
+            "SEA": {"bg": "rgba(0, 92, 92, 0.7)", "border": "rgba(0, 92, 92, 1)", "name": "Seattle"},
+            "TEX": {"bg": "rgba(0, 50, 120, 0.7)", "border": "rgba(0, 50, 120, 1)", "name": "Texas"},
+            "CHW": {"bg": "rgba(39, 37, 31, 0.7)", "border": "rgba(39, 37, 31, 1)", "name": "Chi White Sox"},
+            "CLE": {"bg": "rgba(227, 24, 55, 0.7)", "border": "rgba(227, 24, 55, 1)", "name": "Cleveland"},
+            "DET": {"bg": "rgba(12, 35, 64, 0.7)", "border": "rgba(12, 35, 64, 1)", "name": "Detroit"},
+            "KCR": {"bg": "rgba(0, 70, 135, 0.7)", "border": "rgba(0, 70, 135, 1)", "name": "Kansas City"},
+            "MIN": {"bg": "rgba(0, 43, 92, 0.7)", "border": "rgba(0, 43, 92, 1)", "name": "Minnesota"},
+            "ATL": {"bg": "rgba(206, 17, 65, 0.7)", "border": "rgba(206, 17, 65, 1)", "name": "Atlanta"},
+            "MIA": {"bg": "rgba(0, 163, 224, 0.7)", "border": "rgba(0, 163, 224, 1)", "name": "Miami"},
+            "NYM": {"bg": "rgba(0, 45, 114, 0.7)", "border": "rgba(0, 45, 114, 1)", "name": "NY Mets"},
+            "PHI": {"bg": "rgba(232, 24, 40, 0.7)", "border": "rgba(232, 24, 40, 1)", "name": "Philadelphia"},
+            "WSN": {"bg": "rgba(171, 18, 41, 0.7)", "border": "rgba(171, 18, 41, 1)", "name": "Washington"},
+            "CHC": {"bg": "rgba(14, 51, 134, 0.7)", "border": "rgba(14, 51, 134, 1)", "name": "Chi Cubs"},
+            "CIN": {"bg": "rgba(198, 1, 31, 0.7)", "border": "rgba(198, 1, 31, 1)", "name": "Cincinnati"},
+            "MIL": {"bg": "rgba(18, 40, 75, 0.7)", "border": "rgba(18, 40, 75, 1)", "name": "Milwaukee"},
+            "PIT": {"bg": "rgba(255, 184, 28, 0.7)", "border": "rgba(255, 184, 28, 1)", "name": "Pittsburgh"},
+            "STL": {"bg": "rgba(196, 30, 58, 0.7)", "border": "rgba(196, 30, 58, 1)", "name": "St. Louis"},
+            "ARI": {"bg": "rgba(167, 25, 48, 0.7)", "border": "rgba(167, 25, 48, 1)", "name": "Arizona"},
+            "COL": {"bg": "rgba(51, 0, 111, 0.7)", "border": "rgba(51, 0, 111, 1)", "name": "Colorado"},
+            "LAD": {"bg": "rgba(0, 90, 156, 0.7)", "border": "rgba(0, 90, 156, 1)", "name": "LA Dodgers"},
+            "SDP": {"bg": "rgba(47, 37, 32, 0.7)", "border": "rgba(47, 37, 32, 1)", "name": "San Diego"},
+            "SFG": {"bg": "rgba(253, 90, 30, 0.7)", "border": "rgba(253, 90, 30, 1)", "name": "San Francisco"},
+            "Total": {"bg": "rgba(128, 128, 128, 0.5)", "border": "rgba(128, 128, 128, 1)", "name": "Career Total"},
+            "Default": {"bg": "rgba(150, 150, 150, 0.7)", "border": "rgba(150, 150, 150, 1)", "name": "Other Team"}
+        })
 
-        quiz_data = {"answer": name, "nickname": nickname, "hints": facts}
-        quiz_data_html = f'<div id="quiz-data" style="display:none;">{json.dumps(quiz_data)}</div>'
-
-        chart_html = f"""
-        <div class="chart-container">
-            <h3>Career Arc by WAR</h3>
-            <div class="chart-wrapper">
-                <canvas id="careerArcChart"></canvas>
-            </div>
-        </div>
-
+        career_arc_script = f"""
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
         <script>
             const years = {years};
             const warData = {war_data};
             const teamsByYear = {teams_by_year};
+            const teamColors = {team_colors_json};
 
-            const teamColors = {{
-                'ARI': {{ bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' }},
-                'ATL': {{ bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' }},
-                'BAL': {{ bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' }},
-                'BOS': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' }},
-                'CHC': {{ bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' }},
-                'CHW': {{ bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' }},
-                'CIN': {{ bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' }},
-                'CLE': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' }},
-                'COL': {{ bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' }},
-                'DET': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' }},
-                'HOU': {{ bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' }},
-                'KCR': {{ bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' }},
-                'LAA': {{ bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' }},
-                'LAD': {{ bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' }},
-                'MIA': {{ bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' }},
-                'MIL': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' }},
-                'MIN': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' }},
-                'NYM': {{ bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' }},
-                'NYY': {{ bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' }},
-                'OAK': {{ bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' }},
-                'PHI': {{ bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' }},
-                'PIT': {{ bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' }},
-                'SDP': {{ bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' }},
-                'SFG': {{ bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' }},
-                'SEA': {{ bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' }},
-                'STL': {{ bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' }},
-                'TBR': {{ bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' }},
-                'TEX': {{ bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' }},
-                'TOR': {{ bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' }},
-                'WSN': {{ bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' }},
-                'MON': {{ bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' }},
-                'CAL': {{ bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' }},
-                'FLA': {{ bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' }},
-                'BRO': {{ bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' }},
-                'SLB': {{ bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' }},
-                '2TM': {{ bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' }},
-                'Total': {{ bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' }},
-                'Default': {{ bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }}
-            }};
-
-            const waterfallData = [];
             let cumulativeTotal = 0;
+            const waterfallData = [];
             for (const war of warData) {{
                 waterfallData.push([cumulativeTotal, cumulativeTotal + war]);
                 cumulativeTotal += war;
@@ -249,9 +208,9 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     {{
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Name That Yankee Answer for {formatted_date}",
-      "description": {json.dumps(f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.")},
-      "image": "https://namethatyankeequiz.com/images/clue-{date_str}.webp",
+      "headline": "{display_name} - Trivia Answer",
+      "image": "images/answer-{date_str}.webp",
+      "datePublished": "{date_str}",
       "author": {{
         "@type": "Person",
         "name": "Scott Zager"
@@ -264,79 +223,67 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
           "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
         }}
       }},
-      "datePublished": "{date_str}"
+      "description": "{html.escape(facts[0]) if facts else 'Daily New York Yankees trivia.'}"
     }}
     </script>
 </head>
-<body>
+<body class="detail-page">
     <header>
         <div class="header-content">
-            <h1>The answer for {formatted_date} is...</h1>
-        </div>
-        <div class="header-controls">
-            <a href="instructions" class="instructions-link">New Features!</a>
-            <div id="score-display">
-                Your Score: <span id="total-score">0</span>
-                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                <div id="score-breakdown-container" style="display: none;">
-                    <div class="breakdown-header">Score Breakdown</div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Clue</th>
-                                <th>Points</th>
-                                <th>Count</th>
-                            </tr>
-                        </thead>
-                        <tbody id="breakdown-body"></tbody>
-                    </table>
-                </div>
-            </div>
+            <a href="/" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <span>Back to Archives</span>
+            </a>
+            <h1>Trivia Answer</h1>
+            <div style="width: 24px;"></div>
         </div>
     </header>
 
-    <main>
-        <a href="./" class="back-link">← Back to All Questions</a>
+    <main class="container">
+        <article class="answer-card">
+            <div class="answer-header">
+                <h2 id="player-name">{display_name}</h2>
+                <p class="trivia-date">Puzzle Date: {formatted_date}</p>
+            </div>
 
-        <div class="detail-layout">
-            <div class="left-column">
-                <div class="player-profile">
-                    <div class="player-photo">
-                        <img src="images/answer-{date_str}.webp" alt="Photo of {name}" decoding="async">
-                    </div>
-                    <div class="player-info">
-                        <h2>{display_name}</h2>
-                        <div class="facts-header">
-                            <h3>Career Highlights & Facts</h3>
-                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
-                        </div>
-                        <ul>
+            <div class="answer-images">
+                <div class="image-box">
+                    <h3>The Clue</h3>
+                    <img src="images/clue-{date_str}.webp" alt="Trivia clue for {display_name}" decoding="async">
+                </div>
+                <div class="image-box">
+                    <h3>The Answer</h3>
+                    <img src="images/answer-{date_str}.webp" alt="Photo of {display_name}" decoding="async">
+                </div>
+            </div>
+
+            <div class="facts-section">
+                <h3>Key Career Highlights</h3>
+                <ul class="facts-list">
 {facts_html}
-                        </ul>
+                </ul>
+            </div>
+
+            <div class="chart-section">
+                <h3>Career Value Arc (WAR)</h3>
+                <div class="chart-container">
+                    <canvas id="careerArcChart"></canvas>
+                </div>
+                <p class="chart-disclaimer">WAR (Wins Above Replacement) data courtesy of Baseball-Reference.</p>
+            </div>
+
 {followup_section_html}
-                    </div>
-                </div>
-                {stats_table_html}
-            </div>
-            <div class="right-column">
-                <div class="original-card">
-                    <h3>The Original Clue</h3>
-                    <img src="images/clue-{date_str}.webp" alt="Original trivia card" decoding="async">
-                </div>
-                {chart_html}
-            </div>
-        </div>
-        {search_data_html}
-        {quiz_data_html}
+
+        </article>
+
+        <div id="quiz-data" style="display:none;">{json.dumps(player_data)}</div>
     </main>
-    <script type="module" src="js/detail.js"></script>
+
+    {career_arc_script}
+    
     <script>
     document.addEventListener('DOMContentLoaded', function() {{
-        const container = document.getElementById('followup-section');
-        if (!container) return;
-        const items = container.querySelectorAll('.followup-item');
-        if (!items.length) return;
-
+        const items = document.querySelectorAll('.followup-item');
         items.forEach(function(item) {{
             const btn = item.querySelector('.followup-btn');
             const answerBox = item.querySelector('.followup-answer');
@@ -362,7 +309,16 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
 	    </p>
-        <p>Last Updated: {script_run_date}</p>
+        <p id="last-updated">Last Updated: {script_run_date}</p>
+        <p class="copyright">
+            <a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+        </p>
     </footer>    
 </body>
 </html>"""
@@ -408,98 +364,56 @@ def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
 
 def rebuild_index_page(project_dir: Path):
     print("\n✍️ Rebuilding and re-sorting index.html from all available clues...")
+    
     index_path = project_dir / "index.html"
     images_dir = project_dir / "images"
     
-    if not index_path.exists():
-        print(f"❌ Error: index.html not found at {index_path}.")
-        return
-
-    all_clue_files = sorted(images_dir.glob("clue-*.webp"), reverse=True)
+    # Get all clue files, sorted by date DESC
+    clue_files = sorted(
+        images_dir.glob("clue-????-??-??.webp"),
+        key=lambda f: f.name.replace('clue-', '').replace('.webp', ''),
+        reverse=True
+    )
     
-    if not all_clue_files:
-        print("🤷 No clue images found in the 'images' directory.")
-        return
-
     gallery_tiles = []
     stats_summary = []
-    date_pattern = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.webp")
     
-    team_name_map = {
-        'NYY': 'new york yankees', 'BOS': 'boston red sox', 'CAL': 'california angels',
-        'CHW': 'chicago white sox', 'OAK': 'oakland athletics', 'PHI': 'philadelphia phillies',
-        'SDP': 'san diego padres', 'LAD': 'los angeles dodgers', 'CHC': 'chicago cubs',
-        'NYM': 'new york mets', 'CIN': 'cincinnati reds', 'ATL': 'atlanta braves',
-        'CLE': 'cleveland indians guardians', 'SEA': 'seattle mariners', 'TOR': 'toronto blue jays',
-        'TEX': 'texas rangers', 'KCR': 'kansas city royals', 'MIN': 'minnesota twins',
-        'DET': 'detroit tigers', 'BAL': 'baltimore orioles', 'TBR': 'tampa bay rays devil',
-        'HOU': 'houston astros', 'LAA': 'los angeles angels', 'SFG': 'san francisco giants',
-        'ARI': 'arizona diamondbacks', 'COL': 'colorado rockies', 'MIL': 'milwaukee brewers',
-        'STL': 'st louis cardinals', 'PIT': 'pittsburgh pirates', 'MIA': 'miami florida marlins',
-        'WSN': 'washington nationals', 'MON': 'montreal expos'
-    }
+    for i, clue_file in enumerate(clue_files):
+        date_str = clue_file.name.replace('clue-', '').replace('.webp', '')
+        try:
+            date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            formatted_date = date_obj.strftime("%B %d, %Y")
+            
+            # Load player name from detail page for search optimization
+            player_name = ""
+            detail_path = project_dir / f"{date_str}.html"
+            if detail_path.exists():
+                with open(detail_path, 'r', encoding='utf-8') as df:
+                    d_soup = BeautifulSoup(df, 'html.parser')
+                    quiz_data_el = d_soup.select_one('#quiz-data')
+                    if quiz_data_el:
+                        try:
+                            player_data = json.loads(quiz_data_el.textContent)
+                            player_name = player_data.get('name', '')
+                            
+                            # Build search tokens
+                            teams = [entry['team'] for entry in player_data.get('yearly_war', [])]
+                            years = [entry['year'] for entry in player_data.get('yearly_war', [])]
+                            
+                            stats_summary.append({
+                                "date": date_str,
+                                "name": player_name,
+                                "nickname": player_data.get('nickname', ''),
+                                "teams": list(set(teams)),
+                                "years": list(set(years))
+                            })
+                        except (json.JSONDecodeError, AttributeError):
+                            pass
 
-    for i, clue_file in enumerate(all_clue_files):
-        match = date_pattern.search(clue_file.name)
-        if match:
-            date_str = match.group(1)
-            try:
-                dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
-                formatted_date = dt_obj.strftime("%B %d, %Y")
-                
-                detail_page_path = project_dir / f"{date_str}.html"
-                search_terms: str = formatted_date.lower().replace(',', '') 
-
-                # Metadata for stats_summary
-                player_name = "Unknown"
-                player_nickname = ""
-                teams = []
-                years = []
-
-                if detail_page_path.exists():
-                    with open(detail_page_path, 'r', encoding='utf-8') as detail_f:
-                        detail_soup = BeautifulSoup(detail_f, 'html.parser')
-                    
-                    # Extract name and nickname from <h2>
-                    h2_el = detail_soup.find('h2')
-                    if h2_el:
-                        full_title = h2_el.get_text(strip=True)
-                        # Name format is "Name "Nickname""
-                        if '"' in full_title:
-                            parts = full_title.split('"')
-                            player_name = parts[0].strip()
-                            player_nickname = parts[1].strip()
-                        else:
-                            player_name = full_title
-
-                    search_data_div = detail_soup.find('div', id='search-data')
-                    if search_data_div:
-                        search_data_str = search_data_div.string or "{}"
-                        search_data = json.loads(search_data_str)
-                        teams = search_data.get('teams', [])
-                        years = search_data.get('years', [])
-                        
-                        search_terms += " " + " ".join(teams).lower()
-                        search_terms += " " + " ".join(years)
-                        
-                        for team_abbr in teams:
-                            if team_abbr in team_name_map:
-                                search_terms = f"{search_terms} {team_name_map.get(team_abbr, '')}"
-
-                # Collect into stats_summary
-                stats_summary.append({
-                    'date': date_str,
-                    'name': player_name,
-                    'nickname': player_nickname,
-                    'teams': teams,
-                    'years': years
-                })
-
-                # Generate the gallery card snippet
-                snippet = generate_gallery_snippet(i, date_str, formatted_date, search_terms)
-                gallery_tiles.append(snippet)
-            except ValueError:
-                print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
+            snippet = generate_gallery_snippet(i, date_str, formatted_date, player_name)
+            gallery_tiles.append(snippet)
+        except ValueError:
+            print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
     
     with open(index_path, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'html.parser')
@@ -513,34 +427,46 @@ def rebuild_index_page(project_dir: Path):
         gallery_div.append(tile_soup)
         gallery_div.append('\n')
     
-    # Find the specific paragraph with the ID 'last-updated'
-    update_p = soup.select_one('footer #last-updated')
-    if update_p:
-        script_run_date = date.today().strftime("%d-%b-%Y")
-        update_p.string = f"Last Updated: {script_run_date}"
-        print("✅ Footer timestamp updated.")
-    else:
-        print("⚠️ Warning: Could not find footer element with id='last-updated' to update.")
+    # Update the 'Last Updated' timestamp in the footer of all core pages
+    script_run_date = date.today().strftime("%d-%b-%Y")
+    core_files = ['index.html', 'quiz.html', 'analytics.html', 'instructions.html']
+    
+    for filename in core_files:
+        file_path = project_dir / filename
+        if not file_path.exists():
+            continue
+            
+        with open(file_path, 'r', encoding='utf-8') as f:
+            f_soup = BeautifulSoup(f, 'html.parser')
+            
+        update_p = f_soup.select_one('footer #last-updated')
+        if update_p:
+            update_p.string = f"Last Updated: {script_run_date}"
+            
+            # If we're updating index.html, we also need to update the copyright while we're at it
+            if filename == 'index.html':
+                copyright_p = f_soup.select_one('footer .copyright')
+                if copyright_p:
+                    copyright_p.clear()
+                    new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+                        <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
+                    copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
 
-    copyright_p = soup.select_one('footer .copyright')
-    if copyright_p:
-        copyright_p.clear()
-        new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
-            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
-            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
-        copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
+                # Update index chevron (since we're already processing index.html)
+                index_chevron = f_soup.select_one('#score-display .chevron-icon')
+                if index_chevron:
+                    index_chevron['aria-hidden'] = 'true'
 
-    # Update index chevron
-    index_chevron = soup.select_one('#score-display .chevron-icon')
-    if index_chevron:
-        index_chevron['aria-hidden'] = 'true'
-
-    with open(index_path, 'w', encoding='utf-8') as f:
-        f.write(soup.prettify())
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(f_soup.prettify())
+            print(f"✅ Footer timestamp updated for {filename}.")
+        else:
+            print(f"⚠️ Warning: Could not find footer element with id='last-updated' in {filename}.")
         
     print("✅ index.html rebuilt successfully.")
 
