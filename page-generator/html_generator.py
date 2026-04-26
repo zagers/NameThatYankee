@@ -22,6 +22,15 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     display_name = f'{name} "{nickname}"' if nickname else name
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
 
+    # Generate career totals table rows
+    stats_rows_html = ""
+    for label, val in career_totals_data.items():
+        stats_rows_html += f"""
+                            <div class="stat-item">
+                                <span class="stat-label">{label}</span>
+                                <span class="stat-value">{val}</span>
+                            </div>"""
+
     followup_section_html = ""
     if followup_qa:
         items_html_parts: List[str] = []
@@ -52,9 +61,9 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     # Generate Chart.js initialization script if yearly WAR data is present
     career_arc_script = ""
     if yearly_war_data:
-        years = [entry['year'] for entry in yearly_war_data]
-        war_data = [entry['war'] for entry in yearly_war_data]
-        teams_by_year = [entry['team'] for entry in yearly_war_data]
+        years = [entry.get('year', 'N/A') for entry in yearly_war_data]
+        war_data = [entry.get('war', 0.0) for entry in yearly_war_data]
+        teams_by_year = [entry.get('team', 'Default') for entry in yearly_war_data]
         
         # Color mapping for common MLB teams (Yankees-centric)
         team_colors_json = json.dumps({
@@ -208,7 +217,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     {{
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "{display_name} - Trivia Answer",
+      "headline": "Name That Yankee Answer for {formatted_date}",
       "image": "images/answer-{date_str}.webp",
       "datePublished": "{date_str}",
       "author": {{
@@ -223,7 +232,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
           "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
         }}
       }},
-      "description": "{html.escape(facts[0]) if facts else 'Daily New York Yankees trivia.'}"
+      "description": {json.dumps(f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.")}
     }}
     </script>
 </head>
@@ -234,7 +243,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                 <span>Back to Archives</span>
             </a>
-            <h1>Trivia Answer</h1>
+            <h1>The answer for {formatted_date} is...</h1>
             <div style="width: 24px;"></div>
         </div>
     </header>
@@ -257,6 +266,13 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
                 </div>
             </div>
 
+            <div class="stats-table-container">
+                <h3>Career Statistics</h3>
+                <div class="stats-grid">
+{stats_rows_html}
+                </div>
+            </div>
+
             <div class="facts-section">
                 <h3>Key Career Highlights</h3>
                 <ul class="facts-list">
@@ -276,7 +292,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 
         </article>
 
-        <div id="quiz-data" style="display:none;">{json.dumps(player_data)}</div>
+        <div id="quiz-data" style="display:none;">{json.dumps({**player_data, 'answer': player_data.get('answer', name), 'hints': player_data.get('hints', facts)})}</div>
     </main>
 
     {career_arc_script}
@@ -366,6 +382,10 @@ def rebuild_index_page(project_dir: Path):
     print("\n✍️ Rebuilding and re-sorting index.html from all available clues...")
     
     index_path = project_dir / "index.html"
+    if not index_path.exists():
+        print(f"⚠️  Warning: index.html not found in {project_dir}. Skipping rebuild.")
+        return
+
     images_dir = project_dir / "images"
     
     # Get all clue files, sorted by date DESC
@@ -390,15 +410,29 @@ def rebuild_index_page(project_dir: Path):
             if detail_path.exists():
                 with open(detail_path, 'r', encoding='utf-8') as df:
                     d_soup = BeautifulSoup(df, 'html.parser')
-                    quiz_data_el = d_soup.select_one('#quiz-data')
+                    # Try current standard #quiz-data first, fall back to legacy #search-data
+                    quiz_data_el = d_soup.select_one('#quiz-data') or d_soup.select_one('#search-data')
                     if quiz_data_el:
                         try:
-                            player_data = json.loads(quiz_data_el.textContent)
+                            raw_json = quiz_data_el.get_text().strip()
+                            if not raw_json:
+                                continue
+                                
+                            player_data = json.loads(raw_json)
                             player_name = player_data.get('name', '')
+                            if not player_name:
+                                # Fall back to h2 if name isn't in JSON (some old tests do this)
+                                h2_el = d_soup.select_one('h2')
+                                player_name = h2_el.get_text().strip() if h2_el else ""
                             
                             # Build search tokens
-                            teams = [entry['team'] for entry in player_data.get('yearly_war', [])]
-                            years = [entry['year'] for entry in player_data.get('yearly_war', [])]
+                            teams = player_data.get('teams', [])
+                            if not teams:
+                                teams = [entry.get('team', '') for entry in player_data.get('yearly_war', []) if entry.get('team')]
+                            
+                            years = player_data.get('years', [])
+                            if not years:
+                                years = [entry.get('year', '') for entry in player_data.get('yearly_war', []) if entry.get('year')]
                             
                             stats_summary.append({
                                 "date": date_str,
@@ -436,37 +470,41 @@ def rebuild_index_page(project_dir: Path):
         if not file_path.exists():
             continue
             
-        with open(file_path, 'r', encoding='utf-8') as f:
-            f_soup = BeautifulSoup(f, 'html.parser')
-            
-        update_p = f_soup.select_one('footer #last-updated')
-        if update_p:
-            update_p.string = f"Last Updated: {script_run_date}"
-            
-            # If we're updating index.html, we also need to update the copyright while we're at it
-            if filename == 'index.html':
-                copyright_p = f_soup.select_one('footer .copyright')
-                if copyright_p:
-                    copyright_p.clear()
-                    new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
-                        <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
-                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                        <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
-                    copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                f_soup = BeautifulSoup(f, 'html.parser')
+                
+            update_p = f_soup.select_one('footer #last-updated')
+            if update_p:
+                update_p.string = f"Last Updated: {script_run_date}"
+                
+                # If we're updating index.html, we also need to update the copyright while we're at it
+                if filename == 'index.html':
+                    copyright_p = f_soup.select_one('footer .copyright')
+                    if copyright_p:
+                        copyright_p.clear()
+                        new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+                            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+                            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+                            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
+                        copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
 
-                # Update index chevron (since we're already processing index.html)
-                index_chevron = f_soup.select_one('#score-display .chevron-icon')
-                if index_chevron:
-                    index_chevron['aria-hidden'] = 'true'
+                    # Update index chevron (since we're already processing index.html)
+                    index_chevron = f_soup.select_one('#score-display .chevron-icon')
+                    if index_chevron:
+                        index_chevron['aria-hidden'] = 'true'
 
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(f_soup.prettify())
-            print(f"✅ Footer timestamp updated for {filename}.")
-        else:
-            print(f"⚠️ Warning: Could not find footer element with id='last-updated' in {filename}.")
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(str(f_soup))
+                print(f"✅ Footer timestamp updated for {filename}.")
+            else:
+                if filename == 'index.html':
+                    print(f"⚠️ Warning: Could not find footer element with id='last-updated' in {filename}.")
+        except Exception as e:
+            print(f"⚠️ Warning: Failed to update {filename}: {e}")
         
     print("✅ index.html rebuilt successfully.")
 
