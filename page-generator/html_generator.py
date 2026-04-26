@@ -22,15 +22,6 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     display_name = html.escape(f'{name} "{nickname}"' if nickname else name)
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
 
-    # Generate career totals table rows with consistent indentation
-    stats_rows_html = ""
-    for label, val in career_totals_data.items():
-        stats_rows_html += f"""
-                <div class="stat-item">
-                    <span class="stat-label">{label}</span>
-                    <span class="stat-value">{val}</span>
-                </div>"""
-
     followup_section_html = ""
     if followup_qa:
         items_html_parts: List[str] = []
