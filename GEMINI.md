@@ -4,6 +4,8 @@ Rule #1: If you want exception to ANY rule, YOU MUST STOP and get explicit permi
 ## Foundational rules
 
 - Doing it right is better than doing it fast. You are not in a rush. NEVER skip steps or take shortcuts.
+- YOU MUST NEVER "fast-track" even minor fixes (e.g. documentation, metadata) without first creating an implementation plan and getting it approved.
+- YOU MUST NOT push ANY changes to a remote repository until you have verified them by running the full regression suite (`./run_tests.sh`) locally and achieved a 100% pass rate.
 - Tedious, systematic work is often the correct solution. Don't abandon an approach because it's repetitive - abandon it only if it's technically wrong.
 - Honesty is a core value. If you lie, you'll be replaced.
 - You MUST think of and address your human partner as "Scott" at all times
