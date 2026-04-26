@@ -19,10 +19,11 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     yearly_war_data = player_data.get('yearly_war', [])
     script_run_date = date.today().strftime("%d-%b-%Y")
     
-    display_name = f'{name} "{nickname}"' if nickname else name
+    # Escape name and nickname for HTML safety
+    display_name = html.escape(f'{name} "{nickname}"' if nickname else name)
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
 
-    # Generate career totals table rows
+    # Generate career totals table rows with consistent indentation
     stats_rows_html = ""
     for label, val in career_totals_data.items():
         stats_rows_html += f"""
@@ -65,49 +66,14 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         war_data = [entry.get('war', 0.0) for entry in yearly_war_data]
         teams_by_year = [entry.get('team', 'Default') for entry in yearly_war_data]
         
-        # Color mapping for common MLB teams (Yankees-centric)
-        team_colors_json = json.dumps({
-            "NYY": {"bg": "rgba(12, 35, 64, 0.7)", "border": "rgba(12, 35, 64, 1)", "name": "NY Yankees"},
-            "BAL": {"bg": "rgba(223, 70, 27, 0.7)", "border": "rgba(223, 70, 27, 1)", "name": "Baltimore"},
-            "BOS": {"bg": "rgba(189, 48, 57, 0.7)", "border": "rgba(189, 48, 57, 1)", "name": "Boston"},
-            "TOR": {"bg": "rgba(19, 74, 142, 0.7)", "border": "rgba(19, 74, 142, 1)", "name": "Toronto"},
-            "TBR": {"bg": "rgba(9, 44, 92, 0.7)", "border": "rgba(9, 44, 92, 1)", "name": "Tampa Bay"},
-            "LAA": {"bg": "rgba(186, 0, 33, 0.7)", "border": "rgba(186, 0, 33, 1)", "name": "LA Angels"},
-            "HOU": {"bg": "rgba(235, 110, 31, 0.7)", "border": "rgba(235, 110, 31, 1)", "name": "Houston"},
-            "OAK": {"bg": "rgba(0, 56, 49, 0.7)", "border": "rgba(0, 56, 49, 1)", "name": "Oakland"},
-            "SEA": {"bg": "rgba(0, 92, 92, 0.7)", "border": "rgba(0, 92, 92, 1)", "name": "Seattle"},
-            "TEX": {"bg": "rgba(0, 50, 120, 0.7)", "border": "rgba(0, 50, 120, 1)", "name": "Texas"},
-            "CHW": {"bg": "rgba(39, 37, 31, 0.7)", "border": "rgba(39, 37, 31, 1)", "name": "Chi White Sox"},
-            "CLE": {"bg": "rgba(227, 24, 55, 0.7)", "border": "rgba(227, 24, 55, 1)", "name": "Cleveland"},
-            "DET": {"bg": "rgba(12, 35, 64, 0.7)", "border": "rgba(12, 35, 64, 1)", "name": "Detroit"},
-            "KCR": {"bg": "rgba(0, 70, 135, 0.7)", "border": "rgba(0, 70, 135, 1)", "name": "Kansas City"},
-            "MIN": {"bg": "rgba(0, 43, 92, 0.7)", "border": "rgba(0, 43, 92, 1)", "name": "Minnesota"},
-            "ATL": {"bg": "rgba(206, 17, 65, 0.7)", "border": "rgba(206, 17, 65, 1)", "name": "Atlanta"},
-            "MIA": {"bg": "rgba(0, 163, 224, 0.7)", "border": "rgba(0, 163, 224, 1)", "name": "Miami"},
-            "NYM": {"bg": "rgba(0, 45, 114, 0.7)", "border": "rgba(0, 45, 114, 1)", "name": "NY Mets"},
-            "PHI": {"bg": "rgba(232, 24, 40, 0.7)", "border": "rgba(232, 24, 40, 1)", "name": "Philadelphia"},
-            "WSN": {"bg": "rgba(171, 18, 41, 0.7)", "border": "rgba(171, 18, 41, 1)", "name": "Washington"},
-            "CHC": {"bg": "rgba(14, 51, 134, 0.7)", "border": "rgba(14, 51, 134, 1)", "name": "Chi Cubs"},
-            "CIN": {"bg": "rgba(198, 1, 31, 0.7)", "border": "rgba(198, 1, 31, 1)", "name": "Cincinnati"},
-            "MIL": {"bg": "rgba(18, 40, 75, 0.7)", "border": "rgba(18, 40, 75, 1)", "name": "Milwaukee"},
-            "PIT": {"bg": "rgba(255, 184, 28, 0.7)", "border": "rgba(255, 184, 28, 1)", "name": "Pittsburgh"},
-            "STL": {"bg": "rgba(196, 30, 58, 0.7)", "border": "rgba(196, 30, 58, 1)", "name": "St. Louis"},
-            "ARI": {"bg": "rgba(167, 25, 48, 0.7)", "border": "rgba(167, 25, 48, 1)", "name": "Arizona"},
-            "COL": {"bg": "rgba(51, 0, 111, 0.7)", "border": "rgba(51, 0, 111, 1)", "name": "Colorado"},
-            "LAD": {"bg": "rgba(0, 90, 156, 0.7)", "border": "rgba(0, 90, 156, 1)", "name": "LA Dodgers"},
-            "SDP": {"bg": "rgba(47, 37, 32, 0.7)", "border": "rgba(47, 37, 32, 1)", "name": "San Diego"},
-            "SFG": {"bg": "rgba(253, 90, 30, 0.7)", "border": "rgba(253, 90, 30, 1)", "name": "San Francisco"},
-            "Total": {"bg": "rgba(128, 128, 128, 0.5)", "border": "rgba(128, 128, 128, 1)", "name": "Career Total"},
-            "Default": {"bg": "rgba(150, 150, 150, 0.7)", "border": "rgba(150, 150, 150, 1)", "name": "Other Team"}
-        })
-
         career_arc_script = f"""
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
         <script>
             const years = {years};
             const warData = {war_data};
             const teamsByYear = {teams_by_year};
-            const teamColors = {team_colors_json};
+            const teamColors = window.TEAM_COLORS;
 
             let cumulativeTotal = 0;
             const waterfallData = [];
@@ -191,7 +157,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{html.escape(display_name)} Answer - {formatted_date} | Name That Yankee</title>
+    <title>{display_name} Answer - {formatted_date} | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
@@ -204,12 +170,12 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <meta property="og:description" content="Can you name this New York Yankee based on their career stats?">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Name That Yankee">
-    <meta property="og:image" content="images/clue-{date_str}.webp">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/clue-{date_str}.webp">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Name That Yankee - {formatted_date}">
     <meta name="twitter:description" content="Can you name this New York Yankee based on their career stats?">
-    <meta name="twitter:image" content="images/clue-{date_str}.webp">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/clue-{date_str}.webp">
     
     <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
@@ -218,7 +184,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "Name That Yankee Answer for {formatted_date}",
-      "image": "images/answer-{date_str}.webp",
+      "image": "https://namethatyankeequiz.com/images/answer-{date_str}.webp",
       "datePublished": "{date_str}",
       "author": {{
         "@type": "Person",
@@ -352,14 +318,14 @@ def generate_detail_page(player_data: dict, date_str: str, formatted_date: str, 
         f.write(html_content)
     print(f"  ✅ Detail page saved successfully.")
 
-def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
+def generate_gallery_snippet(i, date_str, formatted_date):
     """
     Generates a single gallery card snippet with LCP-aware image loading.
     """
     # Only lazy load items below the fold (index > 5)
     loading_attr = 'loading="lazy"' if i > 5 else ''
     
-    return f"""<div class="gallery-container" data-search-terms="{html.escape(search_terms)}">
+    return f"""<div class="gallery-container">
                 <a href="{date_str}" class="gallery-item">
                     <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
                 </a>
@@ -404,10 +370,8 @@ def rebuild_index_page(project_dir: Path):
             date_obj = datetime.strptime(date_str, "%Y-%m-%d")
             formatted_date = date_obj.strftime("%B %d, %Y")
             
-            # Initialize search_tokens with date and default player name
-            search_tokens = [date_str, formatted_date]
+            # Load player name from detail page for search optimization
             player_name = ""
-            
             detail_path = project_dir / f"{date_str}.html"
             if detail_path.exists():
                 with open(detail_path, 'r', encoding='utf-8') as df:
@@ -419,20 +383,15 @@ def rebuild_index_page(project_dir: Path):
                             raw_json = quiz_data_el.get_text().strip()
                             if raw_json:
                                 player_data = json.loads(raw_json)
-                                player_name = player_data.get('name', '')
-                                if not player_name:
-                                    # Fall back to h2 if name isn't in JSON
+                                p_name = player_data.get('name', '')
+                                if not p_name:
                                     h2_el = d_soup.select_one('h2')
-                                    player_name = h2_el.get_text().strip() if h2_el else ""
+                                    p_name = h2_el.get_text().strip() if h2_el else ""
                                 
-                                if player_name:
-                                    search_tokens.append(player_name)
-                                
-                                nickname = player_data.get('nickname', '')
-                                if nickname:
-                                    search_tokens.append(nickname)
-                                
-                                # Build search tokens
+                                if p_name:
+                                    player_name = p_name
+
+                                # Extract teams and years for search tokens
                                 teams = player_data.get('teams', [])
                                 if not teams:
                                     teams = [entry.get('team', '') for entry in player_data.get('yearly_war', []) if entry.get('team')]
@@ -441,28 +400,17 @@ def rebuild_index_page(project_dir: Path):
                                 if not years:
                                     years = [entry.get('year', '') for entry in player_data.get('yearly_war', []) if entry.get('year')]
                                 
-                                search_tokens.extend(list(set(teams)))
-                                search_tokens.extend([str(y) for y in set(years)])
-                                
                                 stats_summary.append({
                                     "date": date_str,
                                     "name": player_name,
-                                    "nickname": nickname,
+                                    "nickname": player_data.get('nickname', ''),
                                     "teams": list(set(teams)),
                                     "years": list(set(years))
                                 })
                         except (json.JSONDecodeError, AttributeError):
                             pass
-                    else:
-                        # Fallback for pages without JSON data
-                        h2_el = d_soup.select_one('h2')
-                        player_name = h2_el.get_text().strip() if h2_el else ""
-                        if player_name:
-                            search_tokens.append(player_name)
 
-            # Call generate_gallery_snippet with the space-joined search_terms
-            search_terms = " ".join(filter(None, [str(t) for t in search_tokens]))
-            snippet = generate_gallery_snippet(i, date_str, formatted_date, search_terms)
+            snippet = generate_gallery_snippet(i, date_str, formatted_date)
             gallery_tiles.append(snippet)
         except ValueError:
             print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
@@ -479,11 +427,6 @@ def rebuild_index_page(project_dir: Path):
         gallery_div.append(tile_soup)
         gallery_div.append('\n')
     
-    # Save the updated index.html with new gallery tiles BEFORE the sync loop
-    # This prevents the sync loop from re-reading a stale version of index.html
-    with open(index_path, 'w', encoding='utf-8') as f:
-        f.write(str(soup))
-    
     # Update the 'Last Updated' timestamp in the footer of all core pages
     script_run_date = date.today().strftime("%d-%b-%Y")
     core_files = ['index.html', 'quiz.html', 'analytics.html', 'instructions.html']
@@ -494,8 +437,12 @@ def rebuild_index_page(project_dir: Path):
             continue
             
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                f_soup = BeautifulSoup(f, 'html.parser')
+            # Use existing soup for index.html
+            if filename == 'index.html':
+                f_soup = soup
+            else:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    f_soup = BeautifulSoup(f, 'html.parser')
                 
             update_p = f_soup.select_one('footer #last-updated')
             if update_p:
