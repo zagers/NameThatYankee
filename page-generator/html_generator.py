@@ -26,10 +26,10 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     stats_rows_html = ""
     for label, val in career_totals_data.items():
         stats_rows_html += f"""
-                            <div class="stat-item">
-                                <span class="stat-label">{label}</span>
-                                <span class="stat-value">{val}</span>
-                            </div>"""
+                <div class="stat-item">
+                    <span class="stat-label">{label}</span>
+                    <span class="stat-value">{val}</span>
+                </div>"""
 
     followup_section_html = ""
     if followup_qa:
