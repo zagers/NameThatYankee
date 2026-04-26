@@ -479,6 +479,11 @@ def rebuild_index_page(project_dir: Path):
         gallery_div.append(tile_soup)
         gallery_div.append('\n')
     
+    # Save the updated index.html with new gallery tiles BEFORE the sync loop
+    # This prevents the sync loop from re-reading a stale version of index.html
+    with open(index_path, 'w', encoding='utf-8') as f:
+        f.write(str(soup))
+    
     # Update the 'Last Updated' timestamp in the footer of all core pages
     script_run_date = date.today().strftime("%d-%b-%Y")
     core_files = ['index.html', 'quiz.html', 'analytics.html', 'instructions.html']
