@@ -33,11 +33,13 @@ def test_build_detail_page_html(sample_player_data):
     soup = BeautifulSoup(html_content, "html.parser")
     
     # Check title and header match proper date
-    assert f"Derek Jeter \"The Captain\" Answer - {formatted_date}" in soup.title.string
+    title_text = str(soup.title.string).replace('&quot;', '"')
+    assert f"Derek Jeter \"The Captain\" Answer - {formatted_date}" in title_text
     assert f"The answer for {formatted_date} is..." in soup.find("h1").string
     
     # Check name and nickname logic maps
-    assert "Derek Jeter \"The Captain\"" in soup.find("h2").string
+    h2_text = str(soup.find("h2").string).replace('&quot;', '"')
+    assert "Derek Jeter \"The Captain\"" in h2_text
     
     # Check follow up logic
     followup_section = soup.find(id="followup-section")

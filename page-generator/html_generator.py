@@ -157,7 +157,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{display_name} Answer - {formatted_date} | Name That Yankee</title>
+    <title>{html.escape(display_name)} Answer - {formatted_date} | Name That Yankee</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
@@ -372,6 +372,10 @@ def rebuild_index_page(project_dir: Path):
             
             # Load player name from detail page for search optimization
             player_name = ""
+            teams = []
+            years = []
+            nickname = ""
+            
             detail_path = project_dir / f"{date_str}.html"
             if detail_path.exists():
                 with open(detail_path, 'r', encoding='utf-8') as df:
@@ -391,6 +395,8 @@ def rebuild_index_page(project_dir: Path):
                                 if p_name:
                                     player_name = p_name
 
+                                nickname = player_data.get('nickname', '')
+
                                 # Extract teams and years for search tokens
                                 teams = player_data.get('teams', [])
                                 if not teams:
@@ -399,16 +405,16 @@ def rebuild_index_page(project_dir: Path):
                                 years = player_data.get('years', [])
                                 if not years:
                                     years = [entry.get('year', '') for entry in player_data.get('yearly_war', []) if entry.get('year')]
-                                
-                                stats_summary.append({
-                                    "date": date_str,
-                                    "name": player_name,
-                                    "nickname": player_data.get('nickname', ''),
-                                    "teams": list(set(teams)),
-                                    "years": list(set(years))
-                                })
                         except (json.JSONDecodeError, AttributeError):
                             pass
+
+            stats_summary.append({
+                "date": date_str,
+                "name": player_name,
+                "nickname": nickname,
+                "teams": list(set(teams)),
+                "years": list(set(years))
+            })
 
             # Snippet MUST be generated and appended OUTSIDE of the detail_path check
             snippet = generate_gallery_snippet(i, date_str, formatted_date)
@@ -466,7 +472,7 @@ def rebuild_index_page(project_dir: Path):
                 
             # ALWAYS write the file if we're in this block, ensuring index.html gallery is saved
             with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(str(f_soup))
+                f.write(f_soup.prettify())
             
             if update_p:
                 print(f"✅ Footer timestamp updated for {filename}.")
