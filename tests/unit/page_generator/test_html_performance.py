@@ -20,7 +20,7 @@ def test_generate_gallery_snippet_lcp_logic():
     html_6 = generate_gallery_snippet(6, "2026-04-11", "April 11, 2026", "terms")
     assert 'loading="lazy"' in html_6
 
-def test_generate_gallery_snippet_no_search_terms():
-    # Verify that the data-search-terms attribute is removed
-    html = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026", "should be removed")
-    assert 'data-search-terms' not in html
+def test_generate_gallery_snippet_search_metadata():
+    # Verify that the data-search-terms attribute is present
+    html = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026", "Aaron Judge")
+    assert 'data-search-terms="Aaron Judge"' in html

@@ -359,7 +359,7 @@ def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
     # Only lazy load items below the fold (index > 5)
     loading_attr = 'loading="lazy"' if i > 5 else ''
     
-    return f"""<div class="gallery-container">
+    return f"""<div class="gallery-container" data-search-terms="{html.escape(search_terms)}">
                 <a href="{date_str}" class="gallery-item">
                     <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
                 </a>
@@ -404,8 +404,10 @@ def rebuild_index_page(project_dir: Path):
             date_obj = datetime.strptime(date_str, "%Y-%m-%d")
             formatted_date = date_obj.strftime("%B %d, %Y")
             
-            # Load player name from detail page for search optimization
+            # Initialize search_tokens with date and default player name
+            search_tokens = [date_str, formatted_date]
             player_name = ""
+            
             detail_path = project_dir / f"{date_str}.html"
             if detail_path.exists():
                 with open(detail_path, 'r', encoding='utf-8') as df:
@@ -415,36 +417,52 @@ def rebuild_index_page(project_dir: Path):
                     if quiz_data_el:
                         try:
                             raw_json = quiz_data_el.get_text().strip()
-                            if not raw_json:
-                                continue
+                            if raw_json:
+                                player_data = json.loads(raw_json)
+                                player_name = player_data.get('name', '')
+                                if not player_name:
+                                    # Fall back to h2 if name isn't in JSON
+                                    h2_el = d_soup.select_one('h2')
+                                    player_name = h2_el.get_text().strip() if h2_el else ""
                                 
-                            player_data = json.loads(raw_json)
-                            player_name = player_data.get('name', '')
-                            if not player_name:
-                                # Fall back to h2 if name isn't in JSON (some old tests do this)
-                                h2_el = d_soup.select_one('h2')
-                                player_name = h2_el.get_text().strip() if h2_el else ""
-                            
-                            # Build search tokens
-                            teams = player_data.get('teams', [])
-                            if not teams:
-                                teams = [entry.get('team', '') for entry in player_data.get('yearly_war', []) if entry.get('team')]
-                            
-                            years = player_data.get('years', [])
-                            if not years:
-                                years = [entry.get('year', '') for entry in player_data.get('yearly_war', []) if entry.get('year')]
-                            
-                            stats_summary.append({
-                                "date": date_str,
-                                "name": player_name,
-                                "nickname": player_data.get('nickname', ''),
-                                "teams": list(set(teams)),
-                                "years": list(set(years))
-                            })
+                                if player_name:
+                                    search_tokens.append(player_name)
+                                
+                                nickname = player_data.get('nickname', '')
+                                if nickname:
+                                    search_tokens.append(nickname)
+                                
+                                # Build search tokens
+                                teams = player_data.get('teams', [])
+                                if not teams:
+                                    teams = [entry.get('team', '') for entry in player_data.get('yearly_war', []) if entry.get('team')]
+                                
+                                years = player_data.get('years', [])
+                                if not years:
+                                    years = [entry.get('year', '') for entry in player_data.get('yearly_war', []) if entry.get('year')]
+                                
+                                search_tokens.extend(list(set(teams)))
+                                search_tokens.extend([str(y) for y in set(years)])
+                                
+                                stats_summary.append({
+                                    "date": date_str,
+                                    "name": player_name,
+                                    "nickname": nickname,
+                                    "teams": list(set(teams)),
+                                    "years": list(set(years))
+                                })
                         except (json.JSONDecodeError, AttributeError):
                             pass
+                    else:
+                        # Fallback for pages without JSON data
+                        h2_el = d_soup.select_one('h2')
+                        player_name = h2_el.get_text().strip() if h2_el else ""
+                        if player_name:
+                            search_tokens.append(player_name)
 
-            snippet = generate_gallery_snippet(i, date_str, formatted_date, player_name)
+            # Call generate_gallery_snippet with the space-joined search_terms
+            search_terms = " ".join(filter(None, [str(t) for t in search_tokens]))
+            snippet = generate_gallery_snippet(i, date_str, formatted_date, search_terms)
             gallery_tiles.append(snippet)
         except ValueError:
             print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
