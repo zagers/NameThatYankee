@@ -9,18 +9,18 @@ from html_generator import build_detail_page_html, generate_gallery_snippet
 
 def test_generate_gallery_snippet_lcp_logic():
     # Item 0 (First) - Should be EAGER
-    html_0 = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026", "terms")
+    html_0 = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026")
     assert 'loading="lazy"' not in html_0
     
     # Item 5 (Sixth) - Should be EAGER (last one above the fold)
-    html_5 = generate_gallery_snippet(5, "2026-04-12", "April 12, 2026", "terms")
+    html_5 = generate_gallery_snippet(5, "2026-04-12", "April 12, 2026")
     assert 'loading="lazy"' not in html_5
     
     # Item 6 (Seventh) - Should be LAZY
-    html_6 = generate_gallery_snippet(6, "2026-04-11", "April 11, 2026", "terms")
+    html_6 = generate_gallery_snippet(6, "2026-04-11", "April 11, 2026")
     assert 'loading="lazy"' in html_6
 
 def test_generate_gallery_snippet_search_metadata():
-    # Verify that the data-search-terms attribute is present
-    html = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026", "Aaron Judge")
-    assert 'data-search-terms="Aaron Judge"' in html
+    # Verify that the data-search-terms attribute is REMOVED
+    html = generate_gallery_snippet(0, "2026-04-17", "April 17, 2026")
+    assert 'data-search-terms' not in html

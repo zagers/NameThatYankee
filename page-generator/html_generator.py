@@ -410,22 +410,11 @@ def rebuild_index_page(project_dir: Path):
                         except (json.JSONDecodeError, AttributeError):
                             pass
 
+            # Snippet MUST be generated and appended OUTSIDE of the detail_path check
             snippet = generate_gallery_snippet(i, date_str, formatted_date)
             gallery_tiles.append(snippet)
         except ValueError:
             print(f"⚠️  Warning: Skipping file with invalid date format: {clue_file.name}")
-    
-    with open(index_path, 'r', encoding='utf-8') as f:
-        soup = BeautifulSoup(f, 'html.parser')
-    gallery_div = soup.select_one('.gallery')
-    if not gallery_div:
-        print(f"❌ Could not find insertion point in index.html.")
-        return
-    gallery_div.clear()
-    for tile_html in gallery_tiles:
-        tile_soup = BeautifulSoup(tile_html, 'html.parser')
-        gallery_div.append(tile_soup)
-        gallery_div.append('\n')
     
     # Update the 'Last Updated' timestamp in the footer of all core pages
     script_run_date = date.today().strftime("%d-%b-%Y")
@@ -437,42 +426,52 @@ def rebuild_index_page(project_dir: Path):
             continue
             
         try:
-            # Use existing soup for index.html
-            if filename == 'index.html':
-                f_soup = soup
-            else:
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    f_soup = BeautifulSoup(f, 'html.parser')
+            with open(file_path, 'r', encoding='utf-8') as f:
+                f_soup = BeautifulSoup(f, 'html.parser')
                 
-            update_p = f_soup.select_one('footer #last-updated')
+            # If we're processing index.html, we ALSO need to update the gallery
+            is_index = (filename == 'index.html')
+            if is_index:
+                gallery_div = f_soup.select_one('.gallery')
+                if gallery_div:
+                    gallery_div.clear()
+                    for tile_html in gallery_tiles:
+                        tile_soup = BeautifulSoup(tile_html, 'html.parser')
+                        gallery_div.append(tile_soup)
+                        gallery_div.append('\n')
+                else:
+                    print(f"❌ Could not find insertion point in {filename}.")
+
+                copyright_p = f_soup.select_one('footer .copyright')
+                if copyright_p:
+                    copyright_p.clear()
+                    new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
+                        <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
+                        <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
+                    copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
+
+                # Update index chevron
+                index_chevron = f_soup.select_one('#score-display .chevron-icon')
+                if index_chevron:
+                    index_chevron['aria-hidden'] = 'true'
+
+            # Update footer timestamp - be more robust with selectors
+            update_p = f_soup.select_one('#last-updated')
             if update_p:
                 update_p.string = f"Last Updated: {script_run_date}"
                 
-                # If we're updating index.html, we also need to update the copyright while we're at it
-                if filename == 'index.html':
-                    copyright_p = f_soup.select_one('footer .copyright')
-                    if copyright_p:
-                        copyright_p.clear()
-                        new_copyright_html = f"""<a href="https://namethatyankeequiz.com">Name That Yankee Quiz</a> © 2026 by 
-                            <a href="https://github.com/zagers/NameThatYankee">Scott Zager</a> is licensed under 
-                            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-                            <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                            <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                            <img src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" alt="NC" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-                            <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="SA" style="max-width: 1em;max-height:1em;margin-left: .2em;">"""
-                        copyright_p.append(BeautifulSoup(new_copyright_html, 'html.parser'))
-
-                    # Update index chevron (since we're already processing index.html)
-                    index_chevron = f_soup.select_one('#score-display .chevron-icon')
-                    if index_chevron:
-                        index_chevron['aria-hidden'] = 'true'
-
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(str(f_soup))
+            # ALWAYS write the file if we're in this block, ensuring index.html gallery is saved
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(str(f_soup))
+            
+            if update_p:
                 print(f"✅ Footer timestamp updated for {filename}.")
-            else:
-                if filename == 'index.html':
-                    print(f"⚠️ Warning: Could not find footer element with id='last-updated' in {filename}.")
+            elif is_index:
+                print(f"✅ index.html updated (gallery refreshed, but footer timestamp element not found).")
         except Exception as e:
             print(f"⚠️ Warning: Failed to update {filename}: {e}")
         
