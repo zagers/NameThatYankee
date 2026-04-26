@@ -318,12 +318,12 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 
                 // Toggle visibility
                 const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
-                if (isHidden) {
+                if (isHidden) {{
                     answerBox.textContent = answer;
                     answerBox.style.display = 'block';
-                } else {
+                }} else {{
                     answerBox.style.display = 'none';
-                }
+                }}
 
             }});
         }});
