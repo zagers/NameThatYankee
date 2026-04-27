@@ -8,8 +8,9 @@ import { initScoreDisplay } from './scoreDisplay.js';
  * Redirects to the quiz if the puzzle isn't solved and no bypass flag is present.
  */
 function handleRedirect() {
+    // Stricter regex to ensure we only match dates at the end of the path (e.g., /2026-04-26 or /2026-04-26.html)
     const path = window.location.pathname;
-    const dateMatch = path.match(/(\d{4}-\d{2}-\d{2})/);
+    const dateMatch = path.match(/\/(\d{4}-\d{2}-\d{2})(?:\.html)?$/);
     
     if (dateMatch) {
         const date = dateMatch[1];
@@ -26,8 +27,10 @@ function handleRedirect() {
         const isSolved = Array.isArray(completedPuzzles) && completedPuzzles.includes(date);
 
         if (!isSolved && !reveal) {
-            // Use replace to avoid keeping the answer page in the history stack
-            window.location.replace(`quiz?date=${date}`);
+            // Construct robust redirect URL relative to origin
+            const redirectUrl = new URL('quiz', window.location.origin);
+            redirectUrl.searchParams.set('date', date);
+            window.location.replace(redirectUrl.toString());
         }
     }
 }
