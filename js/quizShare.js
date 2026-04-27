@@ -34,7 +34,7 @@ export function generateShareText(dateStr, state, url) {
  * @returns {Promise<void>}
  */
 export async function copyShareText(dateStr, state) {
-    const url = window.location.href;
+    const url = `${window.location.origin}${window.location.pathname.split('/').slice(0, -1).join('/')}/quiz?date=${state.date}`;
     const text = generateShareText(dateStr, state, url);
     
     if (navigator.share) {

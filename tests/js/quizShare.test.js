@@ -62,6 +62,28 @@ describe('quizShare', () => {
     });
 
     describe('copyShareText', () => {
+        it('should use navigator.share if available and point to the quiz page', async () => {
+            const state = {
+                date: '2026-04-22',
+                shareEvents: ['hit'],
+                finalScore: 100,
+                hintsRequested: 0
+            };
+            const dateStr = 'April 22, 2026';
+            
+            // Mock navigator.share
+            const shareMock = vi.fn().mockResolvedValue(undefined);
+            Object.assign(navigator, { share: shareMock });
+
+            await copyShareText(dateStr, state);
+
+            expect(shareMock).toHaveBeenCalled();
+            const shareData = shareMock.mock.calls[0][0];
+            expect(shareData.text).toContain('Name That Yankee - April 22, 2026');
+            expect(shareData.text).toContain('Score: 100 pts');
+            expect(shareData.text).toContain('quiz?date=2026-04-22');
+        });
+
         it('should use navigator.share if available', async () => {
             const state = {
                 shareEvents: ['hit'],

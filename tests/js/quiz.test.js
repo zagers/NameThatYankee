@@ -290,7 +290,7 @@ describe('Quiz DOM tests', () => {
         expect(sharedText).toContain('Score: 4 pts');
         expect(sharedText).toContain('Hints used: 2');
         expect(sharedText).toContain('🟥📘📘🟩'); // Chronological: miss, hint(auto), hint(manual), hit
-        expect(sharedText).toContain('quiz.html?date=2025-07-11');
+        expect(sharedText).toContain('quiz?date=2025-07-11');
     });
 
     it('should show share button on failure', async () => {

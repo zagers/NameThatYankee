@@ -349,13 +349,13 @@ def generate_gallery_snippet(i, date_str, formatted_date, search_terms):
     loading_attr = 'loading="lazy"' if i > 5 else ''
     
     return f"""<div class="gallery-container" data-search-terms="{html.escape(search_terms)}">
-                <a href="{date_str}" class="gallery-item">
+                <a href="{date_str}?reveal=true" class="gallery-item">
                     <img src="images/clue-{date_str}.webp" alt="Name that Yankee trivia card from {date_str}" {loading_attr} decoding="async">
                 </a>
                 <div class="p-4">
                     <p class="gallery-date">Trivia Date: {formatted_date}</p>
                     <div class="action-links">
-                        <a href="{date_str}" class="action-link reveal-link">
+                        <a href="{date_str}?reveal=true" class="action-link reveal-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                             <span>Reveal</span>
                         </a>

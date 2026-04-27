@@ -64,12 +64,13 @@ class TestCleanURLNavigation:
     def test_gallery_item_navigation(self, page: Page):
         # Instead of clicking whatever is first (which might be a real date not in fixtures)
         # We navigate directly to our stable test fixture clean URL
+        # We add ?reveal=true to bypass the new redirect-to-quiz logic
         test_slug = "2026-04-19"
-        page.goto(f"{BASE_URL}{test_slug}")
+        page.goto(f"{BASE_URL}{test_slug}?reveal=true")
         page.wait_for_load_state("networkidle")
         
-        # URL should be the clean URL
-        expect(page).to_have_url(re.compile(f".*/{test_slug}$"))
+        # URL should be the clean URL (with or without params)
+        expect(page).to_have_url(re.compile(f".*/{test_slug}(\\?reveal=true)?$"))
         # Page should have loaded successfully
         expect(page.locator("h1")).to_be_visible()
         expect(page.locator("h1")).to_contain_text("The answer for")
@@ -77,11 +78,20 @@ class TestCleanURLNavigation:
     def test_reveal_link_navigation(self, page: Page):
         test_slug = "2026-04-19"
         # Verify mapping for another clean URL
+        page.goto(f"{BASE_URL}{test_slug}?reveal=true")
+        page.wait_for_load_state("networkidle")
+        
+        expect(page).to_have_url(re.compile(f".*/{test_slug}(\\?reveal=true)?$"))
+        expect(page.locator("h1")).to_contain_text("The answer for")
+
+    def test_redirect_to_quiz_if_unsolved(self, page: Page):
+        test_slug = "2026-04-19"
+        # Navigate without reveal=true and without completing the puzzle
         page.goto(f"{BASE_URL}{test_slug}")
         page.wait_for_load_state("networkidle")
         
-        expect(page).to_have_url(re.compile(f".*/{test_slug}$"))
-        expect(page.locator("h1")).to_contain_text("The answer for")
+        # Should be redirected to quiz
+        expect(page).to_have_url(re.compile(f".*/quiz\\?date={test_slug}$"))
 
     def test_gallery_cards_have_required_elements(self, page: Page):
         page.goto(BASE_URL)
