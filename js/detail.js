@@ -9,8 +9,9 @@ import { initScoreDisplay } from './scoreDisplay.js';
  */
 function handleRedirect() {
     // Stricter regex to ensure we only match dates at the end of the path (e.g., /2026-04-26 or /2026-04-26.html)
+    // Added optional trailing slash support for robustness
     const path = window.location.pathname;
-    const dateMatch = path.match(/\/(\d{4}-\d{2}-\d{2})(?:\.html)?$/);
+    const dateMatch = path.match(/\/(\d{4}-\d{2}-\d{2})(?:\.html)?\/?$/);
     
     if (dateMatch) {
         const date = dateMatch[1];
@@ -27,15 +28,19 @@ function handleRedirect() {
         const isSolved = Array.isArray(completedPuzzles) && completedPuzzles.includes(date);
 
         if (!isSolved && !reveal) {
-            // Construct robust redirect URL relative to current path to support subdirectory hosting
-            const redirectUrl = new URL('quiz', window.location.href);
+            // Derive the base path (everything before the date part of the URL)
+            // to support both root and subdirectory hosting (e.g. GitHub Pages)
+            const basePath = path.substring(0, dateMatch.index + 1);
+            const redirectUrl = new URL(basePath + 'quiz', window.location.origin);
             redirectUrl.searchParams.set('date', date);
             window.location.replace(redirectUrl.toString());
         }
     }
 }
 
+// Execute redirect check immediately to prevent flashing the answer page
+handleRedirect();
+
 document.addEventListener('DOMContentLoaded', () => {
-    handleRedirect();
     initScoreDisplay();
 });
