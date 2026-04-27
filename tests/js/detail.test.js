@@ -13,6 +13,7 @@ describe('detail.js redirect logic', () => {
         delete window.location;
         window.location = {
             pathname: '/2026-04-26.html',
+            href: 'https://namethatyankeequiz.com/2026-04-26.html',
             search: '',
             origin: 'https://namethatyankeequiz.com',
             replace: vi.fn()

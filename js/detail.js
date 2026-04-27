@@ -27,8 +27,8 @@ function handleRedirect() {
         const isSolved = Array.isArray(completedPuzzles) && completedPuzzles.includes(date);
 
         if (!isSolved && !reveal) {
-            // Construct robust redirect URL relative to origin
-            const redirectUrl = new URL('quiz', window.location.origin);
+            // Construct robust redirect URL relative to current path to support subdirectory hosting
+            const redirectUrl = new URL('quiz', window.location.href);
             redirectUrl.searchParams.set('date', date);
             window.location.replace(redirectUrl.toString());
         }
