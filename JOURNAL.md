@@ -2,6 +2,13 @@
 
 ## Journal
 
+### 2026-04-26: Social Sharing & Redirect Fix - \"Integrity Funnel\"
+*   **Redirect Logic:** Implemented a state-aware redirect on player detail pages (`js/detail.js`). Users who haven't completed a puzzle are redirected to the quiz page unless they use the explicit `?reveal=true` bypass flag.
+*   **Archive Integration:** Updated the archive gallery links in `html_generator.py` to include the `?reveal=true` flag, allowing users to explicitly skip the quiz from the archives while still protecting shared links.
+*   **Share URL Optimization:** Refactored `js/quizShare.js` to generate URLs pointing to the quiz page (`/quiz?date=YYYY-MM-DD`) instead of the answer page, ensuring shared results invite others to play rather than spoiling the answer.
+*   **TDD Implementation:** Added 3 new test files/suites (`tests/js/detail.test.js`, `tests/test_html_generator.py`, and updated `tests/js/quizShare.test.js`) to verify the new functionality before implementation.
+*   **Verification:** Confirmed 100% pass rate across the full 422-test regression suite, including updated E2E tests in `test_yankee_site.py`.
+
 ### 2026-04-20: Authority Funnel Smart Search - \"Identity Logic\"
 *   **Performance Optimization:** Replaced DOM-based search attributes with a 57KB `stats_summary.json` data layer. This reduced `index.html` size by 12% (~30KB) and consolidated all search metadata into a structured, easily maintainable format.
 *   **Smarter Filtering:** Implemented a tokenized search engine in `galleryFilter.js`. It now supports multi-category \"AND\" searches (e.g., \"April NYY\") and intelligent date matching (matching month names like \"July\" against numeric date strings).
