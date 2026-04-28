@@ -1,5 +1,28 @@
 [
     {
+        "date": "2026-04-27",
+        "name": "Jim Mason",
+        "nickname": "",
+        "teams": [
+            "MON",
+            "TOR",
+            "TEX",
+            "NYY",
+            "WSA"
+        ],
+        "years": [
+            "1972",
+            "1975",
+            "1979",
+            "1973",
+            "1977",
+            "1974",
+            "1978",
+            "1971",
+            "1976"
+        ]
+    },
+    {
         "date": "2026-04-26",
         "name": "Jim Wynn",
         "nickname": "The Toy Cannon",
