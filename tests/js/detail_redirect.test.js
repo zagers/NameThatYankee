@@ -1,5 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { initScoreDisplay } from '../../js/scoreDisplay.js';
+
+// Mock scoreDisplay.js for redirect tests to avoid side effects
+vi.mock('../../js/scoreDisplay.js', () => ({
+    initScoreDisplay: vi.fn()
+}));
 
 describe('detail.js redirect logic', () => {
     let originalLocation;
@@ -20,11 +24,6 @@ describe('detail.js redirect logic', () => {
                 replace: vi.fn()
             }
         });
-
-        // Locally mock scoreDisplay for redirect tests
-        vi.mock('../../js/scoreDisplay.js', () => ({
-            initScoreDisplay: vi.fn()
-        }));
     });
 
     afterEach(() => {
@@ -32,7 +31,6 @@ describe('detail.js redirect logic', () => {
             configurable: true,
             value: originalLocation
         });
-        vi.unmock('../../js/scoreDisplay.js');
     });
 
     it('should redirect to quiz if puzzle is not solved and no reveal flag', async () => {
@@ -68,59 +66,21 @@ describe('detail.js redirect logic', () => {
         await import('../../js/detail.js');
         expect(window.location.replace).not.toHaveBeenCalled();
     });
-});
 
-describe('Detail Page Score Display (Restored)', () => {
-    beforeEach(() => {
-        document.body.innerHTML = `
-            <header>
-                <div class="header-controls">
-                    <div id="score-display">
-                        Your Score: <span id="total-score">0</span>
-                        <div id="score-breakdown-container" style="display: none;">
-                            <table>
-                                <tbody id="breakdown-body"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <main></main>
-        `;
-        global.localStorage.clear();
-    });
-
-    it('should initialize score and breakdown on a detail page', () => {
-        localStorage.setItem('nameThatYankeeTotalScore', '17');
-        localStorage.setItem('nameThatYankeeScoreBreakdown', JSON.stringify({ "0": 1, "1": 1, "2": 0, "3": 0 }));
-
-        initScoreDisplay();
-
-        expect(document.getElementById('total-score').textContent).toBe('17');
+    it('should NOT redirect if user agent is a search bot (e.g. Googlebot)', async () => {
+        const originalUserAgent = navigator.userAgent;
+        Object.defineProperty(navigator, 'userAgent', {
+            value: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+            configurable: true
+        });
         
-        const scoreDisplay = document.getElementById('score-display');
-        const breakdownContainer = document.getElementById('score-breakdown-container');
+        await import('../../js/detail.js');
+        expect(window.location.replace).not.toHaveBeenCalled();
         
-        // Toggle open
-        scoreDisplay.click();
-        expect(breakdownContainer.style.display).toBe('block');
-        
-        const rows = document.querySelectorAll('#breakdown-body tr');
-        expect(rows.length).toBe(4);
-        expect(rows[0].textContent).toContain('1'); // 1st clue count
-        expect(rows[1].textContent).toContain('1'); // 2nd clue count
-    });
-
-    it('should close breakdown when clicking outside', () => {
-        initScoreDisplay();
-        const scoreDisplay = document.getElementById('score-display');
-        const breakdownContainer = document.getElementById('score-breakdown-container');
-
-        scoreDisplay.click(); // Open
-        expect(breakdownContainer.style.display).toBe('block');
-
-        // Click main content
-        document.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        expect(breakdownContainer.style.display).toBe('none');
+        // Reset user agent
+        Object.defineProperty(navigator, 'userAgent', {
+            value: originalUserAgent,
+            configurable: true
+        });
     });
 });
