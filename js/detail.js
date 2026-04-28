@@ -18,6 +18,11 @@ function handleRedirect() {
         const params = new URLSearchParams(window.location.search);
         const reveal = params.get('reveal') === 'true';
         
+        // Detect common search engine bots (Google, Bing, Yahoo, DuckDuckGo, etc.)
+        // to allow indexing of answer pages without forcing a redirect.
+        const isBot = /bot|crawler|spider|crawling|slurp|bingbot|googlebot/i.test(navigator.userAgent);
+        if (isBot) return;
+
         let completedPuzzles = [];
         try {
             completedPuzzles = JSON.parse(localStorage.getItem('nameThatYankeeCompletedPuzzles') || '[]');

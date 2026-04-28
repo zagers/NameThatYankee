@@ -72,6 +72,7 @@ jobs:
           path-to-root: ./_site
           base-url-path: https://namethatyankeequiz.com/
           drop-html-extension: true
+          additional-ignore-list: index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

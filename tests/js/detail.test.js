@@ -68,6 +68,23 @@ describe('detail.js redirect logic', () => {
         await import('../../js/detail.js');
         expect(window.location.replace).not.toHaveBeenCalled();
     });
+
+    it('should NOT redirect if user agent is a search bot (e.g. Googlebot)', async () => {
+        const originalUserAgent = navigator.userAgent;
+        Object.defineProperty(navigator, 'userAgent', {
+            value: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+            configurable: true
+        });
+        
+        await import('../../js/detail.js');
+        expect(window.location.replace).not.toHaveBeenCalled();
+        
+        // Reset user agent
+        Object.defineProperty(navigator, 'userAgent', {
+            value: originalUserAgent,
+            configurable: true
+        });
+    });
 });
 
 describe('Detail Page Score Display (Restored)', () => {
