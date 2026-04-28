@@ -34,7 +34,15 @@ export function generateShareText(dateStr, state, url) {
  * @returns {Promise<void>}
  */
 export async function copyShareText(dateStr, state) {
-    const url = window.location.href;
+    // Derive the base path to support both root and subdirectory hosting
+    const path = window.location.pathname;
+    // We expect to be on /quiz or /quiz.html
+    const quizMatch = path.match(/\/quiz(?:\.html)?\/?$/);
+    const basePath = quizMatch ? path.substring(0, quizMatch.index + 1) : '/';
+    
+    const urlObj = new URL(basePath + 'quiz', window.location.origin);
+    urlObj.searchParams.set('date', state.date);
+    const url = urlObj.toString();
     const text = generateShareText(dateStr, state, url);
     
     if (navigator.share) {
