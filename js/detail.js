@@ -20,7 +20,8 @@ function handleRedirect() {
         
         // Detect common search engine bots (Google, Bing, Yahoo, DuckDuckGo, etc.)
         // to allow indexing of answer pages without forcing a redirect.
-        const isBot = /bot|crawler|spider|crawling|slurp|bingbot|googlebot/i.test(navigator.userAgent);
+        // Simplified regex as 'bot' covers 'bingbot' and 'googlebot'
+        const isBot = /bot|crawler|spider|crawl|slurp/i.test(navigator.userAgent || '');
         if (isBot) return;
 
         let completedPuzzles = [];
