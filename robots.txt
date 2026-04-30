@@ -1,6 +1,8 @@
 # robots.txt for https://namethatyankeequiz.com
 User-agent: *
 Allow: /
-Disallow: /*?date=
+
+# Note: We do not Disallow /*?date= here because we want Google to crawl those pages 
+# and see the 'noindex' meta tag in quiz.html, which ensures they are removed from the index.
 
 Sitemap: https://namethatyankeequiz.com/sitemap.xml
