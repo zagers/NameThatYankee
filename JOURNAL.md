@@ -2,6 +2,12 @@
 
 ## Journal
 
+### 2026-04-29: Quiz Generation & Chart Restoration - \"Visual Integrity\"
+*   **Daily Quizzes:** Generated new trivia puzzles for 2026-04-28 (Steve Hamilton) and 2026-04-29 (John Charles Ellis). Updated the main gallery and `stats_summary.json`.
+*   **Bug Fix (Career Arc Chart):** Identified that the \"Career Arc by WAR\" chart was failing to render due to a missing `js/team_colors.js` file. Reconstructed the file from git history (Commit `aa1fa16`) and restored it to the codebase.
+*   **Regression Testing:** Added a new E2E test to `test_yankee_site.py` (`test_detail_page_chart_exists`) to verify that the chart container and canvas are visible on detail pages, preventing future silent failures of this feature.
+*   **Verification:** Achieved 100% pass rate across the full 422-test regression suite (180 Python unit tests, 43 E2E tests, and 94 Vitest frontend tests).
+
 ### 2026-04-26: Social Sharing & Redirect Fix - \"Integrity Funnel\"
 *   **Redirect Logic:** Implemented a state-aware redirect on player detail pages (`js/detail.js`). Users who haven't completed a puzzle are redirected to the quiz page unless they use the explicit `?reveal=true` bypass flag.
 *   **Archive Integration:** Updated the archive gallery links in `html_generator.py` to include the `?reveal=true` flag, allowing users to explicitly skip the quiz from the archives while still protecting shared links.
