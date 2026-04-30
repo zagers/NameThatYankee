@@ -48,6 +48,21 @@ class TestSiteStructure:
         # Check footer
         expect(page.locator("footer")).to_be_visible()
 
+    def test_detail_page_chart_exists(self, page: Page):
+        """Verify that the Career Arc chart exists on a sample detail page."""
+        test_slug = "2026-04-19"
+        page.goto(f"{BASE_URL}{test_slug}?reveal=true")
+        page.wait_for_load_state("networkidle")
+        
+        # Check if the chart container is present
+        chart_container = page.locator(".chart-container")
+        expect(chart_container).to_be_visible()
+        expect(chart_container.locator("h3")).to_contain_text("Career Arc by WAR")
+        
+        # Check if the canvas element for the chart exists
+        canvas = page.locator("#careerArcChart")
+        expect(canvas).to_be_visible()
+
     def test_navigation_links_work(self, page: Page):
         page.goto(BASE_URL)
         
