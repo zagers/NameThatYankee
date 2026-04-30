@@ -2,6 +2,12 @@
 
 ## Journal
 
+### 2026-04-30: SEO Indexing Fix - \"The Visibility Paradox\"
+*   **Conflict Resolution:** Resolved \"Indexed, though blocked by robots.txt\" warnings in Search Console by removing the `Disallow` rule for dated quiz URLs. This allows crawlers to access the pages and discover the `noindex` instruction.
+*   **Directive Hardening:** Strengthened the `robots` meta tag in `quiz.html` to `noindex, nofollow, noarchive, nosnippet` to ensure search engines drop existing indexed versions and prevent caching.
+*   **Verification Standards:** Added a new E2E test to `test_yankee_site.py` to verify static `noindex` presence and updated `test_seo_dynamic.py` with regex-based matching for future-proof validation.
+*   **Verification:** Confirmed 100% pass rate across the full regression suite.
+
 ### 2026-04-29: Quiz Generation & Chart Restoration - \"Visual Integrity\"
 *   **Daily Quizzes:** Generated new trivia puzzles for 2026-04-28 (Steve Hamilton) and 2026-04-29 (John Charles Ellis). Updated the main gallery and `stats_summary.json`.
 *   **Bug Fix (Career Arc Chart):** Identified that the \"Career Arc by WAR\" chart was failing to render due to a missing `js/team_colors.js` file. Reconstructed the file from git history (Commit `aa1fa16`) and restored it to the codebase.
