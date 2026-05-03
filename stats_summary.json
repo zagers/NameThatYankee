@@ -1,5 +1,25 @@
 [
     {
+        "date": "2026-05-03",
+        "name": "Mason Jordan Williams",
+        "nickname": "No Neck or Mase",
+        "teams": [
+            "NYM",
+            "BAL",
+            "CIN",
+            "NYY"
+        ],
+        "years": [
+            "2020",
+            "2018",
+            "2019",
+            "2016",
+            "2017",
+            "2021",
+            "2015"
+        ]
+    },
+    {
         "date": "2026-05-02",
         "name": "Bob Turley",
         "nickname": "Bullet Bob",
