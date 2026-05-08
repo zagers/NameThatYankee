@@ -68,6 +68,14 @@
         ]
     },
     {
+        "date": "2026-05-04",
+        "name": "John Sterling",
+        "nickname": "The Voice of the Yankees",
+        "teams": ["NYY", "ATL", "WAS", "NYK", "NYI"],
+        "years": ["1970-2024"],
+        "isSpecial": true
+    },
+    {
         "date": "2026-05-03",
         "name": "Mason Jordan Williams",
         "nickname": "No Neck or Mase",

@@ -22,7 +22,8 @@
     "auto_approve_player": true,
     "skip_manual_review": true,
     "cleanup_temp_files": true,
-    "batch_processing_enabled": true
+    "batch_processing_enabled": true,
+    "excluded_dates": ["2026-05-04"]
   },
   "logging": {
     "level": "INFO",
