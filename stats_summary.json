@@ -1,5 +1,44 @@
 [
     {
+        "date": "2026-05-08",
+        "name": "Gary Sheffield",
+        "nickname": "Sheff",
+        "teams": [
+            "NYY",
+            "NYM",
+            "FLA",
+            "LAD",
+            "SDP",
+            "DET",
+            "MIL",
+            "ATL"
+        ],
+        "years": [
+            "2005",
+            "1992",
+            "1995",
+            "1997",
+            "2000",
+            "1990",
+            "2001",
+            "1996",
+            "2008",
+            "2004",
+            "2009",
+            "1999",
+            "2002",
+            "1991",
+            "2007",
+            "2006",
+            "1988",
+            "1993",
+            "1989",
+            "2003",
+            "1998",
+            "1994"
+        ]
+    },
+    {
         "date": "2026-05-07",
         "name": "Andre Robertson",
         "nickname": "",
@@ -70,18 +109,9 @@
     {
         "date": "2026-05-04",
         "name": "John Sterling",
-        "nickname": "The Voice of the Yankees",
-        "teams": [
-            "NYY",
-            "ATL",
-            "WAS",
-            "NYK",
-            "NYI",
-            "NJN",
-            "HAW"
-        ],
-        "years": ["1970s", "1980s", "1990s", "2000s", "2010s", "2020s"],
-        "isSpecial": true
+        "nickname": "",
+        "teams": [],
+        "years": []
     },
     {
         "date": "2026-05-03",
