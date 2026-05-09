@@ -39,6 +39,8 @@ jobs:
 
       - name: 'Checkout Code'
         uses: 'actions/checkout@v4' # ratchet:exclude
+        with:
+          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
 
       - name: 'Create ~/.gemini directory'
         run: 'mkdir -p ~/.gemini'

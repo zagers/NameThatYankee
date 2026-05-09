@@ -7,7 +7,7 @@ on:
   pull_request_review:
     types:
       - 'submitted'
-  pull_request:
+  pull_request_target:
     types:
       - 'opened'
   issues:
@@ -48,7 +48,7 @@ jobs:
     # For comments: only if user types @gemini-cli and is OWNER/MEMBER/COLLABORATOR
     if: |-
       (
-        github.event_name == 'pull_request' &&
+        github.event_name == 'pull_request_target' &&
         github.event.pull_request.head.repo.fork == false
       ) || (
         github.event_name == 'issues' &&
@@ -93,7 +93,7 @@ jobs:
             const request = process.env.REQUEST;
             core.setOutput('request', request);
 
-            if (eventType === 'pull_request.opened') {
+            if (eventType === 'pull_request_target.opened') {
               core.setOutput('command', 'review');
             } else if (['issues.opened', 'issues.reopened'].includes(eventType)) {
               core.setOutput('command', 'triage');

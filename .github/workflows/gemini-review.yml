@@ -40,6 +40,8 @@ jobs:
 
       - name: 'Checkout repository'
         uses: 'actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8' # ratchet:actions/checkout@v6
+        with:
+          ref: '${{ github.event.pull_request.head.sha || github.sha }}'
 
       - name: 'Create ~/.gemini directory'
         run: 'mkdir -p ~/.gemini'

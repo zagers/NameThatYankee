@@ -2,6 +2,19 @@
 
 ## Journal
 
+### 2026-05-09: CI/CD Fix - "Secrets Access Restoration"
+*   **Workflow Transition:** Transitioned the primary GitHub Actions trigger for pull requests from `pull_request` to `pull_request_target` in `gemini-dispatch.yml`. This restores access to repository secrets (like `GEMINI_API_KEY`) for PRs opened by Dependabot, which were previously failing with authentication errors.
+*   **Checkout Logic Hardening:** Updated the `actions/checkout` step across `gemini-review.yml`, `gemini-invoke.yml`, and `gemini-plan-execute.yml` to explicitly reference `${{ github.event.pull_request.head.sha || github.sha }}`. This ensures that workflows triggered via `pull_request_target` correctly analyze the code from the PR branch rather than the base branch.
+*   **Reliability:** This change ensures that automated PR reviews and other Gemini-led CI tasks work seamlessly regardless of whether the PR was opened by a human or an automated tool.
+
+### 2026-05-04: John Sterling Tribute - "The Voice of the Yankees"
+*   **Tribute Quiz:** Created a custom, non-standard trivia page for legendary Yankees announcer John Sterling. This bypasses standard player-centric automation as Sterling does not have traditional baseball stats.
+*   **Custom Layout:** Implemented a specialized `2026-05-04.html` with a broadcaster-themed layout, microphone iconography, and a detailed "Broadcast Timeline".
+*   **Autocomplete Injection:** Modified `js/quiz.js` to dynamically inject "John Sterling" into the player pool specifically for the tribute date, ensuring he appears in autocomplete suggestions.
+*   **Data Protection:** Updated `automation_config.json` to exclude the tribute date from automatic regeneration, preserving the manual layout.
+*   **Search Optimization:** Enhanced `js/galleryFilter.js` to support decade-based searching and ensure special tribute items are searchable by name even if unsolved.
+*   **Verification:** Verified with a new TDD test (`tests/test_sterling_tribute.py`) and confirmed 100% pass rate across the full 323-test regression suite.
+
 ### 2026-04-30: SEO Indexing Fix - \"The Visibility Paradox\"
 *   **Conflict Resolution:** Resolved \"Indexed, though blocked by robots.txt\" warnings in Search Console by removing the `Disallow` rule for dated quiz URLs. This allows crawlers to access the pages and discover the `noindex` instruction.
 *   **Directive Hardening:** Strengthened the `robots` meta tag in `quiz.html` to `noindex, nofollow, noarchive, nosnippet` to ensure search engines drop existing indexed versions and prevent caching.
