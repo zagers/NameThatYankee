@@ -15,7 +15,9 @@ const TEAM_NAME_MAP = {
     'HOU': 'houston astros', 'LAA': 'los angeles angels', 'SFG': 'san francisco giants',
     'ARI': 'arizona diamondbacks', 'COL': 'colorado rockies', 'MIL': 'milwaukee brewers',
     'STL': 'st louis cardinals', 'PIT': 'pittsburgh pirates', 'MIA': 'miami florida marlins',
-    'WSN': 'washington nationals', 'MON': 'montreal expos'
+    'WSN': 'washington nationals', 'MON': 'montreal expos',
+    'WAS': 'washington bullets wizards', 'NYK': 'new york knicks', 'NYI': 'new york islanders',
+    'NJN': 'new york new jersey nets brooklyn', 'HAW': 'atlanta hawks'
 };
 
 const MONTH_NAMES = [
@@ -54,18 +56,22 @@ export function checkMatch(puzzle, isCompleted, tokens) {
         
         // 3. Check Years & Decades
         if (puzzle.years.includes(token)) return true;
+        if (token.length === 4 && !isNaN(token)) {
+            const decadePrefix = token.substring(0, 3);
+            if (puzzle.years.some(y => y.startsWith(decadePrefix) && y.endsWith('s'))) return true;
+        }
         if (token.endsWith('s')) {
             if (token.length === 3) { // e.g. "90s"
                 const decadeDigit = token[0];
-                if (puzzle.years.some(y => y.length === 4 && y[2] === decadeDigit)) return true;
+                if (puzzle.years.some(y => (y.length === 4 || y.length === 5) && y[2] === decadeDigit)) return true;
             } else if (token.length === 5) { // e.g. "1990s"
                 const decadePrefix = token.substring(0, 3);
                 if (puzzle.years.some(y => y.startsWith(decadePrefix))) return true;
             }
         }
 
-        // 4. Check Name/Nickname (ONLY if solved)
-        if (isCompleted) {
+        // 4. Check Name/Nickname (ONLY if solved or special)
+        if (isCompleted || puzzle.isSpecial) {
             if (puzzle.name.toLowerCase().includes(token)) return true;
             if (puzzle.nickname && puzzle.nickname.toLowerCase().includes(token)) return true;
         }

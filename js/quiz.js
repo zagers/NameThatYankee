@@ -204,7 +204,13 @@ export async function initQuiz() {
     }
 
     let engine;
-    let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? ALL_PLAYERS : [];
+    let allPlayers = (typeof ALL_PLAYERS !== 'undefined') ? [...ALL_PLAYERS] : [];
+
+    // John Sterling Tribute Injection
+    if (date === '2026-05-04') {
+        allPlayers = ['John Sterling', ...allPlayers.filter(p => p !== 'John Sterling')];
+    }
+
     const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));
 
     let totalScore = parseInt(localStorage.getItem('nameThatYankeeTotalScore')) || 0;
