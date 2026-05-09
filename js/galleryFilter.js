@@ -15,7 +15,9 @@ const TEAM_NAME_MAP = {
     'HOU': 'houston astros', 'LAA': 'los angeles angels', 'SFG': 'san francisco giants',
     'ARI': 'arizona diamondbacks', 'COL': 'colorado rockies', 'MIL': 'milwaukee brewers',
     'STL': 'st louis cardinals', 'PIT': 'pittsburgh pirates', 'MIA': 'miami florida marlins',
-    'WSN': 'washington nationals', 'MON': 'montreal expos'
+    'WSN': 'washington nationals', 'MON': 'montreal expos',
+    'WAS': 'washington bullets wizards', 'NYK': 'new york knicks', 'NYI': 'new york islanders',
+    'NJN': 'new york new jersey nets brooklyn', 'HAW': 'atlanta hawks'
 };
 
 const MONTH_NAMES = [
