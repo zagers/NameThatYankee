@@ -1104,6 +1104,13 @@ tbody tr:hover {
     }
 }
 
+.tribute-layout .player-photo img {
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 .broadcast-stats {
     display: flex;
     justify-content: space-around;
