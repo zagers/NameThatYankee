@@ -1,3 +1,5 @@
+/* ABOUTME: Main stylesheet for the Name That Yankee trivia game. */
+/* ABOUTME: Manages responsive layouts, interactive elements, and broadcast tribute themes. */
 :root {
     --primary-color: #0C2340;
     /* Yankees Navy */
@@ -1094,10 +1096,18 @@ tbody tr:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+@media (min-width: 768px) {
+    .tribute-layout {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        align-items: start;
+    }
+}
+
 .broadcast-stats {
     display: flex;
     justify-content: space-around;
-    background: #003087; /* Yankee Blue */
+    background: var(--primary-color);
     color: white;
     padding: 2rem;
     border-radius: 8px;
@@ -1122,7 +1132,7 @@ tbody tr:hover {
     gap: 1rem;
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border-left: 4px solid #003087;
+    border-left: 4px solid var(--primary-color);
 }
 
 .mic-icon {
