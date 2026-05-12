@@ -106,14 +106,20 @@ class TestCleanURLNavigation:
         page.wait_for_load_state("networkidle")
         
         # Should be redirected to quiz
-        expect(page).to_have_url(re.compile(f".*/quiz\\?date={test_slug}$"))
+        expect(page).to_have_url(re.compile(f".*/{test_slug}-quiz(\\?.*)?$"))
 
     def test_quiz_page_noindex(self, page: Page):
-        """Verify that the interactive quiz page has noindex meta tag."""
-        page.goto(f"{BASE_URL}quiz?date=2025-07-23")
+        """Verify that the new static quiz page is indexable."""
+        page.goto(f"{BASE_URL}2025-07-23-quiz")
         robots_meta = page.locator('meta[name="robots"]')
-        expect(robots_meta).to_have_attribute("content", re.compile(r"noindex"))
-        expect(robots_meta).to_have_attribute("content", re.compile(r"nofollow"))
+        # It should NOT have noindex
+        count = robots_meta.count()
+        if count > 0:
+            content = robots_meta.get_attribute("content")
+            assert "noindex" not in content.lower()
+        else:
+            # If no robots meta tag, it's indexable by default
+            assert True
 
     def test_gallery_cards_have_required_elements(self, page: Page):
         page.goto(BASE_URL)

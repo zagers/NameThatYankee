@@ -37,8 +37,7 @@ function handleRedirect() {
             // Derive the base path (everything before the date part of the URL)
             // to support both root and subdirectory hosting (e.g. GitHub Pages)
             const basePath = path.substring(0, dateMatch.index + 1);
-            const redirectUrl = new URL(basePath + 'quiz', window.location.origin);
-            redirectUrl.searchParams.set('date', date);
+            const redirectUrl = new URL(basePath + date + '-quiz', window.location.origin);
             window.location.replace(redirectUrl.toString());
         }
     }

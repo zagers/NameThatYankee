@@ -36,7 +36,7 @@ describe('detail.js redirect logic', () => {
     it('should redirect to quiz if puzzle is not solved and no reveal flag', async () => {
         // Import triggers immediate handleRedirect()
         await import('../../js/detail.js');
-        expect(window.location.replace).toHaveBeenCalledWith('https://namethatyankeequiz.com/quiz?date=2026-04-26');
+        expect(window.location.replace).toHaveBeenCalledWith('https://namethatyankeequiz.com/2026-04-26-quiz');
     });
 
     it('should handle optional trailing slash in redirect logic', async () => {
@@ -44,7 +44,7 @@ describe('detail.js redirect logic', () => {
         window.location.href = 'https://namethatyankeequiz.com/2026-04-26/';
         
         await import('../../js/detail.js');
-        expect(window.location.replace).toHaveBeenCalledWith('https://namethatyankeequiz.com/quiz?date=2026-04-26');
+        expect(window.location.replace).toHaveBeenCalledWith('https://namethatyankeequiz.com/2026-04-26-quiz');
     });
 
     it('should support subdirectory hosting in redirect logic', async () => {
@@ -52,7 +52,7 @@ describe('detail.js redirect logic', () => {
         window.location.href = 'https://namethatyankeequiz.com/yankee/2026-04-26';
         
         await import('../../js/detail.js');
-        expect(window.location.replace).toHaveBeenCalledWith('https://namethatyankeequiz.com/yankee/quiz?date=2026-04-26');
+        expect(window.location.replace).toHaveBeenCalledWith('https://namethatyankeequiz.com/yankee/2026-04-26-quiz');
     });
 
     it('should NOT redirect if reveal=true flag is present', async () => {

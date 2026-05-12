@@ -26,6 +26,9 @@ cp analytics.html tests/fixtures/www/analytics.html || true
 cp style.css tests/fixtures/www/style.css || true
 cp stats_summary.json tests/fixtures/www/stats_summary.json || true
 cp 2026-04-19.html tests/fixtures/www/2026-04-19.html || true
+cp 2026-04-19-quiz.html tests/fixtures/www/2026-04-19-quiz.html || true
+cp 2025-07-23.html tests/fixtures/www/2025-07-23.html || true
+cp 2025-07-23-quiz.html tests/fixtures/www/2025-07-23-quiz.html || true
 
 # Use local venv pytest if available, otherwise fall back to global
 if [ -f .venv/bin/pytest ]; then
