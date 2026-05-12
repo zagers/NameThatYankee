@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+# ABOUTME: Test script for the automation workflow.
+# ABOUTME: Tests image processing, configuration, git integration, and HTML generation.
 """
 Test script for the automation workflow.
-
+...
 This script tests the basic functionality of the automation modules.
 """
 
