@@ -377,7 +377,7 @@ def build_quiz_page_html(player_data: dict, date_str: str, formatted_date: str) 
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}">
+    <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}-quiz">
     
     <!-- Meta tags for better social sharing -->
     <meta property="og:title" content="Name That Yankee Quiz - {formatted_date}">
