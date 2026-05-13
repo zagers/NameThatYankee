@@ -400,6 +400,8 @@ def build_quiz_page_html(player_data: dict, date_str: str, formatted_date: str) 
     <script type="application/ld+json">
     {json.dumps(game_schema, indent=2)}
     </script>
+
+    <script>window.QUIZ_DATE = "{date_str}";</script>
 </head>
 <body>
     <header>

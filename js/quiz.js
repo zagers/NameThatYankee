@@ -163,7 +163,7 @@ export async function initQuiz() {
     const guessesCollection = collection(db, 'guesses');
 
     const params = new URLSearchParams(window.location.search);
-    let date = params.get('date');
+    let date = window.QUIZ_DATE || params.get('date');
     if (!date) {
         const pathMatch = window.location.pathname.match(/(\d{4}-\d{2}-\d{2})-quiz/);
         if (pathMatch) date = pathMatch[1];
