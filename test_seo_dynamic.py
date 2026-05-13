@@ -21,14 +21,14 @@ class TestDynamicSEO:
 
     def test_quiz_canonical_with_date(self, page: Page):
         test_date = "2025-07-23"
-        page.goto(f"{BASE_URL}/quiz.html?date={test_date}")
+        page.goto(f"{BASE_URL}{test_date}-quiz")
         
-        # Should have canonical pointing to the reveal page
+        # Should have canonical pointing to the static quiz page itself
         canonical = page.locator('link[rel="canonical"]')
-        # In current broken state, it might have two canonicals or the wrong one.
-        # We want it to be exactly one and point to the date.
-        expect(canonical).to_have_attribute("href", f"https://namethatyankeequiz.com/{test_date}")
+        expect(canonical).to_have_attribute("href", f"https://namethatyankeequiz.com/{test_date}-quiz")
         
-        # Should have noindex
-        noindex = page.locator('meta[name="robots"]')
-        expect(noindex).to_have_attribute("content", re.compile(r"noindex"))
+        # New static quiz pages are indexable
+        robots_meta = page.locator('meta[name="robots"]')
+        if robots_meta.count() > 0:
+            content = robots_meta.get_attribute("content")
+            assert "noindex" not in content.lower()
