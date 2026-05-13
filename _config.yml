@@ -7,6 +7,12 @@ permalink: /:basename
 # They will still be in your repository but not on the live website.
 exclude:
   - docs
+  - GEMINI.md
+  - JOURNAL.md
+  - automation_config.json
+  - automate.sh
+  - bootstrap.sh
+  - conftest.py
   - node_modules
   - .pytest_cache
   - .venv
