@@ -2,6 +2,17 @@
 
 ## Journal
 
+### 2026-05-11: Production Outage & Emergency Rollback - "The Extension Gap"
+*   **Incident:** Deployed the "Discovery Engine" SEO update (JSON-LD schemas + static quiz pages). Immediate production failure: all quiz pages displayed "Error: A valid date was not provided."
+*   **Investigation:** 
+    *   The error was consistent in production but non-reproducible on `localhost`.
+    *   Initial fix (injecting `window.QUIZ_DATE`) failed to resolve the issue in production despite passing all regression tests.
+*   **Root Cause Analysis:** The failure was environmental, specifically GitHub Pages' URL routing. 
+    *   Links like `/2025-05-11-quiz` (clean URLs) were not correctly mapping to `2025-05-11-quiz.html` because GitHub Pages' `.html` extension stripping only works if the server is configured to serve the file when the extension is omitted. 
+    *   The browser was likely receiving `index.html` or a custom 404 page for these extensionless paths, leading to a "successful" HTTP load of a page that didn't contain the `window.QUIZ_DATE` or the quiz engine's expected elements.
+*   **Action Taken:** Hard reset `master` to commit `cf3266c` (pre-SEO merge) and force-pushed to origin to restore service.
+*   **Lesson Learned:** Never deploy structural URL changes without verifying the production server's routing behavior for extensionless files. Future SEO attempts must either include `.html` in the canonical/links or use a `404.html` catch-all router.
+
 ### 2026-05-09: Synchronization & Quiz Update - "The Alignment"
 *   **Git Sync:** Resolved a diverged branch state where the local `master` had fallen behind `origin/master`. Successfully synchronized `master` and migrated the new trivia changes to a dedicated feature branch (`feature/quiz-2026-05-09`) to follow project workflow rules.
 *   **Daily Quiz:** Integrated a new trivia puzzle for 2026-05-09 (Willie Randolph). Updated `index.html`, `stats_summary.json`, and added the required puzzle assets.
