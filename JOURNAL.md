@@ -2,6 +2,16 @@
 
 ## Journal
 
+### 2026-05-11: JSON-LD Schema & Static Quiz Migration - "The Discovery Engine"
+*   **SEO Breakthrough:** Transformed the site's discovery potential by implementing rich JSON-LD schemas.
+    *   **Quiz Pages:** Introduced static `YYYY-MM-DD-quiz.html` files with `VideoGame` schema, making individual trivia puzzles indexable by Google for the first time.
+    *   **Answer Pages:** Enriched existing `Article` schemas with a `mainEntity: Person` block, including player names, nicknames, and career summaries to capture player-specific search traffic.
+*   **Architectural Pivot:** Moved away from the dynamic `quiz.html?date=...` pattern in favor of static, date-specific URLs. This ensures crawlers can discover and index the entire puzzle archive without JavaScript execution issues.
+*   **Backwards Compatibility:** Maintained support for legacy query-string links in `quiz.js` and established a redirection funnel in `js/detail.js` that respects bot crawlers to allow both quiz and answer pages to rank.
+*   **Infrastructure:** Updated the Python `html_generator.py` to automate dual-page generation and migrated all 187 existing puzzles to the new architecture via a one-time migration script.
+*   **Maintenance:** Updated the automation pipeline's Gemini model identifier to the GA version (`gemini-3.1-flash-lite`) to prevent API failures following Google's discontinuance of the preview model.
+*   **Verification:** Achieved 100% pass rate across the full 422-test regression suite, with specific updates to E2E and SEO tests to validate the indexable status of quiz pages.
+
 ### 2026-05-09: Synchronization & Quiz Update - "The Alignment"
 *   **Git Sync:** Resolved a diverged branch state where the local `master` had fallen behind `origin/master`. Successfully synchronized `master` and migrated the new trivia changes to a dedicated feature branch (`feature/quiz-2026-05-09`) to follow project workflow rules.
 *   **Daily Quiz:** Integrated a new trivia puzzle for 2026-05-09 (Willie Randolph). Updated `index.html`, `stats_summary.json`, and added the required puzzle assets.

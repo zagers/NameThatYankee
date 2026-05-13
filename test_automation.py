@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+# ABOUTME: Test script for the automation workflow.
+# ABOUTME: Tests image processing, configuration, git integration, and HTML generation.
 """
 Test script for the automation workflow.
-
+...
 This script tests the basic functionality of the automation modules.
 """
 
@@ -217,6 +219,81 @@ def test_rebuild_index_generates_stats_summary(tmp_path):
     assert data[0]['date'] == date_str
     assert data[0]['name'] == "Fran Healy"
     assert "NYY" in data[0]['teams']
+
+def test_generates_quiz_and_answer_pages(tmp_path):
+    import html_generator
+    player_data = {
+        "name": "Derek Jeter",
+        "nickname": "The Captain",
+        "facts": ["Fact 1"],
+        "career_totals": {"HR": "260"}
+    }
+    date_str = "2025-05-11"
+    html_generator.generate_detail_page(player_data, date_str, "May 11, 2025", tmp_path)
+    
+    assert (tmp_path / "2025-05-11.html").exists()
+    assert (tmp_path / "2025-05-11-quiz.html").exists()
+
+def test_quiz_page_has_game_schema(tmp_path):
+    import html_generator
+    import json
+    from bs4 import BeautifulSoup
+    player_data = {
+        "name": "Derek Jeter",
+        "nickname": "The Captain",
+        "facts": ["Fact 1"],
+        "career_totals": {"HR": "260"}
+    }
+    date_str = "2025-05-11"
+    html_generator.generate_detail_page(player_data, date_str, "May 11, 2025", tmp_path)
+    
+    quiz_file = tmp_path / "2025-05-11-quiz.html"
+    assert quiz_file.exists()
+    
+    with open(quiz_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    soup = BeautifulSoup(content, 'html.parser')
+    scripts = soup.find_all('script', type='application/ld+json')
+    assert len(scripts) > 0
+    
+    schemas = [json.loads(s.string) for s in scripts]
+    # Look for VideoGame schema
+    game_schema = next((s for s in schemas if s.get('@type') == 'VideoGame'), None)
+    assert game_schema is not None
+    assert game_schema['name'] == 'Name That Yankee Quiz - May 11, 2025'
+
+def test_answer_page_has_person_schema(tmp_path):
+    import html_generator
+    import json
+    from bs4 import BeautifulSoup
+    player_data = {
+        "name": "Derek Jeter",
+        "nickname": "The Captain",
+        "facts": ["Fact 1"],
+        "career_totals": {"HR": "260"}
+    }
+    date_str = "2025-05-11"
+    html_generator.generate_detail_page(player_data, date_str, "May 11, 2025", tmp_path)
+    
+    answer_file = tmp_path / "2025-05-11.html"
+    assert answer_file.exists()
+    
+    with open(answer_file, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    soup = BeautifulSoup(content, 'html.parser')
+    scripts = soup.find_all('script', type='application/ld+json')
+    assert len(scripts) > 0
+    
+    schemas = [json.loads(s.string) for s in scripts]
+    # Person is now nested as mainEntity of Article
+    article_schema = next((s for s in schemas if s.get('@type') == 'Article'), None)
+    assert article_schema is not None
+    person_schema = article_schema.get('mainEntity')
+    assert person_schema is not None
+    assert person_schema.get('@type') == 'Person'
+    assert person_schema.get('name') == 'Derek Jeter'
 
 if __name__ == "__main__":
     main()
