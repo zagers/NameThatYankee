@@ -39,15 +39,6 @@
   "url": "https://namethatyankeequiz.com/2026-04-10-quiz"
 }
     </script>
-
-    <script>
-        // Static page date injection for quiz.js
-        const url = new URL(window.location.href);
-        if (!url.searchParams.has('date')) {
-            url.searchParams.set('date', '2026-04-10');
-            window.history.replaceState(null, '', url.toString());
-        }
-    </script>
 </head>
 <body>
     <header>

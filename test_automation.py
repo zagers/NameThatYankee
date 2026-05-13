@@ -287,9 +287,13 @@ def test_answer_page_has_person_schema(tmp_path):
     assert len(scripts) > 0
     
     schemas = [json.loads(s.string) for s in scripts]
-    # We want the primary schema to be Person (as per Task 3 plan)
-    person_schema = next((s for s in schemas if s.get('@type') == 'Person' and s.get('name') == 'Derek Jeter'), None)
+    # Person is now nested as mainEntity of Article
+    article_schema = next((s for s in schemas if s.get('@type') == 'Article'), None)
+    assert article_schema is not None
+    person_schema = article_schema.get('mainEntity')
     assert person_schema is not None
+    assert person_schema.get('@type') == 'Person'
+    assert person_schema.get('name') == 'Derek Jeter'
 
 if __name__ == "__main__":
     main()

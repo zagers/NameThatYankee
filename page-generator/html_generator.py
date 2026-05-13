@@ -182,18 +182,25 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     # Enriched Schema for Article and Person
     awards = [f for f in facts if any(x in f.lower() for x in ["mvp", "all-star", "gold glove", "silver slugger", "world series"])]
     
+    # Format career stats for description
+    stats_summary = ", ".join([f"{k}: {v}" for k, v in career_totals_data.items()])
+    nick_part = f" ({nickname})" if nickname and nickname.strip() else ""
+    description = f"New York Yankees player {name}{nick_part}. Career stats: {stats_summary}."
+
     person_schema = {
-        "@context": "https://schema.org",
         "@type": "Person",
         "name": name,
-        "alternateName": nickname,
+        "alternateName": nickname if nickname and nickname.strip() else None,
         "jobTitle": "Professional Baseball Player",
         "memberOf": {
             "@type": "SportsOrganization",
             "name": "New York Yankees"
         },
-        "description": f"New York Yankees player {name} ({nickname}). Career stats include {career_totals_data}."
+        "description": description
     }
+    # Remove None values
+    person_schema = {k: v for k, v in person_schema.items() if v is not None}
+    
     if awards:
         person_schema["award"] = awards
 
@@ -248,9 +255,6 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 
     <script type="application/ld+json">
     {json.dumps(article_schema, indent=2)}
-    </script>
-    <script type="application/ld+json">
-    {json.dumps(person_schema, indent=2)}
     </script>
 </head>
 <body>
@@ -395,15 +399,6 @@ def build_quiz_page_html(player_data: dict, date_str: str, formatted_date: str) 
     
     <script type="application/ld+json">
     {json.dumps(game_schema, indent=2)}
-    </script>
-
-    <script>
-        // Static page date injection for quiz.js
-        const url = new URL(window.location.href);
-        if (!url.searchParams.has('date')) {{
-            url.searchParams.set('date', '{date_str}');
-            window.history.replaceState(null, '', url.toString());
-        }}
     </script>
 </head>
 <body>
