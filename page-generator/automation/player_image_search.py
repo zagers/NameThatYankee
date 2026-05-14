@@ -372,37 +372,44 @@ class PlayerImageSearch:
             response = requests.get(page_url, headers=self.headers, timeout=10)
             from bs4 import BeautifulSoup
             soup = BeautifulSoup(response.content, 'html.parser')
-            
+
             # Common selectors for main high-res images on collector/sports sites
             selectors = [
-                'meta[property="og:image"]', 
+                'meta[property="og:image"]',
                 'link[rel="image_src"]',
                 '.main-image img', '.primary-image img',
                 'img.player-card', 'img.card-image',
-                '#main-image', '[data-main-image] img'
+                '#main-image', '[data-main-image] img',
+                '.col-md-12 .img-thumbnail', # TCDB specific
+                '.card-photo img'
             ]
-            
+
             for selector in selectors:
                 found = soup.select_one(selector)
                 if found:
                     url = found.get('src') or found.get('content') or found.get('href')
                     if url:
                         return urllib.parse.urljoin(page_url, url)
-            
-            # Fallback: Find the largest image on the page
+
+            # Fallback: Find the largest image on the page, prioritizing high-res card patterns
             images = soup.find_all('img')
             if images:
-                # Prioritize images with 'player' or 'card' in their name/alt
+                # First pass: Look for high-res card patterns (like TCDB's SetID-NumFr.jpg)
+                for img in images:
+                    src = img.get('src', '')
+                    if 'Fr.jpg' in src or 'Fr.webp' in src or 'front' in src.lower():
+                        return urllib.parse.urljoin(page_url, src)
+
+                # Second pass: Prioritize images with 'player' or 'card' in their name/alt
                 for img in images:
                     src = img.get('src')
                     alt = img.get('alt', '').lower()
                     if src and ('card' in alt or 'player' in alt or 'yankees' in alt):
                         return urllib.parse.urljoin(page_url, src)
-            
+
             return None
         except Exception:
             return None
-
     def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> List[Path]:
         """Complete workflow orchestrator for finding and saving multiple player image candidates."""
         staging_dir = self.images_dir.parent / "temp_player_images"

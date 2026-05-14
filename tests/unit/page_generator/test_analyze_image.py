@@ -41,8 +41,38 @@ def test_analyze_player_image_rejection_landscape(mock_genai_client, mocker):
 
     result = ai_services.analyze_player_image("fake.jpg", "Jeter", "key")
     
-    assert result["priority"] == 0
-    assert "REJECTED due to landscape" in result["reasoning"]
+    assert result["priority"] == 3
+    # Reasoning should explain it was demoted
+    assert "Priority 3" in result["reasoning"]
+
+def test_analyze_player_image_landscape_with_crop(mock_genai_client, mocker):
+    mocker.patch("ai_services.Image.open")
+    
+    # Gemini returns priority 1, is landscape, but provides a crop_box
+    mock_response = MagicMock()
+    mock_response.text = json.dumps({
+        "is_yankee_uniform": True,
+        "is_official_uniform": True,
+        "is_baseball_card": True,
+        "is_front_of_card": True,
+        "is_rectangular": True,
+        "is_clean_scan": True,
+        "is_in_holder": False,
+        "is_portrait": False, # Landscape
+        "crop_box": [100, 100, 900, 900], # Valid crop box
+        "is_single_player": True,
+        "has_transient_text": False,
+        "priority_level": 1,
+        "confidence": "high",
+        "reasoning": "Landscape but can be cropped."
+    })
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake.jpg", "Jeter", "key")
+    
+    # Should NOT be priority 0
+    assert result["priority"] == 1
+    assert result["crop_box"] == [100, 100, 900, 900]
 
 def test_analyze_player_image_rejection_multiple_players(mock_genai_client, mocker):
     mocker.patch("ai_services.Image.open")

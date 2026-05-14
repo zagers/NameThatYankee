@@ -362,7 +362,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     **CRITICAL REJECTION CRITERIA:**
     1. **Orientation:** If the image is in landscape orientation (width > height), you MUST determine if a clear, portrait-oriented baseball card or player is present that can be cropped out. If a crop is possible, provide the `crop_box` and continue. If the image is landscape and NO portrait-oriented player/card can be cropped, REJECT (Priority 0).
     2. **Transient/Event Text:** REJECT (Priority 0) any image that contains "point-in-time" overlays (e.g., "HE'S BACK", "SIGNED") or promotional event text (e.g., "FANATICS FEST", "NATIONAL CONVENTION", "SPECIAL EDITION").
-    3. **Autographs:** REJECT (Priority 0) any image that contains a hand-written or printed autograph (player signature) on the card or photo. Printed signatures that are part of the original card's factory design (common on vintage cards) are ACCEPTABLE if no cleaner version is available. Only REJECT if the signature is hand-written or an intrusive modern overlay.
+    3. **Autographs:** REJECT (Priority 0) only if the image contains a HAND-WRITTEN signature or an intrusive modern overlay. **NOTE:** Printed signatures that are part of the original card's factory design (common on vintage cards) are **NOT** considered autographs for this check and should be **ACCEPTED**. If it's a printed factory signature, set `is_autographed: false`.
     4. **Multi-Player/Collages:** REJECT (Priority 0) any image that shows more than one baseball card or more than one primary player.
     5. **Non-Rectangular / Perspective:** REJECT (Priority 0) any baseball card that is die-cut, non-rectangular, OR is a photo of a card sitting on a surface/table. The card MUST be the full frame of the image (no visible backgrounds, shadows, or angled perspective). Standard rectangular cards only.
     6. **Holders & Grading:** REJECT (Priority 0) any image that shows a card inside a plastic holder, protector, top-loader, or grading slab (e.g., PSA, Beckett/BGS, SGC).
@@ -438,21 +438,24 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             # we can potentially promote it even if it's not a clean scan or is landscape.
             can_be_fixed_by_crop = crop_box and is_single_player and not is_in_holder and not is_autographed and not has_transient_text
             
-            # Strict Enforcement of Rejection Criteria
-            if (not is_portrait and not can_be_fixed_by_crop) or not is_single_player or not is_rectangular or (not is_clean_scan and not can_be_fixed_by_crop) or is_in_holder or is_autographed or not is_front_of_card or not is_official_uniform or has_transient_text:
+            # Final Override Logic: If the AI sets Priority 0, we respect it.
+            # If the AI sets Priority 1/2/3, we do a sanity check on critical "unfixable" rejections.
+            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player
+            
+            if unfixable_rejection:
                 priority = 0
                 reasons = []
-                if not is_portrait and not can_be_fixed_by_crop: reasons.append("landscape")
-                if not is_single_player: reasons.append("multiple players/collage")
-                if not is_rectangular: reasons.append("non-rectangular/perspective")
-                if not is_clean_scan and not can_be_fixed_by_crop: reasons.append("not a clean scan")
                 if is_in_holder: reasons.append("in holder/slab")
                 if is_autographed: reasons.append("autographed")
-                if not is_front_of_card: reasons.append("card back")
-                if not is_official_uniform: reasons.append("unofficial uniform")
                 if has_transient_text: reasons.append("transient/event text")
+                if not is_single_player: reasons.append("multiple players/collage")
                 reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
-
+            elif priority in [1, 2, 3]:
+                # If it's landscape or not a clean scan, it MUST have a crop box to be Priority 1/2
+                if (not is_portrait or not is_clean_scan) and not can_be_fixed_by_crop:
+                    if priority in [1, 2]:
+                        priority = 3 # Demote if it's a good uniform match but messy frame
+                    
             # Handle Rejections First
             if priority == 0:
                 print(f"  ❌ Image REJECTED: {reasoning}")
