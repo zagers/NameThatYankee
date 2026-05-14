@@ -1,3 +1,5 @@
+# ABOUTME: Handles automated player image search using Selenium and various search engines.
+# ABOUTME: Prioritizes results based on domain and provides candidates for AI verification.
 """
 Player image search automation for puzzle workflow.
 
@@ -189,7 +191,19 @@ class PlayerImageSearch:
         user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         options.add_argument(f"user-agent={user_agent}")
         
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        # Use system chromium/chromedriver if available (especially for ARM/aarch64 support)
+        system_chromedriver = "/usr/bin/chromedriver"
+        system_chromium = "/usr/bin/chromium"
+        
+        if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
+            logger.info(f" using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
+            options.binary_location = system_chromium
+            service = ChromeService(executable_path=system_chromedriver)
+            driver = webdriver.Chrome(service=service, options=options)
+        else:
+            logger.info("Using WebDriver Manager to download ChromeDriver...")
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        
         candidates = []
         
         try:
@@ -245,24 +259,8 @@ class PlayerImageSearch:
                     if "google.com" not in img_url and "gstatic.com" not in img_url:
                         candidates.append({'direct_url': img_url, 'source_page': img_url})
 
-            # Deduplicate and Prioritize
-            seen = set()
-            unique_candidates = []
-            priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com']
-            
-            # First pass: Priority domains
-            for c in candidates:
-                url = c['direct_url']
-                if url not in seen and any(domain in url.lower() for domain in priority_domains):
-                    seen.add(url)
-                    unique_candidates.append(c)
-            
-            # Second pass: General results
-            for c in candidates:
-                url = c['direct_url']
-                if url not in seen:
-                    seen.add(url)
-                    unique_candidates.append(c)
+            # Use centralized prioritization and deduplication
+            unique_candidates = self._prioritize_candidates(candidates)
             
             logger.info(f"Total unique candidates identified: {len(unique_candidates)}")
             
@@ -281,6 +279,33 @@ class PlayerImageSearch:
             return []
         finally:
             driver.quit()
+
+    def _prioritize_candidates(self, candidates: List[dict]) -> List[dict]:
+        """Deduplicates and prioritizes image candidates based on domain source."""
+        seen = set()
+        unique_candidates = []
+        priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com']
+        
+        # First pass: Priority domains
+        for c in candidates:
+            url = c.get('direct_url')
+            if not url or url in seen:
+                continue
+                
+            if any(domain in url.lower() for domain in priority_domains):
+                seen.add(url)
+                unique_candidates.append(c)
+        
+        # Second pass: General results
+        for c in candidates:
+            url = c.get('direct_url')
+            if not url or url in seen:
+                continue
+                
+            seen.add(url)
+            unique_candidates.append(c)
+            
+        return unique_candidates
 
     def _try_bing_search(self, search_term: str, driver: webdriver.Chrome) -> List[dict]:
         """Fallback image search using Bing."""
@@ -310,14 +335,8 @@ class PlayerImageSearch:
                 except:
                     continue
             
-            # Deduplicate
-            seen = set()
-            unique_candidates = []
-            for c in candidates:
-                url = c['direct_url']
-                if url not in seen:
-                    seen.add(url)
-                    unique_candidates.append(c)
+            # Use centralized prioritization and deduplication
+            unique_candidates = self._prioritize_candidates(candidates)
             
             logger.info(f"Total unique candidates from Bing: {len(unique_candidates)}")
             return unique_candidates
