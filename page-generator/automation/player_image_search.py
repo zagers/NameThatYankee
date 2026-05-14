@@ -254,8 +254,8 @@ class PlayerImageSearch:
                     if "google.com" not in img_url and "gstatic.com" not in img_url:
                         candidates.append({'direct_url': img_url, 'source_page': img_url})
 
-            # Use centralized prioritization and deduplication
-            unique_candidates = self._prioritize_candidates(candidates)
+            # Use search engine order but remove duplicates
+            unique_candidates = self._deduplicate_candidates(candidates)
             
             logger.info(f"Total unique candidates identified: {len(unique_candidates)}")
             
@@ -275,23 +275,11 @@ class PlayerImageSearch:
         finally:
             driver.quit()
 
-    def _prioritize_candidates(self, candidates: List[dict]) -> List[dict]:
-        """Deduplicates and prioritizes image candidates based on domain source."""
+    def _deduplicate_candidates(self, candidates: List[dict]) -> List[dict]:
+        """Deduplicates image candidates while preserving search engine order."""
         seen = set()
         unique_candidates = []
-        priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com', 'tcdb.com', 'tradingcarddb.com']
         
-        # First pass: Priority domains
-        for c in candidates:
-            url = c.get('direct_url')
-            if not url or url in seen:
-                continue
-                
-            if any(domain in url.lower() for domain in priority_domains):
-                seen.add(url)
-                unique_candidates.append(c)
-        
-        # Second pass: General results
         for c in candidates:
             url = c.get('direct_url')
             if not url or url in seen:
@@ -332,8 +320,8 @@ class PlayerImageSearch:
                 except:
                     continue
             
-            # Use centralized prioritization and deduplication
-            unique_candidates = self._prioritize_candidates(candidates)
+            # Use search engine order but remove duplicates
+            unique_candidates = self._deduplicate_candidates(candidates)
             
             logger.info(f"Total unique candidates from Bing: {len(unique_candidates)}")
             return unique_candidates

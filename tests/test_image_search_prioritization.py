@@ -10,7 +10,7 @@ sys.path.append(os.path.join(os.getcwd(), "page-generator"))
 
 from automation.player_image_search import PlayerImageSearch
 
-def test_prioritization_logic():
+def test_deduplication_preserves_order():
     # Setup
     search = PlayerImageSearch(Path("images"))
     candidates = [
@@ -20,15 +20,13 @@ def test_prioritization_logic():
         {'direct_url': 'https://example.com/normal.jpg'} # Duplicate
     ]
     
-    # We expect a new method _prioritize_candidates to handle this
     # It should:
     # 1. Deduplicate by direct_url
-    # 2. Prioritize candidates from ebayimg.com
+    # 2. Preserve the original search order
     
-    # Check if method exists (it shouldn't yet, or shouldn't have the new logic)
-    prioritized = search._prioritize_candidates(candidates)
+    unique = search._deduplicate_candidates(candidates)
     
-    assert len(prioritized) == 3
-    assert prioritized[0]['direct_url'] == 'https://ebayimg.com/card.jpg'
-    assert prioritized[1]['direct_url'] == 'https://example.com/normal.jpg'
-    assert prioritized[2]['direct_url'] == 'https://another.com/img.png'
+    assert len(unique) == 3
+    assert unique[0]['direct_url'] == 'https://example.com/normal.jpg'
+    assert unique[1]['direct_url'] == 'https://ebayimg.com/card.jpg'
+    assert unique[2]['direct_url'] == 'https://another.com/img.png'
