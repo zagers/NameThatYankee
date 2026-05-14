@@ -224,9 +224,11 @@ class PlayerImageSearch:
                     href = el.get_attribute("href")
                     if href and "imgurl=" in href:
                         parsed = urllib.parse.urlparse(href)
-                        img_url = urllib.parse.parse_qs(parsed.query).get('imgurl', [None])[0]
+                        params = urllib.parse.parse_qs(parsed.query)
+                        img_url = params.get('imgurl', [None])[0]
+                        page_url = params.get('imgrefurl', [None])[0]
                         if img_url:
-                            candidates.append({'direct_url': img_url, 'source_page': img_url})
+                            candidates.append({'direct_url': img_url, 'source_page': page_url or img_url})
                     
                     # If it's an image, check for data-src (lazy load source)
                     data_src = el.get_attribute("data-src")
@@ -277,7 +279,7 @@ class PlayerImageSearch:
         """Deduplicates and prioritizes image candidates based on domain source."""
         seen = set()
         unique_candidates = []
-        priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com']
+        priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com', 'tcdb.com', 'tradingcarddb.com']
         
         # First pass: Priority domains
         for c in candidates:
@@ -323,8 +325,10 @@ class PlayerImageSearch:
                         import json
                         data = json.loads(m_data)
                         img_url = data.get('murl')
+                        page_url = data.get('purl')
                         if img_url:
-                            candidates.append({'direct_url': img_url, 'source_page': img_url})
+                            # Use page_url if available to enable Strategy B (scraping full scale)
+                            candidates.append({'direct_url': img_url, 'source_page': page_url or img_url})
                 except:
                     continue
             
@@ -344,7 +348,13 @@ class PlayerImageSearch:
         # Strategy A: Try direct download from imgurl
         try:
             logger.debug(f"  Attempting direct download: {candidate['direct_url'][:60]}...")
-            response = requests.get(candidate['direct_url'], headers=self.headers, timeout=10)
+            
+            # Add Referer to bypass hotlinking protections
+            headers = self.headers.copy()
+            if candidate.get('source_page'):
+                headers['Referer'] = candidate['source_page']
+                
+            response = requests.get(candidate['direct_url'], headers=headers, timeout=10)
             if response.status_code == 200 and len(response.content) > 5000: # Simple check for non-thumbnail
                 with open(temp_path, 'wb') as f:
                     f.write(response.content)
