@@ -94,13 +94,6 @@ class PlayerImageSearch:
                     logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 200x200. Skipping.")
                     temp_file.unlink(missing_ok=True)
                     continue
-
-                # Orientation check: Reject landscape (width > height)
-
-                if width > height:
-                    logger.info(f"  ❌ Image is landscape format ({width}x{height}). Skipping.")
-                    temp_file.unlink(missing_ok=True)
-                    continue
             else:
                 logger.info("  ❌ Could not determine image dimensions. Skipping.")
                 temp_file.unlink(missing_ok=True)

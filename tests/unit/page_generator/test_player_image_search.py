@@ -152,22 +152,26 @@ class TestPlayerImageSearch:
         assert not temp_file1.exists()
         assert not temp_file2.exists()
 
-    def test_orientation_rejection(self, player_search, temp_dir):
-        """Test that landscape images are rejected."""
+    def test_landscape_image_accepted_for_ai_eval(self, player_search, temp_dir):
+        """Test that landscape images are accepted for AI evaluation instead of being rejected."""
         test_img = temp_dir / "landscape.jpg"
         test_img.touch()
 
         with patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
              patch.object(player_search, '_download_full_size_image') as mock_download, \
-             patch.object(player_search.image_processor, 'get_image_info') as mock_info:
+             patch.object(player_search.image_processor, 'get_image_info') as mock_info, \
+             patch('ai_services.analyze_player_image') as mock_analyze:
             
             mock_google.return_value = [{'direct_url': 'url', 'source_page': 'page'}]
             mock_download.return_value = test_img
             # Landscape: width > height
             mock_info.return_value = {'width': 800, 'height': 600}
+            # Mock AI rejecting it eventually (but it should REACH the AI)
+            mock_analyze.return_value = {'priority': 4} # Rejected by AI
             
-            results = player_search.find_first_yankee_image("Test Player")
+            results = player_search.find_first_yankee_image("Test Player", api_key="fake")
             
-            # Results should be empty because candidate was skipped due to orientation
+            # Results should be empty because AI rejected it, but mock_analyze should have been called
             assert len(results) == 0
-            assert not test_img.exists() # Should be unlinked
+            assert mock_analyze.called
+            assert not test_img.exists() # Should be unlinked after rejection
