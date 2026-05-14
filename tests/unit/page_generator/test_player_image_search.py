@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# ABOUTME: Unit tests for the PlayerImageSearch class.
+# ABOUTME: Verifies image candidate extraction, prioritization, and orientation handling.
 """
 Tests for the PlayerImageSearch class in the automation module.
 """
