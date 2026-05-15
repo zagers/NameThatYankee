@@ -1,3 +1,5 @@
+# ABOUTME: Handles automated player image search using Selenium and various search engines.
+# ABOUTME: Prioritizes results based on domain and provides candidates for AI verification.
 """
 Player image search automation for puzzle workflow.
 
@@ -9,6 +11,7 @@ import os
 import re
 import urllib.parse
 import requests
+import json
 from pathlib import Path
 from PIL import Image
 from typing import List, Optional, Dict, Any
@@ -58,11 +61,17 @@ class PlayerImageSearch:
         3. Any image of the player
         """
         search_term = f"{player_name} yankees card"
-        logger.info(f"🚀 Searching Google Images for: {search_term}")
+        logger.info(f"🚀 Searching Bing Images for: {search_term}")
         
-        candidates = self._get_image_candidates_from_google(search_term)
+        # Switch to Bing as primary search engine
+        candidates = self._get_image_candidates_from_bing(search_term)
+        
         if not candidates:
-            logger.warning("No image candidates found in Google Search.")
+            logger.info("⚠️ No candidates from Bing. Attempting fallback to Google...")
+            candidates = self._get_image_candidates_from_google(search_term)
+
+        if not candidates:
+            logger.warning("No image candidates found in any search engine.")
             return []
 
         logger.info(f"Total candidates available from search: {len(candidates)}")
@@ -90,13 +99,6 @@ class PlayerImageSearch:
                 width, height = img_info.get('width', 0), img_info.get('height', 0)
                 if width < 200 or height < 200:
                     logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 200x200. Skipping.")
-                    temp_file.unlink(missing_ok=True)
-                    continue
-
-                # Orientation check: Reject landscape (width > height)
-
-                if width > height:
-                    logger.info(f"  ❌ Image is landscape format ({width}x{height}). Skipping.")
                     temp_file.unlink(missing_ok=True)
                     continue
             else:
@@ -189,7 +191,19 @@ class PlayerImageSearch:
         user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
         options.add_argument(f"user-agent={user_agent}")
         
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        # Use system chromium/chromedriver if available (especially for ARM/aarch64 support)
+        system_chromedriver = "/usr/bin/chromedriver"
+        system_chromium = "/usr/bin/chromium"
+        
+        if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
+            logger.info(f" using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
+            options.binary_location = system_chromium
+            service = ChromeService(executable_path=system_chromedriver)
+            driver = webdriver.Chrome(service=service, options=options)
+        else:
+            logger.info("Using WebDriver Manager to download ChromeDriver...")
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        
         candidates = []
         
         try:
@@ -217,9 +231,11 @@ class PlayerImageSearch:
                     href = el.get_attribute("href")
                     if href and "imgurl=" in href:
                         parsed = urllib.parse.urlparse(href)
-                        img_url = urllib.parse.parse_qs(parsed.query).get('imgurl', [None])[0]
+                        params = urllib.parse.parse_qs(parsed.query)
+                        img_url = params.get('imgurl', [None])[0]
+                        page_url = params.get('imgrefurl', [None])[0]
                         if img_url:
-                            candidates.append({'direct_url': img_url, 'source_page': img_url})
+                            candidates.append({'direct_url': img_url, 'source_page': page_url or img_url})
                     
                     # If it's an image, check for data-src (lazy load source)
                     data_src = el.get_attribute("data-src")
@@ -245,35 +261,11 @@ class PlayerImageSearch:
                     if "google.com" not in img_url and "gstatic.com" not in img_url:
                         candidates.append({'direct_url': img_url, 'source_page': img_url})
 
-            # Deduplicate and Prioritize
-            seen = set()
-            unique_candidates = []
-            priority_domains = ['showzone.io', 'showzone.gg', 'cards.theshow.com', 'topps.com', 'ebayimg.com', 'ebay.com']
+            # Use search engine order but remove duplicates
+            unique_candidates = self._deduplicate_candidates(candidates)
             
-            # First pass: Priority domains
-            for c in candidates:
-                url = c['direct_url']
-                if url not in seen and any(domain in url.lower() for domain in priority_domains):
-                    seen.add(url)
-                    unique_candidates.append(c)
+            logger.info(f"Total unique candidates identified from Google: {len(unique_candidates)}")
             
-            # Second pass: General results
-            for c in candidates:
-                url = c['direct_url']
-                if url not in seen:
-                    seen.add(url)
-                    unique_candidates.append(c)
-            
-            logger.info(f"Total unique candidates identified: {len(unique_candidates)}")
-            
-            # Fallback to Bing if Google returns nothing (often due to bot detection)
-            if not unique_candidates:
-                logger.info("⚠️ No candidates from Google. Attempting fallback to Bing...")
-                unique_candidates = self._try_bing_search(search_term, driver)
-
-            if unique_candidates:
-                logger.info(f"Top candidate: {unique_candidates[0]['direct_url'][:80]}...")
-                
             return unique_candidates
             
         except Exception as e:
@@ -282,8 +274,25 @@ class PlayerImageSearch:
         finally:
             driver.quit()
 
-    def _try_bing_search(self, search_term: str, driver: webdriver.Chrome) -> List[dict]:
-        """Fallback image search using Bing."""
+    def _get_image_candidates_from_bing(self, search_term: str) -> List[dict]:
+        """Uses Selenium to extract image candidate URLs from Bing."""
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1920,1080")
+        
+        # Use system chromium/chromedriver if available
+        system_chromedriver = "/usr/bin/chromedriver"
+        system_chromium = "/usr/bin/chromium"
+        
+        if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
+            options.binary_location = system_chromium
+            service = ChromeService(executable_path=system_chromedriver)
+            driver = webdriver.Chrome(service=service, options=options)
+        else:
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+            
         candidates = []
         try:
             encoded_query = urllib.parse.quote_plus(search_term)
@@ -302,28 +311,39 @@ class PlayerImageSearch:
                 try:
                     m_data = el.get_attribute("m")
                     if m_data:
-                        import json
                         data = json.loads(m_data)
                         img_url = data.get('murl')
+                        page_url = data.get('purl')
                         if img_url:
-                            candidates.append({'direct_url': img_url, 'source_page': img_url})
+                            # Use page_url if available to enable Strategy B (scraping full scale)
+                            candidates.append({'direct_url': img_url, 'source_page': page_url or img_url})
                 except:
                     continue
             
-            # Deduplicate
-            seen = set()
-            unique_candidates = []
-            for c in candidates:
-                url = c['direct_url']
-                if url not in seen:
-                    seen.add(url)
-                    unique_candidates.append(c)
+            # Use search engine order but remove duplicates
+            unique_candidates = self._deduplicate_candidates(candidates)
             
             logger.info(f"Total unique candidates from Bing: {len(unique_candidates)}")
             return unique_candidates
         except Exception as e:
             logger.error(f"Error extracting Bing Image results: {e}")
             return []
+        finally:
+            driver.quit()
+    def _deduplicate_candidates(self, candidates: List[dict]) -> List[dict]:
+        """Deduplicates image candidates while preserving search engine order."""
+        seen = set()
+        unique_candidates = []
+        
+        for c in candidates:
+            url = c.get('direct_url')
+            if not url or url in seen:
+                continue
+                
+            seen.add(url)
+            unique_candidates.append(c)
+            
+        return unique_candidates
 
     def _download_full_size_image(self, candidate: dict) -> Optional[Path]:
         """Downloads the full-size image, prioritizing the direct URL but falling back to page scraping."""
@@ -332,7 +352,13 @@ class PlayerImageSearch:
         # Strategy A: Try direct download from imgurl
         try:
             logger.debug(f"  Attempting direct download: {candidate['direct_url'][:60]}...")
-            response = requests.get(candidate['direct_url'], headers=self.headers, timeout=10)
+            
+            # Add Referer to bypass hotlinking protections
+            headers = self.headers.copy()
+            if candidate.get('source_page'):
+                headers['Referer'] = candidate['source_page']
+                
+            response = requests.get(candidate['direct_url'], headers=headers, timeout=10)
             if response.status_code == 200 and len(response.content) > 5000: # Simple check for non-thumbnail
                 with open(temp_path, 'wb') as f:
                     f.write(response.content)
@@ -362,37 +388,44 @@ class PlayerImageSearch:
             response = requests.get(page_url, headers=self.headers, timeout=10)
             from bs4 import BeautifulSoup
             soup = BeautifulSoup(response.content, 'html.parser')
-            
+
             # Common selectors for main high-res images on collector/sports sites
             selectors = [
-                'meta[property="og:image"]', 
+                'meta[property="og:image"]',
                 'link[rel="image_src"]',
                 '.main-image img', '.primary-image img',
                 'img.player-card', 'img.card-image',
-                '#main-image', '[data-main-image] img'
+                '#main-image', '[data-main-image] img',
+                '.col-md-12 .img-thumbnail', # TCDB specific
+                '.card-photo img'
             ]
-            
+
             for selector in selectors:
                 found = soup.select_one(selector)
                 if found:
                     url = found.get('src') or found.get('content') or found.get('href')
                     if url:
                         return urllib.parse.urljoin(page_url, url)
-            
-            # Fallback: Find the largest image on the page
+
+            # Fallback: Find the largest image on the page, prioritizing high-res card patterns
             images = soup.find_all('img')
             if images:
-                # Prioritize images with 'player' or 'card' in their name/alt
+                # First pass: Look for high-res card patterns (like TCDB's SetID-NumFr.jpg)
+                for img in images:
+                    src = img.get('src', '')
+                    if 'Fr.jpg' in src or 'Fr.webp' in src or 'front' in src.lower():
+                        return urllib.parse.urljoin(page_url, src)
+
+                # Second pass: Prioritize images with 'player' or 'card' in their name/alt
                 for img in images:
                     src = img.get('src')
                     alt = img.get('alt', '').lower()
                     if src and ('card' in alt or 'player' in alt or 'yankees' in alt):
                         return urllib.parse.urljoin(page_url, src)
-            
+
             return None
         except Exception:
             return None
-
     def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> List[Path]:
         """Complete workflow orchestrator for finding and saving multiple player image candidates."""
         staging_dir = self.images_dir.parent / "temp_player_images"

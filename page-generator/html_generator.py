@@ -80,7 +80,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
             for team in item['teams']:
                 all_teams.add(team)
         all_years = {item['year'] for item in yearly_war_data}
-        search_data = {'teams': list(all_teams), 'years': list(all_years)}
+        search_data = {'teams': list(all_teams), 'years': sorted(list(all_years))}
         search_data_html = f'<div id="search-data" style="display:none;">{json.dumps(search_data)}</div>'
 
         quiz_data = {"answer": name, "nickname": nickname, "hints": facts}

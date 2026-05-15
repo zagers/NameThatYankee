@@ -3,6 +3,7 @@
 from bs4 import BeautifulSoup, Comment
 import time
 import urllib.parse
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
@@ -149,9 +150,23 @@ def search_and_scrape_player(player_name, automated=False):
     print(f"  (Using cleaned name for search: '{cleaned_name}')")
     
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.page_load_strategy = 'eager'
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+    
+    # Use system chromium/chromedriver if available (especially for ARM/aarch64 support)
+    system_chromedriver = "/usr/bin/chromedriver"
+    system_chromium = "/usr/bin/chromium"
+    
+    if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
+        print(f"  Using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
+        options.binary_location = system_chromium
+        service = ChromeService(executable_path=system_chromedriver)
+        driver = webdriver.Chrome(service=service, options=options)
+    else:
+        print("  Using WebDriver Manager to download ChromeDriver...")
+        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
     try:
         search_query = urllib.parse.quote_plus(cleaned_name)
@@ -184,12 +199,22 @@ def search_and_scrape_player(player_name, automated=False):
                 return None
             
             if len(major_league_players) == 1 or automated:
+                selected_index = 0
                 if len(major_league_players) > 1 and automated:
-                    print("  ⚠️ Multiple players found. Automatically selecting the first result.")
+                    print(f"  ⚠️ Multiple players found. Searching for best match for '{cleaned_name}'...")
+                    # Try to find a better match than just the first result
+                    for i, item in enumerate(major_league_players):
+                        name_text = item.get_text().lower()
+                        if cleaned_name.lower() in name_text:
+                            selected_index = i
+                            print(f"  ✅ Found better match at index {i+1}: {item.find('div', class_='search-item-name').get_text(strip=True)}")
+                            break
+                    if selected_index == 0:
+                        print("  ⚠️ No perfect name match found. Defaulting to the first result.")
                 else:
                     print("  Found a single Major League player match.")
                 
-                link = major_league_players[0].find('a')
+                link = major_league_players[selected_index].find('a')
                 player_url_to_scrape = f"https://www.baseball-reference.com{link['href']}"
             else:
                 print("\n  Multiple players found. Please choose one:")
@@ -242,9 +267,23 @@ def generate_master_player_list(project_dir: Path):
     base_url = "https://www.baseball-reference.com/players/"
     
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.page_load_strategy = 'eager'
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+    
+    # Use system chromium/chromedriver if available (especially for ARM/aarch64 support)
+    system_chromedriver = "/usr/bin/chromedriver"
+    system_chromium = "/usr/bin/chromium"
+    
+    if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
+        print(f"  Using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
+        options.binary_location = system_chromium
+        service = ChromeService(executable_path=system_chromedriver)
+        driver = webdriver.Chrome(service=service, options=options)
+    else:
+        print("  Using WebDriver Manager to download ChromeDriver...")
+        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
     try:
         total_players_found = 0

@@ -214,8 +214,8 @@ To use the puzzle generation tools:
 ### Quiz Refactor (Part 2) (COMPLETED 2026-04-24)
 *   **Quiz Refactor:** Split `quiz.js` into `Orchestrator`, `UI`, and `Share` modules using a state-driven architecture.
 
-### Gemini Model Transition (PENDING)
-*   **Model Update:** Update `page-generator/ai_services.py` to use `gemini-3.1-flash-lite` (GA) instead of the preview model identifier before the May 25, 2026 cutoff.
+### Gemini Model Transition (COMPLETED 2026-05-14)
+*   **Model Update:** Updated `page-generator/ai_services.py` to use `gemini-3.1-flash-lite` (GA) instead of the preview model identifier.
 
 ### SEO Discovery Engine (PENDING)
 *   **Structured Data & Static Pages:** Re-implement JSON-LD (VideoGame/Person) and indexable quiz pages. **NOTE:** The first attempt (2026-05-11) was rolled back due to production routing issues on GitHub Pages. Future implementation must resolve clean URL mapping or use explicit `.html` paths for indexability.
