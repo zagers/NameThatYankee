@@ -132,6 +132,72 @@ def parse_yearly_war(soup):
 
     return sorted(yearly_data, key=lambda x: x['year'])
 
+def parse_transactions(soup):
+    """Parses the transactions section, handling comments and different possible IDs."""
+    transactions = []
+    
+    # Possible IDs for transactions
+    possible_ids = ['all_transactions', 'all_transactions_other', 'div_transactions_other']
+    
+    trans_div = None
+    for tid in possible_ids:
+        trans_div = soup.find('div', id=tid)
+        if trans_div: break
+        
+    if not trans_div:
+        # Check in comments
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            for tid in possible_ids:
+                if f'id="{tid}"' in comment:
+                    trans_soup = BeautifulSoup(comment, 'html.parser')
+                    trans_div = trans_soup.find('div', id=tid)
+                    if trans_div: break
+            if trans_div: break
+                
+    if trans_div:
+        # Transactions are usually in <p> tags
+        for p in trans_div.find_all('p'):
+            # Skip the 'note' paragraph
+            if 'class' in p.attrs and 'note' in p['class']:
+                continue
+            text = p.get_text(strip=True)
+            if text:
+                transactions.append(text)
+                
+    return transactions
+
+def parse_awards(soup):
+    """Parses the awards/honors from the bling or extra_stats div."""
+    awards = []
+    
+    # Possible IDs for awards
+    possible_ids = ['bling', 'extra_stats']
+    
+    awards_div = None
+    for aid in possible_ids:
+        awards_div = soup.find(['ul', 'div'], id=aid)
+        if awards_div: break
+        
+    if not awards_div:
+        # Check in comments
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            for aid in possible_ids:
+                if f'id="{aid}"' in comment:
+                    awards_soup = BeautifulSoup(comment, 'html.parser')
+                    awards_div = awards_soup.find(['ul', 'div'], id=aid)
+                    if awards_div: break
+            if awards_div: break
+            
+    if awards_div:
+        for li in awards_div.find_all('li'):
+            text = li.get_text(strip=True)
+            if text:
+                awards.append(text)
+                
+    return awards
+
 def search_and_scrape_player(player_name, automated=False):
     """
     Opens a browser, finds a player's page, and scrapes both career totals and yearly WAR.
@@ -247,10 +313,17 @@ def search_and_scrape_player(player_name, automated=False):
         
         career_totals = parse_career_totals(soup)
         yearly_war = parse_yearly_war(soup)
+        transactions = parse_transactions(soup)
+        awards = parse_awards(soup)
 
         if career_totals and yearly_war:
             print("  ✅ All stats scraped successfully.")
-            return {"career_totals": career_totals, "yearly_war": yearly_war}
+            return {
+                "career_totals": career_totals, 
+                "yearly_war": yearly_war,
+                "transactions": transactions,
+                "awards": awards
+            }
         else:
             print("  ❌ Failed to scrape all required data.")
             return None
