@@ -11,6 +11,7 @@ import os
 import re
 import urllib.parse
 import requests
+import json
 from pathlib import Path
 from PIL import Image
 from typing import List, Optional, Dict, Any
@@ -310,7 +311,6 @@ class PlayerImageSearch:
                 try:
                     m_data = el.get_attribute("m")
                     if m_data:
-                        import json
                         data = json.loads(m_data)
                         img_url = data.get('murl')
                         page_url = data.get('purl')
@@ -344,45 +344,6 @@ class PlayerImageSearch:
             unique_candidates.append(c)
             
         return unique_candidates
-
-    def _try_bing_search(self, search_term: str, driver: webdriver.Chrome) -> List[dict]:
-        """Fallback image search using Bing."""
-        candidates = []
-        try:
-            encoded_query = urllib.parse.quote_plus(search_term)
-            search_url = f"https://www.bing.com/images/search?q={encoded_query}"
-            logger.info(f"🔍 Searching Bing Images: {search_url}")
-            driver.get(search_url)
-            time.sleep(5)
-            
-            # Scroll to trigger lazy loading
-            driver.execute_script("window.scrollBy(0, 1000);")
-            time.sleep(2)
-            
-            # Bing often uses 'm' attribute in 'iusc' class for image metadata
-            elements = driver.find_elements(By.CSS_SELECTOR, "a.iusc")
-            for el in elements:
-                try:
-                    m_data = el.get_attribute("m")
-                    if m_data:
-                        import json
-                        data = json.loads(m_data)
-                        img_url = data.get('murl')
-                        page_url = data.get('purl')
-                        if img_url:
-                            # Use page_url if available to enable Strategy B (scraping full scale)
-                            candidates.append({'direct_url': img_url, 'source_page': page_url or img_url})
-                except:
-                    continue
-            
-            # Use search engine order but remove duplicates
-            unique_candidates = self._deduplicate_candidates(candidates)
-            
-            logger.info(f"Total unique candidates from Bing: {len(unique_candidates)}")
-            return unique_candidates
-        except Exception as e:
-            logger.error(f"Error extracting Bing Image results: {e}")
-            return []
 
     def _download_full_size_image(self, candidate: dict) -> Optional[Path]:
         """Downloads the full-size image, prioritizing the direct URL but falling back to page scraping."""
