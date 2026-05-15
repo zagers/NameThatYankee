@@ -18,6 +18,8 @@ import ai_services
 import scraper
 import html_generator
 import user_interaction
+import fact_verifier
+import grounded_ai
 
 # Import automation modules
 try:
@@ -643,29 +645,54 @@ Notes:
         dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
         formatted_date = dt_obj.strftime("%B %d, %Y")
         
-        try:
             player_info = ai_services.get_player_info_from_image(clue_path, api_key)
             if player_info:
                 scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated)
+                sabr_bio = scraper.get_sabr_bio(player_info['name'])
+                
                 if scraped_data:
                     player_info['career_totals'] = scraped_data['career_totals']
                     player_info['yearly_war'] = scraped_data['yearly_war']
+
+                player_dossier = {
+                    "name": player_info['name'],
+                    "career_totals": scraped_data.get('career_totals', {}) if scraped_data else {},
+                    "yearly_war": scraped_data.get('yearly_war', []) if scraped_data else [],
+                    "transactions": scraped_data.get('transactions', []) if scraped_data else [],
+                    "awards": scraped_data.get('awards', []) if scraped_data else [],
+                    "bio": sabr_bio
+                }
 
                 # Determine how much Gemini usage to apply based on mode
                 if id_only_mode:
                     # No Gemini text calls; leave facts and follow-up empty
                     player_info['facts'] = []
                     player_info['followup_qa'] = []
-                elif facts_only_mode:
-                    # Only fetch facts via Gemini, skip follow-up Q&A
-                    facts = ai_services.get_facts_from_gemini(player_info['name'], api_key)
-                    player_info['facts'] = facts
-                    player_info['followup_qa'] = []
                 else:
-                    # Full mode: single call to get both facts and follow-up Q&A
-                    combined = ai_services.get_facts_and_followup_from_gemini(player_info['name'], api_key)
-                    player_info['facts'] = combined.get('facts', [])
-                    player_info['followup_qa'] = combined.get('qa', [])
+                    max_retries = 3
+                    generation_success = False
+                    
+                    for attempt in range(max_retries):
+                        print(f"  🤖 Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
+                        result = grounded_ai.generate_grounded_trivia(player_dossier, api_key)
+                        
+                        print(f"  🔍 Verifying claims...")
+                        if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                            print("  ✅ All claims verified successfully.")
+                            player_info['facts'] = result.get("facts", [])
+                            if not facts_only_mode:
+                                player_info['followup_qa'] = result.get("qa", [])
+                            else:
+                                player_info['followup_qa'] = []
+                            generation_success = True
+                            break
+                        else:
+                            print(f"  ❌ Verification failed on attempt {attempt + 1}.")
+                    
+                    if not generation_success:
+                        print("  ⚠️ All generation attempts failed verification. Using basic fallback.")
+                        player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                        player_info['followup_qa'] = []
 
                 verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
                 html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)

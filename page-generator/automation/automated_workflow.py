@@ -17,6 +17,8 @@ import ai_services
 import scraper
 import html_generator
 import user_interaction
+import fact_verifier
+import grounded_ai
 
 # Import automation modules
 from .image_processor import ImageProcessor
@@ -90,6 +92,8 @@ class AutomatedWorkflow:
             if scraped_data:
                 player_info['career_totals'] = scraped_data['career_totals']
                 player_info['yearly_war'] = scraped_data['yearly_war']
+                # Store enhanced data for grounded AI
+                player_info['scraped_data'] = scraped_data
             
             # Step 4: Generate AI content (facts and follow-up)
             logger.info("Step 4: Generating AI content...")
@@ -155,7 +159,7 @@ class AutomatedWorkflow:
             return None
     
     def _scrape_player_stats(self, player_name: str) -> Optional[Dict[str, Any]]:
-        """Scrape player statistics from Baseball-Reference."""
+        """Scrape player statistics and biography."""
         try:
             # Skip scraping if player is "Unknown"
             if player_name == 'Unknown':
@@ -163,8 +167,11 @@ class AutomatedWorkflow:
                 return None
                 
             scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
+            sabr_bio = scraper.get_sabr_bio(player_name)
+            
             if scraped_data:
                 logger.info(f"Successfully scraped stats for {player_name}")
+                scraped_data['bio'] = sabr_bio
                 return scraped_data
             else:
                 logger.warning(f"Could not scrape stats for {player_name}")
@@ -174,7 +181,7 @@ class AutomatedWorkflow:
             return None
     
     def _generate_ai_content(self, player_info: Dict[str, Any]) -> None:
-        """Generate AI content (facts and follow-up Q&A)."""
+        """Generate AI content using the grounded pipeline."""
         try:
             # Skip AI content generation for "Unknown" player
             if player_info.get('name') == 'Unknown':
@@ -182,14 +189,39 @@ class AutomatedWorkflow:
                 player_info['facts'] = []
                 player_info['followup_qa'] = []
                 return
+            
+            scraped = player_info.get('scraped_data', {})
+            player_dossier = {
+                "name": player_info['name'],
+                "career_totals": scraped.get('career_totals', {}),
+                "yearly_war": scraped.get('yearly_war', []),
+                "transactions": scraped.get('transactions', []),
+                "awards": scraped.get('awards', []),
+                "bio": scraped.get('bio', '')
+            }
+
+            max_retries = 3
+            generation_success = False
+            
+            for attempt in range(max_retries):
+                logger.info(f"Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
+                result = grounded_ai.generate_grounded_trivia(player_dossier, self.api_key)
                 
-            # Use the single-call method for efficiency
-            combined = ai_services.get_facts_and_followup_from_gemini(
-                player_info['name'], self.api_key
-            )
-            player_info['facts'] = combined.get('facts', [])
-            player_info['followup_qa'] = combined.get('qa', [])
-            logger.info(f"Generated AI content for {player_info['name']}")
+                logger.info("Verifying claims...")
+                if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                    logger.info("✅ All claims verified successfully.")
+                    player_info['facts'] = result.get("facts", [])
+                    player_info['followup_qa'] = result.get("qa", [])
+                    generation_success = True
+                    break
+                else:
+                    logger.warning(f"❌ Verification failed on attempt {attempt + 1}.")
+            
+            if not generation_success:
+                logger.error("All generation attempts failed verification. Using basic fallback.")
+                player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                player_info['followup_qa'] = []
+
         except Exception as e:
             logger.error(f"Error generating AI content: {e}")
             # Set empty lists as fallback
