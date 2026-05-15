@@ -322,3 +322,52 @@ def generate_master_player_list(project_dir: Path):
 
     finally:
         driver.quit()
+
+def get_sabr_bio(player_name):
+    """
+    Scrapes the SABR biography for a given player name.
+    """
+    import requests
+    from bs4 import BeautifulSoup
+    import urllib.parse
+    
+    print(f"⚾ Scraping SABR bio for {player_name}...")
+    
+    # Simple search or direct link guess
+    search_query = urllib.parse.quote_plus(player_name)
+    search_url = f"https://sabr.org/?s={search_query}&post_type=bioproj"
+    
+    try:
+        response = requests.get(search_url, timeout=10)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Find first result - SABR uses .post-title or h3.entry-title
+        link = soup.select_one('.post-title a, .entry-title a')
+        if not link:
+            print(f"  ❌ No SABR bio found for {player_name}.")
+            return ""
+        
+        bio_url = link['href']
+        print(f"  Found bio URL: {bio_url}")
+        
+        bio_response = requests.get(bio_url, timeout=10)
+        bio_response.raise_for_status()
+        bio_soup = BeautifulSoup(bio_response.text, 'html.parser')
+        
+        # SABR uses .entry-content or Toolset blocks (.tb-field)
+        content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
+        if content:
+            # Clean up the text - remove extra whitespace and script/style tags
+            for script in content(["script", "style"]):
+                script.decompose()
+            text = content.get_text(separator=' ', strip=True)
+            print(f"  ✅ Successfully scraped SABR bio ({len(text)} chars).")
+            return text
+        else:
+            print(f"  ❌ Could not find .entry-content in {bio_url}")
+            return ""
+            
+    except Exception as e:
+        print(f"  ❌ Error scraping SABR bio: {e}")
+        return ""
