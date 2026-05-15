@@ -64,13 +64,15 @@ class TestPlayerImageSearch:
         test_img = temp_dir / "test.jpg"
         test_img.touch()
 
-        with patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
+        with patch.object(player_search, '_get_image_candidates_from_bing') as mock_bing, \
+             patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
              patch.object(player_search, '_download_full_size_image') as mock_download, \
              patch.object(player_search.image_processor, 'get_image_info') as mock_info, \
              patch('ai_services.analyze_player_image') as mock_analyze:
             
             # Mock candidate
-            mock_google.return_value = [{'direct_url': 'http://ex.com/1.jpg', 'source_page': 'http://ex.com/1'}]
+            mock_bing.return_value = [{'direct_url': 'http://ex.com/1.jpg', 'source_page': 'http://ex.com/1'}]
+            mock_google.return_value = []
             mock_download.return_value = test_img
             mock_info.return_value = {'width': 400, 'height': 600}
             
@@ -85,13 +87,15 @@ class TestPlayerImageSearch:
 
     def test_find_first_yankee_image_collects_three(self, player_search, temp_dir):
         """Test that it collects up to 3 high-priority matches."""
-        with patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
+        with patch.object(player_search, '_get_image_candidates_from_bing') as mock_bing, \
+             patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
              patch.object(player_search, '_download_full_size_image') as mock_download, \
              patch.object(player_search.image_processor, 'get_image_info') as mock_info, \
              patch('ai_services.analyze_player_image') as mock_analyze:
             
             # 5 candidates
-            mock_google.return_value = [{'direct_url': f'http://ex.com/{i}.jpg', 'source_page': 'url'} for i in range(5)]
+            mock_bing.return_value = [{'direct_url': f'http://ex.com/{i}.jpg', 'source_page': 'url'} for i in range(5)]
+            mock_google.return_value = []
             
             # Mock files
             files = []
@@ -159,12 +163,14 @@ class TestPlayerImageSearch:
         test_img = temp_dir / "landscape.jpg"
         test_img.touch()
 
-        with patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
+        with patch.object(player_search, '_get_image_candidates_from_bing') as mock_bing, \
+             patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
              patch.object(player_search, '_download_full_size_image') as mock_download, \
              patch.object(player_search.image_processor, 'get_image_info') as mock_info, \
              patch('ai_services.analyze_player_image') as mock_analyze:
             
-            mock_google.return_value = [{'direct_url': 'url', 'source_page': 'page'}]
+            mock_bing.return_value = [{'direct_url': 'url', 'source_page': 'page'}]
+            mock_google.return_value = []
             mock_download.return_value = test_img
             # Landscape: width > height
             mock_info.return_value = {'width': 800, 'height': 600}

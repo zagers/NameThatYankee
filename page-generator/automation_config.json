@@ -1,0 +1,31 @@
+{
+  "image_processing": {
+    "quality": 85,
+    "max_width": 800,
+    "max_height": 600,
+    "min_width": 200,
+    "min_height": 200
+  },
+  "player_image_search": {
+    "max_results": 10,
+    "timeout_seconds": 30,
+    "prefer_baseball_cards": true,
+    "fallback_enabled": true
+  },
+  "git_integration": {
+    "auto_commit": false,
+    "auto_push": false,
+    "remote": "origin",
+    "branch": "master"
+  },
+  "workflow": {
+    "auto_approve_player": true,
+    "skip_manual_review": true,
+    "cleanup_temp_files": true,
+    "batch_processing_enabled": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "automation.log"
+  }
+}

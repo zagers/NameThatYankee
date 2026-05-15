@@ -60,11 +60,17 @@ class PlayerImageSearch:
         3. Any image of the player
         """
         search_term = f"{player_name} yankees card"
-        logger.info(f"🚀 Searching Google Images for: {search_term}")
+        logger.info(f"🚀 Searching Bing Images for: {search_term}")
         
-        candidates = self._get_image_candidates_from_google(search_term)
+        # Switch to Bing as primary search engine
+        candidates = self._get_image_candidates_from_bing(search_term)
+        
         if not candidates:
-            logger.warning("No image candidates found in Google Search.")
+            logger.info("⚠️ No candidates from Bing. Attempting fallback to Google...")
+            candidates = self._get_image_candidates_from_google(search_term)
+
+        if not candidates:
+            logger.warning("No image candidates found in any search engine.")
             return []
 
         logger.info(f"Total candidates available from search: {len(candidates)}")
@@ -257,16 +263,8 @@ class PlayerImageSearch:
             # Use search engine order but remove duplicates
             unique_candidates = self._deduplicate_candidates(candidates)
             
-            logger.info(f"Total unique candidates identified: {len(unique_candidates)}")
+            logger.info(f"Total unique candidates identified from Google: {len(unique_candidates)}")
             
-            # Fallback to Bing if Google returns nothing (often due to bot detection)
-            if not unique_candidates:
-                logger.info("⚠️ No candidates from Google. Attempting fallback to Bing...")
-                unique_candidates = self._try_bing_search(search_term, driver)
-
-            if unique_candidates:
-                logger.info(f"Top candidate: {unique_candidates[0]['direct_url'][:80]}...")
-                
             return unique_candidates
             
         except Exception as e:
@@ -275,6 +273,63 @@ class PlayerImageSearch:
         finally:
             driver.quit()
 
+    def _get_image_candidates_from_bing(self, search_term: str) -> List[dict]:
+        """Uses Selenium to extract image candidate URLs from Bing."""
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1920,1080")
+        
+        # Use system chromium/chromedriver if available
+        system_chromedriver = "/usr/bin/chromedriver"
+        system_chromium = "/usr/bin/chromium"
+        
+        if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
+            options.binary_location = system_chromium
+            service = ChromeService(executable_path=system_chromedriver)
+            driver = webdriver.Chrome(service=service, options=options)
+        else:
+            driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+            
+        candidates = []
+        try:
+            encoded_query = urllib.parse.quote_plus(search_term)
+            search_url = f"https://www.bing.com/images/search?q={encoded_query}"
+            logger.info(f"🔍 Searching Bing Images: {search_url}")
+            driver.get(search_url)
+            time.sleep(5)
+            
+            # Scroll to trigger lazy loading
+            driver.execute_script("window.scrollBy(0, 1000);")
+            time.sleep(2)
+            
+            # Bing often uses 'm' attribute in 'iusc' class for image metadata
+            elements = driver.find_elements(By.CSS_SELECTOR, "a.iusc")
+            for el in elements:
+                try:
+                    m_data = el.get_attribute("m")
+                    if m_data:
+                        import json
+                        data = json.loads(m_data)
+                        img_url = data.get('murl')
+                        page_url = data.get('purl')
+                        if img_url:
+                            # Use page_url if available to enable Strategy B (scraping full scale)
+                            candidates.append({'direct_url': img_url, 'source_page': page_url or img_url})
+                except:
+                    continue
+            
+            # Use search engine order but remove duplicates
+            unique_candidates = self._deduplicate_candidates(candidates)
+            
+            logger.info(f"Total unique candidates from Bing: {len(unique_candidates)}")
+            return unique_candidates
+        except Exception as e:
+            logger.error(f"Error extracting Bing Image results: {e}")
+            return []
+        finally:
+            driver.quit()
     def _deduplicate_candidates(self, candidates: List[dict]) -> List[dict]:
         """Deduplicates image candidates while preserving search engine order."""
         seen = set()

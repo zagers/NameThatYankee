@@ -12,7 +12,7 @@ import time
 MAX_RETRIES = 5
 SLEEP_TIME = 30
 #MODEL = 'gemini-2.5-flash'
-MODEL = 'gemini-3.1-flash-lite-preview'
+MODEL = 'gemini-3.1-flash-lite'
 
 # Simple in-process rate limiter to respect Free Tier limit
 # (5 requests per minute per model). We maintain at most one
