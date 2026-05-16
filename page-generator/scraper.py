@@ -198,23 +198,8 @@ def parse_awards(soup):
                 
     return awards
 
-def search_and_scrape_player(player_name, automated=False):
-    """
-    Opens a browser, finds a player's page, and scrapes both career totals and yearly WAR.
-    """
-    print(f"⚾ Scraping all stats for {player_name} from Baseball-Reference...")
-
-    # Strip trailing Roman numerals (e.g., " III", " IV") to improve search results.
-    # This handles cases like "Roy Smalley III" which fails in search, while "Roy Smalley" succeeds.
-    name_for_search = re.sub(r'\s[IVX]+$', '', player_name.strip())
-
-    if name_for_search != player_name.strip():
-        print(f"  (Note: Removed Roman numerals. Using '{name_for_search}' for search)")
-
-    # The existing cleaning step is still valuable for other characters. Apply it to the name.
-    cleaned_name = re.sub(r'[^\w\s]', '', name_for_search)
-    print(f"  (Using cleaned name for search: '{cleaned_name}')")
-    
+def get_driver():
+    """Initializes and returns a headless Chrome driver."""
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
@@ -229,10 +214,30 @@ def search_and_scrape_player(player_name, automated=False):
         print(f"  Using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
         options.binary_location = system_chromium
         service = ChromeService(executable_path=system_chromedriver)
-        driver = webdriver.Chrome(service=service, options=options)
+        return webdriver.Chrome(service=service, options=options)
     else:
         print("  Using WebDriver Manager to download ChromeDriver...")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+
+def search_and_scrape_player(player_name, automated=False, driver=None):
+    """
+    Opens a browser (if not provided), finds a player's page, and scrapes both career totals and yearly WAR.
+    """
+    print(f"⚾ Scraping all stats for {player_name} from Baseball-Reference...")
+
+    # Strip trailing Roman numerals (e.g., " III", " IV") to improve search results.
+    name_for_search = re.sub(r'\s[IVX]+$', '', player_name.strip())
+
+    if name_for_search != player_name.strip():
+        print(f"  (Note: Removed Roman numerals. Using '{name_for_search}' for search)")
+
+    cleaned_name = re.sub(r'[^\w\s]', '', name_for_search)
+    print(f"  (Using cleaned name for search: '{cleaned_name}')")
+    
+    own_driver = False
+    if driver is None:
+        driver = get_driver()
+        own_driver = True
 
     try:
         search_query = urllib.parse.quote_plus(cleaned_name)
@@ -329,7 +334,8 @@ def search_and_scrape_player(player_name, automated=False):
             return None
 
     finally:
-        driver.quit()
+        if own_driver:
+            driver.quit()
 
 def generate_master_player_list(project_dir: Path):
     """
@@ -339,24 +345,7 @@ def generate_master_player_list(project_dir: Path):
     all_players = []
     base_url = "https://www.baseball-reference.com/players/"
     
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.page_load_strategy = 'eager'
-    
-    # Use system chromium/chromedriver if available (especially for ARM/aarch64 support)
-    system_chromedriver = "/usr/bin/chromedriver"
-    system_chromium = "/usr/bin/chromium"
-    
-    if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
-        print(f"  Using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
-        options.binary_location = system_chromium
-        service = ChromeService(executable_path=system_chromedriver)
-        driver = webdriver.Chrome(service=service, options=options)
-    else:
-        print("  Using WebDriver Manager to download ChromeDriver...")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+    driver = get_driver()
 
     try:
         total_players_found = 0

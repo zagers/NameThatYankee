@@ -398,80 +398,86 @@ def handle_regeneration_mode(config, project_dir, mode_input):
 
     print(f"Plan to process {len(dates_to_process)} dates.")
 
-    for date_str in dates_to_process:
-        print(f"\nProcessing {date_str}...")
-        
-        # Find player info in stats
-        player_entry = next((s for s in all_stats if s['date'] == date_str), None)
-        if not player_entry:
-            print(f"  ⚠️ Skipping {date_str}: No entry found in stats_summary.json")
-            continue
-            
-        player_name = player_entry['name']
-        if player_name == "Unknown":
-            print(f"  ⚠️ Skipping {date_str}: Player name is 'Unknown'")
-            continue
+    # Initialize shared driver for performance
+    shared_driver = scraper.get_driver()
 
-        # Check for necessary files
-        html_file = project_dir / f"{date_str}.html"
-        clue_img = project_dir / "images" / f"clue-{date_str}.webp"
-        ans_img = project_dir / "images" / f"answer-{date_str}.webp"
-        
-        if not (html_file.exists() and clue_img.exists() and ans_img.exists()):
-            print(f"  ⚠️ Skipping {date_str}: Missing required files (HTML or images).")
-            continue
-
-        try:
-            # 1. Scrape Enhanced Data
-            scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
-            sabr_bio = scraper.get_sabr_bio(player_name)
+    try:
+        for date_str in dates_to_process:
+            print(f"\nProcessing {date_str}...")
             
-            if not scraped_data:
-                print(f"  ❌ Failed to scrape BR stats for {player_name}")
+            # Find player info in stats
+            player_entry = next((s for s in all_stats if s['date'] == date_str), None)
+            if not player_entry:
+                print(f"  ⚠️ Skipping {date_str}: No entry found in stats_summary.json")
+                continue
+                
+            player_name = player_entry['name']
+            if player_name == "Unknown":
+                print(f"  ⚠️ Skipping {date_str}: Player name is 'Unknown'")
                 continue
 
-            player_dossier = {
-                "name": player_name,
-                "career_totals": scraped_data.get('career_totals', {}),
-                "yearly_war": scraped_data.get('yearly_war', []),
-                "transactions": scraped_data.get('transactions', []),
-                "awards": scraped_data.get('awards', []),
-                "bio": sabr_bio
-            }
+            # Check for necessary files
+            html_file = project_dir / f"{date_str}.html"
+            clue_img = project_dir / "images" / f"clue-{date_str}.webp"
+            ans_img = project_dir / "images" / f"answer-{date_str}.webp"
+            
+            if not (html_file.exists() and clue_img.exists() and ans_img.exists()):
+                print(f"  ⚠️ Skipping {date_str}: Missing required files (HTML or images).")
+                continue
 
-            # 2. Generate Grounded AI Content
-            max_retries = 3
-            generation_success = False
-            for attempt in range(max_retries):
-                print(f"  🤖 Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
-                result = grounded_ai.generate_grounded_trivia(player_dossier, api_key)
+            try:
+                # 1. Scrape Enhanced Data (Using shared driver)
+                scraped_data = scraper.search_and_scrape_player(player_name, automated=True, driver=shared_driver)
+                sabr_bio = scraper.get_sabr_bio(player_name)
                 
-                print(f"  🔍 Verifying claims...")
-                if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
-                    print("  ✅ All claims verified successfully.")
-                    player_data = {
-                        'name': player_name,
-                        'nickname': player_entry.get('nickname', ''),
-                        'facts': result.get("facts", []),
-                        'followup_qa': result.get("qa", []),
-                        'career_totals': scraped_data['career_totals'],
-                        'yearly_war': scraped_data['yearly_war']
-                    }
+                if not scraped_data:
+                    print(f"  ❌ Failed to scrape BR stats for {player_name}")
+                    continue
+
+                player_dossier = {
+                    "name": player_name,
+                    "career_totals": scraped_data.get('career_totals', {}),
+                    "yearly_war": scraped_data.get('yearly_war', []),
+                    "transactions": scraped_data.get('transactions', []),
+                    "awards": scraped_data.get('awards', []),
+                    "bio": sabr_bio
+                }
+
+                # 2. Generate Grounded AI Content
+                max_retries = 3
+                generation_success = False
+                for attempt in range(max_retries):
+                    print(f"  🤖 Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
+                    result = grounded_ai.generate_grounded_trivia(player_dossier, api_key)
                     
-                    # 3. Save updated HTML
-                    dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
-                    formatted_date = dt_obj.strftime("%B %d, %Y")
-                    html_generator.generate_detail_page(player_data, date_str, formatted_date, project_dir)
-                    generation_success = True
-                    break
-                else:
-                    print(f"  ❌ Verification failed.")
+                    print(f"  🔍 Verifying claims...")
+                    if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                        print("  ✅ All claims verified successfully.")
+                        player_data = {
+                            'name': player_name,
+                            'nickname': player_entry.get('nickname', ''),
+                            'facts': result.get("facts", []),
+                            'followup_qa': result.get("qa", []),
+                            'career_totals': scraped_data['career_totals'],
+                            'yearly_war': scraped_data['yearly_war']
+                        }
+                        
+                        # 3. Save updated HTML
+                        dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                        formatted_date = dt_obj.strftime("%B %d, %Y")
+                        html_generator.generate_detail_page(player_data, date_str, formatted_date, project_dir)
+                        generation_success = True
+                        break
+                    else:
+                        print(f"  ❌ Verification failed.")
 
-            if not generation_success:
-                print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts.")
+                if not generation_success:
+                    print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts.")
 
-        except Exception as e:
-            print(f"  ❌ Error processing {date_str}: {e}")
+            except Exception as e:
+                print(f"  ❌ Error processing {date_str}: {e}")
+    finally:
+        shared_driver.quit()
 
     # Rebuild index at the end
     html_generator.rebuild_index_page(project_dir)
@@ -759,73 +765,79 @@ Notes:
 
     print(f"\nFound {len(clue_files_to_process)} clue images to process.")
     
-    for clue_path in clue_files_to_process:
-        print("\n" + "-"*50)
-        date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.webp", clue_path.name)
-        if not date_match:
-            continue
-        
-        date_str = date_match.group(1)
-        dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
-        formatted_date = dt_obj.strftime("%B %d, %Y")
-        try:
-            player_info = ai_services.get_player_info_from_image(clue_path, api_key)
-            if player_info:
-                scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated)
-                sabr_bio = scraper.get_sabr_bio(player_info['name'])
-                
-                if scraped_data:
-                    player_info['career_totals'] = scraped_data['career_totals']
-                    player_info['yearly_war'] = scraped_data['yearly_war']
+    # Initialize shared driver for performance
+    shared_driver = scraper.get_driver()
 
-                player_dossier = {
-                    "name": player_info['name'],
-                    "career_totals": scraped_data.get('career_totals', {}) if scraped_data else {},
-                    "yearly_war": scraped_data.get('yearly_war', []) if scraped_data else [],
-                    "transactions": scraped_data.get('transactions', []) if scraped_data else [],
-                    "awards": scraped_data.get('awards', []) if scraped_data else [],
-                    "bio": sabr_bio
-                }
+    try:
+        for clue_path in clue_files_to_process:
+            print("\n" + "-"*50)
+            date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.webp", clue_path.name)
+            if not date_match:
+                continue
+            
+            date_str = date_match.group(1)
+            dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+            formatted_date = dt_obj.strftime("%B %d, %Y")
+            try:
+                player_info = ai_services.get_player_info_from_image(clue_path, api_key)
+                if player_info:
+                    scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated, driver=shared_driver)
+                    sabr_bio = scraper.get_sabr_bio(player_info['name'])
+                    
+                    if scraped_data:
+                        player_info['career_totals'] = scraped_data['career_totals']
+                        player_info['yearly_war'] = scraped_data['yearly_war']
 
-                # Determine how much Gemini usage to apply based on mode
-                if id_only_mode:
-                    # No Gemini text calls; leave facts and follow-up empty
-                    player_info['facts'] = []
-                    player_info['followup_qa'] = []
-                else:
-                    max_retries = 3
-                    generation_success = False
-                    
-                    for attempt in range(max_retries):
-                        print(f"  🤖 Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
-                        result = grounded_ai.generate_grounded_trivia(player_dossier, api_key)
-                        
-                        print(f"  🔍 Verifying claims...")
-                        if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
-                            print("  ✅ All claims verified successfully.")
-                            player_info['facts'] = result.get("facts", [])
-                            if not facts_only_mode:
-                                player_info['followup_qa'] = result.get("qa", [])
-                            else:
-                                player_info['followup_qa'] = []
-                            generation_success = True
-                            break
-                        else:
-                            print(f"  ❌ Verification failed on attempt {attempt + 1}.")
-                    
-                    if not generation_success:
-                        print("  ⚠️ All generation attempts failed verification. Using basic fallback.")
-                        player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                    player_dossier = {
+                        "name": player_info['name'],
+                        "career_totals": scraped_data.get('career_totals', {}) if scraped_data else {},
+                        "yearly_war": scraped_data.get('yearly_war', []) if scraped_data else [],
+                        "transactions": scraped_data.get('transactions', []) if scraped_data else [],
+                        "awards": scraped_data.get('awards', []) if scraped_data else [],
+                        "bio": sabr_bio
+                    }
+
+                    # Determine how much Gemini usage to apply based on mode
+                    if id_only_mode:
+                        # No Gemini text calls; leave facts and follow-up empty
+                        player_info['facts'] = []
                         player_info['followup_qa'] = []
+                    else:
+                        max_retries = 3
+                        generation_success = False
+                        
+                        for attempt in range(max_retries):
+                            print(f"  🤖 Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
+                            result = grounded_ai.generate_grounded_trivia(player_dossier, api_key)
+                            
+                            print(f"  🔍 Verifying claims...")
+                            if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                                print("  ✅ All claims verified successfully.")
+                                player_info['facts'] = result.get("facts", [])
+                                if not facts_only_mode:
+                                    player_info['followup_qa'] = result.get("qa", [])
+                                else:
+                                    player_info['followup_qa'] = []
+                                generation_success = True
+                                break
+                            else:
+                                print(f"  ❌ Verification failed on attempt {attempt + 1}.")
+                        
+                        if not generation_success:
+                            print("  ⚠️ All generation attempts failed verification. Using basic fallback.")
+                            player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                            player_info['followup_qa'] = []
 
-                verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
-                html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)
-        except ai_services.GeminiDailyQuotaExceeded as e:
-            print("\n❌ Gemini Free Tier daily quota has been reached.")
-            print("   Details from API: ")
-            print(f"   {e}")
-            print("\nStopping processing for today. You can rerun this script tomorrow to continue where you left off.")
-            break
+                    verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
+                    html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)
+            except ai_services.GeminiDailyQuotaExceeded as e:
+                print("\n❌ Gemini Free Tier daily quota has been reached.")
+                print("   Details from API: ")
+                print(f"   {e}")
+                print("\nStopping processing for today. You can rerun this script tomorrow to continue where you left off.")
+                break
+    finally:
+        shared_driver.quit()
     
     html_generator.rebuild_index_page(project_dir)
             
