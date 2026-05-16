@@ -4,6 +4,7 @@ import os
 import json
 import re
 import time
+import argparse
 from pathlib import Path
 from bs4 import BeautifulSoup
 from google import genai
@@ -40,32 +41,36 @@ class FactAuditor:
 
     def scrape_facts(self, html_path):
         """Extracts player name and all 6 facts from a puzzle HTML file."""
-        with open(html_path, 'r', encoding='utf-8') as f:
-            soup = BeautifulSoup(f, 'html.parser')
-        
-        # Identity
-        h2_el = soup.find('h2')
-        if not h2_el:
+        try:
+            with open(html_path, 'r', encoding='utf-8') as f:
+                soup = BeautifulSoup(f, 'html.parser')
+            
+            # Identity
+            h2_el = soup.find('h2')
+            if not h2_el:
+                return None
+            
+            full_title = h2_el.get_text(strip=True)
+            player_name = full_title.split('"')[0].strip() if '"' in full_title else full_title
+            
+            # Main Facts
+            facts = [li.get_text(strip=True) for li in soup.select('.player-info ul li')]
+            
+            # Q&A Facts (from data-answer attributes)
+            btns = soup.select('.followup-btn')
+            for btn in btns:
+                answer = btn.get('data-answer')
+                if answer:
+                    facts.append(answer)
+            
+            return {
+                "name": player_name,
+                "facts": facts,
+                "date": html_path.stem
+            }
+        except Exception as e:
+            print(f"  ❌ Error scraping {html_path}: {e}")
             return None
-        
-        full_title = h2_el.get_text(strip=True)
-        player_name = full_title.split('"')[0].strip() if '"' in full_title else full_title
-        
-        # Main Facts
-        facts = [li.get_text(strip=True) for li in soup.select('.player-info ul li')]
-        
-        # Q&A Facts (from data-answer attributes)
-        btns = soup.select('.followup-btn')
-        for btn in btns:
-            answer = btn.get('data-answer')
-            if answer:
-                facts.append(answer)
-        
-        return {
-            "name": player_name,
-            "facts": facts,
-            "date": html_path.stem
-        }
 
     def run_phase_1(self, player_data):
         """Phase 1: Skeptical Identity Sweep."""
@@ -82,6 +87,8 @@ class FactAuditor:
         1. Identify the player(s) described by these facts.
         2. Determine if ALL facts consistently describe "{player_data['name']}".
         3. If any fact describes a different player, or if the facts as a whole better fit someone else, you MUST flag it.
+        
+        **IMPORTANT**: Maintain normal English spacing. Do NOT squash words together in your JSON response.
         
         Return ONLY a JSON object:
         {{
@@ -131,6 +138,8 @@ class FactAuditor:
             Facts:
             {json.dumps(batch)}
             
+            **CRITICAL**: Do NOT squash words together. Ensure all "reasoning" and "fact" strings have proper spaces between words.
+            
             Return ONLY a JSON list of objects:
             [
               {{
@@ -162,8 +171,13 @@ class FactAuditor:
         
         return verdicts
 
-    def audit_all(self, limit=None):
+    def audit_all(self, limit=None, skip=0):
         html_files = sorted(PROJECT_DIR.glob("????-??-??.html"), reverse=True)
+        
+        if skip:
+            print(f"⏩ Skipping the first {skip} files...")
+            html_files = html_files[skip:]
+            
         if limit:
             html_files = html_files[:limit]
         
@@ -178,6 +192,7 @@ class FactAuditor:
                 "name": data['name'],
                 "p1_match": p1_result['is_match'],
                 "p1_predicted": p1_result['predicted_name'],
+                "reasoning": p1_result.get('reasoning', ''),
                 "failures": []
             }
             
@@ -190,42 +205,50 @@ class FactAuditor:
             self.generate_report()
 
     def generate_report(self):
-        with open(REPORT_PATH, 'w', encoding='utf-8') as f:
-            f.write(f"# Player Fact Audit Report\n")
-            f.write(f"Generated on: {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-            
-            total = len(self.results)
-            mismatches = len([r for r in self.results if not r['p1_match']])
-            
-            f.write(f"## Summary\n")
-            f.write(f"- **Total Players Audited:** {total}\n")
-            f.write(f"- **Identity Mismatches (Phase 1):** {mismatches}\n\n")
-            
-            f.write(f"## Detailed Findings\n")
-            for r in self.results:
-                if not r['p1_match']:
-                    f.write(f"### ❌ {r['name']} ({r['date']})\n")
-                    f.write(f"- **Phase 1 Prediction:** {r['p1_predicted']}\n")
-                    if r['failures']:
-                        f.write("- **Debunked Facts:**\n")
-                        for fail in r['failures']:
-                            f.write(f"  - **Fact:** {fail['fact']}\n")
-                            f.write(f"    - **Reason:** {fail['reasoning']}\n")
-                            f.write(f"    - **Source:** [{fail['source']}]({fail['source']})\n")
-                    else:
-                        f.write("- *No specific facts debunked in Phase 2 (potential false positive in P1)*\n")
-                    f.write("\n")
-                elif any(r.get('failures', [])): # In case we add sampling later
-                     f.write(f"### ⚠️ {r['name']} ({r['date']}) - Detail Error\n")
-                     # ... detail error reporting ...
+        """Appends the latest result to the audit report."""
+        if not self.results:
+            return
 
-import argparse
+        file_exists = REPORT_PATH.exists()
+        
+        # We only write the newest result (the last one in the list)
+        r = self.results[-1]
+        
+        # We only care about logging failures/mismatches
+        if r['p1_match']:
+            return
+
+        with open(REPORT_PATH, 'a', encoding='utf-8') as f:
+            if not file_exists:
+                f.write(f"# Player Fact Audit Report\n")
+                f.write(f"Started on: {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            
+            f.write(f"### ❌ {r['name']} ({r['date']})\n")
+            f.write(f"- **Phase 1 Prediction:** {r['p1_predicted']}\n")
+            if r.get('reasoning'):
+                f.write(f"- **Phase 1 Reasoning:** {r['reasoning']}\n")
+            
+            if r['failures']:
+                f.write("- **Debunked Facts:**\n")
+                for fail in r['failures']:
+                    f.write(f"  - **Fact:** {fail['fact']}\n")
+                    f.write(f"    - **Reason:** {fail['reasoning']}\n")
+                    f.write(f"    - **Source:** [{fail['source']}]({fail['source']})\n")
+            else:
+                f.write("- *No specific facts debunked in Phase 2 (potential false positive in P1)*\n")
+            f.write("\n")
+            f.flush()
 
 def main():
     parser = argparse.ArgumentParser(description="Audit AI-generated player facts.")
     parser.add_argument("--limit", type=int, help="Limit the number of files to audit.")
     parser.add_argument("--file", type=str, help="Audit a specific HTML file.")
+    parser.add_argument("--skip", type=int, default=0, help="Skip the first N files (useful for resuming).")
+    parser.add_argument("--fresh", action="store_true", help="Start a fresh report (deletes existing one).")
     args = parser.parse_args()
+
+    if args.fresh and REPORT_PATH.exists():
+        REPORT_PATH.unlink()
 
     try:
         api_key = load_api_key()
@@ -242,6 +265,7 @@ def main():
                         "name": data['name'],
                         "p1_match": p1_result['is_match'],
                         "p1_predicted": p1_result['predicted_name'],
+                        "reasoning": p1_result.get('reasoning', ''),
                         "failures": []
                     }
                     if not p1_result['is_match']:
@@ -252,7 +276,7 @@ def main():
             else:
                 print(f"File not found: {args.file}")
         else:
-            auditor.audit_all(limit=args.limit)
+            auditor.audit_all(limit=args.limit, skip=args.skip)
 
     except Exception as e:
         print(f"Error: {e}")

@@ -191,11 +191,15 @@ class TestAutomatedWorkflow:
 
     def test_generate_ai_content_success(self, automated_workflow):
         """Test successful AI content generation."""
-        with patch('automation.automated_workflow.ai_services') as mock_ai_services:
-            mock_ai_services.get_facts_and_followup_from_gemini.return_value = {
+        with patch('automation.automated_workflow.grounded_ai') as mock_grounded_ai, \
+             patch('automation.automated_workflow.fact_verifier') as mock_fact_verifier:
+            
+            mock_grounded_ai.generate_grounded_trivia.return_value = {
                 'facts': ['Fact 1', 'Fact 2'],
-                'qa': [{'q': 'Question 1', 'a': 'Answer 1'}]
+                'qa': [{'q': 'Question 1', 'a': 'Answer 1'}],
+                'claims': ['Claim 1']
             }
+            mock_fact_verifier.verify_claims.return_value = True
             
             player_info = {'name': 'Test Player'}
             
@@ -215,8 +219,8 @@ class TestAutomatedWorkflow:
 
     def test_generate_ai_content_failure(self, automated_workflow):
         """Test AI content generation when service fails."""
-        with patch('automation.automated_workflow.ai_services') as mock_ai_services:
-            mock_ai_services.get_facts_and_followup_from_gemini.side_effect = Exception("API Error")
+        with patch('automation.automated_workflow.grounded_ai') as mock_grounded_ai:
+            mock_grounded_ai.generate_grounded_trivia.side_effect = Exception("API Error")
             
             player_info = {'name': 'Test Player'}
             
