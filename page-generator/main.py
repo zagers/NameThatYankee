@@ -771,6 +771,16 @@ Notes:
     try:
         for clue_path in clue_files_to_process:
             print("\n" + "-"*50)
+            
+            # Health check for driver
+            try:
+                shared_driver.current_url
+            except Exception:
+                print("  ⚠️ Selenium driver unresponsive. Re-initializing...")
+                try: shared_driver.quit()
+                except: pass
+                shared_driver = scraper.get_driver()
+
             date_match = re.search(r"clue-(\d{4}-\d{2}-\d{2})\.webp", clue_path.name)
             if not date_match:
                 continue

@@ -12,6 +12,7 @@ import re
 import json
 from pathlib import Path
 import string
+import requests
 
 def parse_career_totals(soup):
     """Parses the 'stats_pullout' div for career totals."""
@@ -389,11 +390,6 @@ def get_sabr_bio(player_name):
     """
     Scrapes the SABR biography for a given player name with robust searching.
     """
-    import requests
-    from bs4 import BeautifulSoup
-    import urllib.parse
-    import re
-    
     print(f"⚾ Scraping SABR bio for {player_name}...")
     
     # 1. Try direct URL guess (most common format)
@@ -435,17 +431,21 @@ def get_sabr_bio(player_name):
         links = soup.select('.post-title a, .entry-title a, .search-result-title a')
         best_link = None
         
+        name_parts = player_name.lower().split()
+        first_last_only = [name_parts[0], name_parts[-1]] if len(name_parts) > 1 else name_parts
+
         for link in links:
             href = link.get('href', '')
             text = link.get_text().lower()
             
             # Prioritize person biographies
             if "bioproj/person" in href:
-                # Check if player name is in title to avoid wrong matches
-                name_parts = player_name.lower().split()
-                # Only ignore single initials like "A." or "J.", but keep "Al", "Ed", "Bo"
-                matches = all(part in text or part in href for part in name_parts if len(part) > 1 or not part.isalpha())
-                if matches:
+                # First try full name match (excluding initials)
+                full_match = all(part in text or part in href for part in name_parts if len(part) > 1 or not part.isalpha())
+                # If that fails, try first and last name match (more flexible for middle names/nicknames)
+                fl_match = all(part in text or part in href for part in first_last_only)
+                
+                if full_match or fl_match:
                     best_link = href
                     break
         
