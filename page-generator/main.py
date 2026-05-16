@@ -362,6 +362,121 @@ def handle_find_image(config: dict):
     else:
         print(f"\n❌ Failed to find or process any suitable images for {player_name}")
 
+def handle_regeneration_mode(config, project_dir, mode_input):
+    """Regenerates facts/QA for existing puzzles using the grounded pipeline."""
+    print(f"\n--- Fact Regeneration Mode ---")
+    
+    api_key = config.get("gemini_api_key")
+    if not api_key:
+        print("❌ Error: API key not found in config.")
+        return
+
+    # Load existing stats to find player names
+    stats_path = project_dir / "stats_summary.json"
+    if not stats_path.exists():
+        print("❌ Error: stats_summary.json not found. Run a normal generation first.")
+        return
+        
+    with open(stats_path, 'r') as f:
+        all_stats = json.load(f)
+    
+    # Filter dates based on input
+    dates_to_process = []
+    if mode_input.upper() == 'ALL':
+        dates_to_process = [s['date'] for s in all_stats]
+    elif " to " in mode_input:
+        try:
+            start_str, end_str = mode_input.split(" to ")
+            start_date = datetime.strptime(start_str.strip(), "%Y-%m-%d")
+            end_date = datetime.strptime(end_str.strip(), "%Y-%m-%d")
+            dates_to_process = [s['date'] for s in all_stats if start_date <= datetime.strptime(s['date'], "%Y-%m-%d") <= end_date]
+        except ValueError:
+            print("❌ Invalid date range format.")
+            return
+    else:
+        dates_to_process = [mode_input.strip()]
+
+    print(f"Plan to process {len(dates_to_process)} dates.")
+
+    for date_str in dates_to_process:
+        print(f"\nProcessing {date_str}...")
+        
+        # Find player info in stats
+        player_entry = next((s for s in all_stats if s['date'] == date_str), None)
+        if not player_entry:
+            print(f"  ⚠️ Skipping {date_str}: No entry found in stats_summary.json")
+            continue
+            
+        player_name = player_entry['name']
+        if player_name == "Unknown":
+            print(f"  ⚠️ Skipping {date_str}: Player name is 'Unknown'")
+            continue
+
+        # Check for necessary files
+        html_file = project_dir / f"{date_str}.html"
+        clue_img = project_dir / "images" / f"clue-{date_str}.webp"
+        ans_img = project_dir / "images" / f"answer-{date_str}.webp"
+        
+        if not (html_file.exists() and clue_img.exists() and ans_img.exists()):
+            print(f"  ⚠️ Skipping {date_str}: Missing required files (HTML or images).")
+            continue
+
+        try:
+            # 1. Scrape Enhanced Data
+            scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
+            sabr_bio = scraper.get_sabr_bio(player_name)
+            
+            if not scraped_data:
+                print(f"  ❌ Failed to scrape BR stats for {player_name}")
+                continue
+
+            player_dossier = {
+                "name": player_name,
+                "career_totals": scraped_data.get('career_totals', {}),
+                "yearly_war": scraped_data.get('yearly_war', []),
+                "transactions": scraped_data.get('transactions', []),
+                "awards": scraped_data.get('awards', []),
+                "bio": sabr_bio
+            }
+
+            # 2. Generate Grounded AI Content
+            max_retries = 3
+            generation_success = False
+            for attempt in range(max_retries):
+                print(f"  🤖 Generating grounded trivia (Attempt {attempt + 1}/{max_retries})...")
+                result = grounded_ai.generate_grounded_trivia(player_dossier, api_key)
+                
+                print(f"  🔍 Verifying claims...")
+                if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                    print("  ✅ All claims verified successfully.")
+                    player_data = {
+                        'name': player_name,
+                        'nickname': player_entry.get('nickname', ''),
+                        'facts': result.get("facts", []),
+                        'followup_qa': result.get("qa", []),
+                        'career_totals': scraped_data['career_totals'],
+                        'yearly_war': scraped_data['yearly_war']
+                    }
+                    
+                    # 3. Save updated HTML
+                    dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                    formatted_date = dt_obj.strftime("%B %d, %Y")
+                    html_generator.generate_detail_page(player_data, date_str, formatted_date, project_dir)
+                    generation_success = True
+                    break
+                else:
+                    print(f"  ❌ Verification failed.")
+
+            if not generation_success:
+                print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts.")
+
+        except Exception as e:
+            print(f"  ❌ Error processing {date_str}: {e}")
+
+    # Rebuild index at the end
+    html_generator.rebuild_index_page(project_dir)
+    print("\n✅ Regeneration session complete.")
+
 def handle_batch_automation(workflow: AutomatedWorkflow):
     """Handle batch puzzle automation."""
     # Get screenshot directory
@@ -468,6 +583,9 @@ Options:
 
   --config             Show or modify automation configuration settings.
 
+  --regenerate-facts   Regenerate trivia facts for existing puzzles using 
+                       the new grounded pipeline. Requires selecting dates.
+
   -h, --help            Show this help message and exit.
 
 Interactive prompts (normal generation mode):
@@ -511,6 +629,7 @@ Notes:
     find_image = "--find-image" in sys.argv
     identify_player = "--identify-player" in sys.argv
     config_mode = "--config" in sys.argv
+    regenerate_mode = "--regenerate-facts" in sys.argv
 
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
@@ -591,6 +710,11 @@ Notes:
     images_dir.mkdir(exist_ok=True)
 
     # 3. Choose mode
+    if regenerate_mode:
+        mode = input("Enter a date (YYYY-MM-DD), a range (YYYY-MM-DD to YYYY-MM-DD), or 'ALL' to REGENERATE facts: ").strip()
+        handle_regeneration_mode(config, project_dir, mode)
+        exit()
+
     mode = input("Enter a date (YYYY-MM-DD), a range (YYYY-MM-DD to YYYY-MM-DD), 'REFRESH', or 'ALL': ").strip()
 
     clue_files_to_process = []
@@ -644,7 +768,7 @@ Notes:
         date_str = date_match.group(1)
         dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
         formatted_date = dt_obj.strftime("%B %d, %Y")
-        
+        try:
             player_info = ai_services.get_player_info_from_image(clue_path, api_key)
             if player_info:
                 scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated)

@@ -44,34 +44,43 @@ def generate_grounded_trivia(player_dossier, api_key: str):
     dossier_json = json.dumps(player_dossier, indent=2)
     
     prompt = f"""
-You are a "Skeptical Copy Editor" tasked with generating high-accuracy trivia for a New York Yankees trivia game.
-Your goal is to generate facts and Q&A pairs about the player: {player_dossier.get('name', 'Unknown Player')}.
+You are a "Skeptical Storyteller" tasked with generating high-accuracy, engaging trivia for a New York Yankees trivia game.
+Your goal is to generate trivia "hints" and follow-up "story bites" about the player: {player_dossier.get('name', 'Unknown Player')}.
 
 **PLAYER DOSSIER**:
 {dossier_json}
 
 **STRICT RULES**:
-1. ONLY use information provided in the dossier above.
-2. If the dossier is missing information needed for a common trivia point, DO NOT use your internal knowledge. Skip it.
-3. FORBIDDEN: Do not mention any stats, teams, or awards not explicitly listed in the dossier.
-4. Accuracy is paramount. Assume any information NOT in the dossier is false for the purposes of this task.
+1. **NO NAME IN HINTS**: You MUST NEVER use the player's name ({player_dossier.get('name')}) or his nickname in the hints. Refer to him as "this player", "the reliever", etc.
+2. **AVOID GIF REPETITION**: The user can already see the player's team list and years (e.g. "NYY 1974-1976") in a GIF. DO NOT simply repeat his tenure or team sequence in the hints.
+3. **STORY-DRIVEN**: Use the SABR biography to find interesting anecdotes, weird circumstances, or defining moments.
+4. **STRICT GROUNDING**: ONLY use info in the dossier. If you include a year or stat, it must be verbatim from the dossier.
 
-**TASK**:
-Generate exactly 3 trivia facts (strings) and exactly 3 Q&A pairs (objects with 'question' and 'answer').
-Also, provide a 'claims' list which is a comprehensive list of every factual claim made in the facts and Q&A pairs.
+**TASK 1: HINTS (The "facts" list)**
+Generate exactly 3 trivia hints. These should be progressively easier. 
+- Hint 1: An obscure or early career detail (e.g. college, draft, or a weird minor league story).
+- Hint 2: A notable milestone, award, or unique narrative detail (e.g. a specific record or a famous play).
+- Hint 3: A career-defining achievement or reputation-based fact (e.g. "Led the league in X", "World Series heroics", or "Known for his devastating curveball").
+- **IMPORTANT**: Avoid just saying "He played for the Yankees from X to Y". The user already knows that!
+
+**TASK 2: STORY BITES (The "qa" list)**
+Generate exactly 3 Q&A pairs that provide more depth for users who want to "find out more."
+- These should reveal interesting narrative arcs.
+- The answers should be 1-3 sentences and feel like a story.
 
 **OUTPUT FORMAT**:
 Return ONLY a JSON object with the following structure:
 {{
-  "facts": ["fact 1", "fact 2", "fact 3"],
+  "facts": ["hint 1", "hint 2", "hint 3"],
   "qa": [
-    {{"question": "q1", "answer": "a1"}},
-    {{"question": "q2", "answer": "a2"}},
-    {{"question": "q3", "answer": "a3"}}
+    {{"question": "How did he...", "answer": "The player..."}},
+    {{"question": "What happened...", "answer": "In 1974..."}},
+    {{"question": "...", "answer": "..."}}
   ],
   "claims": ["claim 1", "claim 2", ...]
 }}
 """
+
 
     response = client.models.generate_content(
         model=MODEL,

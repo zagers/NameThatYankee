@@ -398,47 +398,83 @@ def generate_master_player_list(project_dir: Path):
 
 def get_sabr_bio(player_name):
     """
-    Scrapes the SABR biography for a given player name.
+    Scrapes the SABR biography for a given player name with robust searching.
     """
     import requests
     from bs4 import BeautifulSoup
     import urllib.parse
+    import re
     
     print(f"⚾ Scraping SABR bio for {player_name}...")
     
-    # Simple search or direct link guess
+    # 1. Try direct URL guess (most common format)
+    slug = player_name.lower().strip().replace(" ", "-").replace(".", "")
+    # Remove common suffixes like Jr, Sr, III
+    slug = re.sub(r'-(jr|sr|ii|iii|iv)$', '', slug)
+    direct_url = f"https://sabr.org/bioproj/person/{slug}/"
+    
+    urls_to_try = [direct_url]
+    
+    # 2. Search if direct guess fails or as part of the loop
     search_query = urllib.parse.quote_plus(player_name)
     search_url = f"https://sabr.org/?s={search_query}&post_type=bioproj"
     
     try:
+        # Check direct URL first for speed
+        for url in urls_to_try:
+            try:
+                response = requests.get(url, timeout=5)
+                if response.status_code == 200 and "bioproj/person" in response.url:
+                    bio_soup = BeautifulSoup(response.text, 'html.parser')
+                    content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
+                    if content:
+                        for script in content(["script", "style"]): script.decompose()
+                        text = content.get_text(separator=' ', strip=True)
+                        if len(text) > 500: # Ensure it's a real bio, not a stub
+                            print(f"  ✅ Found bio via direct link: {url}")
+                            return text
+            except:
+                continue
+
+        # 3. Perform search if direct link didn't work
         response = requests.get(search_url, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
         
-        # Find first result - SABR uses .post-title or h3.entry-title
-        link = soup.select_one('.post-title a, .entry-title a')
-        if not link:
-            print(f"  ❌ No SABR bio found for {player_name}.")
+        # Find all result links
+        links = soup.select('.post-title a, .entry-title a, .search-result-title a')
+        best_link = None
+        
+        for link in links:
+            href = link.get('href', '')
+            text = link.get_text().lower()
+            
+            # Prioritize person biographies
+            if "bioproj/person" in href:
+                # Check if player name is in title to avoid wrong matches
+                name_parts = player_name.lower().split()
+                matches = all(part in text or part in href for part in name_parts if len(part) > 2)
+                if matches:
+                    best_link = href
+                    break
+        
+        if not best_link:
+            print(f"  ❌ No definitive SABR bio found for {player_name}.")
             return ""
         
-        bio_url = link['href']
-        print(f"  Found bio URL: {bio_url}")
-        
-        bio_response = requests.get(bio_url, timeout=10)
+        print(f"  Found bio URL via search: {best_link}")
+        bio_response = requests.get(best_link, timeout=10)
         bio_response.raise_for_status()
         bio_soup = BeautifulSoup(bio_response.text, 'html.parser')
         
-        # SABR uses .entry-content or Toolset blocks (.tb-field)
         content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
         if content:
-            # Clean up the text - remove extra whitespace and script/style tags
-            for script in content(["script", "style"]):
-                script.decompose()
+            for script in content(["script", "style"]): script.decompose()
             text = content.get_text(separator=' ', strip=True)
             print(f"  ✅ Successfully scraped SABR bio ({len(text)} chars).")
             return text
         else:
-            print(f"  ❌ Could not find .entry-content in {bio_url}")
+            print(f"  ❌ Could not find content in {best_link}")
             return ""
             
     except Exception as e:
