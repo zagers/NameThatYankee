@@ -787,6 +787,8 @@ Notes:
                     if scraped_data:
                         player_info['career_totals'] = scraped_data['career_totals']
                         player_info['yearly_war'] = scraped_data['yearly_war']
+                        player_info['transactions'] = scraped_data.get('transactions', [])
+                        player_info['awards'] = scraped_data.get('awards', [])
 
                     player_dossier = {
                         "name": player_info['name'],

@@ -68,6 +68,12 @@ Generate exactly 3 Q&A pairs that provide more depth for users who want to "find
 - These should reveal interesting narrative arcs.
 - The answers should be 1-3 sentences and feel like a story.
 
+**TASK 3: ATOMIC CLAIMS (The "claims" list)**
+Extract ALL atomic factual statements (specific years, statistics, team names, awards) mentioned in your HINTS and STORY BITES.
+- Each claim should be a single, verifiable sentence.
+- Example: "He won the Cy Young Award in 1978."
+- Example: "He played for the Yankees from 1974 to 1976."
+
 **OUTPUT FORMAT**:
 Return ONLY a JSON object with the following structure:
 {{

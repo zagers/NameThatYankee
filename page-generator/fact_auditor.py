@@ -102,11 +102,13 @@ class FactAuditor:
             response = self.client.models.generate_content(
                 model=MODEL,
                 contents=prompt,
-                config=types.GenerateContentConfig(temperature=0.1)
+                config=types.GenerateContentConfig(
+                    temperature=0.1,
+                    response_mime_type="application/json"
+                )
             )
             
-            json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
-            result = json.loads(json_text)
+            result = json.loads(response.text)
             predicted_name = result.get("primary_identity", "Unknown")
             is_consistent = result.get("is_fully_consistent", True)
             
@@ -157,12 +159,12 @@ class FactAuditor:
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         temperature=0.1,
+                        response_mime_type="application/json",
                         tools=[types.Tool(google_search=types.GoogleSearch())]
                     )
                 )
                 
-                json_text = response.text.strip().replace("```json", "").replace("```", "").strip()
-                batch_verdicts = json.loads(json_text)
+                batch_verdicts = json.loads(response.text)
                 verdicts.extend(batch_verdicts)
             except Exception as e:
                 print(f"  ❌ Error in Phase 2: {e}")

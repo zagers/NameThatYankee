@@ -397,7 +397,8 @@ def get_sabr_bio(player_name):
     print(f"⚾ Scraping SABR bio for {player_name}...")
     
     # 1. Try direct URL guess (most common format)
-    slug = player_name.lower().strip().replace(" ", "-").replace(".", "")
+    slug = player_name.lower().strip().replace(" ", "-")
+    slug = re.sub(r'[^a-z0-9-]', '', slug)
     # Remove common suffixes like Jr, Sr, III
     slug = re.sub(r'-(jr|sr|ii|iii|iv)$', '', slug)
     direct_url = f"https://sabr.org/bioproj/person/{slug}/"
@@ -442,7 +443,8 @@ def get_sabr_bio(player_name):
             if "bioproj/person" in href:
                 # Check if player name is in title to avoid wrong matches
                 name_parts = player_name.lower().split()
-                matches = all(part in text or part in href for part in name_parts if len(part) > 2)
+                # Only ignore single initials like "A." or "J.", but keep "Al", "Ed", "Bo"
+                matches = all(part in text or part in href for part in name_parts if len(part) > 1 or not part.isalpha())
                 if matches:
                     best_link = href
                     break

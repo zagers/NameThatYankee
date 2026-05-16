@@ -37,6 +37,22 @@ def verify_claims(claims, raw_data):
             # Also add with the dot if it was there (e.g. .280)
             if str(val).startswith('.'):
                 valid_numbers.add(str(val))
+    
+    # 2b. Add derived counts (seasons, teams)
+    yearly_war = raw_data.get('yearly_war', [])
+    if yearly_war:
+        valid_numbers.add(str(len(yearly_war)))
+        
+        # Unique teams
+        teams = set()
+        for entry in yearly_war:
+            entry_teams = entry.get('teams', '')
+            if entry_teams:
+                # Split "NYY, LAD" etc.
+                parts = [p.strip() for p in entry_teams.split(',')]
+                teams.update(parts)
+        if teams:
+            valid_numbers.add(str(len(teams)))
 
     # 3. Check claims
     for claim in claims:
