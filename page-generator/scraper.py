@@ -12,6 +12,7 @@ import re
 import json
 from pathlib import Path
 import string
+import requests
 
 def parse_career_totals(soup):
     """Parses the 'stats_pullout' div for career totals."""
@@ -132,23 +133,74 @@ def parse_yearly_war(soup):
 
     return sorted(yearly_data, key=lambda x: x['year'])
 
-def search_and_scrape_player(player_name, automated=False):
-    """
-    Opens a browser, finds a player's page, and scrapes both career totals and yearly WAR.
-    """
-    print(f"⚾ Scraping all stats for {player_name} from Baseball-Reference...")
-
-    # Strip trailing Roman numerals (e.g., " III", " IV") to improve search results.
-    # This handles cases like "Roy Smalley III" which fails in search, while "Roy Smalley" succeeds.
-    name_for_search = re.sub(r'\s[IVX]+$', '', player_name.strip())
-
-    if name_for_search != player_name.strip():
-        print(f"  (Note: Removed Roman numerals. Using '{name_for_search}' for search)")
-
-    # The existing cleaning step is still valuable for other characters. Apply it to the name.
-    cleaned_name = re.sub(r'[^\w\s]', '', name_for_search)
-    print(f"  (Using cleaned name for search: '{cleaned_name}')")
+def parse_transactions(soup):
+    """Parses the transactions section, handling comments and different possible IDs."""
+    transactions = []
     
+    # Possible IDs for transactions
+    possible_ids = ['all_transactions', 'all_transactions_other', 'div_transactions_other']
+    
+    trans_div = None
+    for tid in possible_ids:
+        trans_div = soup.find('div', id=tid)
+        if trans_div: break
+        
+    if not trans_div:
+        # Check in comments
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            for tid in possible_ids:
+                if f'id="{tid}"' in comment:
+                    trans_soup = BeautifulSoup(comment, 'html.parser')
+                    trans_div = trans_soup.find('div', id=tid)
+                    if trans_div: break
+            if trans_div: break
+                
+    if trans_div:
+        # Transactions are usually in <p> tags
+        for p in trans_div.find_all('p'):
+            # Skip the 'note' paragraph
+            if 'class' in p.attrs and 'note' in p['class']:
+                continue
+            text = p.get_text(strip=True)
+            if text:
+                transactions.append(text)
+                
+    return transactions
+
+def parse_awards(soup):
+    """Parses the awards/honors from the bling or extra_stats div."""
+    awards = []
+    
+    # Possible IDs for awards
+    possible_ids = ['bling', 'extra_stats']
+    
+    awards_div = None
+    for aid in possible_ids:
+        awards_div = soup.find(['ul', 'div'], id=aid)
+        if awards_div: break
+        
+    if not awards_div:
+        # Check in comments
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            for aid in possible_ids:
+                if f'id="{aid}"' in comment:
+                    awards_soup = BeautifulSoup(comment, 'html.parser')
+                    awards_div = awards_soup.find(['ul', 'div'], id=aid)
+                    if awards_div: break
+            if awards_div: break
+            
+    if awards_div:
+        for li in awards_div.find_all('li'):
+            text = li.get_text(strip=True)
+            if text:
+                awards.append(text)
+                
+    return awards
+
+def get_driver():
+    """Initializes and returns a headless Chrome driver."""
     options = webdriver.ChromeOptions()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
@@ -163,10 +215,30 @@ def search_and_scrape_player(player_name, automated=False):
         print(f"  Using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
         options.binary_location = system_chromium
         service = ChromeService(executable_path=system_chromedriver)
-        driver = webdriver.Chrome(service=service, options=options)
+        return webdriver.Chrome(service=service, options=options)
     else:
         print("  Using WebDriver Manager to download ChromeDriver...")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+        return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+
+def search_and_scrape_player(player_name, automated=False, driver=None):
+    """
+    Opens a browser (if not provided), finds a player's page, and scrapes both career totals and yearly WAR.
+    """
+    print(f"⚾ Scraping all stats for {player_name} from Baseball-Reference...")
+
+    # Strip trailing Roman numerals (e.g., " III", " IV") to improve search results.
+    name_for_search = re.sub(r'\s[IVX]+$', '', player_name.strip())
+
+    if name_for_search != player_name.strip():
+        print(f"  (Note: Removed Roman numerals. Using '{name_for_search}' for search)")
+
+    cleaned_name = re.sub(r'[^\w\s]', '', name_for_search)
+    print(f"  (Using cleaned name for search: '{cleaned_name}')")
+    
+    own_driver = False
+    if driver is None:
+        driver = get_driver()
+        own_driver = True
 
     try:
         search_query = urllib.parse.quote_plus(cleaned_name)
@@ -247,16 +319,24 @@ def search_and_scrape_player(player_name, automated=False):
         
         career_totals = parse_career_totals(soup)
         yearly_war = parse_yearly_war(soup)
+        transactions = parse_transactions(soup)
+        awards = parse_awards(soup)
 
         if career_totals and yearly_war:
             print("  ✅ All stats scraped successfully.")
-            return {"career_totals": career_totals, "yearly_war": yearly_war}
+            return {
+                "career_totals": career_totals, 
+                "yearly_war": yearly_war,
+                "transactions": transactions,
+                "awards": awards
+            }
         else:
             print("  ❌ Failed to scrape all required data.")
             return None
 
     finally:
-        driver.quit()
+        if own_driver:
+            driver.quit()
 
 def generate_master_player_list(project_dir: Path):
     """
@@ -266,24 +346,7 @@ def generate_master_player_list(project_dir: Path):
     all_players = []
     base_url = "https://www.baseball-reference.com/players/"
     
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.page_load_strategy = 'eager'
-    
-    # Use system chromium/chromedriver if available (especially for ARM/aarch64 support)
-    system_chromedriver = "/usr/bin/chromedriver"
-    system_chromium = "/usr/bin/chromium"
-    
-    if os.path.exists(system_chromedriver) and os.path.exists(system_chromium):
-        print(f"  Using system chromium: {system_chromium} and chromedriver: {system_chromedriver}")
-        options.binary_location = system_chromium
-        service = ChromeService(executable_path=system_chromedriver)
-        driver = webdriver.Chrome(service=service, options=options)
-    else:
-        print("  Using WebDriver Manager to download ChromeDriver...")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
+    driver = get_driver()
 
     try:
         total_players_found = 0
@@ -322,3 +385,89 @@ def generate_master_player_list(project_dir: Path):
 
     finally:
         driver.quit()
+
+def get_sabr_bio(player_name):
+    """
+    Scrapes the SABR biography for a given player name with robust searching.
+    """
+    print(f"⚾ Scraping SABR bio for {player_name}...")
+    
+    # 1. Try direct URL guess (most common format)
+    slug = player_name.lower().strip().replace(" ", "-")
+    slug = re.sub(r'[^a-z0-9-]', '', slug)
+    # Remove common suffixes like Jr, Sr, III
+    slug = re.sub(r'-(jr|sr|ii|iii|iv)$', '', slug)
+    direct_url = f"https://sabr.org/bioproj/person/{slug}/"
+    
+    urls_to_try = [direct_url]
+    
+    # 2. Search if direct guess fails or as part of the loop
+    search_query = urllib.parse.quote_plus(player_name)
+    search_url = f"https://sabr.org/?s={search_query}&post_type=bioproj"
+    
+    try:
+        # Check direct URL first for speed
+        for url in urls_to_try:
+            try:
+                response = requests.get(url, timeout=5)
+                if response.status_code == 200 and "bioproj/person" in response.url:
+                    bio_soup = BeautifulSoup(response.text, 'html.parser')
+                    content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
+                    if content:
+                        for script in content(["script", "style"]): script.decompose()
+                        text = content.get_text(separator=' ', strip=True)
+                        if len(text) > 500: # Ensure it's a real bio, not a stub
+                            print(f"  ✅ Found bio via direct link: {url}")
+                            return text
+            except:
+                continue
+
+        # 3. Perform search if direct link didn't work
+        response = requests.get(search_url, timeout=10)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Find all result links
+        links = soup.select('.post-title a, .entry-title a, .search-result-title a')
+        best_link = None
+        
+        name_parts = player_name.lower().split()
+        first_last_only = [name_parts[0], name_parts[-1]] if len(name_parts) > 1 else name_parts
+
+        for link in links:
+            href = link.get('href', '')
+            text = link.get_text().lower()
+            
+            # Prioritize person biographies
+            if "bioproj/person" in href:
+                # First try full name match (excluding initials)
+                full_match = all(part in text or part in href for part in name_parts if len(part) > 1 or not part.isalpha())
+                # If that fails, try first and last name match (more flexible for middle names/nicknames)
+                fl_match = all(part in text or part in href for part in first_last_only)
+                
+                if full_match or fl_match:
+                    best_link = href
+                    break
+        
+        if not best_link:
+            print(f"  ❌ No definitive SABR bio found for {player_name}.")
+            return ""
+        
+        print(f"  Found bio URL via search: {best_link}")
+        bio_response = requests.get(best_link, timeout=10)
+        bio_response.raise_for_status()
+        bio_soup = BeautifulSoup(bio_response.text, 'html.parser')
+        
+        content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
+        if content:
+            for script in content(["script", "style"]): script.decompose()
+            text = content.get_text(separator=' ', strip=True)
+            print(f"  ✅ Successfully scraped SABR bio ({len(text)} chars).")
+            return text
+        else:
+            print(f"  ❌ Could not find content in {best_link}")
+            return ""
+            
+    except Exception as e:
+        print(f"  ❌ Error scraping SABR bio: {e}")
+        return ""

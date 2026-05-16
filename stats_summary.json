@@ -4,8 +4,8 @@
         "name": "Tippy Martinez",
         "nickname": "Tippy",
         "teams": [
-            "MIN",
             "NYY",
+            "MIN",
             "BAL"
         ],
         "years": [
@@ -30,9 +30,9 @@
         "name": "Gary Roenicke",
         "nickname": "",
         "teams": [
+            "NYY",
             "MON",
             "ATL",
-            "NYY",
             "BAL"
         ],
         "years": [
@@ -55,12 +55,12 @@
         "name": "Pat Dobson",
         "nickname": "Dobber",
         "teams": [
-            "NYY",
-            "CLE",
-            "BAL",
-            "DET",
             "SDP",
-            "ATL"
+            "DET",
+            "ATL",
+            "BAL",
+            "CLE",
+            "NYY"
         ],
         "years": [
             "1967",

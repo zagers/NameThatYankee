@@ -82,7 +82,9 @@ class TestMainIntegrationWorkflows:
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('main.ai_services.get_player_info_from_image', return_value=sample_player_data), \
              patch('main.scraper.search_and_scrape_player', return_value=sample_scraped_data), \
-             patch('main.ai_services.get_facts_and_followup_from_gemini', return_value=sample_player_data), \
+             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
+             patch('main.grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
+             patch('main.fact_verifier.verify_claims', return_value=True), \
              patch('main.user_interaction.review_and_edit_data', return_value=sample_player_data), \
              patch('main.html_generator.generate_detail_page') as mock_generate, \
              patch('main.html_generator.rebuild_index_page') as mock_rebuild:
@@ -127,6 +129,7 @@ class TestMainIntegrationWorkflows:
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('main.ai_services.get_player_info_from_image', return_value=sample_player_data), \
              patch('main.scraper.search_and_scrape_player', return_value=sample_scraped_data), \
+             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
              patch('main.user_interaction.review_and_edit_data', return_value=sample_player_data), \
              patch('main.html_generator.generate_detail_page') as mock_generate:
             
@@ -164,7 +167,9 @@ class TestMainIntegrationWorkflows:
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('main.ai_services.get_player_info_from_image', return_value=sample_player_data), \
              patch('main.scraper.search_and_scrape_player', return_value=sample_scraped_data), \
-             patch('main.ai_services.get_facts_from_gemini', return_value=sample_player_data['facts']), \
+             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
+             patch('main.grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
+             patch('main.fact_verifier.verify_claims', return_value=True), \
              patch('main.user_interaction.review_and_edit_data', return_value=sample_player_data), \
              patch('main.html_generator.generate_detail_page') as mock_generate:
             
@@ -247,6 +252,7 @@ class TestMainIntegrationWorkflows:
         """Test handling of Gemini quota exceeded exception"""
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('main.ai_services.get_player_info_from_image', side_effect=ai_services.GeminiDailyQuotaExceeded("Quota exceeded")), \
+             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
              patch('main.html_generator.rebuild_index_page') as mock_rebuild, \
              patch('builtins.print') as mock_print:
             
@@ -282,11 +288,11 @@ class TestMainIntegrationWorkflows:
 
     def test_error_handling_workflows(self, temp_project_dir, sample_clue_image, sample_config):
         """Test various error handling scenarios"""
-        
+
         # Test AI service failure
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', return_value=None):
-            
+             patch('main.ai_services.get_player_info_from_image', return_value=None), \
+             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"):
             # Process should continue even if AI fails
             clue_path = sample_clue_image
             player_info = ai_services.get_player_info_from_image(clue_path, sample_config['gemini_api_key'])
