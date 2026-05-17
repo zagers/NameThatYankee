@@ -36,11 +36,14 @@ def build_request(dossier):
     }
 
 def extract_player_name(html_content):
-    """Extracts player name from <h2> tag in the HTML."""
+    """Extracts player name from <h2> tag in the HTML, stripping nicknames."""
     soup = BeautifulSoup(html_content, 'html.parser')
     h2 = soup.find('h2')
     if h2:
-        return h2.get_text(strip=True)
+        full_title = h2.get_text(strip=True)
+        # Strip nickname in quotes if present (e.g. Don Mattingly "Donnie Baseball")
+        player_name = full_title.split('"')[0].strip() if '"' in full_title else full_title
+        return player_name
     return None
 
 def prepare_batch(project_root):
