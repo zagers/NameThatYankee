@@ -25,12 +25,15 @@ def patch_html(html_content, new_data, player_name):
     player_info = soup.select_one('.player-info')
     if player_info:
         ul = player_info.find('ul')
-        if ul:
-            ul.clear()
-            for fact in new_data.get('facts', []):
-                li = soup.new_tag('li')
-                li.string = fact
-                ul.append(li)
+        if not ul:
+            ul = soup.new_tag('ul')
+            player_info.append(ul)
+            
+        ul.clear()
+        for fact in new_data.get('facts', []):
+            li = soup.new_tag('li')
+            li.string = fact
+            ul.append(li)
     
     # 2. Inject/Replace followup-section
     followup_section = soup.find(id='followup-section')
@@ -112,7 +115,8 @@ def main(project_root):
                 content_text = ""
                 # Developer API structure: {"response": {"candidates": [{"content": {"parts": [{"text": "..."}]}}]}}
                 response_obj = resp_data.get('response', {})
-                candidates = response_obj.get('candidates', [])
+                body = response_obj.get('body', {})
+                candidates = body.get('candidates', []) if body else response_obj.get('candidates', [])
                 if candidates:
                     content_text = candidates[0].get('content', {}).get('parts', [{}])[0].get('text', '')
                 

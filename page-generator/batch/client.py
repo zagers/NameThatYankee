@@ -70,6 +70,6 @@ class BatchClient:
         
         result_file = getattr(job, "results_file", None)
         if not result_file:
-             raise ValueError(f"Job {job_name} has no results_file")
+            raise AttributeError(f"BatchJob '{job_name}' is missing required 'results_file' attribute. Check job output configuration.")
              
         self.client.files.download(name=result_file, path=output_path)

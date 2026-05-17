@@ -30,8 +30,10 @@ class StateManager:
             self.state[date]["data"] = data
             
     def save(self):
-        with open(self.path, 'w') as f:
+        temp_path = self.path.with_suffix(".tmp")
+        with open(temp_path, 'w') as f:
             json.dump(self.state, f, indent=2)
+        temp_path.replace(self.path)
 
 BATCH_PROMPT_TEMPLATE = """
 You are a "Skeptical Storyteller" tasked with generating high-accuracy, engaging trivia for a New York Yankees trivia game.
