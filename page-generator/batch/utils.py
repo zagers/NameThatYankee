@@ -67,6 +67,7 @@ Extract ALL atomic factual statements (specific years, statistics, team names, a
 **OUTPUT FORMAT**:
 Return ONLY a JSON object with the following structure:
 {{
+  "date": "{date_str}",
   "facts": ["hint 1", "hint 2", "hint 3"],
   "qa": [
     {{"question": "How did he...", "answer": "The player..."}},

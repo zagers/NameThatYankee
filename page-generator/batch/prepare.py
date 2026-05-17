@@ -16,13 +16,14 @@ if str(current_dir.parent) not in sys.path:
 from batch.utils import StateManager, BATCH_PROMPT_TEMPLATE
 import scraper
 
-def build_request(dossier):
+def build_request(dossier, date_str):
     """
     Constructs a GenerateContentRequest dictionary for the Gemini Batch API.
     """
     prompt = BATCH_PROMPT_TEMPLATE.format(
         name=dossier["name"],
-        dossier_json=json.dumps(dossier, indent=2)
+        dossier_json=json.dumps(dossier, indent=2),
+        date_str=date_str
     )
     
     return {
@@ -46,7 +47,7 @@ def extract_player_name(html_content):
         return player_name
     return None
 
-def prepare_batch(project_root):
+def prepare_batch(project_root, limit=None):
     """
     Main loop to scrape dossiers and generate requests.jsonl.
     """
@@ -63,7 +64,12 @@ def prepare_batch(project_root):
     try:
         # 1. Scrape dossiers
         html_files = sorted(list(root_path.glob("202*.html")))
+        processed_count = 0
+        
         for html_file in html_files:
+            if limit and processed_count >= limit:
+                break
+                
             date_str = html_file.stem # YYYY-MM-DD
             
             status = manager.get_status(date_str)
@@ -109,6 +115,7 @@ def prepare_batch(project_root):
                 
             manager.set_status(date_str, "scraped", data={"player": player_name})
             manager.save()
+            processed_count += 1
             
         # 2. Generate requests.jsonl
         print("Generating requests.jsonl...")
@@ -119,7 +126,7 @@ def prepare_batch(project_root):
                     if dossier_path.exists():
                         with open(dossier_path, 'r', encoding='utf-8') as f_in:
                             dossier = json.load(f_in)
-                            request = build_request(dossier)
+                            request = build_request(dossier, date_str)
                             f_out.write(json.dumps(request) + "\n")
                             
         print(f"Successfully generated {requests_file}")
@@ -130,4 +137,5 @@ def prepare_batch(project_root):
 if __name__ == "__main__":
     import sys
     project_root = sys.argv[1] if len(sys.argv) > 1 else "."
-    prepare_batch(project_root)
+    limit = int(sys.argv[2]) if len(sys.argv) > 2 else None
+    prepare_batch(project_root, limit=limit)
