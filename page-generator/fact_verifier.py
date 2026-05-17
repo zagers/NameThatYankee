@@ -48,10 +48,10 @@ def verify_claims(claims, raw_data):
         for entry in yearly_war:
             entry_teams = entry.get('teams', [])
             if isinstance(entry_teams, str):
-                parts = [p.strip() for p in entry_teams.split(',')]
+                parts = [p.strip() for p in entry_teams.split(',') if p.strip()]
                 teams.update(parts)
             elif isinstance(entry_teams, list):
-                teams.update([p.strip() for p in entry_teams])
+                teams.update([p.strip() for p in entry_teams if isinstance(p, str) and p.strip()])
         if teams:
             valid_numbers.add(str(len(teams)))
 
