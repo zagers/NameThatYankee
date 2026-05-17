@@ -1,5 +1,25 @@
 [
     {
+        "date": "2026-05-17",
+        "name": "Marv Throneberry",
+        "nickname": "Marvelous Marv",
+        "teams": [
+            "BAL",
+            "NYY",
+            "NYM",
+            "KCA"
+        ],
+        "years": [
+            "1955",
+            "1958",
+            "1959",
+            "1960",
+            "1961",
+            "1962",
+            "1963"
+        ]
+    },
+    {
         "date": "2026-05-13",
         "name": "Tippy Martinez",
         "nickname": "Tippy",

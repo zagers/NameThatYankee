@@ -162,13 +162,16 @@ export class QuizUI {
         if (this.elements.hintBtn) this.elements.hintBtn.disabled = shouldDisable;
         if (this.elements.giveUpBtn) this.elements.giveUpBtn.disabled = shouldDisable;
 
-        if (this.elements.hintBtn && state.hintsRequested >= (state.clues ? state.clues.length : this.clues.length)) {
-            this.elements.hintBtn.disabled = true;
-            if (!shouldDisable && !state.feedback && state.status !== 'complete') {
-                if (this.elements.feedbackMessage) {
-                    this.elements.feedbackMessage.textContent = 'All hints revealed! One guess remaining.';
-                    this.elements.feedbackMessage.className = '';
-                    this.elements.feedbackMessage.style.display = 'block';
+        if (this.elements.hintBtn) {
+            const totalClues = state.clues ? state.clues.length : this.clues.length;
+            if (state.hintsRequested >= totalClues) {
+                this.elements.hintBtn.disabled = true;
+                if (!shouldDisable && !state.feedback && state.status !== 'complete' && totalClues > 0) {
+                    if (this.elements.feedbackMessage) {
+                        this.elements.feedbackMessage.textContent = 'All hints revealed! One guess remaining.';
+                        this.elements.feedbackMessage.className = '';
+                        this.elements.feedbackMessage.style.display = 'block';
+                    }
                 }
             }
         }
