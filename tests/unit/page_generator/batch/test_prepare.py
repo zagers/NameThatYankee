@@ -21,7 +21,8 @@ def test_build_request():
     }
     request = build_request(dossier, "2025-04-01")
     
-    assert "contents" in request
+    assert "request" in request
+    assert "contents" in request["request"]
     assert "Test Player" in str(request)
     assert "Skeptical Storyteller" in str(request)
     assert "2025-04-01" in str(request)
