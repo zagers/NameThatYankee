@@ -49,8 +49,39 @@ def test_prompt_contains_new_criteria(mock_genai_client):
     assert "If a crop is possible, provide the `crop_box` and continue." in prompt
     
     # Check for Autographs update
-    assert "Printed signatures that are part of the original card's factory design (common on vintage cards) are ACCEPTABLE if no cleaner version is available." in prompt
-    assert "Only REJECT if the signature is hand-written or an intrusive modern overlay." in prompt
+    assert "factory design (common on vintage cards) are" in prompt
+    assert "considered autographs for this check and should be" in prompt
+    assert "ACCEPTED" in prompt
+    assert "REJECT (Priority 0) only if the image contains a HAND-WRITTEN signature" in prompt
     
     # Check for Unofficial Uniforms update
     assert "Relax rejection for players from before 1990 if the uniform is a standard road/home pinstripe or gray uniform from that era, even if branding is subtle." in prompt
+
+def test_prompt_contains_rotation_criteria(mock_genai_client):
+    # Setup mock response
+    mock_response = MagicMock()
+    mock_response.text = '{"priority_level": 0}'
+    mock_genai_client.return_value = mock_response
+
+    # Trigger the function
+    ai_services.analyze_player_image("fake_path.webp", "Mickey Mantle", "fake_key")
+    
+    args, kwargs = mock_genai_client.call_args
+    prompt = kwargs.get('contents')[0]
+    
+    # Verify Rotation rejection rule
+    assert "Rotation/Upside Down" in prompt
+    assert "REJECT (Priority 0) any image that is rotated sideways or upside down" in prompt
+    assert "is_upside_down" in prompt
+
+def test_analyze_player_image_rejects_upside_down(mock_genai_client):
+    # Setup mock response where AI says it is upside down
+    mock_response = MagicMock()
+    mock_response.text = '{"priority_level": 1, "confidence": "high", "is_upside_down": true, "reasoning": "Upside down"}'
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake_path.webp", "Mickey Mantle", "fake_key")
+    
+    # Even if Priority is 1, the override logic should set it to 0
+    assert result["priority"] == 0
+    assert "upside down/sideways" in result["reasoning"].lower()
