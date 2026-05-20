@@ -1,0 +1,110 @@
+{
+  "name": "Orlando Hern\u00e1ndez",
+  "career_totals": {
+    "WAR": "23.1",
+    "W": "90",
+    "L": "65",
+    "ERA": "4.13",
+    "G": "219",
+    "GS": "211",
+    "SV": "2",
+    "IP": "1314.2",
+    "SO": "1086",
+    "WHIP": "1.263"
+  },
+  "yearly_war": [
+    {
+      "year": "1998",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.6
+    },
+    {
+      "year": "1999",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 4.2
+    },
+    {
+      "year": "2000",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.2
+    },
+    {
+      "year": "2001",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.4
+    },
+    {
+      "year": "2002",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.7
+    },
+    {
+      "year": "2004",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 2.8
+    },
+    {
+      "year": "2005",
+      "teams": [
+        "CHW"
+      ],
+      "display_team": "CHW",
+      "war": 0.4
+    },
+    {
+      "year": "2006",
+      "teams": [
+        "ARI",
+        "NYM"
+      ],
+      "display_team": "2TM",
+      "war": 1.2
+    },
+    {
+      "year": "2007",
+      "teams": [
+        "NYM"
+      ],
+      "display_team": "NYM",
+      "war": 2.5
+    }
+  ],
+  "transactions": [
+    "March 23, 1998:Signed by theNew York Yankeesas an amateur free agent.",
+    "January 15, 2003:Traded by theNew York Yankeesto theChicago White SoxforEddi Candelario(minors) andAntonio Osuna.",
+    "January 15, 2003:Traded by theChicago White SoxwithRocky Biddle,Jeff Lieferand cash to theMontreal ExposforJorge Nu\u00f1ez(minors) andBartolo Col\u00f3n.",
+    "December 21, 2003:Granted Free Agency.",
+    "March 12, 2004:Signed as a Free Agent with theNew York Yankees.",
+    "November 2, 2004:Granted Free Agency.",
+    "January 3, 2005:Signed as a Free Agent with theChicago White Sox.",
+    "December 20, 2005:Traded by theChicago White SoxwithLuis Vizca\u00ednoandChris Youngto theArizona DiamondbacksforJavier V\u00e1zquez.",
+    "May 24, 2006:Traded by theArizona Diamondbacksto theNew York MetsforJorge Julio.",
+    "October 31, 2006:Granted Free Agency.",
+    "November 14, 2006:Signed as a Free Agent with theNew York Mets.",
+    "November 1, 2008:Granted Free Agency.",
+    "June 11, 2009:Signed as a Free Agent with theTexas Rangers.",
+    "July 17, 2009:Released by theTexas Rangers.",
+    "July 2, 2010:Signed as a Free Agent with theWashington Nationals."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

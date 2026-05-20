@@ -1,0 +1,115 @@
+{
+  "name": "Richard Monteleone",
+  "career_totals": {
+    "WAR": "2.6",
+    "W": "24",
+    "L": "17",
+    "ERA": "3.87",
+    "G": "210",
+    "GS": "0",
+    "SV": "0",
+    "IP": "353.1",
+    "SO": "212",
+    "WHIP": "1.310"
+  },
+  "yearly_war": [
+    {
+      "year": "1987",
+      "teams": [
+        "SEA"
+      ],
+      "display_team": "SEA",
+      "war": 0.0
+    },
+    {
+      "year": "1988",
+      "teams": [
+        "CAL"
+      ],
+      "display_team": "CAL",
+      "war": 0.4
+    },
+    {
+      "year": "1989",
+      "teams": [
+        "CAL"
+      ],
+      "display_team": "CAL",
+      "war": 0.5
+    },
+    {
+      "year": "1990",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.1
+    },
+    {
+      "year": "1991",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.0
+    },
+    {
+      "year": "1992",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.5
+    },
+    {
+      "year": "1993",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.4
+    },
+    {
+      "year": "1994",
+      "teams": [
+        "SFG"
+      ],
+      "display_team": "SFG",
+      "war": 0.4
+    },
+    {
+      "year": "1995",
+      "teams": [
+        "CAL"
+      ],
+      "display_team": "CAL",
+      "war": 0.3
+    },
+    {
+      "year": "1996",
+      "teams": [
+        "CAL"
+      ],
+      "display_team": "CAL",
+      "war": -0.1
+    }
+  ],
+  "transactions": [
+    "June 7, 1982:Drafted by theDetroit Tigersin the1st round(20th pick) of the 1982 amateur draft.",
+    "December 12, 1985:Traded by theDetroit Tigersto theSeattle MarinersforDarnell Coles.",
+    "May 9, 1988:Released by theSeattle Mariners.",
+    "May 13, 1988:Signed as a Free Agent with theCalifornia Angels.",
+    "April 29, 1990:Traded by theCalifornia AngelswithClaudell Washingtonto theNew York YankeesforLuis Polonia.",
+    "October 15, 1993:Granted Free Agency.",
+    "November 9, 1993:Signed as a Free Agent with theSan Francisco Giants.",
+    "November 22, 1994:Released by theSan Francisco Giants.",
+    "August 8, 1995:Signed as a Free Agent with theCalifornia Angels.",
+    "December 21, 1995:Granted Free Agency.",
+    "February 7, 1996:Signed as a Free Agent with theNew York Yankees.",
+    "June 12, 1996:Traded by theNew York Yankeesto theCalifornia AngelsforMike Aldrete.",
+    "September 2, 1996:Released by theCalifornia Angels."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

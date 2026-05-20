@@ -1,6 +1,5 @@
 {
   "name": "James Edward Key",
-  "bio": "No SABR bio found.",
   "career_totals": {
     "WAR": "48.9",
     "W": "186",
@@ -144,9 +143,7 @@
     "December 10, 1996:Signed as a Free Agent with theBaltimore Orioles.",
     "October 27, 1998:Granted Free Agency."
   ],
-  "awards": [
-    "5x All-Star",
-    "2x World Series",
-    "ERA Title"
-  ]
+  "awards": [],
+  "positions": {},
+  "bio": ""
 }

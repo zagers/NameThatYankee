@@ -1,0 +1,61 @@
+{
+  "name": "Jos\u00e9 Caballero",
+  "career_totals": {
+    "WAR": "8.4",
+    "AB": "1121",
+    "H": "260",
+    "HR": "22",
+    "BA": ".232",
+    "R": "160",
+    "RBI": "119",
+    "SB": "132",
+    "OBP": ".317",
+    "SLG": ".348",
+    "OPS": ".664",
+    "OPS+": "89"
+  },
+  "yearly_war": [
+    {
+      "year": "2023",
+      "teams": [
+        "SEA"
+      ],
+      "display_team": "SEA",
+      "war": 2.5
+    },
+    {
+      "year": "2024",
+      "teams": [
+        "TBR"
+      ],
+      "display_team": "TBR",
+      "war": 1.6
+    },
+    {
+      "year": "2025",
+      "teams": [
+        "TBR",
+        "NYY"
+      ],
+      "display_team": "2TM",
+      "war": 2.9
+    },
+    {
+      "year": "2026",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.6
+    }
+  ],
+  "transactions": [
+    "June 13, 2017:Drafted by theArizona Diamondbacksin the7th roundof the 2017 amateur draft. Player signed June 23, 2017.",
+    "July 31, 2019:Traded by theArizona Diamondbacksto theSeattle MarinersforMike Leakeand cash.",
+    "January 5, 2024:Traded by theSeattle Marinersto theTampa Bay RaysforLuke Raley.",
+    "July 31, 2025:Traded by theTampa Bay Raysto theNew York Yankeesforfuture considerations(minors) andEverson Pereira."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

@@ -1,0 +1,132 @@
+{
+  "name": "John Charles Ellis",
+  "career_totals": {
+    "WAR": "3.0",
+    "AB": "2672",
+    "H": "699",
+    "HR": "69",
+    "BA": ".262",
+    "R": "259",
+    "RBI": "391",
+    "SB": "6",
+    "OBP": ".312",
+    "SLG": ".392",
+    "OPS": ".704",
+    "OPS+": "99"
+  },
+  "yearly_war": [
+    {
+      "year": "1969",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.2
+    },
+    {
+      "year": "1970",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.5
+    },
+    {
+      "year": "1971",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.1
+    },
+    {
+      "year": "1972",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.8
+    },
+    {
+      "year": "1973",
+      "teams": [
+        "CLE"
+      ],
+      "display_team": "CLE",
+      "war": 1.3
+    },
+    {
+      "year": "1974",
+      "teams": [
+        "CLE"
+      ],
+      "display_team": "CLE",
+      "war": 2.0
+    },
+    {
+      "year": "1975",
+      "teams": [
+        "CLE"
+      ],
+      "display_team": "CLE",
+      "war": -0.1
+    },
+    {
+      "year": "1976",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 0.4
+    },
+    {
+      "year": "1977",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": -0.4
+    },
+    {
+      "year": "1978",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 0.0
+    },
+    {
+      "year": "1979",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 0.5
+    },
+    {
+      "year": "1980",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": -1.0
+    },
+    {
+      "year": "1981",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": -0.7
+    }
+  ],
+  "transactions": [
+    "August 15, 1966:Signed by theNew York Yankeesas an amateur free agent.",
+    "November 27, 1972:Traded by theNew York YankeeswithJerry Kenney,Charlie SpikesandRusty Torresto theCleveland IndiansforJerry MosesandGraig Nettles.",
+    "December 9, 1975:Traded by theCleveland Indiansto theTexas RangersforRon PruittandStan Thomas.",
+    "March 30, 1982:Released by theTexas Rangers."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

@@ -1,0 +1,124 @@
+{
+  "name": "Zach Britton",
+  "career_totals": {
+    "WAR": "14.0",
+    "W": "35",
+    "L": "26",
+    "ERA": "3.13",
+    "G": "442",
+    "GS": "46",
+    "SV": "154",
+    "IP": "641.0",
+    "SO": "532",
+    "WHIP": "1.264"
+  },
+  "yearly_war": [
+    {
+      "year": "2011",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 0.4
+    },
+    {
+      "year": "2012",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 0.1
+    },
+    {
+      "year": "2013",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 0.0
+    },
+    {
+      "year": "2014",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 2.6
+    },
+    {
+      "year": "2015",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 2.3
+    },
+    {
+      "year": "2016",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 4.1
+    },
+    {
+      "year": "2017",
+      "teams": [
+        "BAL"
+      ],
+      "display_team": "BAL",
+      "war": 1.0
+    },
+    {
+      "year": "2018",
+      "teams": [
+        "BAL",
+        "NYY"
+      ],
+      "display_team": "2TM",
+      "war": 0.6
+    },
+    {
+      "year": "2019",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 2.5
+    },
+    {
+      "year": "2020",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.5
+    },
+    {
+      "year": "2021",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.4
+    },
+    {
+      "year": "2022",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.1
+    }
+  ],
+  "transactions": [
+    "June 6, 2006:Drafted by theBaltimore Oriolesin the3rd roundof the 2006 amateur draft. Player signed June 23, 2006.",
+    "July 24, 2018:Traded by theBaltimore Oriolesto theNew York YankeesforCody Carroll,Josh RogersandDillon Tate.",
+    "October 29, 2018:Granted Free Agency.",
+    "January 11, 2019:Signed as a Free Agent with theNew York Yankees.",
+    "November 6, 2022:Granted Free Agency."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

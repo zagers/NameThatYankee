@@ -1,0 +1,122 @@
+{
+  "name": "George Medich",
+  "career_totals": {
+    "WAR": "19.6",
+    "W": "124",
+    "L": "105",
+    "ERA": "3.78",
+    "G": "312",
+    "GS": "287",
+    "SV": "2",
+    "IP": "1996.2",
+    "SO": "955",
+    "WHIP": "1.332"
+  },
+  "yearly_war": [
+    {
+      "year": "1972",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.0
+    },
+    {
+      "year": "1973",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 4.8
+    },
+    {
+      "year": "1974",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 2.9
+    },
+    {
+      "year": "1975",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.5
+    },
+    {
+      "year": "1976",
+      "teams": [
+        "PIT"
+      ],
+      "display_team": "PIT",
+      "war": 1.2
+    },
+    {
+      "year": "1977",
+      "teams": [
+        "2TM",
+        "OAK",
+        "SEA",
+        "NYM"
+      ],
+      "display_team": "3TM",
+      "war": 0.9
+    },
+    {
+      "year": "1978",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 1.8
+    },
+    {
+      "year": "1979",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 0.7
+    },
+    {
+      "year": "1980",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 2.5
+    },
+    {
+      "year": "1981",
+      "teams": [
+        "TEX"
+      ],
+      "display_team": "TEX",
+      "war": 1.7
+    },
+    {
+      "year": "1982",
+      "teams": [
+        "TEX",
+        "MIL"
+      ],
+      "display_team": "2TM",
+      "war": -0.1
+    }
+  ],
+  "transactions": [
+    "June 4, 1970:Drafted by theNew York Yankeesin the30th roundof the 1970 amateur draft.",
+    "December 11, 1975:Traded by theNew York Yankeesto thePittsburgh PiratesforKen Brett,Dock EllisandWillie Randolph.",
+    "March 15, 1977:Traded by thePittsburgh PirateswithTony Armas,Doug Bair,Dave Giusti,Rick LangfordandMitchell Pageto theOakland AthleticsforChris Batton,Phil GarnerandTommy Helms.",
+    "September 13, 1977:Purchased by theSeattle Marinersfrom theOakland Athletics.",
+    "September 26, 1977:Selected off waivers by theNew York Metsfrom theSeattle Mariners.",
+    "November 2, 1977:Granted Free Agency.",
+    "November 11, 1977:Signed as a Free Agent with theTexas Rangers.",
+    "August 11, 1982:Purchased by theMilwaukee Brewersfrom theTexas Rangers."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

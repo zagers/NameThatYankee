@@ -1,0 +1,204 @@
+{
+  "name": "Charles Herbert Ruffing",
+  "career_totals": {
+    "WAR": "68.6",
+    "W": "273",
+    "L": "225",
+    "ERA": "3.80",
+    "G": "624",
+    "GS": "538",
+    "SV": "18",
+    "IP": "4344.0",
+    "SO": "1987",
+    "WHIP": "1.341"
+  },
+  "yearly_war": [
+    {
+      "year": "1924",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 0.0
+    },
+    {
+      "year": "1925",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 0.0
+    },
+    {
+      "year": "1926",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 0.0
+    },
+    {
+      "year": "1927",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 0.2
+    },
+    {
+      "year": "1928",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 1.5
+    },
+    {
+      "year": "1929",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 1.1
+    },
+    {
+      "year": "1930",
+      "teams": [
+        "BOS",
+        "NYY"
+      ],
+      "display_team": "2TM",
+      "war": 1.7
+    },
+    {
+      "year": "1931",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.2
+    },
+    {
+      "year": "1932",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.3
+    },
+    {
+      "year": "1933",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.6
+    },
+    {
+      "year": "1934",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.5
+    },
+    {
+      "year": "1935",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.4
+    },
+    {
+      "year": "1936",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.1
+    },
+    {
+      "year": "1937",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.2
+    },
+    {
+      "year": "1938",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.8
+    },
+    {
+      "year": "1939",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.6
+    },
+    {
+      "year": "1940",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.5
+    },
+    {
+      "year": "1941",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.0
+    },
+    {
+      "year": "1942",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.7
+    },
+    {
+      "year": "1945",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.2
+    },
+    {
+      "year": "1946",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.2
+    },
+    {
+      "year": "1947",
+      "teams": [
+        "CHW"
+      ],
+      "display_team": "CHW",
+      "war": 0.1
+    }
+  ],
+  "transactions": [
+    "August 8, 1923:Traded by Danville (Three-I)  to theBoston Red Soxfor $4000 and 2 players to be named.",
+    "May 6, 1930:Traded by theBoston Red Soxto theNew York YankeesforCedric Durstand $50,000.",
+    "September 20, 1946:Released by theNew York Yankees.",
+    "December 5, 1946:Signed as a Free Agent with theChicago White Sox.",
+    "September 30, 1947:Released by theChicago White Sox."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

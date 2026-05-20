@@ -14,7 +14,9 @@ def verify_claims(claims, raw_data):
     """
     # 1. Gather all valid years and full dates
     valid_years = set()
-    raw_text_for_matching = raw_data.get('bio', '') + " " + " ".join(raw_data.get('transactions', []))
+    bio_text = raw_data.get('bio') or ''
+    trans_list = raw_data.get('transactions') or []
+    raw_text_for_matching = bio_text + " " + " ".join(trans_list)
     
     # From yearly stats
     for entry in raw_data.get('yearly_war', []):

@@ -1,0 +1,139 @@
+{
+  "name": "Vernon Gomez",
+  "career_totals": {
+    "WAR": "38.7",
+    "W": "189",
+    "L": "102",
+    "ERA": "3.34",
+    "G": "368",
+    "GS": "320",
+    "SV": "10",
+    "IP": "2503.0",
+    "SO": "1468",
+    "WHIP": "1.352"
+  },
+  "yearly_war": [
+    {
+      "year": "1930",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.1
+    },
+    {
+      "year": "1931",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 5.9
+    },
+    {
+      "year": "1932",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.4
+    },
+    {
+      "year": "1933",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.7
+    },
+    {
+      "year": "1934",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 8.4
+    },
+    {
+      "year": "1935",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 4.1
+    },
+    {
+      "year": "1936",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.5
+    },
+    {
+      "year": "1937",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 9.2
+    },
+    {
+      "year": "1938",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 4.6
+    },
+    {
+      "year": "1939",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.0
+    },
+    {
+      "year": "1940",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.5
+    },
+    {
+      "year": "1941",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 1.0
+    },
+    {
+      "year": "1942",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -0.7
+    },
+    {
+      "year": "1943",
+      "teams": [
+        "WSH"
+      ],
+      "display_team": "WSH",
+      "war": -0.2
+    }
+  ],
+  "transactions": [
+    "August 17, 1929:Purchased by theNew York Yankeesfrom San Francisco (PCL) for $45,000.",
+    "January 25, 1943:Purchased by theBoston Bravesfrom theNew York Yankees.",
+    "May 19, 1943:Released by theBoston Braves.",
+    "May 21, 1943:Signed as a Free Agent with theWashington Nationals.(Date given is approximate. Exact date is uncertain.)",
+    "July 15, 1943:Released by theWashington Nationals."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": ""
+}

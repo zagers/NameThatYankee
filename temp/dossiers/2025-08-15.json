@@ -1,0 +1,197 @@
+{
+  "name": "Lindy McDaniel",
+  "career_totals": {
+    "WAR": "28.2",
+    "W": "141",
+    "L": "119",
+    "ERA": "3.45",
+    "G": "987",
+    "GS": "74",
+    "SV": "174",
+    "IP": "2139.1",
+    "SO": "1361",
+    "WHIP": "1.272"
+  },
+  "yearly_war": [
+    {
+      "year": "1955",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": 0.2
+    },
+    {
+      "year": "1956",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": 0.6
+    },
+    {
+      "year": "1957",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": 2.2
+    },
+    {
+      "year": "1958",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": -0.9
+    },
+    {
+      "year": "1959",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": 2.9
+    },
+    {
+      "year": "1960",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": 5.9
+    },
+    {
+      "year": "1961",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": -0.2
+    },
+    {
+      "year": "1962",
+      "teams": [
+        "STL"
+      ],
+      "display_team": "STL",
+      "war": 0.7
+    },
+    {
+      "year": "1963",
+      "teams": [
+        "CHC"
+      ],
+      "display_team": "CHC",
+      "war": 2.0
+    },
+    {
+      "year": "1964",
+      "teams": [
+        "CHC"
+      ],
+      "display_team": "CHC",
+      "war": 1.1
+    },
+    {
+      "year": "1965",
+      "teams": [
+        "CHC"
+      ],
+      "display_team": "CHC",
+      "war": 2.9
+    },
+    {
+      "year": "1966",
+      "teams": [
+        "SFG"
+      ],
+      "display_team": "SFG",
+      "war": 1.6
+    },
+    {
+      "year": "1967",
+      "teams": [
+        "SFG"
+      ],
+      "display_team": "SFG",
+      "war": 0.0
+    },
+    {
+      "year": "1968",
+      "teams": [
+        "SFG",
+        "NYY"
+      ],
+      "display_team": "2TM",
+      "war": 1.9
+    },
+    {
+      "year": "1969",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.4
+    },
+    {
+      "year": "1970",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 4.2
+    },
+    {
+      "year": "1971",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": -1.4
+    },
+    {
+      "year": "1972",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 0.9
+    },
+    {
+      "year": "1973",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 3.3
+    },
+    {
+      "year": "1974",
+      "teams": [
+        "KCR"
+      ],
+      "display_team": "KCR",
+      "war": 1.1
+    },
+    {
+      "year": "1975",
+      "teams": [
+        "KCR"
+      ],
+      "display_team": "KCR",
+      "war": -0.2
+    }
+  ],
+  "transactions": [
+    "August 19, 1955:Signed by theSt. Louis Cardinalsas an amateur free agent (bonus baby).",
+    "October 17, 1962:Traded by theSt. Louis CardinalswithLarry JacksonandJimmie Schafferto theChicago CubsforGeorge Altman,Don CardwellandMoe Thacker.",
+    "December 2, 1965:Traded by theChicago CubswithDon Landrumto theSan Francisco GiantsforBill HandsandRandy Hundley.",
+    "July 12, 1968:Traded by theSan Francisco Giantsto theNew York YankeesforBill Monbouquette.",
+    "December 7, 1973:Traded by theNew York Yankeesto theKansas City RoyalsforLou PiniellaandKen Wright.",
+    "January 3, 1977:Released by theKansas City Royals."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": "Lindy McDaniel August 20, 2013 / in BioProject - Person 1960s All-Stars Siblings / by admin LnRiLWhlYWRpbmcuaGFzLWJhY2tncm91bmR7cGFkZGluZzowfQ== LnRiLWZpZWxke21hcmdpbi1ib3R0b206MC43NmVtfS50Yi1maWVsZC0tbGVmdHt0ZXh0LWFsaWduOmxlZnR9LnRiLWZpZWxkLS1jZW50ZXJ7dGV4dC1hbGlnbjpjZW50ZXJ9LnRiLWZpZWxkLS1yaWdodHt0ZXh0LWFsaWduOnJpZ2h0fS50Yi1maWVsZF9fc2t5cGVfcHJldmlld3twYWRkaW5nOjEwcHggMjBweDtib3JkZXItcmFkaXVzOjNweDtjb2xvcjojZmZmO2JhY2tncm91bmQ6IzAwYWZlZTtkaXNwbGF5OmlubGluZS1ibG9ja311bC5nbGlkZV9fc2xpZGVze21hcmdpbjowfQ== LnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gLndwLWJsb2NrLXRvb2xzZXQtYmxvY2tzLWNvbnRhaW5lci50Yi1jb250YWluZXJbZGF0YS10b29sc2V0LWJsb2Nrcy1jb250YWluZXI9Ijc2YjllMTlhZWJkNzhiNDY3YjA0YzY0YWNmZTMzMTY3Il0geyBwYWRkaW5nOiAwcHg7IH0gLnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gLndwLWJsb2NrLXRvb2xzZXQtYmxvY2tzLWNvbnRhaW5lci50Yi1jb250YWluZXJbZGF0YS10b29sc2V0LWJsb2Nrcy1jb250YWluZXI9IjYxNTE2M2MzOGJlYjJiY2YyYmRjNjA3NzdiNGVjMDk3Il0geyBiYWNrZ3JvdW5kOiByZ2JhKCAyNDgsIDI0OCwgMjQ4LCAxICk7cGFkZGluZzogMjVweDsgfSAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfS50Yi1maWVsZHMtYW5kLXRleHRbZGF0YS10b29sc2V0LWJsb2Nrcy1maWVsZHMtYW5kLXRleHQ9IjM0MDljMjMzMWJlNTQ2YjcwOWVkMDM2NmMzYTZlNTZmIl0geyBtYXJnaW4tdG9wOiAxMHB4OyB9IGg1LnRiLWhlYWRpbmdbZGF0YS10b29sc2V0LWJsb2Nrcy1oZWFkaW5nPSI2YjlmOTI3Y2VjMTUwZDg3NzFkNTEyYmE2YzczZmQ4OCJdICB7IHBhZGRpbmctYm90dG9tOiAxMHB4OyB9ICBoNS50Yi1oZWFkaW5nW2RhdGEtdG9vbHNldC1ibG9ja3MtaGVhZGluZz0iNmI5ZjkyN2NlYzE1MGQ4NzcxZDUxMmJhNmM3M2ZkODgiXSBhICB7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgfSAudGItZmllbGRzLWFuZC10ZXh0W2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGRzLWFuZC10ZXh0PSI2M2MyZGNiODA5MmY4NDFmYTMxZDk0ZDQ2MjFmYTkwYSJdIHsgcGFkZGluZy1ib3R0b206IDE1cHg7IH0gLnRiLWZpZWxkcy1hbmQtdGV4dFtkYXRhLXRvb2xzZXQtYmxvY2tzLWZpZWxkcy1hbmQtdGV4dD0iMzk3ZjY0YTY5MzllYjViYWZjOTM0ODgxYjZjYTI4NTgiXSB7IHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOyB9IC50Yi1maWVsZHMtYW5kLXRleHRbZGF0YS10b29sc2V0LWJsb2Nrcy1maWVsZHMtYW5kLXRleHQ9IjM5N2Y2NGE2OTM5ZWI1YmFmYzkzNDg4MWI2Y2EyODU4Il0gcCB7IHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOyB9IC50Yi1maWVsZHMtYW5kLXRleHRbZGF0YS10b29sc2V0LWJsb2Nrcy1maWVsZHMtYW5kLXRleHQ9IjU5MTNhMjE5NjUxOWQzNTY5MTM1M2QwMTkxZjRjYWM2Il0geyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgfSAudGItZmllbGRzLWFuZC10ZXh0W2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGRzLWFuZC10ZXh0PSI1OTEzYTIxOTY1MTlkMzU2OTEzNTNkMDE5MWY0Y2FjNiJdIHAgeyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgfSAgaDYudGItaGVhZGluZ1tkYXRhLXRvb2xzZXQtYmxvY2tzLWhlYWRpbmc9IjlhNzU4NmFhNzRjNGEwZTI4OTI5YTgzZjE1NWZkMGE3Il0gYSAgeyB0ZXh0LWRlY29yYXRpb246IG5vbmU7IH0gIGg2LnRiLWhlYWRpbmdbZGF0YS10b29sc2V0LWJsb2Nrcy1oZWFkaW5nPSI3ZDQwMmZiODZiMzFhMWY2ZGYxZDA0MTBkODY2MjdiYSJdIGEgIHsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyB9IC50Yi1jb250YWluZXIgLnRiLWNvbnRhaW5lci1pbm5lcnt3aWR0aDoxMDAlO21hcmdpbjowIGF1dG99IC53cC1ibG9jay10b29sc2V0LWJsb2Nrcy1jb250YWluZXIudGItY29udGFpbmVyW2RhdGEtdG9vbHNldC1ibG9ja3MtY29udGFpbmVyPSI2YjRjMDZiNThiNzhhNDE1N2MyM2NkZDM5NGI0ZmY2OSJdIHsgcGFkZGluZzogMHB4IDBweCAxMHB4IDBweDsgfSAgaDYudGItaGVhZGluZ1tkYXRhLXRvb2xzZXQtYmxvY2tzLWhlYWRpbmc9IjA2MWMxMmEzMDcyYjc0ZGYzYTE5ZmVjZjlmMTYwNmY3Il0gYSAgeyB0ZXh0LWRlY29yYXRpb246IG5vbmU7IH0gLnRiLWZpZWxkW2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGQ9ImVjMjg5ZWRlODU2NTcyYTdkMWIwYjY0YTc2MWZiYjFkIl0geyBmb250LXNpemU6IDE2cHg7dGV4dC1hbGlnbjogbGVmdDsgfSAgLnRiLWZpZWxkW2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGQ9ImVjMjg5ZWRlODU2NTcyYTdkMWIwYjY0YTc2MWZiYjFkIl0gYSB7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgfSAudGItZmllbGRzLWFuZC10ZXh0W2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGRzLWFuZC10ZXh0PSJmNDgwOTZhM2ZiMTRiZTBjN2Q5ZGNjOTI0NzUzMGQyMCJdIHsgcGFkZGluZy1ib3R0b206IDEwcHg7IH0gQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA3ODFweCkgeyAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfS50Yi1jb250YWluZXIgLnRiLWNvbnRhaW5lci1pbm5lcnt3aWR0aDoxMDAlO21hcmdpbjowIGF1dG99LnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gICAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfSAgIH0gQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA1OTlweCkgeyAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfS50Yi1jb250YWluZXIgLnRiLWNvbnRhaW5lci1pbm5lcnt3aWR0aDoxMDAlO21hcmdpbjowIGF1dG99LnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gICAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfSAgIH0g This article was written by David E. Skelton A lifelong pursuit toward a ministerial career was put on hold for 21 years while the devoutly religious Lindy McDaniel labored in his temporary gig as a major-league hurler.  During the interim employment he alternately became both the \u201ctoast of the town \u2026 [and] the roast of the town with his ups and downs.\u201d 1 Possessor of one of the finest curves and later forkballs the game has ever known, McDaniel rode his pitching mastery to a longevity that shattered numerous records.  Not bad for temp work. Born on December 13, 1935, Lyndall Dale McDaniel earned the nickname Lindy at 4 years old in a nod to the famous aviator Charles Lindbergh.  Hollis, Oklahoma, a one-stoplight town in the southwest part of the state, was Lindy\u2019s home throughout the early stages of his life.  Hollis, whose population has never exceeded 3,200, remains large enough to have made a sizable splash in sports, serving as home to two successful college coaches, a professional football player, and four professional baseball players (two of whom were Lindy\u2019s younger siblings, Von and Kerry Don ). Among the childhood pleasures of rabbit hunting and taking in Western action movies, Lindy and his brothers developed a passion for baseball with gloves made \u201cof sacks, crudely sewn in the shape of their hands.\u201d 2 This handicap was overcome by a certain inherited athleticism: His father, Newell (a cousin of famed University of Texas football coach Darrell Royal), had been an accomplished athlete in tennis and track.  Newell and his wife, Ada Mae (Burk) McDaniel, raised their four children in a deeply religious manner.  Fearing the temptations that might befall her son, Ada Mae required a great deal of persuasion before concluding that baseball was a fit pursuit. She was forced to reach this conclusion early when the St. Louis Cardinals began scouting her son before he was 16.  Lindy had established himself as a star hurler at Arnett High School, a reputation further enhanced by his exploits on the Altus American Legion team. Alongside teammates Eddie Fisher and Tony Risinger \u2013 both of whom would go on to play professionally \u2013 the team captured two consecutive state championships.  Though the attraction between prospect and team was mutual \u2013 Lindy grew up idolizing the Cardinals\u2019 Stan Musial and the earlier feats of Dizzy Dean \u2013 he accepted a four-year basketball scholarship offered by the University of Oklahoma. The Cardinals had kept tabs on the Hollis native, and when scout Fred Hawn signed him three months before his 20th birthday, it was reported that St. Louis had five years of data on McDaniel. By signing with the Cardinals McDaniel became ineligible for college athletics and, three days after his fourth appearance as a major leaguer, he enrolled at Abilene Christian College in Texas. The $50,000 price tag qualified McDaniel as a \u201cbonus baby\u201d who, under the rules then in effect, had to be placed on the Cardinals\u2019 roster.  Dubbed \u201cthe eleventh member of a ten-man staff,\u201d 3 McDaniel was inserted into mop-up duty a day after he reported to the club.  The positive impression made in this and a subsequent outing earned McDaniel his first starting assignment, on September 19, 1955, against the Chicago Cubs, when he yielded Hall of Famer Ernie Banks\u2019 then-record fifth grand slam of the season.  Despite a hefty 4.74 ERA in 19 end-of-the-season innings, his potential was glimpsed by the league\u2019s senior umpire of 40 years, Babe Pinelli, who offered that \u201c[McDaniel] showed me one of the best curves I\u2019ve ever seen.\u201d 4 Entering the 1956 campaign, the Cardinals had not won a pennant in ten years and, due to a near-league worst 3.97 ERA, they would not come close during McDaniel\u2019s first full season.  Nineteen pitchers took the mound for St. Louis but only two managed less than a 3.50 mark: 39-year-old Murry Dickson and 20-year-old McDaniel.  Excluding a handful of difficult outings, McDaniel finished with a 2.37 ERA in 34 appearances that prompted manager Fred Hutchinson to remark, \u201cI don\u2019t know what we\u2019d do without him.\u201d 5 Though he got the occasional starting assignment (including a complete-game victory over the Cubs on September 25) most of his success was achieved from the bullpen \u2013 a harbinger of his future. For the second consecutive year McDaniel reported to 1957 spring training as the Cardinals\u2019 youngest player.  A reshuffling of the pitching staff saw relievers McDaniel and Larry Jackson inserted permanently into the rotation, and with the later addition of another $50,000 bonus baby \u2013 Lindy\u2019s younger brother, Von \u2013 the Cardinals were thrust into immediate pennant contention.  While Lindy set a course for a team-leading 15 victories and ten complete games, Von turned his first starting assignment into a two-hit shutout over the Brooklyn Dodgers that soon drew comparisons to another successful brother combination from the Gas House Gang era, Dizzy and Paul Dean (a comparison enhanced when Von was a two-base hit shy of a perfect game against the Pittsburgh Pirates on July 28).  Lindy had posted his first shutout on May 16 with a four-hit gem against the Philadelphia Phillies.  Though an August collapse doomed the Cardinals\u2019 hopes for the National League crown, the McDaniel brothers appeared poised for long and fruitful careers in St. Louis.  But that never came to fruition: Von made two brief appearances in 1958 and never donned a major-league uniform again. Meanwhile, Lindy suffered the first of a series of Jekyll-and-Hyde seasons that became part of his signature in the majors. The 1958 Cardinals never fully recovered from a 3-14 start to the campaign, and McDaniel\u2019s season followed suit.  After 11 starts his record stood at 3-5 with a 5.49 ERA, the lone bright spot being a shutout over Philadelphia. Moved to the bullpen, he fared little better. On August 14, with the bonus-baby rules since relaxed, St. Louis demoted McDaniel to Triple-A Omaha \u2013the only time in his long career that he served in the minors. Roster expansions in September afforded McDaniel one final outing, but he closed the season with a 5-7, 5.80 record. As mysteriously as he slumped in 1958, McDaniel just as mysteriously rebounded for a fine two-year run. A complete-game victory over the Los Angeles Dodgers in his first outing of 1959 reflected his determination to win back his spot in the rotation, but six subsequent starts proved less successful.  Relegated again to the bullpen, McDaniel blossomed into the relief specialist that \u2013 with the addition of a forkball to his repertoire \u2013 represented the successful remainder of his career (he started only 15 games over the next 15 years).  From the time he was shifted into the bullpen until the end of the 1960 season, McDaniel posted a record of 24-9 with a 2.40 ERA and was established as one of the premier relievers in the game. In 1960 he was selected for the All-Star Team for the only time. After the season he finished fifth in the voting for the NL Most Valuable Player and third for the Cy Young Award. (He was the first reliever to ever receive a Cy Young Award vote.) He was the first recipient of The Sporting News\u2019 National League Fireman Trophy, and shared with teammate Ernie Broglio the J.G. Taylor Spink Award as the St. Louis Baseball Man of the Year as determined by the local chapter of the Baseball Writers\u2019 Association of America (where during the ceremony the preacher-to-be was asked to deliver the invocation). In this same two-year span McDaniel entered the record books in a unique manner: On May 10, 1959, he pitched in both games of a doubleheader against the Cubs, losing the first game and winning the second. The Cubs\u2019 Elmer Singleton won the opener and lost the nightcap. This rare combination had occurred only twice before and four times since in the major leagues through 2012. The 1959-60 ascendency of Jekyll yielded to Hyde in 1961-62.  A strong finish to the 1961 campaign helped mask a 6.05 ERA on July 20. The next year McDaniel suffered a late collapse that saw his ERA rise from 2.14 on July 7 to 4.12 at season\u2019s end (with a 3-10 won-lost record).  Rumors emerged about McDaniel\u2019s availability and, in spite of his difficulties, teams began courting. The day after the 1961 World Series ended, the Cardinals traded McDaniel and fellow pitcher Larry Jackson to the Cubs, hoping to improve on the team\u2019s paltry home run output with the acquisition of slugger George Altman. McDaniel and Jackson were deemed expendable with the emergence of young pitchers including such as Ray Washburn and Ray Sadecki. The Cubs were seeking to bolster a pitching corps whose runs yielded in 1962 were exceeded only by the hapless expansion New York Mets. Weeks later Lindy\u2019s feeling on the parting was parodied by sportscaster Jack Buck in a fictitious telegram to manager Johnny Keane:  \u201cDear John \u2013 Gee whiz \u2026 darn it \u2026 golly \u2026 and oh dear. \u2013 P.S.:  Heck.\u201d 6 \u2013 a gentle, respectful jab at the player whose closest brush with profanity was \u201cdoggone it!\u201d If the Cubs were hoping for a comeback  season from McDaniel that is exactly what they got.  Their pitching staff went from one of the worst in the league to one of the best, and McDaniel was credited largely for the turnaround.  \u201c[McDaniel] brought a new atmosphere of confidence and know-how to our pitching staff,\u201d 7 said 22-game winner Dick Ellsworth as the team logged its first winning campaign in 17 years. Thirteen victories and a 2.86 ERA helped McDaniel become the first to win two Fireman Trophies in the National League. Perhaps it was the novelty of pitching for a different club that brought out the best in McDaniel, for although he logged two more fine campaigns with the Cubs \u2013 including a record 155 appearances by him and Cubs submariner Ted Abernathy in 1965 \u2013 McDaniel found himself hurling on the West Coast in 1966. (His legacy: Until 1977, when Bruce Sutter set a new standard for relief in Chicago, McDaniel\u2019s name was often invoked when a pitcher on either the White Sox or Cubs emerged as the team\u2019s primary closer.) Despite the efforts of McDaniel and Abernathy, the Cubs had reverted to their familiar bent with a 90-loss campaign in 1965. After the season the club looked to fill numerous needs, one of which was at catcher. The Cubs had long coveted San Francisco catching prospect Randy Hundley. Notwithstanding new manager Leo Durocher\u2019s comment in November that the Cubs could not \u201cafford to part with him,\u201d 8 McDaniel became part of the price paid to acquire Hundley. Perhaps no two players were happier than two Giants, future Hall of Famers Willie Mays and Willie McCovey. When Mays first encountered Jim Bunning in the 1957 All-Star Game, he reached for McDaniel as an apt comparison of how tough he was to hit against by stating, that Lindy \u201cmade us hit the ball on the ground.\u201d 9 Six years later McCovey echoed his teammate, saying, \u201cI\u2019d prefer to face a number of [left-handers] rather than \u2026 Lindy McDaniel.\u201d 10 Both took solace in the knowledge that this feared hurler was now in the same uniform. Still another player may have been even more ecstatic:  Giants closer Frank Linzy.  \u201cMcDaniel \u2026 will make our bullpen stronger than a year ago when [rookie] Frank Linzy had to carry the big load,\u201d said manager Herman Franks. 11 As if on cue, McDaniel turned in one of his finest seasons in 1966. He and the Dodgers\u2019 Phil Regan were the only National League relievers to reach double figures in victories. In a four-week stretch beginning August 6, McDaniel was nearly untouchable: a scoreless streak of 20? innings over ten appearances that contributed to a 1.95 ERA after the All-Star break. A sentimental honor for him was his five innings of one-hit relief on May 8 that earned McDaniel the final victory in a venue he knew very well \u2013 the first Busch Stadium.  Though the Giants held a stake in first place for more than 60 percent of the campaign, they were eliminated on the last day of the season. It was the closest McDaniel ever came to participating in postseason play \u2013 the one regret he had in his career. Injuries marred much of McDaniel\u2019s 1967 campaign. He was a pitcher who thrived on work, and his numbers suffered when a sore shoulder sidelined him for five weeks.  A strong close (2.18 ERA in his final 20 appearances) did not forestall rampant trade rumors, and when in 1968 McDaniel had a 7.45 ERA on July 4, the Giants placed him on waivers. McDaniel later acknowledged thinking of retirement during this difficult stretch, but those thoughts were shelved when the New York Yankees claimed him and the two teams worked out a deal aimed at reviving the careers of two thirty-something hurlers McDaniel was exchanged for Yankees right-hander Bill Monbouquette. As witnessed in previous patterns, his season promptly turned around. McDaniel made his first appearance in pinstripes two days after the July 12 transaction and manager Ralph Houk ensured continuous use thereafter \u2013 a positive development for the rubber-armed veteran whose success was anchored on such use. Four wins and ten saves later, McDaniel received considerable credit for the Yankees\u2019 first winning campaign in four years.  \u201cWe were losing games in the eighth and ninth innings because no one in the bullpen could lock up these games,\u201d Houk said. \u201cIf we had had [McDaniel] the first half, I am sure we [would\u2019ve been] in the pennant race.\u201d 12 A successful five-year run ensued in New York. In his second season he again got votes for MVP. With nine wins, 29 saves, and a 2.01 ERA in 1970, he nearly captured a third Fireman\u2019s Award. In 1972 and 1973 (in a nod to The Odd Couple) he served as the Felix to fellow reliever Sparky Lyle\u2019s Oscar,\u2013 \u201cthe austere, quiet lay preacher [paired with] the bon vivant, the fun-loving Rover boy of loud laughter and practical jokes.\u201d 13 On September 23, 1973, McDaniel made his 907th career appearance, passing Cy Young for second place on the all-time list. But by the end of the 1973 campaign, the travel associated with a major-league career was taking its toll on the 37-year-old righty.  The strain of separation for a married man of 16 years, compounded by separation from the churches he served, only added to this toll. As a young Cardinal McDaniel studied in the offseasons at Abilene Christian College in 1955-56. Then he transferred to Florida Christian College. His motive: He\u2019d fallen in love. During spring training he had met Oral Audrey Kuhn, who was a student at Florida Christian, which was in Temple Terrace, Florida, not far from the Cardinals\u2019 training site in St. Petersburg. They were married on January 24, 1957. For years thereafter, when the Florida Christian student body attended Grapefruit League games, McDaniel had his own personal cheering section. In 1964, when McDaniel was a Cub, the school\u2019s new athletic field was named for McDaniel. They had three children, Dale, Kathi, and Jonathan, and as of 2013 had 13 grandchildren and four great-grandchildren. Eventually McDaniel was ordained a minister of the Church of Christ, and preached for congregations in his hometown of Hollis, churches in Missouri during his years with the Cardinals, and in Baytown, Texas. McDaniel began publishing a religious newsletter, \u201cPitching for the Master,\u201d which in 2013 he was still writing from his calling in Lavon, Texas, 30 miles northeast of Dallas. To remedy the challenges of separation, when the Yankees would not acquiesce to a two-year contract, McDaniel requested a trade after the 1973 season in order to be closer to his religious and familial responsibilities. The Yankees engineered a swap with Kansas City on December 7 for pitcher Ken Wright and outfielder Lou Piniella. Unaccustomed to pitching regularly on artificial surfaces like that at the Royals\u2019 ballpark, McDaniel had trouble inducing groundballs on the harder, faster surface, and in his two seasons with Kansas City he was lit up for a 4.98 ERA versus 2.87 on grass. These difficulties notwithstanding, the Pittsburgh Pirates, who also played on an artificial surface sought (unsuccessfully) to obtain McDaniel during the 1974 pennant race when their pitching was struck by a series of injuries \u2013 a clear indication of the esteem for McDaniel at almost 39 years old. In Arlington, Texas, on September 27, 1975, Texas Rangers\u2019 right fielder Jeff Burroughs grounded out in the eighth inning on McDaniel\u2019s last pitch in the major leagues. (He had previously announced he would retire.) When McDaniel retired he trailed only Hoyt Wilhelm in career appearances, relief victories, and relief appearances. Wilhelm was elected to the Hall of Fame, but McDaniel got only four votes for the Hall over a two-year period. In 1968 McDaniel tied Vic Raschi\u2019s American League record of 32 consecutive batters retired. (Kansas City teammate Steve Busby broke the record in 1974.) McDaniel made only 22 errors in his career, and set the NL record (since broken) for most consecutive games by a pitcher without an error, 225. For his humanitarian efforts he was given the Ken Hubbs Memorial Award in 1970 by the Chicago baseball writers. In 1978 the St. Louis baseball writers named him one of the 15 best players during the then-25-year ownership of Anheuser-Busch. In mid-career McDaniel offered a modest assessment of his ability: \u201cIf I wasn\u2019t a relief pitcher I probably wouldn\u2019t be in the majors.  I may not have realized it at the time, but when I went to the bullpen, it was a break for me.\u201d 14 He was characterized as a person with a serene disposition and a ready smile.  He was never ejected from a game or suspended for a rules infraction. But he was also a fierce competitor on the mound. Perhaps no one captured this competitiveness better than Joe Garagiola (echoing a comment from Gil Hodges in 1957):  \u201cLindy\u2019s the only preacher I know with a great knockdown pitch.\u201d 15 That competitiveness resulted in a productive 21-year career: fine work for a part-timer. Author\u2019s note The author wishes to thank Lindy McDaniel for his time and assistance in ensuring the accuracy of this narrative.  Further thanks are extended to Mike Emeigh and Len Levin. Sources Baseball-reference.com Ancestry.com Notes 1 \u201cRebounding Lindy Lion of Yank Bullpen,\u201d The \tSporting News, May \t30, 1970, 13. 2 \u201cMcDaniels of Cardinals Revive Dean Act,\u201d The \tSporting News, June \t12, 1957, 3. 3 \u201cCards\u2019 50-Grand Gee-Whiz Strikes Gold Dust on Relief,\u201d The \tSporting News, June \t6, 1956, 8. 4 \u201c50-Grand McDaniel Starts Paying Off Cards,\u201d The \tSporting News, May \t2, 1956, 2. 5 \u201cCards\u2019 50-Grand Gee-Whiz Strikes Gold Dust on Relief,\u201d The \tSporting News, June \t6, 1956, 8. 6 \u201cSpieler Buck\u2019s Fake Messages Give Banquet Guests a Barrel of \tLaughs,\u201d The \tSporting News, December \t1, 1962, 36. 7 \u201cEllsworth First Cub to Log 20 Wins Since \u201945,\u201d The \tSporting News, September \t14, 1963, 9. 8 \u201cLip Slams Brakes On Yarn That Cubs Will Trade Lindy,\u201d The \tSporting News, November \t20, 1965, 6. 9 \u201cBunning Best Musial\u2019s Seen; \u2018He Had the Most,\u2019 Says Mays,\u201d The Sporting \tNews, July \t17, 1957, 8. 10 \u201cMcCovey Aiming to Double HR Tempo Against Lefties,\u201d The \tSporting News, December \t14, 1963, 17. 11 \u201cChirpin\u2019 Herman Claims Giants \u2018Look Stronger\u2019 Than Year \tAgo,\u201d The \tSporting News, January \t29, 1966, 21. 12 \u201cRevived McDaniel Perks Up Sagging Yankees\u2019 Bullpen,\u201d The \tSporting News, August \t17, 1968, 16. 13 \u201cFire Fighters\u2019 Local Speeds Up Yank Express,\u201d The \tSporting News, July \t14, 1973, 15. 14 \u201cLindy Finds Good Life \u2013 He Gets Rich on Relief,\u201d The \tSporting News, April \t15, 1967, 13. 15 \u201cFireman Lindy Ready to Quell Cubs\u2019 Troubles,\u201d The \tSporting News, March \t20, 1965, 17. Full Name Lyndall Dale McDaniel Born December 13, 1935 at Hollis, OK (USA) Died November 14, 2020 at Carrollton, TX (USA) Stats Baseball Reference Retrosheet If you can help us improve this player\u2019s biography, contact us . Tags 1960s All-Stars \u00b7 Siblings \u00b7 Share this entry Share on Facebook Share on X Share on LinkedIn Share on Reddit Share by Mail http://dev.sabr.org/wp-content/uploads/2013/08/McDanielLindy.large-thumbnail.jpg 600 800 admin /wp-content/uploads/2020/02/sabr_logo.png admin 2013-08-20 16:55:09 2022-04-04 13:52:29 Lindy McDaniel"
+}

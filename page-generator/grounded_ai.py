@@ -27,24 +27,48 @@ def get_gemini_client(api_key: str):
     """Returns a Gemini API client instance."""
     return genai.Client(api_key=api_key)
 
+def contains_spoiler(result, name):
+    """Checks if the player name or nicknames appear in the hints."""
+    facts = result.get("facts", [])
+    # Case insensitive search for the name parts
+    name_parts = [p.lower() for p in name.split() if len(p) > 2]
+    for fact in facts:
+        for part in name_parts:
+            if part in fact.lower():
+                return True
+    return False
+
+def contains_hall_of_shame(result):
+    """Checks for low-quality filler and meta-commentary."""
+    facts = result.get("facts", [])
+    qa = result.get("qa", [])
+    all_text = " ".join(facts) + " " + " ".join([q.get('question', '') + " " + q.get('answer', '') for q in qa])
+    all_text = all_text.lower()
+    
+    forbidden = [
+        "sabr", "bioproject", "biography remains", "unassigned",
+        "born on", "birthplace", "full name is", "middle name",
+        "official record", "database"
+    ]
+    
+    for word in forbidden:
+        if word in all_text:
+            return True, word
+    return False, None
+
 def generate_grounded_trivia(player_dossier, api_key: str):
     """
     Generates trivia facts and Q&A pairs anchored strictly to the provided player dossier.
-    
-    Args:
-        player_dossier (dict): Contains name, career_totals, yearly_war, transactions, awards, bio.
-        api_key (str): Gemini API key.
-        
-    Returns:
-        dict: A dictionary containing 'facts', 'qa', and 'claims'.
+    Includes a quality guard that forces retries on spoilers or low-quality filler.
     """
     _respect_free_tier_rate_limit()
     client = get_gemini_client(api_key)
     
+    player_name = player_dossier.get('name', 'Unknown Player')
     dossier_json = json.dumps(player_dossier, indent=2)
     
     prompt = f"""
-You are a passionate New York Yankees historian and fan. Your goal is to generate engaging, high-impact trivia hints and follow-up "story bites" for the player: {player_dossier.get('name', 'Unknown Player')}.
+You are a passionate New York Yankees historian and fan. Your goal is to generate engaging, high-impact trivia hints and follow-up "story bites" for the player: {player_name}.
 
 **THE SOURCE OF TRUTH (PLAYER DOSSIER)**:
 {dossier_json}
@@ -95,24 +119,34 @@ Return ONLY a JSON object:
 }}
 """
 
-
-    response = client.models.generate_content(
-        model=MODEL,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            response_mime_type="application/json",
-            temperature=0.1
+    max_attempts = 5
+    for attempt in range(max_attempts):
+        response = client.models.generate_content(
+            model=MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                temperature=0.2
+            )
         )
-    )
-    
-    try:
-        return json.loads(response.text)
-    except Exception as e:
-        print(f"Error parsing Gemini response: {e}")
-        print(f"Raw response: {response.text}")
-        # Return a fallback structure if parsing fails
-        return {
-            "facts": [],
-            "qa": [],
-            "claims": []
-        }
+        
+        try:
+            result = json.loads(response.text)
+            
+            # QUALITY GUARD
+            if contains_spoiler(result, player_name):
+                print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Name found in hints.")
+                continue
+                
+            has_junk, word = contains_hall_of_shame(result)
+            if has_junk:
+                print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Hall of Shame filler detected ('{word}').")
+                continue
+                
+            return result
+            
+        except Exception as e:
+            print(f"Error parsing Gemini response: {e}")
+            
+    # Fallback if all attempts fail
+    return {"facts": [], "qa": [], "claims": []}

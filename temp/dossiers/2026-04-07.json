@@ -1,0 +1,251 @@
+{
+  "name": "Rickey Henderson",
+  "career_totals": {
+    "WAR": "111.2",
+    "AB": "10961",
+    "H": "3055",
+    "HR": "297",
+    "BA": ".279",
+    "R": "2295",
+    "RBI": "1115",
+    "SB": "1406",
+    "OBP": ".401",
+    "SLG": ".419",
+    "OPS": ".820",
+    "OPS+": "127"
+  },
+  "yearly_war": [
+    {
+      "year": "1979",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": -0.9
+    },
+    {
+      "year": "1980",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 8.8
+    },
+    {
+      "year": "1981",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 6.7
+    },
+    {
+      "year": "1982",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 6.7
+    },
+    {
+      "year": "1983",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 6.9
+    },
+    {
+      "year": "1984",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 6.0
+    },
+    {
+      "year": "1985",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 9.9
+    },
+    {
+      "year": "1986",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 6.3
+    },
+    {
+      "year": "1987",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 4.7
+    },
+    {
+      "year": "1988",
+      "teams": [
+        "NYY"
+      ],
+      "display_team": "NYY",
+      "war": 6.3
+    },
+    {
+      "year": "1989",
+      "teams": [
+        "NYY",
+        "OAK"
+      ],
+      "display_team": "2TM",
+      "war": 8.7
+    },
+    {
+      "year": "1990",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 9.9
+    },
+    {
+      "year": "1991",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 4.6
+    },
+    {
+      "year": "1992",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 5.6
+    },
+    {
+      "year": "1993",
+      "teams": [
+        "OAK",
+        "TOR"
+      ],
+      "display_team": "2TM",
+      "war": 5.0
+    },
+    {
+      "year": "1994",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 3.5
+    },
+    {
+      "year": "1995",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 2.9
+    },
+    {
+      "year": "1996",
+      "teams": [
+        "SDP"
+      ],
+      "display_team": "SDP",
+      "war": 1.9
+    },
+    {
+      "year": "1997",
+      "teams": [
+        "SDP",
+        "ANA"
+      ],
+      "display_team": "2TM",
+      "war": 1.6
+    },
+    {
+      "year": "1998",
+      "teams": [
+        "OAK"
+      ],
+      "display_team": "OAK",
+      "war": 2.3
+    },
+    {
+      "year": "1999",
+      "teams": [
+        "NYM"
+      ],
+      "display_team": "NYM",
+      "war": 1.9
+    },
+    {
+      "year": "2000",
+      "teams": [
+        "NYM",
+        "SEA"
+      ],
+      "display_team": "2TM",
+      "war": 0.7
+    },
+    {
+      "year": "2001",
+      "teams": [
+        "SDP"
+      ],
+      "display_team": "SDP",
+      "war": 0.5
+    },
+    {
+      "year": "2002",
+      "teams": [
+        "BOS"
+      ],
+      "display_team": "BOS",
+      "war": 0.4
+    },
+    {
+      "year": "2003",
+      "teams": [
+        "LAD"
+      ],
+      "display_team": "LAD",
+      "war": 0.2
+    }
+  ],
+  "transactions": [
+    "June 8, 1976:Drafted by theOakland Athleticsin the4th roundof the 1976 amateur draft. Player signed July 9, 1976.",
+    "December 5, 1984:Traded by theOakland AthleticswithBert Bradleyand cash to theNew York YankeesforTim Birtsas,Jay Howell,Stan Javier,Eric PlunkandJos\u00e9 Rijo.",
+    "June 21, 1989:Traded by theNew York Yankeesto theOakland AthleticsforGreg Cadaret,Eric PlunkandLuis Polonia.",
+    "November 13, 1989:Granted Free Agency.",
+    "November 28, 1989:Signed as a Free Agent with theOakland Athletics.",
+    "July 31, 1993:Traded by theOakland Athleticsto theToronto Blue Jaysfor a player to be named later andSteve Karsay. TheToronto Blue JayssentJos\u00e9 Herrera(August 6, 1993) to theOakland Athleticsto complete the trade.",
+    "October 29, 1993:Granted Free Agency.",
+    "December 17, 1993:Signed as a Free Agent with theOakland Athletics.",
+    "October 30, 1995:Granted Free Agency.",
+    "December 29, 1995:Signed as a Free Agent with theSan Diego Padres.",
+    "August 13, 1997:Traded by theSan Diego Padresto theAnaheim Angelsfor a player to be named later,Stevenson Agosto(minors) andRyan Hancock. TheAnaheim AngelssentGeorge Arias(August 19, 1997) to theSan Diego Padresto complete the trade.",
+    "October 27, 1997:Granted Free Agency.",
+    "January 22, 1998:Signed as a Free Agent with theOakland Athletics.",
+    "October 26, 1998:Granted Free Agency.",
+    "December 16, 1998:Signed as a Free Agent with theNew York Mets.",
+    "May 13, 2000:Released by theNew York Mets.",
+    "May 19, 2000:Signed as a Free Agent with theSeattle Mariners.",
+    "November 3, 2000:Granted Free Agency.",
+    "March 19, 2001:Signed as a Free Agent with theSan Diego Padres.",
+    "November 5, 2001:Granted Free Agency.",
+    "February 13, 2002:Signed as a Free Agent with theBoston Red Sox.",
+    "October 29, 2002:Granted Free Agency.",
+    "July 14, 2003:Signed as a Free Agent with theLos Angeles Dodgers."
+  ],
+  "awards": [],
+  "positions": {},
+  "bio": "Rickey Henderson January 3, 2018 / in BioProject - Person 3000 Hits Hall of Fame , Most Valuable Player 1980s All-Stars , 1990s All-Stars / by admin LnRiLWhlYWRpbmcuaGFzLWJhY2tncm91bmR7cGFkZGluZzowfQ== LnRiLWZpZWxke21hcmdpbi1ib3R0b206MC43NmVtfS50Yi1maWVsZC0tbGVmdHt0ZXh0LWFsaWduOmxlZnR9LnRiLWZpZWxkLS1jZW50ZXJ7dGV4dC1hbGlnbjpjZW50ZXJ9LnRiLWZpZWxkLS1yaWdodHt0ZXh0LWFsaWduOnJpZ2h0fS50Yi1maWVsZF9fc2t5cGVfcHJldmlld3twYWRkaW5nOjEwcHggMjBweDtib3JkZXItcmFkaXVzOjNweDtjb2xvcjojZmZmO2JhY2tncm91bmQ6IzAwYWZlZTtkaXNwbGF5OmlubGluZS1ibG9ja311bC5nbGlkZV9fc2xpZGVze21hcmdpbjowfQ== LnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gLndwLWJsb2NrLXRvb2xzZXQtYmxvY2tzLWNvbnRhaW5lci50Yi1jb250YWluZXJbZGF0YS10b29sc2V0LWJsb2Nrcy1jb250YWluZXI9Ijc2YjllMTlhZWJkNzhiNDY3YjA0YzY0YWNmZTMzMTY3Il0geyBwYWRkaW5nOiAwcHg7IH0gLnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gLndwLWJsb2NrLXRvb2xzZXQtYmxvY2tzLWNvbnRhaW5lci50Yi1jb250YWluZXJbZGF0YS10b29sc2V0LWJsb2Nrcy1jb250YWluZXI9IjYxNTE2M2MzOGJlYjJiY2YyYmRjNjA3NzdiNGVjMDk3Il0geyBiYWNrZ3JvdW5kOiByZ2JhKCAyNDgsIDI0OCwgMjQ4LCAxICk7cGFkZGluZzogMjVweDsgfSAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfS50Yi1maWVsZHMtYW5kLXRleHRbZGF0YS10b29sc2V0LWJsb2Nrcy1maWVsZHMtYW5kLXRleHQ9IjM0MDljMjMzMWJlNTQ2YjcwOWVkMDM2NmMzYTZlNTZmIl0geyBtYXJnaW4tdG9wOiAxMHB4OyB9IGg1LnRiLWhlYWRpbmdbZGF0YS10b29sc2V0LWJsb2Nrcy1oZWFkaW5nPSI2YjlmOTI3Y2VjMTUwZDg3NzFkNTEyYmE2YzczZmQ4OCJdICB7IHBhZGRpbmctYm90dG9tOiAxMHB4OyB9ICBoNS50Yi1oZWFkaW5nW2RhdGEtdG9vbHNldC1ibG9ja3MtaGVhZGluZz0iNmI5ZjkyN2NlYzE1MGQ4NzcxZDUxMmJhNmM3M2ZkODgiXSBhICB7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgfSAudGItZmllbGRzLWFuZC10ZXh0W2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGRzLWFuZC10ZXh0PSI2M2MyZGNiODA5MmY4NDFmYTMxZDk0ZDQ2MjFmYTkwYSJdIHsgcGFkZGluZy1ib3R0b206IDE1cHg7IH0gLnRiLWZpZWxkcy1hbmQtdGV4dFtkYXRhLXRvb2xzZXQtYmxvY2tzLWZpZWxkcy1hbmQtdGV4dD0iMzk3ZjY0YTY5MzllYjViYWZjOTM0ODgxYjZjYTI4NTgiXSB7IHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOyB9IC50Yi1maWVsZHMtYW5kLXRleHRbZGF0YS10b29sc2V0LWJsb2Nrcy1maWVsZHMtYW5kLXRleHQ9IjM5N2Y2NGE2OTM5ZWI1YmFmYzkzNDg4MWI2Y2EyODU4Il0gcCB7IHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lOyB9IC50Yi1maWVsZHMtYW5kLXRleHRbZGF0YS10b29sc2V0LWJsb2Nrcy1maWVsZHMtYW5kLXRleHQ9IjU5MTNhMjE5NjUxOWQzNTY5MTM1M2QwMTkxZjRjYWM2Il0geyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgfSAudGItZmllbGRzLWFuZC10ZXh0W2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGRzLWFuZC10ZXh0PSI1OTEzYTIxOTY1MTlkMzU2OTEzNTNkMDE5MWY0Y2FjNiJdIHAgeyB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTsgfSAgaDYudGItaGVhZGluZ1tkYXRhLXRvb2xzZXQtYmxvY2tzLWhlYWRpbmc9IjlhNzU4NmFhNzRjNGEwZTI4OTI5YTgzZjE1NWZkMGE3Il0gYSAgeyB0ZXh0LWRlY29yYXRpb246IG5vbmU7IH0gIGg2LnRiLWhlYWRpbmdbZGF0YS10b29sc2V0LWJsb2Nrcy1oZWFkaW5nPSI3ZDQwMmZiODZiMzFhMWY2ZGYxZDA0MTBkODY2MjdiYSJdIGEgIHsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyB9IC50Yi1jb250YWluZXIgLnRiLWNvbnRhaW5lci1pbm5lcnt3aWR0aDoxMDAlO21hcmdpbjowIGF1dG99IC53cC1ibG9jay10b29sc2V0LWJsb2Nrcy1jb250YWluZXIudGItY29udGFpbmVyW2RhdGEtdG9vbHNldC1ibG9ja3MtY29udGFpbmVyPSI2YjRjMDZiNThiNzhhNDE1N2MyM2NkZDM5NGI0ZmY2OSJdIHsgcGFkZGluZzogMHB4IDBweCAxMHB4IDBweDsgfSAgaDYudGItaGVhZGluZ1tkYXRhLXRvb2xzZXQtYmxvY2tzLWhlYWRpbmc9IjA2MWMxMmEzMDcyYjc0ZGYzYTE5ZmVjZjlmMTYwNmY3Il0gYSAgeyB0ZXh0LWRlY29yYXRpb246IG5vbmU7IH0gLnRiLWZpZWxkW2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGQ9ImVjMjg5ZWRlODU2NTcyYTdkMWIwYjY0YTc2MWZiYjFkIl0geyBmb250LXNpemU6IDE2cHg7dGV4dC1hbGlnbjogbGVmdDsgfSAgLnRiLWZpZWxkW2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGQ9ImVjMjg5ZWRlODU2NTcyYTdkMWIwYjY0YTc2MWZiYjFkIl0gYSB7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgfSAudGItZmllbGRzLWFuZC10ZXh0W2RhdGEtdG9vbHNldC1ibG9ja3MtZmllbGRzLWFuZC10ZXh0PSJmNDgwOTZhM2ZiMTRiZTBjN2Q5ZGNjOTI0NzUzMGQyMCJdIHsgcGFkZGluZy1ib3R0b206IDEwcHg7IH0gQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA3ODFweCkgeyAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfS50Yi1jb250YWluZXIgLnRiLWNvbnRhaW5lci1pbm5lcnt3aWR0aDoxMDAlO21hcmdpbjowIGF1dG99LnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gICAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfSAgIH0gQG1lZGlhIG9ubHkgc2NyZWVuIGFuZCAobWF4LXdpZHRoOiA1OTlweCkgeyAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfS50Yi1jb250YWluZXIgLnRiLWNvbnRhaW5lci1pbm5lcnt3aWR0aDoxMDAlO21hcmdpbjowIGF1dG99LnRiLWNvbnRhaW5lciAudGItY29udGFpbmVyLWlubmVye3dpZHRoOjEwMCU7bWFyZ2luOjAgYXV0b30gICAudGItY29udGFpbmVyIC50Yi1jb250YWluZXItaW5uZXJ7d2lkdGg6MTAwJTttYXJnaW46MCBhdXRvfSAgIH0g This article was written by Joseph Wancho \u201c Lou Brock is the symbol of great base stealing, but today I am the greatest of all time.\u201d 1 \u2014 Rickey Henderson, May 1, 1991 The above proclamation was part of a short speech made by Oakland\u2019s Rickey Henderson just moments after he stole base number 939 in his career. The thievery of third base in the bottom of the fourth inning in a game against the New York Yankees on May 1, 1991, moved Henderson to number one all-time on the stolen base leader board. To some, his statement may have seemed boastful, disrespectful, or just plain out of line. But the truth stands alone, and the truth is that Rickey Henderson is the greatest base stealer of all time. Henderson had been caught stealing by New York catcher Matt Nokes in the first inning of the May showdown. Henderson took note of Nokes\u2019 exuberance at his success. Soon-to-be-second-place Lou Brock had been traveling with the A\u2019s so he could be present when Henderson set the new record. Henderson was in his hometown of Oakland, with his mother in attendance. If he needed extra incentive to run into the record books, Nokes may have provided it. In his second at-bat, Henderson reached first base when Yankee shortstop Alvaro Espinoza could not field Henderson\u2019s groundball cleanly. Henderson checked into second base when Dave Henderson followed with a single. Jose Canseco followed with a fly out to center field. Henderson then took off, making history with the record-breaking stolen base. A short celebration was held on the field to commemorate the achievement. The 36,139 who were in attendance roared their approval. \u201cI said to myself: \u2018It\u2019s all over. You\u2019re No. 1.\u2019\u201d said Henderson. \u201cA lot of pressure left me at that moment, like I was 50 pounds lighter. There had been so much pressure to get it done.\u201d 2 Brock told Henderson, \u201cToday you are the greatest competitor that ever ran the bases in the big leagues.\u201d 3 Rickey Henderson was born Rickey Nelson Henley on December 25, 1958, in Chicago. He was the second son (after older brother Tyrone), born to John and Bobbie Henley. John Henley left the family two years after Rickey was born. Bobbie gathered up her family (in addition to Tyrone and Rickey, there were brothers Alton, John, and Douglas) and moved them to her native Arkansas and settling on her mother\u2019s farm in Pine Bluff. After a few years, Bobbie sought a better opportunity for her family in California. She went ahead to search for a place to live and a job that could support her family sufficiently. Once she was settled, she sent for her family to live with her in Oakland. Bobbie met Paul Henderson, whom she married, and he adopted her five sons. The boys took the name Henderson as their surname, and soon two sisters, Paula and Glynnes, joined the family. Paul Henderson was employed by General Motors, while Bobbie worked as a registered nurse. 4 Henderson enrolled at Oakland Technical High School, and was a three-sport star in baseball, basketball and football. It was the gridiron that was his first love. \u201cRonnie Lott, Rickey, and myself were among the top high school players in the country our senior year,\u201d said future A\u2019s teammate Dave Henderson. \u201cWe didn\u2019t play against each other, but we saw each other in All-Star workouts and things like that. Ronnie and I saw Rickey take the ball on a sweep one time, hit the corner, and he was gone, 80 yards. I thought I was pretty good, but I remember thinking \u2018We gotta tackle guys like that?\u2019\u201d 5 \u201cHe was such a pleasure,\u201d said his high school baseball coach Bob Cryer. \u201cAlways upbeat and positive, always showed up on time and worked hard. I was never very close to Rickey, but I always liked him and wanted the best for him.\u201d 6 It was also in high school where Henderson met his future wife, the former Pamela Palmer. They had three daughters: Angela, Adrianna, and Alexis. Henderson could have gone either route\u2014to college on a football scholarship, or the path to a baseball career in the big leagues. Although his dream was to play professional football, he left the decision to his mother. \u201cIt was a tough decision to make, but I didn\u2019t make it,\u201d said Henderson. \u201cMy mother made the decision. I loved football; I thought I could be an All-American, but she thought baseball was better for me. I gave her the choice to make and she chose baseball.\u201d 7 The Oakland Athletics selected Henderson in the fourth round of the free-agent draft on June 8, 1976. Oakland scout Jim Guinn wrote a glowing report of Henderson, thus summarizing his opinion: \u201cHenderson is the best-looking prospect in the Alameda County League and the Oakland Athletic League. I am impressed with this youngster mainly because of his all-around athletic ability.\u201d 8 Henderson performed exceptionally well in the minor leagues. He hit above .300 in each class of the minors and was stealing bases constantly once he got to first. Perhaps the one season that gave a glimpse of what the future held was in 1977 at Modesto of the Class A California League. Henderson batted .345, walked 104 times, hit 11 home runs, drove in 69, and scored 120 runs. He also stole 95 bases, giving a lot of the credit for his success to his manager Tom Trebelhorn. \u201cWhen I got into pro ball, Tom Trebelhorn helped my base-stealing,\u201d said Henderson. \u201cWe used to sit up and look at films. I looked at Lou Brock and Ty Cobb , and those were kind of my idols. Trebelhorn was my manager in rookie ball and then he moved up with me to Class A ball. He was probably the biggest influence in my becoming a great base-stealer. He took the time to teach me. He took me out individually and looked at the things I was good at. He took me and made me better. Plus, he also let me steal whenever I thought I could make it, and that gave me a lot of confidence. That was a big thing for me, just coming out of high school, but I guess he saw something in me.\u201d 9 He opened the 1979 season at Ogden of the Class AAA Pacific Coast League. After 71 games, Henderson was called up to Oakland and made his major league debut on June 24, 1979. He went 2-for-4 against Texas with a double and a stolen base. Henderson led the team with 33 steals and batted .274. The Athletics were a dismal team that year. Their record was 54-108 and they finished 34 games behind California in the American League West Division in 1979. That all changed when manager Jim Marshall was shown the door and Billy Martin took over. Martin could turn around a club\u2019s fortunes as well as anyone and he did so in Oakland. Remarkably, the Athletics\u2019 record improved to 83-79 as they finished in second place, 14 games behind Kansas City\u2019s juggernaut in 1980. Martin preached playing aggressively, or \u201cBilly Ball,\u201d as it was commonly referred to. This style suited his team just fine. Henderson also improved, finishing second in the league in walks (117), third in on-base percentage (.420), and he batted .303. He was selected to participate in the first of ten All-Star Games. Henderson was also the recipient of his first and only Gold Glove Award in 1981. Henderson led the league in stolen bases with 100 thefts, beginning his dominance of that category, and his assault on the record books. He accomplished the feat two more times in his career: 1982 (130) and 1983 (108). Henderson led the AL in base thievery the next seven straight seasons and eight-of-nine years. He became the first player, and as of 2017 the only player, in American League history to steal 100 bases in a season. Henderson had a slightly different theory regarding stealing bases. While most players would study a pitcher\u2019s pickoff move to first base, Henderson paid attention to the pitcher\u2019s move to home plate. He believed that if he could accurately detect when the pitcher was going home with the pitch, he would be able to get more of a jump on his way to stealing a base. The 1981 season was broken into two halves due to the players\u2019 strike. Henderson led the league in runs (89) and hits (135) as well stolen bases (56). \u201cRickey is a once-in-a-lifetime player,\u201d said Martin. \u201cYou see very few Rickey Hendersons. You might not see another one for fifty years.\u201d 10 The pitching staff was sublime. Rick Langford (12-10, 2.99 ERA), Steve McCatty (14-7, 2.33), Mike Norris (12-9, 3.75) and Matt Keough 10-6, 3.40) anchored a formidable staff. The A\u2019s won the West in 1981 and defeated Kansas City in the Division Series. But they were swept by the Yankees in the ALCS. Still, the transformation from just two years prior was remarkable. But just as fortunes change for the better, the opposite is also true, as the A\u2019s sank to fifth place in 1982. The pitching staff faltered, as not one of the starters posted a winning record. For the first time in his career, Henderson led the league in walks (116), the first time in four seasons that he would do so. He also set a new major league record with 130 stolen bases in 1982, breaking the old mark of 118 set by Brock in 1974. \u201cWhen I stole 130 bases, we didn\u2019t have the home run hitters, we didn\u2019t have the players,\u201d Henderson later remarked. \u201cWhen we\u2019d go to spring training all we had were \u201cscrap players\u201d and Billy Martin would say \u2018All we can do is run. Everybody\u2019s going to run.\u2019\u201d 11 Martin was fired after the season, but resurfaced in New York as manager of the Yankees. The Athletics predictably did not improve under his replacement, Steve Boros , and then Jackie Moore . For Henderson, he was a showman out on the field. He made snap catches with his glove, pranced around the bases, beat his chest, and was noted as a hot dog. But he felt the fans were paying to see him play, so they should be entertained. Often he would refer to himself in the third person: \u201cPeople are always saying, \u2018Rickey says Rickey\u2019. But it\u2019s been blown way out of proportion. People might catch me, when they know I\u2019m ticked off, saying \u2018Rickey, what the heck are you doing, Rickey?\u2019 They say, \u2018Darn Rickey, what are you saying Rickey for? Why don\u2019t you just say I?\u2019 But I never did. I always said \u2018Rickey\u2019 and it became something for people to joke about.\u201d 12 Henderson was traded with pitcher Bert Bradley to the Yankees on December 5, 1984. The A\u2019s received five players in return ( Stan Javier , Jose Rijo , Eric Plunk , Tim Birtsas and Jay Howell ). To complete the deal, Henderson signed a five-year deal worth $8.6 million with the Yankees. Although his stolen base total (66) in 1984 was considerably less than in previous seasons, he still led the league and it was four more than the entire Yankee team. He was also reunited with Billy Martin. \u201cOakland wanted a power team,\u201d said Henderson. \u201cWe had some guys who didn\u2019t want me running. Billy likes the running game. He believes in me. The aggressiveness I have goes with the aggressiveness Billy has.\u201d 13 Martin was pleased with the reunion. \u201cRickey\u2019s the same as (Mickey) Rivers was: Exciting. But he\u2019s got more than Rivers had,\u201d said Martin. \u201cRivers got thrown out. This guy doesn\u2019t get thrown out.\u201d 14 On August 30, 1985, the Yankees trailed Toronto by five games in the AL East. The Yankees won 11 straight from August 31 through September 10. They closed the gap to 1 \u00bd games. But then the bottom fell out and they posted a 3-10 record from September 11 to September 24. Even though they closed out the season on a run of 10-3, they could not catch the Blue Jays, who claimed the division title by two games. In 1986, they fell short again, finishing in second place to Boston by 5 \u00bd games. For Henderson, the switch from the West Coast to the East did not affect his game. He led the AL in runs in 1985 (146) and 1986 (130). He also added the long ball to his repertoire, slugging 24 home runs in 1985 and 28 in 1986. Henderson was switched to center field from left, where he was stationed defensively in Oakland. Henderson was sidelined with a hamstring injury in 1987, and he missed 67 games. His streak of leading the AL in stolen bases was snapped, although he still managed to swipe 41. Lou Piniella , who had replaced Martin after the 1986 season, questioned Henderson\u2019s commitment to the Yankees. It caused a strain on the manager-player relationship. If there was any doubt, Henderson returned in good health in 1988, and batted .305 and stole 93 bases. \u201cThere was a lot of pressure in New York with the George Steinbrenner era \u2014 George was very vocal then,\u201d said Dave Righetti . \u201cRickey was the one guy who seemed to loosen that team up. He relaxed our club, on and off the field, with his personality and the way he played.\u201d 15 But New York was mired in the middle of the pack in the AL East. They were not getting much better in 1989, and traded Henderson back to Oakland on June 21, 1989, for pitchers Eric Plunk and Greg Cadaret , as well as outfielder Luis Polonia . \u201cWhen Rickey got traded to the A\u2019s, we\u2019d walk through the locker room, someone would say \u2018Hey Hendu\u2019, and we\u2019d both look up,\u201d said Dave Henderson. \u201cWe had to figure something out. So, we\u2019re both in the on-deck circle one day and I say, \u2018The first guy who goes deep is Hendu\u2019, the other guy will be Dave or Rickey.\u2019 I forgot the guy had the most leadoff home runs ever. He hits a homer in his next at-bat and he\u2019s coming around the bases laughing like crazy, yelling \u2018I\u2019m Hendu! I\u2019m Hendu!\u2019 Well, the pitcher and catcher start getting pissed \u2014 they think he\u2019s showing them up. I had to explain things before they started throwing at me. Rickey goes back to the dugout and he\u2019s still yelling, \u2018I\u2019m Hendu! I\u2019m Hendu!\u2019 The funny part is, everyone knows he\u2019s always been Rickey and I\u2019ve always been Hendu. But it was still a bad bet.\u201d 16 The A\u2019s were the defending American League champs, but lost to the Los Angeles Dodgers in the World Series in 1988. As Henderson said when he was dealt to New York, the Athletics were looking to build a team of power hitters. And they did just that. In 1988, Jose Canseco led the AL in round-trippers with 42. Mark McGwire added 32 and Dave Henderson smacked 24. Canseco and McGwire, known as the \u201cBash Brothers\u201d, formed a formidable pair in the middle of the A\u2019s lineup, along with Dave Henderson and Carney Lansford . Now they added Rickey Henderson to the top of the lineup and they were unstoppable. Oakland outlasted the Royals by seven games to win the AL West. They wiped out Toronto in five games in the ALCS. Henderson was named MVP of the ALCS as he batted .400 (6-for-15), two home runs, five RBIs, eight runs, seven walks, and eight steals. It was a performance for the ages. \u201cWe\u2019re a very relaxed club that knows what we have to do to win,\u201d said Henderson. \u201cI like to think that I\u2019m a money player. When we need a steal or drive home a run, I like to think I\u2019ll deliver.\u201d 17 The 1989 World Series became known as the \u201cEarthquake Series.\u201d Oakland was facing its northern California neighbor, the San Francisco Giants, when an earthquake measuring 6.9 shook the Bay Area. Candlestick Park lost power, as well as sustaining structural damage. Commissioner Fay Vincent called a halt to the series until further noticed. Play was resumed on October 27 at Candlestick Park. Oakland, which held a 2-0 advantage, went on to sweep the Giants. Henderson did not suffer a hangover from his performance in the LCS. He batted .474 (9-for-19) with one home run and three RBIs, with two triples and three stolen bases. \u201cRickey was on base in the 1989 World Series and Terry Kennedy was catching for the Giants,\u201d said Lansford. \u201cI walked up to the plate and Kennedy was talking to himself\u2014he was saying. \u2018Go ahead and steal it. You\u2019re going to take it anyway.\u2019 Next pitch, he stole. Terry tried to be quick and dropped the ball. That\u2019s how frustrated catchers were behind the plate\u2014they knew he was going to run, but they couldn\u2019t do anything about it.\u201d 18 Oakland had little trouble holding off Chicago to win its third straight AL pennant under Tony La Russa in 1990. They outdistanced the White Sox by nine games with a 103-59 record. Henderson was named American League MVP, as he batted .325, and led the league in runs (119), stolen bases (65) and on-base percentage (.439). He tied a career-high in home runs with 28. He finished 31 points ahead of runner-up Detroit\u2019s Cecil Fielder , who led the AL in home runs (51) and RBI (132). \u201cI felt like I was cheated the last three times I was involved in the voting,\u201d said Henderson. \u201cBut it\u2019s not my decision. You can\u2019t take away what Cecil did, and if he had won, I would have tipped my hat to him and not felt cheated this time. I still think that (1985) was my best year, but this isn\u2019t far off. The only difference is that I hit for a higher average this season. That was a better year \u2014 and I had some great years in New York \u2014 but this was good because it helped the team win.\u201d 19 Oakland swept the Red Sox in the ALCS. They were heavy favorites to beat Cincinnati in the World Series, but it was the Reds who pulled a major upset, sweeping the A\u2019s. \u201cSome people had some great years on this club,\u201d said Dennis Eckersley . \u201cWe won our division and we won a pennant. But we\u2019ll be remembered now for getting our ass kicked. We did everything but win the World Series \u2014 and we didn\u2019t look good doing it. I said before that if we didn\u2019t win the World Series, it meant we choked. Well, that\u2019s what we did.\u201d 20 Henderson made two trips to the disabled list in 1992, as did Bob Welch , Scott Brosius , and Dave Henderson. In spite of the injuries, the A\u2019s won the AL West by six games over the Twins. However, they were dumped in six games by Toronto in the ALCS. On July 5, 1993, Oakland hosted Cleveland in a doubleheader. Henderson led off both games with a home run. It was believed that Henderson was the first player in 80 years to accomplish the feat. Harry Hooper of Boston turned the trick on May 30, 1913, against Washington. Henderson was dealt to Toronto on July 31, 1993, for pitcher Steve Karsay and a player-to-named-later who turned out to be outfielder Jose Herrera . It was a tale of two teams, as the A\u2019s were rebuilding and were in the cellar in the AL West. Toronto was tied with New York atop the AL East at the time of the deal. Henderson stole 22 bases in 44 games for the Blue Jays. Toronto finished on top in the East and eliminated Chicago in six games of the ALCS. In the World Series, the Jays made it two World Championships in a row as they toppled Philadelphia in six games in the World Series. Henderson returned to Oakland in 1994 for his third tour of duty with the A\u2019s. He signed a two-year $8.6 million-dollar contact. In spite of some differences that he had with La Russa, Henderson returned to the familiar surroundings of his home. The season was cut short by the players\u2019 strike on August 12, 1994, forcing the cancellation of the remainder of the season and for the first time since 1904, the postseason. Each league was now split into three separate divisions. Oakland finished a scant one game behind Texas in 1994. The strike extended into the 1995 season, wiping out the first three weeks. Henderson batted .300 and swiped 32 bases in 112 games. But the Athletics finished in last place with a 67-77 record, 11 \u00bd games behind division-winner Seattle. Henderson signed a two-year $6.2 million-dollar contract with San Diego in 1996, entering the National League for the first time in his career. \u201cThe negative stuff people were talking about when we got him here, that he was going to come to spring training late, that he was going to be a disruptive force in the clubhouse, I haven\u2019t seen it,\u201d said Tony Gwynn . \u201cI\u2019ve seen a guy who\u2019s prepared. I\u2019ve seen a guy who works hard, loves to help young guys, and who has done whatever the club has asked him to do, not only on the field, but off the field.\u201d 21 He may have been a great teammate, but his production slipped. Henderson batted .241 and the following year, he was traded to the Anaheim Angels on August 13, 1997. For the 1998 season, Henderson signed a one-year deal with Oakland, the fourth time he suited up for the Athletics. At 39 years of age, Henderson led the AL in stolen bases (66) and walks (118) in 1998 despite a .236 average in 542 at-bats. The New York Mets inked Henderson to a two-year deal worth $3.9 million after he 1998 season wrapped. He was named The Sporting News Comeback Player of the Year in 1999. He batted .315 with 37 stolen bases, 12 home runs, 42 RBIs, and a .423 on-base percentage. The next year, he was released by the Mets on May 13, 2000. Tempers were hot from the year before when it was reported that during the Mets\u2019 Game Six loss to Atlanta in the LCS, he was playing cards in the clubhouse with Bobby Bonilla . Henderson denied the allegation and demanded that the accuser confront him face-to-face. Of course, it never came to that. He reported late to spring training the following season. \u201cIt\u2019s addition by subtraction,\u201d said Mets general manager Steve Phillips. 22 Henderson signed with Seattle and finished out the year with the Mariners. Rickey returned to the Padres in 2001, which proved to be a record-setting one for Henderson. On April 25, 2001, the Padres were trailing Philadelphia, 5-3, heading into the bottom of the ninth inning. Henderson led off with a walk against Phillies closer Jose Mesa . The free pass was the 2,063rd of Henderson\u2019s career, surpassing Babe Ruth for the top spot on the all-time walk list. On October 4, 2001, Henderson hit a home run off Dodger pitcher Luke Prokopec in the third inning. As he neared home plate, Henderson slid into home plate to commemorate the 2,246th run scored in his career, passing Ty Cobb on the all-time runs scored list. \u201cWhen I first started in the big leagues,\u201d said Henderson, \u201cI felt that as the leadoff hitter, my job was to get on the base paths, create stuff, and score some runs to help my teammates win some ballgames. It just happens over the 23 years I think I went out there and did my job as well as I could do \u2026 and all of a sudden, it\u2019s a record breaker \u2026 it\u2019s just an honor. \u201cGoing out and scoring so many runs is just not an individual record. It\u2019s a record that you\u2019ve got to have your teammates help you out and in the 23 years I have had some great teammates.\u201d 23 On October 7, 2001, the San Diego Padres were hosting the Colorado Rockies in Tony Gwynn\u2019s last major league game. Henderson added to the festivities when he hit a double to right field off pitcher John Thomson to record his 3,000th career base hit. \u201cI thought it was going to come,\u201d said Thomson. \u201cI gave up three hits to him in Colorado. I\u2019m glad he got it. I\u2019d feel really weird if he had three or four at-bats and he didn\u2019t get a hit. Now when someone asks who gave up Rickey Henderson\u2019s 3,000 hit, the answer will be \u2018John Thomson\u2019\u201d. 24 Boston signed Henderson to a minor league contract in 2002. To this point in his career, Henderson had stolen 1,395 bases, totaling more than the Red Sox franchise, which in the same amount of time, had amassed 1,382 stolen bases. 25 The Red Sox passed Henderson early that year. In a surprise development at the start of the 2003 campaign, Henderson signed a contract with the independent Newark Bears of the Atlantic League. He was 44 years old, making $3,000 playing for a team that was considered on par with a Class AA team in the minor leagues. \u201cIf I don\u2019t feel I have the skills, I\u2019d be happy to hang up my shoes and go be with my kids,\u201d said Henderson. \u201cBut I know I have the skill. The speed guys who can score runs? I think I am better than the guys in the major leagues. Will I get the chance?\u201d 26 Indeed, that opportunity came his way, as Rickey signed on with the Los Angeles Dodgers on July 14, 2003. He played 30 games, batting .208. That was the last season in the major leagues for Henderson. He ranks first all-time in stolen bases (1,406), runs (2,295), and leadoff home runs (81). Henderson ranks second all-time in walks (2,190). For his career, he smacked 297 home runs, drove in 1,115 RBIs, and batted .279. In retirement, Rickey was a special instructor for the Mets in spring training, and served as their first base coach in 2007. Rickey Henderson was inducted into the National Baseball Hall of Fame in 2009. On August 1 that year, Henderson\u2019s number 24 was retired by the Athletics. In later years, he served as the special assistant to Oakland A\u2019s President David Kaval. The A\u2019s named the playing field at the Oakland Coliseum in Henderson\u2019s honor on April 3, 2017. 27 Henderson participated in several public ceremonies to acknowledge the Athletics\u2019 final season in Oakland in 2024, just months before his death at the age of 65 on December 20, 2024. Acknowledgments This biography was reviewed by Joel Barnhart and fact-checked by Jeff Findley. Photo credits: SABR-Rucker Archive, Trading Card Database. Notes 1 \u201cQuote of the Day,\u201d New York Times , May 2, 1991: A2 2 Michael Martinez, \u201cSafe! Henderson Steals No. 939, and Brock Is Out,\u201d New York Times , May 2, 1992: B17 3 Martinez: B19 4 Rickey Henderson and John Shea, Off Base: Confessions of a Thief , Harper Collins, New York, NY, 1992, 24 5 Ron Kroichick, \u201cThe Rickey Show,\u201d San Francisco Chronicle , July 19, 2009: Players File from Hall of Fame 6 David Waldstein, \u201cFrom Bushrod to Cooperstown,\u201d New York Post , August 15, 1999: 105 7 Glenn Dickey, \u201cInside Interview: Rickey Henderson,\u201d Inside Sports , June, 1991: 24 8 Jim Guinn, Oakland Athletics Free Agent Report, April 19, 1976, National Baseball Hall of Fame, Player File 9 Glenn Dickey, \u201cInside Interview: Rickey Henderson\u201d: 24-26 10 Jeff Katz, Split Season 1981 , Thomas Dunne Books, St. Martin\u2019s Press. New York, NY, 2015, 250 11 Dickey, \u201cInside Interview: Rickey Henderson\u201d: 26 12 Dennis Manoloff, \u201cCatching Up With Rickey Henderson,\u201d Cleveland Plain Dealer , September 29, 2002: D6 13 Dave Anderson, \u201cHenderson: Break Dancer at the Ballet,\u201d New York Times , December 9, 1984: S6 14 Ibid. 15 Kroichick, \u201cThe Rickey Show.\u201d 16 Kroichick, \u201cThe Rickey Show.\u201d 17 Malcolm Moran, \u201cDazzling, Daring A\u2019s Win Crown,\u201d New York Times , October 9, 1989: C6. 18 Kroichick, \u201cThe Rickey Show.\u201d 19 Michael Martinez, \u201cHenderson Selected Most Valuable Player,\u201d New York Times , November 21, 1990: B13. 20 Tom Barnidge, \u201cA\u2019s Frantically Dial Canseco Hotline During Series But Jose Doesn\u2019t Answer,\u201d The Sporting News, October 29, 1990: 5. 21 Tom Weir, \u201cInside Rickey\u2019s World,\u201d USA Today , September 25, 2001: 2C. 22 Liz Robbins, \u201cWith Patience Long Gone, Mets Release Henderson,\u201d New York Times , May 14, 2000, SP5. 23 Paul Gutierrez, \u201cRecord Run for Rickey,\u201d Los Angeles Times , October 5, 2001: B10. 24 Bernie Wilson, \u201cRickey Register\u2019s 3,000,\u201d usatoday.com & baseballweekly.com, October 8, 2001, accessed November 6, 2017. 25 Retrosheet.org. 26 Tom Verducci, \u201dWhat is Rickey Henderson Doing in Newark?\u201d, Sports Illustrated , June 23, 2003: 80. 27 Jon Becker, \u201cA\u2019s to unveil statue of Rickey Henderson at Coliseum next season,\u201d San Jose Mercury-News ,\u00a0 September 15, 2017, accessed at http://www.mercurynews.com/2017/09/15/report-as-to-have-statue-of-rickey-henderson-at-coliseum on November 7, 2017. Full Name Rickey Nelson Henley Henderson Born December 25, 1958 at Chicago, IL (USA) Died December 20, 2024 at Oakland, CA (USA) Stats Baseball Reference Retrosheet If you can help us improve this player\u2019s biography, contact us . Tags 3000 Hits \u00b7 Hall of Fame \u00b7 Most Valuable Player \u00b7 1980s All-Stars \u00b7 1990s All-Stars \u00b7 Share this entry Share on Facebook Share on X Share on LinkedIn Share on Reddit Share by Mail https://sabr.org/wp-content/uploads/2025/01/Henderson-Rickey-OAK-Rucker-TWIS-600px.jpg 475 600 admin /wp-content/uploads/2020/02/sabr_logo.png admin 2018-01-03 00:46:05 2025-10-01 16:23:00 Rickey Henderson"
+}

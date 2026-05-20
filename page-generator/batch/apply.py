@@ -85,6 +85,45 @@ def patch_html(html_content, new_data, player_name):
             # For div, we want to maintain the style if possible, but at least valid JSON
             quiz_data_el.string = f"\n{new_json_str}\n"
 
+    # 4. Add the JS handler for the followup buttons if missing
+    if not soup.find('script', string=re.compile('followup-btn')):
+        js_handler = """
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('followup-section');
+        if (!container) return;
+        const items = container.querySelectorAll('.followup-item');
+        if (!items.length) return;
+
+        items.forEach(function(item) {
+            const btn = item.querySelector('.followup-btn');
+            const answerBox = item.querySelector('.followup-answer');
+            if (!btn || !answerBox) return;
+
+            btn.addEventListener('click', function() {
+                const answer = btn.getAttribute('data-answer') || '';
+                if (!answer) return;
+
+                // Toggle visibility
+                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+                if (isHidden) {
+                    answerBox.textContent = answer;
+                    answerBox.style.display = 'block';
+                } else {
+                    answerBox.style.display = 'none';
+                }
+            });
+        });
+    });
+    """
+        new_script = soup.new_tag('script')
+        new_script.string = js_handler
+        # Insert before footer or at end of body
+        footer = soup.find('footer')
+        if footer:
+            footer.insert_before(new_script)
+        else:
+            soup.body.append(new_script)
+
     return soup.prettify() if not html_content.strip().startswith('<!DOCTYPE') else str(soup)
 
 def main(project_root):
