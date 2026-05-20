@@ -47,3 +47,4 @@ firestore-debug-*.log
 gha-creds-*.json
 .worktrees/
 tests/fixtures/www/
+temp/

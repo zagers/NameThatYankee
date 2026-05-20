@@ -18,24 +18,26 @@ import scraper
 
 def build_request(dossier, date_str):
     """
-    Constructs a GenerateContentRequest dictionary for the Gemini Batch API.
+    Constructs a request dictionary for the Gemini Batch API.
     """
     prompt = BATCH_PROMPT_TEMPLATE.format(
         name=dossier["name"],
         dossier_json=json.dumps(dossier, indent=2),
         date_str=date_str
     )
-    
-    return {
-        "contents": [
-            {
-                "parts": [
-                    {"text": prompt}
-                ]
-            }
-        ]
-    }
 
+    return {
+        "key": date_str,
+        "request": {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": prompt}
+                    ]
+                }
+            ]
+        }
+    }
 def extract_player_name(html_content):
     """Extracts player name from <h2> tag in the HTML, stripping nicknames."""
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -88,6 +90,13 @@ def prepare_batch(project_root, limit=None):
             print(f"Scraping dossier for {player_name}...")
             stats = scraper.search_and_scrape_player(player_name, automated=True, driver=shared_driver)
             bio = scraper.get_sabr_bio(player_name)
+            
+            # MLB.com Fallback
+            if not bio or len(bio) < 500:
+                print(f"  ℹ️ SABR bio thin or missing for {player_name}, trying MLB.com fallback...")
+                mlb_bio = scraper.get_mlb_bio(player_name, shared_driver=shared_driver)
+                if mlb_bio:
+                    bio = mlb_bio
             
             # Limit bio to ~2500 words to avoid context overflow
             if bio:

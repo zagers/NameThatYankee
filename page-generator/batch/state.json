@@ -1,14 +1,1145 @@
 {
-  "2025-03-29": {
-    "status": "scraped",
-    "data": {
-      "player": "James Edward Key"
+    "2025-03-29": {
+        "status": "completed",
+        "data": {
+            "player": "James Edward Key"
+        }
+    },
+    "2025-03-30": {
+        "status": "completed",
+        "data": {
+            "player": "Tony Lazzeri"
+        }
+    },
+    "2025-04-01": {
+        "status": "completed",
+        "data": {
+            "player": "Scott Brosius"
+        }
+    },
+    "2025-04-02": {
+        "status": "completed",
+        "data": {
+            "player": "Ramiro Mendoza"
+        }
+    },
+    "2025-04-03": {
+        "status": "completed",
+        "data": {
+            "player": "Todd Greene"
+        }
+    },
+    "2025-04-04": {
+        "status": "completed",
+        "data": {
+            "player": "Tony Kubek"
+        }
+    },
+    "2025-04-05": {
+        "status": "completed",
+        "data": {
+            "player": "Tim Foli"
+        }
+    },
+    "2025-04-06": {
+        "status": "completed",
+        "data": {
+            "player": "Ralph Terry"
+        }
+    },
+    "2025-04-07": {
+        "status": "completed",
+        "data": {
+            "player": "Iv\u00e1n Nova"
+        }
+    },
+    "2025-04-08": {
+        "status": "completed",
+        "data": {
+            "player": "Tony Clark"
+        }
+    },
+    "2025-04-09": {
+        "status": "completed",
+        "data": {
+            "player": "Tom Tresh"
+        }
+    },
+    "2025-04-11": {
+        "status": "completed",
+        "data": {
+            "player": "Nick Johnson"
+        }
+    },
+    "2025-04-12": {
+        "status": "completed",
+        "data": {
+            "player": "Santos Alomar"
+        }
+    },
+    "2025-04-13": {
+        "status": "completed",
+        "data": {
+            "player": "Bob Melvin"
+        }
+    },
+    "2025-04-14": {
+        "status": "completed",
+        "data": {
+            "player": "Chris Chambliss"
+        }
+    },
+    "2025-04-15": {
+        "status": "completed",
+        "data": {
+            "player": "John Mayberry"
+        }
+    },
+    "2025-04-17": {
+        "status": "completed",
+        "data": {
+            "player": "Ji-Man Choi"
+        }
+    },
+    "2025-04-18": {
+        "status": "completed",
+        "data": {
+            "player": "Dioner Navarro"
+        }
+    },
+    "2025-04-19": {
+        "status": "completed",
+        "data": {
+            "player": "Richard Monteleone"
+        }
+    },
+    "2025-04-20": {
+        "status": "completed",
+        "data": {
+            "player": "David Robertson"
+        }
+    },
+    "2025-04-21": {
+        "status": "completed",
+        "data": {
+            "player": "Enrique Wilson"
+        }
+    },
+    "2025-04-22": {
+        "status": "completed",
+        "data": {
+            "player": "Fred Stanley"
+        }
+    },
+    "2025-04-23": {
+        "status": "completed",
+        "data": {
+            "player": "Joe Gordon"
+        }
+    },
+    "2025-04-25": {
+        "status": "completed",
+        "data": {
+            "player": "Ted Lilly"
+        }
+    },
+    "2025-04-27": {
+        "status": "completed",
+        "data": {
+            "player": "Bill Dickey"
+        }
+    },
+    "2025-04-28": {
+        "status": "completed",
+        "data": {
+            "player": "Brian Roberts"
+        }
+    },
+    "2025-04-29": {
+        "status": "completed",
+        "data": {
+            "player": "Sidney Ponson"
+        }
+    },
+    "2025-04-30": {
+        "status": "completed",
+        "data": {
+            "player": "Gus Triandos"
+        }
+    },
+    "2025-05-02": {
+        "status": "completed",
+        "data": {
+            "player": "Shane Spencer"
+        }
+    },
+    "2025-05-03": {
+        "status": "completed",
+        "data": {
+            "player": "Reid Brignac"
+        }
+    },
+    "2025-05-04": {
+        "status": "completed",
+        "data": {
+            "player": "Wade Boggs"
+        }
+    },
+    "2025-05-05": {
+        "status": "completed",
+        "data": {
+            "player": "Dave Winfield"
+        }
+    },
+    "2025-05-06": {
+        "status": "completed",
+        "data": {
+            "player": "Kerry Wood"
+        }
+    },
+    "2025-05-07": {
+        "status": "completed",
+        "data": {
+            "player": "Andy Hawkins"
+        }
+    },
+    "2025-05-10": {
+        "status": "completed",
+        "data": {
+            "player": "Stan Javier"
+        }
+    },
+    "2025-05-11": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Hunter"
+        }
+    },
+    "2025-05-12": {
+        "status": "completed",
+        "data": {
+            "player": "Russ Davis"
+        }
+    },
+    "2025-05-13": {
+        "status": "completed",
+        "data": {
+            "player": "Henry Cotto"
+        }
+    },
+    "2025-05-14": {
+        "status": "completed",
+        "data": {
+            "player": "Larry Milbourne"
+        }
+    },
+    "2025-05-16": {
+        "status": "completed",
+        "data": {
+            "player": "Kevin Elster"
+        }
+    },
+    "2025-05-20": {
+        "status": "completed",
+        "data": {
+            "player": "Willie Calhoun"
+        }
+    },
+    "2025-05-21": {
+        "status": "completed",
+        "data": {
+            "player": "Mike Stanley"
+        }
+    },
+    "2025-05-22": {
+        "status": "completed",
+        "data": {
+            "player": "George Medich"
+        }
+    },
+    "2025-05-23": {
+        "status": "completed",
+        "data": {
+            "player": "Jerry Coleman"
+        }
+    },
+    "2025-05-24": {
+        "status": "completed",
+        "data": {
+            "player": "Ralph Houk"
+        }
+    },
+    "2025-05-25": {
+        "status": "completed",
+        "data": {
+            "player": "Phil Rizzuto"
+        }
+    },
+    "2025-05-26": {
+        "status": "completed",
+        "data": {
+            "player": "Whitey Ford"
+        }
+    },
+    "2025-05-27": {
+        "status": "completed",
+        "data": {
+            "player": "Mike Heath"
+        }
+    },
+    "2025-05-28": {
+        "status": "completed",
+        "data": {
+            "player": "John Candelaria"
+        }
+    },
+    "2025-06-03": {
+        "status": "completed",
+        "data": {
+            "player": "CC Sabathia"
+        }
+    },
+    "2025-06-04": {
+        "status": "completed",
+        "data": {
+            "player": "Ron Hassey"
+        }
+    },
+    "2025-06-05": {
+        "status": "completed",
+        "data": {
+            "player": "Walt Williams"
+        }
+    },
+    "2025-06-06": {
+        "status": "completed",
+        "data": {
+            "player": "Charles Herbert Ruffing"
+        }
+    },
+    "2025-06-10": {
+        "status": "completed",
+        "data": {
+            "player": "Johnny Damon"
+        }
+    },
+    "2025-06-11": {
+        "status": "completed",
+        "data": {
+            "player": "Dick Howser"
+        }
+    },
+    "2025-06-12": {
+        "status": "completed",
+        "data": {
+            "player": "Don Slaught"
+        }
+    },
+    "2025-06-13": {
+        "status": "completed",
+        "data": {
+            "player": "George Scott"
+        }
+    },
+    "2025-06-15": {
+        "status": "completed",
+        "data": {
+            "player": "Clay Bellinger"
+        }
+    },
+    "2025-06-16": {
+        "status": "completed",
+        "data": {
+            "player": "Austin Romine"
+        }
+    },
+    "2025-06-17": {
+        "status": "completed",
+        "data": {
+            "player": "Aaron Hicks"
+        }
+    },
+    "2025-06-18": {
+        "status": "completed",
+        "data": {
+            "player": "Andrew Heaney"
+        }
+    },
+    "2025-06-19": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Abbott"
+        }
+    },
+    "2025-06-20": {
+        "status": "completed",
+        "data": {
+            "player": "Eddie Lopat"
+        }
+    },
+    "2025-06-21": {
+        "status": "completed",
+        "data": {
+            "player": "George Stirnweiss"
+        }
+    },
+    "2025-06-23": {
+        "status": "completed",
+        "data": {
+            "player": "Paul O'Neill"
+        }
+    },
+    "2025-06-24": {
+        "status": "completed",
+        "data": {
+            "player": "Mariano Duncan"
+        }
+    },
+    "2025-06-25": {
+        "status": "completed",
+        "data": {
+            "player": "Ken Griffey Sr."
+        }
+    },
+    "2025-06-27": {
+        "status": "completed",
+        "data": {
+            "player": "Greg Cadaret"
+        }
+    },
+    "2025-06-28": {
+        "status": "completed",
+        "data": {
+            "player": "Al Downing"
+        }
+    },
+    "2025-06-29": {
+        "status": "completed",
+        "data": {
+            "player": "Steve Sax"
+        }
+    },
+    "2025-06-30": {
+        "status": "completed",
+        "data": {
+            "player": "Roger Clemens"
+        }
+    },
+    "2025-07-01": {
+        "status": "completed",
+        "data": {
+            "player": "Paul Quantrill"
+        }
+    },
+    "2025-07-02": {
+        "status": "completed",
+        "data": {
+            "player": "Jesse Barfield"
+        }
+    },
+    "2025-07-03": {
+        "status": "completed",
+        "data": {
+            "player": "Lyle Overbay"
+        }
+    },
+    "2025-07-04": {
+        "status": "completed",
+        "data": {
+            "player": "Neil Allen"
+        }
+    },
+    "2025-07-05": {
+        "status": "completed",
+        "data": {
+            "player": "Daryl Boston"
+        }
+    },
+    "2025-07-06": {
+        "status": "completed",
+        "data": {
+            "player": "Darryl Strawberry"
+        }
+    },
+    "2025-07-08": {
+        "status": "completed",
+        "data": {
+            "player": "Jay Buhner"
+        }
+    },
+    "2025-07-09": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Beattie"
+        }
+    },
+    "2025-07-10": {
+        "status": "completed",
+        "data": {
+            "player": "Luis Sojo"
+        }
+    },
+    "2025-07-11": {
+        "status": "completed",
+        "data": {
+            "player": "Rick Reuschel"
+        }
+    },
+    "2025-07-12": {
+        "status": "completed",
+        "data": {
+            "player": "Jay Johnstone"
+        }
+    },
+    "2025-07-13": {
+        "status": "completed",
+        "data": {
+            "player": "Joe Pepitone"
+        }
+    },
+    "2025-07-18": {
+        "status": "completed",
+        "data": {
+            "player": "Mark Wohlers"
+        }
+    },
+    "2025-07-19": {
+        "status": "completed",
+        "data": {
+            "player": "Paul Zuvella"
+        }
+    },
+    "2025-07-20": {
+        "status": "completed",
+        "data": {
+            "player": "Clete Boyer"
+        }
+    },
+    "2025-07-21": {
+        "status": "completed",
+        "data": {
+            "player": "Vernon Wells"
+        }
+    },
+    "2025-07-22": {
+        "status": "completed",
+        "data": {
+            "player": "Brandon Drury"
+        }
+    },
+    "2025-07-23": {
+        "status": "completed",
+        "data": {
+            "player": "Dale Murray"
+        }
+    },
+    "2025-07-26": {
+        "status": "completed",
+        "data": {
+            "player": "Al Holland"
+        }
+    },
+    "2025-07-27": {
+        "status": "completed",
+        "data": {
+            "player": "Ronald Torreyes"
+        }
+    },
+    "2025-07-28": {
+        "status": "completed",
+        "data": {
+            "player": "Roy White"
+        }
+    },
+    "2025-07-29": {
+        "status": "completed",
+        "data": {
+            "player": "Randy Choate"
+        }
+    },
+    "2025-07-30": {
+        "status": "completed",
+        "data": {
+            "player": "Rey S\u00e1nchez"
+        }
+    },
+    "2025-07-31": {
+        "status": "completed",
+        "data": {
+            "player": "Sam Militello"
+        }
+    },
+    "2025-08-01": {
+        "status": "completed",
+        "data": {
+            "player": "Mike Lowell"
+        }
+    },
+    "2025-08-02": {
+        "status": "completed",
+        "data": {
+            "player": "Randy Choate"
+        }
+    },
+    "2025-08-03": {
+        "status": "completed",
+        "data": {
+            "player": "Jorge Posada"
+        }
+    },
+    "2025-08-04": {
+        "status": "completed",
+        "data": {
+            "player": "Billy Sample"
+        }
+    },
+    "2025-08-05": {
+        "status": "completed",
+        "data": {
+            "player": "Wayne Tolleson"
+        }
+    },
+    "2025-08-06": {
+        "status": "completed",
+        "data": {
+            "player": "Mark Leiter"
+        }
+    },
+    "2025-08-09": {
+        "status": "completed",
+        "data": {
+            "player": "Bob Watson"
+        }
+    },
+    "2025-08-10": {
+        "status": "completed",
+        "data": {
+            "player": "Andy Pettitte"
+        }
+    },
+    "2025-08-11": {
+        "status": "completed",
+        "data": {
+            "player": "Phil Hughes"
+        }
+    },
+    "2025-08-12": {
+        "status": "completed",
+        "data": {
+            "player": "Kevin Maas"
+        }
+    },
+    "2025-08-13": {
+        "status": "completed",
+        "data": {
+            "player": "Jeff Reardon"
+        }
+    },
+    "2025-08-15": {
+        "status": "completed",
+        "data": {
+            "player": "Lindy McDaniel"
+        }
+    },
+    "2025-08-17": {
+        "status": "completed",
+        "data": {
+            "player": "Bill White"
+        }
+    },
+    "2025-08-19": {
+        "status": "completed",
+        "data": {
+            "player": "Bobby Richardson"
+        }
+    },
+    "2025-08-20": {
+        "status": "completed",
+        "data": {
+            "player": "Phil Linz"
+        }
+    },
+    "2025-08-22": {
+        "status": "completed",
+        "data": {
+            "player": "Luis Tiant"
+        }
+    },
+    "2025-08-23": {
+        "status": "completed",
+        "data": {
+            "player": "Danny Cater"
+        }
+    },
+    "2025-08-25": {
+        "status": "completed",
+        "data": {
+            "player": "Tim Raines"
+        }
+    },
+    "2025-08-26": {
+        "status": "completed",
+        "data": {
+            "player": "Ricky Bones"
+        }
+    },
+    "2025-08-27": {
+        "status": "completed",
+        "data": {
+            "player": "Graig Nettles"
+        }
+    },
+    "2025-08-28": {
+        "status": "completed",
+        "data": {
+            "player": "Dan Pasqua"
+        }
+    },
+    "2025-08-29": {
+        "status": "completed",
+        "data": {
+            "player": "Ron Kittle"
+        }
+    },
+    "2025-08-30": {
+        "status": "completed",
+        "data": {
+            "player": "Andrew Arthur Carey"
+        }
+    },
+    "2025-08-31": {
+        "status": "completed",
+        "data": {
+            "player": "Orlando Hern\u00e1ndez"
+        }
+    },
+    "2025-09-02": {
+        "status": "completed",
+        "data": {
+            "player": "Marwin Gonz\u00e1lez"
+        }
+    },
+    "2025-09-03": {
+        "status": "completed",
+        "data": {
+            "player": "Lance Berkman"
+        }
+    },
+    "2025-09-04": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Bouton"
+        }
+    },
+    "2025-09-05": {
+        "status": "completed",
+        "data": {
+            "player": "Alberto Castillo"
+        }
+    },
+    "2025-09-06": {
+        "status": "completed",
+        "data": {
+            "player": "Bob MacDonald"
+        }
+    },
+    "2025-09-07": {
+        "status": "completed",
+        "data": {
+            "player": "Don Mattingly"
+        }
+    },
+    "2025-09-09": {
+        "status": "completed",
+        "data": {
+            "player": "Joba Chamberlain"
+        }
+    },
+    "2025-09-10": {
+        "status": "completed",
+        "data": {
+            "player": "Cecil Fielder"
+        }
+    },
+    "2025-09-13": {
+        "status": "completed",
+        "data": {
+            "player": "Bill Monbouquette"
+        }
+    },
+    "2025-09-15": {
+        "status": "completed",
+        "data": {
+            "player": "Roy Smalley III"
+        }
+    },
+    "2025-09-16": {
+        "status": "completed",
+        "data": {
+            "player": "Ron Davis"
+        }
+    },
+    "2025-09-17": {
+        "status": "completed",
+        "data": {
+            "player": "Vernon Gomez"
+        }
+    },
+    "2025-09-19": {
+        "status": "completed",
+        "data": {
+            "player": "Paul Blair"
+        }
+    },
+    "2025-09-20": {
+        "status": "completed",
+        "data": {
+            "player": "Elliott Maddox"
+        }
+    },
+    "2025-09-21": {
+        "status": "completed",
+        "data": {
+            "player": "Mike Mussina"
+        }
+    },
+    "2025-09-23": {
+        "status": "completed",
+        "data": {
+            "player": "Nick Swisher"
+        }
+    },
+    "2025-09-24": {
+        "status": "completed",
+        "data": {
+            "player": "Joel Skinner"
+        }
+    },
+    "2025-09-25": {
+        "status": "completed",
+        "data": {
+            "player": "Richard Dotson"
+        }
+    },
+    "2025-09-26": {
+        "status": "completed",
+        "data": {
+            "player": "Gene Woodling"
+        }
+    },
+    "2025-09-27": {
+        "status": "completed",
+        "data": {
+            "player": "Bobby Shantz"
+        }
+    },
+    "2025-09-28": {
+        "status": "completed",
+        "data": {
+            "player": "Zach Britton"
+        }
+    },
+    "2026-02-28": {
+        "status": "completed",
+        "data": {
+            "player": "Amed Rosario"
+        }
+    },
+    "2026-03-05": {
+        "status": "completed",
+        "data": {
+            "player": "Duke Ellis"
+        }
+    },
+    "2026-03-06": {
+        "status": "completed",
+        "data": {
+            "player": "Paul Blackburn"
+        }
+    },
+    "2026-03-11": {
+        "status": "completed",
+        "data": {
+            "player": "Jos\u00e9 Caballero"
+        }
+    },
+    "2026-03-15": {
+        "status": "completed",
+        "data": {
+            "player": "Trent Grisham"
+        }
+    },
+    "2026-03-18": {
+        "status": "completed",
+        "data": {
+            "player": "Fernando Cruz"
+        }
+    },
+    "2026-03-19": {
+        "status": "completed",
+        "data": {
+            "player": "Paul Goldschmidt"
+        }
+    },
+    "2026-03-22": {
+        "status": "completed",
+        "data": {
+            "player": "Aaron Boone"
+        }
+    },
+    "2026-03-27": {
+        "status": "completed",
+        "data": {
+            "player": "Joe DiMaggio"
+        }
+    },
+    "2026-03-30": {
+        "status": "completed",
+        "data": {
+            "player": "David Weathers"
+        }
+    },
+    "2026-03-31": {
+        "status": "completed",
+        "data": {
+            "player": "Ken Clay"
+        }
+    },
+    "2026-04-01": {
+        "status": "completed",
+        "data": {
+            "player": "Mike Morgan"
+        }
+    },
+    "2026-04-03": {
+        "status": "completed",
+        "data": {
+            "player": "Jon Berti"
+        }
+    },
+    "2026-04-04": {
+        "status": "completed",
+        "data": {
+            "player": "Mark Hutton"
+        }
+    },
+    "2026-04-05": {
+        "status": "completed",
+        "data": {
+            "player": "Austin Slater"
+        }
+    },
+    "2026-04-07": {
+        "status": "completed",
+        "data": {
+            "player": "Rickey Henderson"
+        }
+    },
+    "2026-04-08": {
+        "status": "completed",
+        "data": {
+            "player": "Jos\u00e9 Canseco"
+        }
+    },
+    "2026-04-09": {
+        "status": "completed",
+        "data": {
+            "player": "Randy Velarde"
+        }
+    },
+    "2026-04-10": {
+        "status": "completed",
+        "data": {
+            "player": "Bubba Trammell"
+        }
+    },
+    "2026-04-12": {
+        "status": "completed",
+        "data": {
+            "player": "Shelley Duncan"
+        }
+    },
+    "2026-04-13": {
+        "status": "completed",
+        "data": {
+            "player": "Reggie Jackson"
+        }
+    },
+    "2026-04-14": {
+        "status": "completed",
+        "data": {
+            "player": "Don Baylor"
+        }
+    },
+    "2026-04-15": {
+        "status": "completed",
+        "data": {
+            "player": "Mickey Rivers"
+        }
+    },
+    "2026-04-16": {
+        "status": "completed",
+        "data": {
+            "player": "Mike Witt"
+        }
+    },
+    "2026-04-17": {
+        "status": "completed",
+        "data": {
+            "player": "Larry Gura"
+        }
+    },
+    "2026-04-18": {
+        "status": "completed",
+        "data": {
+            "player": "Fran Healy"
+        }
+    },
+    "2026-04-19": {
+        "status": "completed",
+        "data": {
+            "player": "Lou Piniella"
+        }
+    },
+    "2026-04-21": {
+        "status": "completed",
+        "data": {
+            "player": "Jacoby Ellsbury"
+        }
+    },
+    "2026-04-22": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Leyritz"
+        }
+    },
+    "2026-04-23": {
+        "status": "completed",
+        "data": {
+            "player": "Jackie Jensen"
+        }
+    },
+    "2026-04-24": {
+        "status": "completed",
+        "data": {
+            "player": "Jos\u00e9 Cruz"
+        }
+    },
+    "2026-04-25": {
+        "status": "completed",
+        "data": {
+            "player": "Octavio Dotel"
+        }
+    },
+    "2026-04-26": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Wynn"
+        }
+    },
+    "2026-04-27": {
+        "status": "completed",
+        "data": {
+            "player": "Jim Mason"
+        }
+    },
+    "2026-04-28": {
+        "status": "completed",
+        "data": {
+            "player": "Steve Hamilton"
+        }
+    },
+    "2026-04-29": {
+        "status": "completed",
+        "data": {
+            "player": "John Charles Ellis"
+        }
+    },
+    "2026-05-01": {
+        "status": "completed",
+        "data": {
+            "player": "Tim Stoddard"
+        }
+    },
+    "2026-05-02": {
+        "status": "completed",
+        "data": {
+            "player": "Bob Turley"
+        }
+    },
+    "2026-05-03": {
+        "status": "completed",
+        "data": {
+            "player": "Mason Jordan Williams"
+        }
+    },
+    "2026-05-04": {
+        "status": "completed",
+        "data": {
+            "player": "John Sterling"
+        }
+    },
+    "2026-05-05": {
+        "status": "completed",
+        "data": {
+            "player": "Toby Harrah"
+        }
+    },
+    "2026-05-06": {
+        "status": "completed",
+        "data": {
+            "player": "Fritz Peterson"
+        }
+    },
+    "2026-05-07": {
+        "status": "completed",
+        "data": {
+            "player": "Andre Robertson"
+        }
+    },
+    "2026-05-08": {
+        "status": "completed",
+        "data": {
+            "player": "Gary Sheffield"
+        }
+    },
+    "2026-05-09": {
+        "status": "completed",
+        "data": {
+            "player": "Willie Randolph"
+        }
+    },
+    "2026-05-10": {
+        "status": "completed",
+        "data": {
+            "player": "Graeme Lloyd"
+        }
+    },
+    "2026-05-11": {
+        "status": "completed",
+        "data": {
+            "player": "Pat Dobson"
+        }
+    },
+    "2026-05-12": {
+        "status": "completed",
+        "data": {
+            "player": "Gary Roenicke"
+        }
+    },
+    "2026-05-13": {
+        "status": "completed",
+        "data": {
+            "player": "Tippy Martinez"
+        }
+    },
+    "2026-05-17": {
+        "status": "completed",
+        "data": {
+            "player": "Marv Throneberry"
+        }
+    },
+    "2026-05-18": {
+        "status": "completed"
     }
-  },
-  "2025-03-30": {
-    "status": "scraped",
-    "data": {
-      "player": "Tony Lazzeri"
-    }
-  }
 }

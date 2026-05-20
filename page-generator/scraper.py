@@ -220,6 +220,55 @@ def get_driver():
         print("  Using WebDriver Manager to download ChromeDriver...")
         return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
+def parse_appearances(soup):
+    """
+    Parses games played by position from the 'Appearances' table.
+    Often hidden in comments.
+    """
+    pos_data = {}
+    # B-Ref hides many tables in comments.
+    comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+    table = None
+    for comment in comments:
+        if 'id="appearances"' in comment:
+            c_soup = BeautifulSoup(comment, "html.parser")
+            table = c_soup.find("table", id="appearances")
+            break
+            
+    if not table:
+        table = soup.find("table", id="appearances")
+        
+    if table:
+        # Looking for rows in the body
+        for row in table.select("tbody tr"):
+            th = row.find("th")
+            if not th: continue
+            pos = th.get_text(strip=True)
+            # We want specific positions, not "Total"
+            if pos in ["Total", "Year", "Age", "Team", "Lg"]: continue
+            
+            g_td = row.find("td", {"data-stat": "G"})
+            if g_td:
+                pos_data[pos] = g_td.get_text(strip=True)
+                
+    return pos_data
+
+def parse_awards(soup):
+    """Extracts awards and honors from the bling items or awards section."""
+    awards = []
+    # Bling items at the top
+    bling = soup.select(".bling-item")
+    for item in bling:
+        awards.append(item.get_text(strip=True))
+        
+    # Also check specific awards list
+    awards_div = soup.select_one("#awards")
+    if awards_div:
+        for li in awards_div.find_all('li'):
+            awards.append(li.get_text(strip=True))
+            
+    return list(set(awards))
+
 def search_and_scrape_player(player_name, automated=False, driver=None):
     """
     Opens a browser (if not provided), finds a player's page, and scrapes both career totals and yearly WAR.
@@ -321,6 +370,7 @@ def search_and_scrape_player(player_name, automated=False, driver=None):
         yearly_war = parse_yearly_war(soup)
         transactions = parse_transactions(soup)
         awards = parse_awards(soup)
+        positions = parse_appearances(soup)
 
         if career_totals and yearly_war:
             print("  ✅ All stats scraped successfully.")
@@ -328,7 +378,8 @@ def search_and_scrape_player(player_name, automated=False, driver=None):
                 "career_totals": career_totals, 
                 "yearly_war": yearly_war,
                 "transactions": transactions,
-                "awards": awards
+                "awards": awards,
+                "positions": positions
             }
         else:
             print("  ❌ Failed to scrape all required data.")
@@ -385,6 +436,66 @@ def generate_master_player_list(project_dir: Path):
 
     finally:
         driver.quit()
+
+def get_mlb_bio(player_name, shared_driver=None):
+    """
+    Scrapes the MLB.com biography/profile for a player as a fallback for SABR.
+    """
+    print(f"⚾ Attempting MLB.com bio fallback for {player_name}...")
+    
+    # Use a simpler pattern search if we can't find a direct API
+    # format is https://www.mlb.com/player/first-last-ID
+    
+    driver = shared_driver or get_driver()
+    try:
+        # Search Bing for the MLB profile URL (often less bot-blocked than Google for scraping)
+        search_query = urllib.parse.quote_plus(f"site:mlb.com/player {player_name}")
+        driver.get(f"https://www.bing.com/search?q={search_query}")
+        time.sleep(2)
+        
+        # Find the first MLB player link
+        links = driver.find_elements(By.TAG_NAME, "a")
+        mlb_url = None
+        for link in links:
+            try:
+                href = link.get_attribute("href")
+                if href and "mlb.com/player/" in href and "-" in href:
+                    mlb_url = href
+                    break
+            except:
+                continue
+        
+        if not mlb_url:
+            print(f"  ⚠️ No MLB.com profile link found for {player_name}")
+            return None
+            
+        print(f"  ✅ Found MLB.com profile: {mlb_url}")
+        driver.get(mlb_url)
+        time.sleep(3)
+        
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        
+        # Target the bio section
+        # MLB.com uses a modal or a bottom profile section
+        content = soup.find("div", id="playerBioModalBody")
+        if not content:
+            content = soup.select_one(".player-profile-bottom")
+            
+        if content:
+            # Clean up the text
+            for script in content(["script", "style"]): script.decompose()
+            text = content.get_text(separator=' ', strip=True)
+            if len(text) > 200:
+                return text
+
+        return None
+
+    except Exception as e:
+        print(f"  ⚠️ MLB.com fallback failed for {player_name}: {e}")
+        return None
+    finally:
+        if not shared_driver:
+            driver.quit()
 
 def get_sabr_bio(player_name):
     """

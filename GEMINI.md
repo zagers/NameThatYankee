@@ -217,6 +217,12 @@ To use the puzzle generation tools:
 ### Gemini Model Transition (COMPLETED 2026-05-14)
 *   **Model Update:** Updated `page-generator/ai_services.py` to use `gemini-3.1-flash-lite` (GA) instead of the preview model identifier.
 
+### Local Development Alignment (PENDING)
+*   **Jekyll Setup:** Set up a local Jekyll environment (`Gemfile` + `bundle exec jekyll serve`) to perfectly mimic GitHub Pages routing and prevent "Invalid Date" errors caused by URL path divergence.
+
+### Robust Date Identification (PENDING)
+*   **Source of Truth:** Implement the "Body Data Attribute" strategy (`<body data-quiz-date="YYYY-MM-DD">`) as defined in `docs/superpowers/specs/2026-05-11-robust-date-identification.md`. This provides a foolproof way for JavaScript to identify the puzzle date, regardless of URL structure or environment.
+
 ### SEO Discovery Engine (PENDING)
 *   **Structured Data & Static Pages:** Re-implement JSON-LD (VideoGame/Person) and indexable quiz pages. **NOTE:** The first attempt (2026-05-11) was rolled back due to production routing issues on GitHub Pages. Future implementation must resolve clean URL mapping or use explicit `.html` paths for indexability.
 

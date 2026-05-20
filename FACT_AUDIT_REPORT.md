@@ -682,3 +682,4255 @@ Started on: 2026-05-15 15:39:45
     - **Reason:** Thenickname'BigPuma'didnotoriginatefromareportercallinghima'fatcat.'ItoriginatedfromBerkmanhimselfduringaHoustonradioshowappearancewherehewasaddressinghisothernickname, 'FatElvis.'Hestatedhedisliked'FatElvis'andclaimedhewas'morelikeapuma'becausepumasare'sleekandagile.'Thehostsandfansthenadoptedthe'BigPuma'nickname.
     - **Source:** [1.3, 1.15](1.3, 1.15)
 
+## 2025-03-29 - James Edward Key
+Fact verification failed for the following claims:
+- The player was drafted by the Chicago White Sox in the 10th round of the 1979 amateur draft.
+- The player did not sign with the White Sox in 1979.
+- The player won an ERA title.
+- The player pitched in 470 games and 389 games started.
+- The player is a two-time World Series champion.
+- The player recorded a 6.3 WAR in 1993.
+- The player recorded 2,591.2 innings pitched in his career.
+- The player recorded 1,538 career strikeouts.
+- The player has a career 3.51 ERA.
+- The player recorded a 4.6 WAR in 1997 with the Baltimore Orioles.
+
+## 2025-04-01 - Scott Brosius
+Fact verification failed for the following claims:
+- The player was drafted in the 20th round of the 1987 amateur draft.
+- The player signed with the Oakland Athletics on June 9, 1987.
+- The player was acquired by the New York Yankees on November 18, 1997.
+- The player was involved in a trade for Kenny Rogers.
+- The player won the World Series MVP award.
+- The player won three World Series titles.
+- The player earned a Gold Glove award.
+- The player was a one-time All-Star.
+- The player was granted free agency on November 5, 2001.
+
+## 2025-04-03 - Todd Greene
+Fact verification failed for the following claims:
+- The player was drafted by the Atlanta Braves in the 27th round of the 1989 amateur draft but did not sign.
+- The player was a member of the New York Yankees in 2001.
+- The player signed with the New York Yankees on April 5, 2001.
+- The player was released by the New York Yankees on March 27, 2002.
+- The player hit 71 career home runs.
+- The player had 1,573 career at-bats.
+- The player had 397 career hits.
+- The player had 217 career RBIs.
+- The player had a career batting average of .252.
+- The player had a career OPS of .730.
+- The player was released by the Toronto Blue Jays on March 28, 2001.
+
+## 2025-04-04 - Tony Kubek
+Fact verification failed for the following claims:
+- The player signed with the New York Yankees in 1954 for a $1,500 bonus.
+- The player attended Bay View High School.
+- The player hit two home runs in the 1957 World Series.
+- The player hit three home runs during the 1957 regular season.
+- The player was struck in the throat by a baseball during the 1960 World Series.
+- Ralph Houk managed the player in the minor leagues at Denver in 1956.
+- The player won the Rookie of the Year award.
+- The player was a four-time All-Star.
+- The player won three World Series titles.
+
+## 2025-04-06 - Ralph Terry
+Fact verification failed for the following claims:
+- Branch Rickey offered a $100 bill as a target to this player during a tryout in 1953.
+- This player was involved in a near-fatal car accident during the 1957-58 offseason.
+- This player spent seven weeks in traction following his 1957-58 car accident.
+- This player recorded the highest number of 'Golden Pitches' in World Series history.
+- This player helped the Yankees win the World Series in 1962.
+- This player was advanced from second to fourth grade by Mrs. Edmonds.
+- This player earned approximately 140 college credits without receiving a degree.
+- This player struck out 21 batters in a high school game where he also recorded seven RBIs.
+
+## 2025-04-07 - Iván Nova
+Fact verification failed for the following claims:
+- This player was drafted by the San Diego Padres from the New York Yankees in the 2008 Rule 5 draft.
+- This player was returned by the San Diego Padres to the New York Yankees on March 29, 2009.
+- This player recorded a 3.4 WAR in the 2013 season.
+- This player recorded a -0.7 WAR in the 2014 season.
+- This player was traded by the New York Yankees to the Pittsburgh Pirates on August 1, 2016.
+- Tito Polo and Stephen Tarpley were sent to the New York Yankees to complete the trade on August 30, 2016.
+- This player accumulated 90 career wins.
+- This player recorded 963 career strikeouts.
+- This player played for the Chicago White Sox in 2019.
+- This player played for the Detroit Tigers in 2020.
+
+## 2025-04-11 - Nick Johnson
+Fact verification failed for the following claims:
+- This player was drafted by the New York Yankees in the 3rd round of the 1996 amateur draft.
+- This player signed with the New York Yankees on June 14, 1996.
+- This player was traded to the Montreal Expos on December 16, 2003, along with Randy Choate and Juan Rivera.
+- The New York Yankees acquired Javier Vázquez in the 2003 trade involving this player.
+- This player retired with a career .399 on-base percentage.
+- This player finished his career with a .268 batting average.
+- This player recorded a 5.0 WAR during the 2006 season.
+- This player recorded a career total of 2,698 at-bats.
+- This player had a career OPS+ of 123.
+- This player signed a free agent contract with the New York Yankees on December 18, 2009.
+
+## 2025-04-12 - Santos Alomar
+Fact verification failed for the following claims:
+- This player was signed by the San Diego Padres as an amateur free agent on October 21, 1983.
+- This player won the Rookie of the Year award.
+- This player was a 6-time All-Star.
+- This player won the All-Star Game MVP award.
+- This player won a Gold Glove award.
+- This player accumulated 1236 hits over his career.
+- This player hit 112 career home runs.
+- On December 6, 1989, this player was traded by the San Diego Padres to the Cleveland Indians along with Carlos Baerga and Chris James for Joe Carter.
+- This player played for the Chicago White Sox, Colorado Rockies, Texas Rangers, Los Angeles Dodgers, and New York Mets.
+- This player signed with the New York Mets on March 1, 2007.
+
+## 2025-04-13 - Bob Melvin
+Fact verification failed for the following claims:
+- The player won 350 pounds of yams by hitting seven home runs in an American Legion tournament.
+- The player attended Menlo-Atherton High School.
+- Stevie Nicks and Lindsey Buckingham are alumni of Menlo-Atherton High School.
+- The player was inducted into the Menlo-Atherton Athletic Hall of Fame in 1994.
+- The player won three Manager of the Year awards.
+- The player played for the New York Yankees in 1994.
+- Vince Lombardi was a friend of the player's grandfather.
+- Mike McCormick won the 1967 National League Cy Young Award.
+- The player drove in four runs at Yankee Stadium on August 27, 1989.
+- The player hit his only home run and triple of the 1989 season on August 27, 1989.
+- The player began the 1993 season with the record for most plate appearances without being hit by a pitch among active players.
+
+## 2025-04-17 - Ji-Man Choi
+Fact verification failed for the following claims:
+- This player signed as a free agent with the Seattle Mariners on July 2, 2009.
+- This player was drafted by the Los Angeles Angels from the Baltimore Orioles in the 2015 Rule 5 draft.
+- This player has a career OPS of .764.
+- This player played for the New York Yankees in 2017.
+- This player played for the New York Mets in 2024.
+- This player earned 0.1 WAR while playing for the Yankees in 2017.
+- This player had 1,567 career at-bats.
+- This player has a career OPS+ of 112.
+
+## 2025-04-18 - Dioner Navarro
+Fact verification failed for the following claims:
+- This player signed as an amateur free agent with the New York Yankees on August 21, 2000.
+- This player was traded to the Arizona Diamondbacks on January 11, 2005, in exchange for Randy Johnson.
+- Javier Vázquez and Brad Halsey were also included in the January 11, 2005, trade for Randy Johnson.
+- This player is a one-time All-Star.
+- This player recorded 3,207 career at-bats.
+- This player recorded 802 career hits.
+- This player recorded 367 career runs batted in.
+- This player recorded a 2.5 WAR during the 2014 season with the Toronto Blue Jays.
+
+## 2025-04-19 - Richard Monteleone
+Fact verification failed for the following claims:
+- The player was drafted by the Detroit Tigers in the 1st round of the 1982 amateur draft.
+- On April 29, 1990, the player was traded from the California Angels to the New York Yankees.
+- The 1990 trade involved the player and Claudell Washington moving to the Yankees for Luis Polonia.
+- The player made 210 career appearances.
+- The player recorded zero career saves.
+- The player made zero career starts.
+- The player was with the New York Yankees from 1990 to 1993.
+- The player returned to the New York Yankees in February 1996.
+- The player recorded a 1.5 WAR in the 1992 season.
+- The player was traded from the New York Yankees to the California Angels for Mike Aldrete on June 12, 1996.
+- The player was released by the California Angels on September 2, 1996.
+
+## 2025-04-20 - David Robertson
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 17th round of the 2006 amateur draft.
+- He signed his first professional contract on August 21, 2006.
+- He was a member of the 2009 World Series championship team.
+- He has 1,176 career strikeouts.
+- He has pitched 894.1 career innings.
+- His career WHIP is 1.162.
+- He was traded from the Chicago White Sox to the New York Yankees on July 19, 2017.
+- The 2017 trade also involved Todd Frazier and Tommy Kahnle.
+- He has accumulated 179 career saves.
+- He is a one-time All-Star.
+
+## 2025-04-21 - Enrique Wilson
+Fact verification failed for the following claims:
+- This player was signed by the Minnesota Twins as an amateur free agent on April 15, 1992.
+- This player was traded from the Pittsburgh Pirates to the New York Yankees on June 13, 2001.
+- Dámaso Marte was traded to the Pittsburgh Pirates for this player on June 13, 2001.
+- This player had a career total of 22 home runs.
+- This player had a career batting average of .244.
+- This player played for the Yankees from 2001 to 2004.
+- This player had a career total WAR of -5.2.
+- This player had a career OPS+ of 64.
+- This player played for the Cleveland Indians, Pittsburgh Pirates, New York Yankees, Chicago Cubs, and Boston Red Sox during his career.
+- This player's career spanned from 1997 to 2006.
+
+## 2025-04-25 - Ted Lilly
+Fact verification failed for the following claims:
+- The player was drafted in the 23rd round of the 1996 amateur draft.
+- The player was traded to the New York Yankees on March 17, 2000.
+- The player was traded to the Oakland Athletics on July 5, 2002.
+- Jeff Weaver was traded to the New York Yankees in the July 5, 2002, three-team trade.
+- The player accumulated 130 career wins.
+- The player is a two-time All-Star.
+- The player appeared in 356 career games.
+- The player pitched 1,982.2 career innings.
+- The player recorded 1,681 career strikeouts.
+
+## 2025-04-29 - Sidney Ponson
+Fact verification failed for the following claims:
+- He signed as an amateur free agent with the Baltimore Orioles on August 17, 1993.
+- He pitched for the New York Yankees in 2006 and 2008.
+- He was released by the New York Yankees on August 23, 2006.
+- He signed with the New York Yankees on June 19, 2008.
+- He became a free agent on October 30, 2008.
+- His career spanned from 1998 to 2009.
+- He recorded 91 career wins.
+- He pitched 1760.1 career innings.
+- He played for the Baltimore Orioles from 1998 to 2005.
+- He was traded to the San Francisco Giants in 2003.
+- He finished his career with a 5.03 ERA.
+- He recorded 1,031 career strikeouts.
+- He played in 298 total games.
+
+## 2025-04-30 - Gus Triandos
+Fact verification failed for the following claims:
+- This player signed with the New York Yankees in 1948 for a $2,500 bonus.
+- This player served in the US Army in 1951.
+- This player was part of the 17-player trade between the New York Yankees and Baltimore Orioles on November 17, 1954.
+- This player caught a 45-inch circumference mitt to help manage the knuckleball.
+- This player recorded only one stolen base in 1,206 consecutive games.
+- This player hit 167 home runs during his career.
+- This player was a four-time All-Star selection.
+
+## 2025-05-02 - Shane Spencer
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 28th round of the 1990 amateur draft.
+- He won two World Series championships.
+- He finished his career with a 5.0 WAR.
+- He hit 59 career home runs.
+- He recorded 438 hits in his career.
+- He recorded 242 RBIs in his career.
+- He recorded 1.1 WAR in 1998.
+- He signed with the Cleveland Indians on January 14, 2003.
+- He was traded to the Texas Rangers on July 18, 2003.
+- He signed with the New York Mets on January 29, 2004.
+- He returned to the New York Yankees on August 17, 2004.
+
+## 2025-05-03 - Reid Brignac
+Fact verification failed for the following claims:
+- The player was drafted in the 2nd round of the 2004 amateur draft.
+- The player played for the Tampa Bay organization from 2008 to 2012.
+- The player was purchased by the New York Yankees from the Colorado Rockies on May 18, 2013.
+- The player was granted free agency by the New York Yankees on June 25, 2013.
+- The player achieved a 2.5 WAR in the 2010 season.
+- The player recorded 886 at-bats and 194 hits over his career.
+- The player played for the Tampa Bay Rays, Colorado Rockies, New York Yankees, Philadelphia Phillies, Miami Marlins, and Atlanta Braves.
+- The player's major league career spanned from 2008 to 2016.
+
+## 2025-05-04 - Wade Boggs
+Fact verification failed for the following claims:
+- This player participated in a 33-inning game starting on April 18, 1981.
+- This player was selected in the seventh round of the 1976 amateur draft.
+- This player won five batting titles in his career.
+- This player led all of baseball in on-base percentage for five consecutive years ending in 1989.
+- He read the book The Science of Hitting by Ted Williams to improve his discipline.
+- He hit .485 during a high school season after adjusting his approach at the plate.
+- He played for the Boston Red Sox in 1986.
+- He hit .358 over the final 96 games of the 1982 season.
+
+## 2025-05-05 - Dave Winfield
+Fact verification failed for the following claims:
+- The player was selected by five teams in three major sports.
+- He was a two-time All-Big Ten basketball selection in 1971 and 1973.
+- He earned the Babe Ruth Award for the 1992 World Series.
+- He is one of only five players in MLB history to record 3,000 hits and 450 home runs.
+- He played for the Minnesota Gophers basketball team as part of the 'Iron Five'.
+- He was involved in an on-court brawl against Ohio State on January 25, 1972.
+- George Steinbrenner paid a known gambler to discredit the player.
+- The player founded the David M. Winfield Foundation, which operated for 22 years.
+
+## 2025-05-06 - Kerry Wood
+Fact verification failed for the following claims:
+- The player was selected in the first round of the 1995 amateur draft.
+- The player threw 175 pitches in a high school doubleheader two days before the 1995 draft.
+- The player recorded 20 strikeouts in a single game on May 6, 1998.
+- The player joined the New York Yankees in 2010 after being traded by the Cleveland Indians.
+- The player served as a setup man for Mariano Rivera.
+- The player hit a two-run home run in Game 7 of the 2003 National League Championship Series.
+- The player retired on May 18, 2012, after striking out the only batter he faced.
+- The player took a no-hitter into the seventh inning against the Milwaukee Brewers on May 25, 2001.
+
+## 2025-05-10 - Stan Javier
+Fact verification failed for the following claims:
+- The player wore uniform number 6 in the minor leagues.
+- The player was named after Stan Musial.
+- The player requested a demotion while playing for the Yankees in 1984.
+- The player was a member of the 1989 World Series champion Oakland A's.
+- The player batted .500 during the 1989 postseason.
+- The player switch-hit because of field conditions in the Dominican Republic.
+- The player was traded to the Oakland Athletics for Rickey Henderson on December 5, 1984.
+- Walt Jocketty insisted that the player be included in the trade for Rickey Henderson.
+
+## 2025-05-11 - Jim Hunter
+Fact verification failed for the following claims:
+- The player was drafted by the Atlanta Braves in the 23rd round of the 1983 amateur draft.
+- The player was drafted by the Baltimore Orioles in the 2nd round of the 1984 amateur draft.
+- The player was selected by the Montreal Expos in the 1st round (10th pick) of the 1985 amateur draft.
+- The player was purchased by the Milwaukee Brewers from the Montreal Expos on June 9, 1986.
+- The player recorded a -0.7 WAR in 1991.
+- The player played for the Milwaukee Brewers in 1991.
+- The player finished his career with 8 total games played.
+- The player finished his career with 6 games started.
+- The player finished his career with a 7.26 ERA.
+- The player finished his career with 5 losses.
+- The player was granted free agency on October 15, 1991.
+
+## 2025-05-12 - Russ Davis
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 29th round of the 1988 amateur draft.
+- He played for the New York Yankees in 1994 and 1995.
+- He was traded by the New York Yankees with Sterling Hitchcock to the Seattle Mariners on December 7, 1995.
+- The Yankees received Tino Martinez, Jim Mecir, and Jeff Nelson in the December 1995 trade.
+- He hit 84 home runs in his career.
+- He recorded 276 RBI in his career.
+- He had 1,980 career at-bats.
+- His career OPS was .755.
+- He played for the Seattle Mariners from 1996 to 1999.
+- He played for the San Francisco Giants in 2000 and 2001.
+- He was released by the San Francisco Giants on June 21, 2001.
+
+## 2025-05-13 - Henry Cotto
+Fact verification failed for the following claims:
+- He signed as an amateur free agent with the Chicago Cubs on June 7, 1980.
+- He was traded from the Chicago Cubs to the New York Yankees on December 4, 1984.
+- The trade involved Porfi Altamirano, Rich Bordi, Ron Hassey, Brian Dayett, and Ray Fontenot.
+- He finished his career with 130 stolen bases.
+- His career batting average was .261.
+- He was traded from the New York Yankees to the Seattle Mariners on December 22, 1987.
+- The 1987 trade involved Steve Trout, Lee Guetterman, Clay Parker, and Wade Taylor.
+- He signed as a free agent with the Baltimore Orioles on February 3, 1994.
+
+## 2025-05-14 - Larry Milbourne
+Fact verification failed for the following claims:
+- The player was drafted by the California Angels in the 1971 minor league draft.
+- The player was drafted by the St. Louis Cardinals in the 1972 minor league draft.
+- The player was drafted by the Houston Astros in the 1973 Rule 5 draft.
+- The player was traded to the Yankees in November 1980 for Brad Gulden and $150,000.
+- The player recorded a 1.2 WAR with the Yankees in 1981.
+- The player was purchased by the Yankees from the Philadelphia Phillies in July 1983.
+- The player played for the Houston Astros, Seattle Mariners, New York Yankees, Minnesota Twins, Cleveland Indians, and Philadelphia Phillies.
+
+## 2025-05-23 - Jerry Coleman
+Fact verification failed for the following claims:
+- The Brooklyn Dodgers offered him a $2,500 bonus to sign.
+- He was a student athlete at USC.
+- He hit a 'dying swan' double in the 1949 pennant race.
+- He is the only major-league ballplayer to see combat in both World War II and the Korean Conflict.
+- He flew 57 missions in a dive bomber in World War II.
+- He flew 63 missions in a fighter plane in Korea.
+- He was named the MVP of the 1950 World Series.
+- He hit a walk-off single in Game Three of the 1950 World Series.
+- He played for the New York Yankees.
+- He hit a career-high 69 RBIs in the 1950 season.
+
+## 2025-05-28 - John Candelaria
+Fact verification failed for the following claims:
+- The player was the second all-time leading rebounder at his high school behind Kareem Abdul-Jabbar.
+- The player threw a no-hitter against the Los Angeles Dodgers on August 9, 1976.
+- The player won the ERA title with a 2.34 ERA in 1977.
+- The player signed with the Pittsburgh Pirates for $40,000.
+- Roberto Clemente acted as a translator for the Pittsburgh Pirates during the signing process.
+
+## 2025-06-04 - Ron Hassey
+Fact verification failed for the following claims:
+- This player attended the University of Arizona.
+- This player is the all-time RBI leader at the University of Arizona with 235 RBIs.
+- This player was drafted in the 23rd round of the 1972 amateur draft.
+- This player was drafted in the 22nd round of the 1975 June draft.
+- This player is the only catcher to have caught two perfect games in major league history.
+- This player's career spanned 14 years in the major leagues.
+- This player played for six different franchises.
+- This player had two passed balls while catching for Phil Niekro on August 13, 1985.
+- This player hit a home run in the same game he caught for Phil Niekro on August 13, 1985.
+
+## 2025-06-05 - Walt Williams
+Fact verification failed for the following claims:
+- This player was born on December 19, 1943.
+- This player was born in Brownwood, Texas.
+- This player died in Abilene, Texas, on January 23, 2016.
+- This player played for the Yankees from 1974 to 1976.
+
+## 2025-06-10 - Johnny Damon
+Fact verification failed for the following claims:
+- This player impersonated his older brother to a police officer after taking his mother's car at age 14.
+- This player won the J.G. Taylor Spink Award as the National Association Minor League Player of the Year in 1995.
+- This player won a World Series title with the 2004 Boston Red Sox.
+- This player won a World Series title with the 2009 New York Yankees.
+- The Kansas City Royals drafted this player with the 35th pick in the first round of the 1992 draft.
+- This player declined a baseball scholarship to the University of Florida to sign with the Royals for $300,000.
+- This player called his 2004 Red Sox teammates 'idiots' to describe their carefree team culture.
+- This player suffered a concussion in the 2003 ALDS after colliding with Damian Jackson.
+
+## 2025-06-11 - Dick Howser
+Fact verification failed for the following claims:
+- This player attended Florida State University on a $500 scholarship.
+- This player hit .422 during his sophomore year at Florida State in 1956.
+- This player recorded his first major-league hit against Mike Fornieles in 1961.
+- This player was named team captain by manager Hank Bauer in 1961.
+- This player won the World Series as a manager in 1985.
+- This player suffered two cracked ribs during batting practice on April 22, 1963.
+- The Kansas City Royals retired this player's number 10 on July 3, 1987.
+- A bronze statue of this player was unveiled at Kauffman Stadium on April 10, 2009.
+
+## 2025-06-13 - George Scott
+Fact verification failed for the following claims:
+- This player was temporarily removed from a Little League team for being too good.
+- In 1965, the player achieved a Triple Crown in the Double-A Eastern League.
+- The player batted .319 in 1965.
+- The player hit 25 home runs in 1965.
+- The player recorded 94 RBIs in 1965.
+- This player won eight Gold Glove awards.
+- The player's major league career lasted 14 seasons.
+- The player hit a home run off Whitey Ford in 1966.
+- Mickey Mantle suggested the player's 1966 home run off Whitey Ford could be estimated at 550 feet.
+
+## 2025-06-15 - Clay Bellinger
+Fact verification failed for the following claims:
+- The player was born in Oneonta, New York, on November 18, 1968.
+- The player was a member of the 2000 New York Yankees World Series championship team.
+- The player was associated with the 2002 Anaheim Angels.
+
+## 2025-06-17 - Aaron Hicks
+Fact verification failed for the following claims:
+- The player was born on October 2, 1989.
+- The player was born in San Pedro, California.
+- The player was drafted in 2008.
+- The player played as an outfielder for the New York Yankees.
+
+## 2025-06-18 - Andrew Heaney
+Fact verification failed for the following claims:
+- The player was born on June 5, 1991, in Oklahoma City, Oklahoma.
+- The player was acquired by the New York Yankees in 2021.
+- The player previously competed for the Los Angeles Angels.
+- The player is a left-handed pitcher.
+
+## 2025-06-19 - Jim Abbott
+Fact verification failed for the following claims:
+- This player was drafted by the Toronto Blue Jays in the 36th round.
+- This player attended the University of Michigan.
+- This player was the first U.S. pitcher to beat the Cuban national team in Cuba in 25 years.
+- This player finished third in the 1991 American League Cy Young Award voting.
+- This player led the American League in 'tough losses' in 1991.
+- This player hit a 375-foot triple against the San Francisco Giants during 1991 spring training.
+- Baseball America ranked this player's 1989 major league debut as the second most historically significant debut behind Jackie Robinson.
+
+## 2025-06-20 - Eddie Lopat
+Fact verification failed for the following claims:
+- This player was originally a first baseman.
+- This player was rejected by the New York Giants because he could not make the throw to second base.
+- This player effectively possessed a repertoire of 72 different deliveries.
+- This player led the American League with a 2.42 ERA in 1953.
+- This player led the American League with an .800 winning percentage in 1953.
+- Ted Williams ranked this player as one of the five toughest pitchers he faced.
+- This player helped Whitey Ford identify a 'tell' in his delivery that revealed his pitch type to coaches.
+
+## 2025-06-21 - George Stirnweiss
+Fact verification failed for the following claims:
+- The player attended the University of North Carolina.
+- The player earned letters in baseball and football at the University of North Carolina.
+- The player led the American League in batting average in 1945.
+- The player led the American League in hits in 1945.
+- The player led the American League in triples in 1945.
+- The player hit .309 in 1945.
+- The player led the American League in stolen bases in 1944.
+- The player led the American League in stolen bases in 1945.
+- The player played for the St. Louis Browns.
+- The player played for the Cleveland Indians.
+- The player concluded his major league career in 1952.
+
+## 2025-06-23 - Paul O'Neill
+Fact verification failed for the following claims:
+- The player's great-grandfather married Mary Clemens, a cousin to Mark Twain.
+- In the 1990 NLCS, the player recorded a 1.324 OPS.
+- The Cincinnati Reds won their first pennant since 1976 in the 1990 season.
+- In 1992, the player batted .246 with 19 doubles, 14 home runs, and 66 RBIs.
+- The Reds traded the player to the New York Yankees on November 3, 1992.
+
+## 2025-06-24 - Mariano Duncan
+Fact verification failed for the following claims:
+- The player committed 15 errors in 30 appearances in the Pioneer League.
+- The player and his teammate hit grand slams in consecutive innings on August 23, 1985.
+- The player won a World Series title with the 1990 Cincinnati Reds.
+- The player won a World Series title with the 1996 New York Yankees.
+- In 1990, the player batted .306 with an NL-high 11 triples.
+
+## 2025-06-28 - Al Downing
+Fact verification failed for the following claims:
+- The player was born on June 28, 1941.
+- The player was born in Trenton, New Jersey.
+- The player surrendered Hank Aaron's 715th career home run in 1974.
+- The player was an All-Star in 1967.
+- The player had a professional career spanning 17 seasons.
+
+## 2025-07-02 - Jesse Barfield
+Fact verification failed for the following claims:
+- This player won a statewide drafting contest to earn a scholarship at Bradley University.
+- This player was called up to the major leagues on September 3, 1981.
+- This player had his jersey number stapled to his uniform for his major league debut.
+- This player recorded 162 outfield assists during his 12-season career.
+- This player played in the major leagues from 1981 to 1992.
+- This player hit 40 home runs during the 1986 season.
+- This player led the major leagues in home runs in 1986.
+
+## 2025-07-05 - Daryl Boston
+Fact verification failed for the following claims:
+- The player was born in Cincinnati, Ohio.
+- The player was born on January 4, 1963.
+- The player was selected in the 1981 MLB Draft.
+- The player appeared in over 1,000 Major League Baseball games.
+- The player served as a Major League coach.
+
+## 2025-07-06 - Darryl Strawberry
+Fact verification failed for the following claims:
+- This player played for the rookie-level Appalachian League team in Kingsport, Tennessee, in 1980.
+- This player attended Crenshaw High School in Los Angeles.
+- This player played in the 1979 Los Angeles city championship game at Dodger Stadium.
+- John Elway played third base and pitched for Granada Hills in the 1979 city championship game.
+- A national sports magazine likened this player to Ted Williams during his senior year of high school.
+- This player was selected by the New York Mets in the June 1980 draft.
+- The New York Mets gave this player a $200,000 signing bonus in 1980.
+
+## 2025-07-08 - Jay Buhner
+Fact verification failed for the following claims:
+- This player attended McLennan Community College.
+- This player hit for the cycle on June 23, 1993.
+- From 1995 through 1997, this player hit 124 home runs.
+- Ken Griffey Jr. hit 122 home runs from 1995 through 1997.
+- Mo Vaughn hit 118 home runs from 1995 through 1997.
+- Juan Gonzalez hit 116 home runs from 1995 through 1997.
+- Frank Thomas hit 115 home runs from 1995 through 1997.
+- The 'Buhner Buzz Cut Night' promotion ran from 1994 to 2001.
+- In 1994, 512 fans participated in the buzz cut promotion.
+- In 2001, 6,246 fans participated in the buzz cut promotion.
+
+## 2025-07-09 - Jim Beattie
+Fact verification failed for the following claims:
+- This player was born on July 4, 1954, in Hampton, Virginia.
+- This player attended Dartmouth College.
+- This player earned a victory in Game 5 of the 1978 World Series by tossing a complete game.
+- This player served as the General Manager for the Montreal Expos.
+- This player served as the General Manager for the Baltimore Orioles.
+- This player began his professional career in 1974.
+
+## 2025-07-11 - Rick Reuschel
+Fact verification failed for the following claims:
+- This player attended Western Illinois University.
+- In his 1970 junior year, he posted a 1.94 ERA.
+- He achieved a 40-inning scoreless streak in 1970.
+- The player combined with his brother for a 7-0 shutout against the Dodgers in 1975.
+- He led all pitchers in WAR in 1977.
+- He ranked sixth in sacrifice bunts over the 1946-2024 seasons.
+- He was traded to the Yankees on June 12, 1981.
+- He was sidelined for the entire 1982 season due to two rotator cuff surgeries.
+
+## 2025-07-18 - Mark Wohlers
+Fact verification failed for the following claims:
+- The player worked as a dishwasher at Mel's Restaurant at age 14.
+- The player contributed to a combined no-hitter on September 11, 1991.
+- The player told the Braves 400 Club in January 1991 that he wanted to throw 100 miles per hour.
+- In 1988, the player walked 50 batters in 59 2/3 innings for the Pulaski Braves.
+- The player recorded his first major-league save on August 17, 1991.
+- The player's 1989 season with the Sumter Braves resulted in a 2-7 record and a 6.49 ERA.
+
+## 2025-07-21 - Vernon Wells
+Fact verification failed for the following claims:
+- This player was born in Shreveport, Louisiana.
+- This player was born on December 8, 1978.
+- This player was drafted in the first round of the 1997 MLB June Amateur Draft.
+- This player was the fifth overall pick in the 1997 MLB June Amateur Draft.
+- This player joined the New York Yankees via trade in 2013.
+
+## 2025-07-26 - Al Holland
+Fact verification failed for the following claims:
+- This player led the nation with 143 strikeouts in 1972.
+- This player finished the 1972 season with a 0.54 earned run average.
+- Branch Rickey III offered the player a steak dinner if he reached the major leagues before 1978.
+- The reliever was nicknamed 'Mr. T' by Ed Farmer in 1983.
+- The player pitched the ninth inning of Steve Carlton's 300th major league win on September 23, 1983.
+
+## 2025-07-28 - Roy White
+Fact verification failed for the following claims:
+- In 1962, the player batted .284 for the Greensboro Class A club.
+- The player won the James P. Dawson Award in 1966.
+- The player set an American League record with 17 sacrifice flies in 1971.
+- Ralph Houk moved the player to the cleanup spot on August 13, 1968.
+- The player was moved to a part-time designated hitter role during the 1974 season.
+
+## 2025-07-29 - Randy Choate
+Fact verification failed for the following claims:
+- The player was born on September 5, 1975.
+- The player was born in San Antonio, Texas.
+- The player was drafted in the 1996 amateur draft.
+
+## 2025-07-30 - Rey Sánchez
+Fact verification failed for the following claims:
+- This player graduated from Live Oak High School in Morgan Hill, California.
+- This player was ranked tops in the American League in defensive WAR from 1989 to 1991.
+- This player hit a 10th-inning walk-off inside-the-park home run on June 11, 2004.
+- In 2003, this player and Roberto Alomar served as the starting shortstop and second baseman for the New York Mets.
+- This player hit a game-winning sacrifice fly for the Chicago Cubs in May 1992.
+
+## 2025-07-31 - Sam Militello
+Fact verification failed for the following claims:
+- Sam Militello was born in Tampa, Florida on November 26, 1969.
+- Sam Militello made his major league debut in 1992.
+- Sam Militello won his first major league start in 1992.
+
+## 2025-08-04 - Billy Sample
+Fact verification failed for the following claims:
+- This player was born on April 2, 1955, in Roanoke, Virginia.
+- This player was part of the Yankees organization from 1974 to 1976.
+
+## 2025-08-06 - Mark Leiter
+Fact verification failed for the following claims:
+- This player sat out professional baseball during 1986, 1987, and 1988.
+- This player worked as a corrections officer at the Ocean County Jail.
+- This player won the Tony Conigliaro Award in 1994.
+- The player's son, Ryan Leiter, died on April 4, 1994.
+- The player was traded from the Yankees to the Tigers for Torey Lovullo in March 1991.
+- The player signed a two-year, $3.9 million deal with the Philadelphia Phillies after the 1996 season.
+- The player appeared in 335 games over 11 major-league seasons between 1990 and 2001.
+
+## 2025-08-10 - Andy Pettitte
+Fact verification failed for the following claims:
+- The player was a 22nd-round draft pick in 1990.
+- The player has a career WAR of 60.2.
+- No other player picked in the 22nd round in 1990 recorded a WAR above zero.
+- The player threw a knuckleball under the tutelage of Hoyt Wilhelm in the Gulf Coast League.
+- The player holds the all-time record for postseason wins with 19.
+- The player pitched 276 2/3 innings in the postseason.
+- The player's ERA was 5.53 at the end of June 1999.
+
+## 2025-08-11 - Phil Hughes
+Fact verification failed for the following claims:
+- This player was born in Mission Viejo, California.
+- This player was selected in the first round of the 2004 Major League Baseball draft.
+- This player made his Major League debut in 2007.
+
+## 2025-08-12 - Kevin Maas
+Fact verification failed for the following claims:
+- The player was born in Castro Valley, California.
+- The player was a left-handed hitter.
+- The player performed for the New York Yankees in the early 1990s.
+- The player provided high-impact offensive performance during the 1990 season.
+
+## 2025-08-19 - Bobby Richardson
+Fact verification failed for the following claims:
+- The player traveled to Norfolk, Virginia, by bus with $85 in coins.
+- The player won the Sport Magazine World Series MVP award in 1960.
+- The player is the only person to win the World Series MVP while playing for the losing team.
+- The player recorded 6 RBIs in a single World Series game in 1960.
+- The player was known as one of the 'Milkshake Twins' alongside Tony Kubek.
+- Casey Stengel managed the New York Yankees from 1949 to 1960.
+
+## 2025-08-22 - Luis Tiant
+Fact verification failed for the following claims:
+- The pitcher had a 5-19 record with the Mexico City Tigers in 1959.
+- Reggie Jackson called the player 'the Fred Astaire of baseball'.
+- The player led the American League with a 1.60 ERA in 1968.
+- The player won the Comeback Player of the Year award in 1972.
+- In 1972, the player had a 9-1 record with six shutouts and a 0.82 ERA over a 10-start stretch.
+- The player was released by the Minnesota Twins on March 31, 1971.
+- Luis Eleuterio Tiant was a legendary pitcher in the Cuban Leagues and American Negro Leagues.
+- The player did not return to Cuba in 1961 on his father's advice.
+- The player finished the 1968 season with a 21-9 record.
+- The player struck out 19 batters in 10 innings against the Twins on July 3, 1968.
+
+## 2025-08-26 - Ricky Bones
+Fact verification failed for the following claims:
+- The player was born on April 7, 1969, in Salinas, Puerto Rico.
+- The player made his Major League Baseball debut in 1991.
+- The player appeared in 34 games for the New York Yankees during the 2001 season.
+
+## 2025-08-27 - Graig Nettles
+Fact verification failed for the following claims:
+- This player attended San Diego State University.
+- This player played semipro baseball for the Alaska Goldpanners in Fairbanks.
+- This player set the record for most double plays by a third baseman in a season with 54.
+- This player set the record for most assists by a third baseman in a season with 412.
+- This player recorded five assists in Game Three of the 1978 World Series.
+- This player's mother combined the names Craig and Greg to create his name.
+- This player was caught using a corked bat on September 7, 1974.
+- This player's relationship with Billy Martin began in the minor leagues with the Denver Bears.
+
+## 2025-08-30 - Andrew Arthur Carey
+Fact verification failed for the following claims:
+- He was signed by the New York Yankees as an amateur free agent in 1951.
+- He made his Major League debut in 1952.
+- He was a member of the 1960 American League pennant-winning New York Yankees.
+- He was involved in a seven-player trade with the Kansas City Athletics following the 1960 season.
+
+## 2025-08-31 - Orlando Hernández
+Fact verification failed for the following claims:
+- The player was a star for Industriales in the Cuban National Series.
+- The player defected from Cuba by boat in 1997.
+- The player was banned from his national team in 1996.
+
+## 2025-09-02 - Marwin González
+Fact verification failed for the following claims:
+- The player originated from Venezuela as an international amateur signee.
+- The player broke up a potential no-hitter in the ninth inning of a 2017 World Series game.
+- The player was a utility player for the New York Yankees.
+- The player hit a solo home run in the ninth inning of a 2017 World Series game.
+
+## 2025-09-03 - Lance Berkman
+Fact verification failed for the following claims:
+- This player was required to alternate batting sides in youth league games.
+- In 1996, this player hit six home runs in a doubleheader and nine in one week.
+- This player ranks 22nd all-time in career OPS.
+- This player's career OPS is higher than Willie Mays and lower than Ty Cobb.
+- This player was a member of the Houston Astros 'Killer B's'.
+- In 1997, this player led the NCAA with 41 home runs and 134 RBIs.
+- This player was named the 1997 NCAA Player of the Year by the National Collegiate Baseball Writers Association.
+- This player batted right-handed in the 2004 Home Run Derby.
+
+## 2025-09-04 - Jim Bouton
+Fact verification failed for the following claims:
+- In high school, the player was nicknamed 'Warmup' because he only pitched in practice until the final game.
+- The player wore jersey number 56 for his entire career as a reminder of the hard work required to reach the major leagues.
+- In 1963, the player finished with a 21-7 record and a 2.53 ERA.
+- On September 13, 1963, the player threw a shutout against the Minnesota Twins.
+- The player won two games during the 1964 World Series.
+- The player's 1964 season ended with a 18-13 record and a 3.02 ERA.
+
+## 2025-09-06 - Bob MacDonald
+Fact verification failed for the following claims:
+- The player attended Rutgers University.
+- The player's sophomore ERA at Rutgers was 7.74.
+- The player's senior ERA at Rutgers was 2.97.
+- Nolan Ryan recorded his seventh career no-hitter on May 1, 1991.
+- The player pitched in the game where Nolan Ryan recorded his seventh no-hitter.
+- The player held left-handed hitters to a .143 batting average in 1992.
+- The Toronto Blue Jays traded Tony Castillo to the Atlanta Braves for Jim Acker in August 1989.
+- The player was sold to the Detroit Tigers for $20,000 at the end of 1993 spring training.
+
+## 2025-09-07 - Don Mattingly
+Fact verification failed for the following claims:
+- The player was selected in the 19th round of the 1979 amateur draft.
+- The player participated in the 1983 Pine Tar Game.
+- The player played second base during the 1983 Pine Tar Game.
+- The player has a career fielding percentage of .9959.
+- The player won nine Gold Glove awards.
+- The player won the American League batting title in 1984 with a .343 average.
+- The player hit 207 hits in 1984.
+
+## 2025-09-10 - Cecil Fielder
+Fact verification failed for the following claims:
+- This player averaged 27 points, 12 rebounds, and 10 assists per game in his senior year of high school.
+- This player became the first American League player in 29 years to hit 50 home runs in 1990.
+- This player signed a contract with the Hanshin Tigers in 1989 for $1,000,050.
+- This player was traded to the Yankees in 1996.
+- This player helped the Yankees win the World Series in 1996.
+- This player finished his career with 319 home runs.
+- This player's son finished his career with 319 home runs.
+
+## 2025-09-15 - Roy Smalley III
+Fact verification failed for the following claims:
+- He played collegiate baseball at the University of Southern California.
+- He is the son of former major leaguer Roy Smalley Jr.
+- He is the nephew of Hall of Famer Gene Mauch.
+- He was the first overall pick in the secondary phase of the 1973 MLB Draft.
+- He was traded from the New York Yankees to the Minnesota Twins in 1976.
+
+## 2025-09-17 - Vernon Gomez
+Fact verification failed for the following claims:
+- The player was a member of the New York Yankees from 1974 to 1976.
+- The player served as a relief pitcher for the Yankees.
+- The player's time in the major leagues with the team included the seasons 1974, 1975, and 1976.
+
+## 2025-09-20 - Elliott Maddox
+Fact verification failed for the following claims:
+- In 1969, this player and four teammates slept in their cars for three days due to housing discrimination.
+- In 1974, this player was moved to center field, forcing Bobby Murcer to right field.
+- The 1975 Topps baseball card discussed the controversy of the position switch between this player and Bobby Murcer.
+- This player led all American League outfielders in 1971 with a 3.05 Range Factor per Nine Innings.
+- This player played for the Detroit Tigers in 1970.
+- This player attended the University of Michigan during the 1970 season.
+- The final Washington Senators game at RFK Stadium took place in 1971.
+- Bob Short owned the Washington Senators in 1971.
+- Ted Williams managed the Washington Senators.
+
+## 2025-09-21 - Mike Mussina
+Fact verification failed for the following claims:
+- The player attended Stanford University.
+- The player earned a degree in economics.
+- The player was the first American League pitcher to win 10 or more games in 17 consecutive seasons.
+- Cal Ripken Jr. broke Lou Gehrig’s consecutive-game record in 1995.
+- The Orioles gifted Cal Ripken Jr. a 2,131-pound engraved chunk of white marble.
+- A plane crash in 1996 took the lives of 16 students and 5 chaperones from Montoursville.
+- The player had 21 names inscribed on his cap in 1996.
+- The player hit Seattle Mariners catcher Bill Haselman with a pitch on June 6, 1993.
+
+## 2025-09-26 - Gene Woodling
+Fact verification failed for the following claims:
+- This player won five straight World Series with the Yankees from 1949 through 1953.
+- This player led American League outfielders in fielding percentage with .996 in both 1952 and 1953.
+- This player hit .385 while playing for the San Francisco Seals in 1948.
+- This player was selected as the Minor League Player of the Year by The Sporting News in 1948.
+- This player served at the Great Lakes Naval Training Station in 1944.
+- This player was one of twelve individuals to remain with the Yankees through the entire 1949-1953 World Series run.
+
+## 2025-09-27 - Bobby Shantz
+Fact verification failed for the following claims:
+- This player won the American League Most Valuable Player Award in 1952.
+- This player stood 5-feet-6½ tall as an adult.
+- This player was signed to an A-Ball contract in November 1947.
+- This player was managed by Connie Mack, who forbade him from throwing the knuckleball.
+- Jimmie Dykes succeeded Connie Mack as manager in 1952.
+- This player pitched 28 games for the Lincoln A's in 1948, going 18-7 with a 2.82 ERA.
+
+## 2025-09-28 - Zach Britton
+Fact verification failed for the following claims:
+- The player was drafted as a starting pitcher out of high school in Texas.
+- The player posted a 0.54 ERA in 2016.
+- The 0.54 ERA is the lowest in a single season for any pitcher with at least 50 innings pitched in MLB history.
+- The player recorded 47 saves in 2016.
+- The player finished fourth in the AL Cy Young Award voting in 2016.
+
+## 2026-03-06 - Paul Blackburn
+Fact verification failed for the following claims:
+- The player was born on December 4, 1993.
+- The player was born in Antioch, California.
+- The player was a participant in the 2012 MLB Draft.
+
+## 2026-03-11 - José Caballero
+Fact verification failed for the following claims:
+- This player signed as an international amateur free agent in 2017.
+
+## 2026-03-22 - Aaron Boone
+Fact verification failed for the following claims:
+- Aaron Boone was born on March 9, 1973.
+- He was born in La Mesa, California.
+- He hit a walk-off home run in the 2003 American League Championship Series.
+- He began serving as the New York Yankees manager in 2018.
+- His father is Bob Boone.
+- His brother is Bret Boone.
+
+## 2026-03-27 - Joe DiMaggio
+Fact verification failed for the following claims:
+- The player suffered a knee injury in 1934.
+- The player hit .398 with 34 homers and 154 RBIs in 1935.
+- The player recorded a 56-game hitting streak in 1941.
+- The hitting streak ended in Cleveland on July 17, 1941.
+- Ken Keltner was the third baseman who ended the 1941 hitting streak.
+- Joe McCarthy managed the Yankees from 1931 to 1946.
+- Al Gionfriddo made a spectacular catch against the player in the 1947 World Series.
+- The player had a three-inch bone spur removed from his left heel on January 7, 1947.
+- The player received a medical discharge from the Army Air Force in September 1945.
+
+## 2026-03-30 - David Weathers
+Fact verification failed for the following claims:
+- The player was reprimanded by manager Eddie Dennis for saying 'coach' during his first professional day.
+- The player debuted at Fenway Park in August 1991.
+- The player served as the bullpen ace during the 1996 ALDS.
+- Tino Martinez advised the player to throw a slider to Juan Gonzalez in the 1996 ALDS.
+- The player replaced Mike Timlin on the Toronto Blue Jays roster in 1991.
+- The player played in two regular-season games for the 1992 Toronto Blue Jays.
+- The 1992 Toronto Blue Jays players voted to give the player 19 percent of a full World Series share.
+- The player received a $22,800 payout as part of his 1992 World Series share.
+
+## 2026-03-31 - Ken Clay
+Fact verification failed for the following claims:
+- The player was born in Lynchburg, Virginia, in 1954.
+- The player was drafted in 1974.
+- The player joined the New York Yankees organization in 1974.
+
+## 2026-04-01 - Mike Morgan
+Fact verification failed for the following claims:
+- Mike Morgan was born on October 8, 1959.
+- Mike Morgan was born in Tulare, California.
+- Mike Morgan played for 12 different major league franchises.
+- Mike Morgan's professional career lasted from 1978 to 2002.
+
+## 2026-04-07 - Rickey Henderson
+Fact verification failed for the following claims:
+- The player was a standout in baseball, basketball, and football at Oakland Technical High School.
+- In 1977, while playing for Modesto in the Class A California League, the player batted .345.
+- The player recorded 104 walks in the 1977 season with Modesto.
+- The player stole 95 bases during the 1977 season with Modesto.
+- On May 1, 1991, the player broke the all-time career stolen base record.
+- The player stole his 939th career base against the New York Yankees on May 1, 1991.
+- The player was traded back to the Oakland Athletics on June 21, 1989.
+
+## 2026-04-14 - Don Baylor
+Fact verification failed for the following claims:
+- This player was nicknamed 'Groove' by his teammates.
+- This player holds the record for being hit by 267 pitches in the 20th century.
+- This player won the American League Most Valuable Player award in 1979.
+- In 1979, this player led both leagues in runs scored and RBIs.
+- Frank Robinson served as a mentor and manager for this player.
+- This player was a member of the Baltimore Orioles organization early in his career.
+
+## 2026-04-16 - Mike Witt
+Fact verification failed for the following claims:
+- The player won all 14 of his pitching decisions during his senior year at Servite High School.
+- The player was chosen by California in the fourth round of the 1978 amateur draft.
+- The player joined the Angels' Opening Day roster in 1981.
+- General Manager Buzzie Bavasi previously worked for the Brooklyn and Los Angeles Dodgers.
+- The player finished his 1981 rookie season with an 8-9 record.
+- The player had an ERA of 3.28 during the 1981 season.
+- The player appeared in relief in Game Three of the 1982 American League Championship Series.
+- Sportswriter Peter Gammons praised the player's curveball in 1982.
+
+## 2026-04-18 - Fran Healy
+Fact verification failed for the following claims:
+- This player attended Tabor Academy.
+- This player signed with the Cleveland Indians for a $40,000 bonus in 1964.
+- In 1974, this player appeared in 138 games behind the plate.
+- In 1974, this player appeared in 138 games behind the plate, which was more than any other big-league catcher that season.
+- Reggie Jackson credited this player for providing vital support during their time with the Yankees.
+- In 1977, a public confrontation occurred between Reggie Jackson and Billy Martin at Fenway Park.
+- In 1978, this player played only once on April 21.
+- This player retired from playing in 1978 due to recurring neck problems.
+- This player became a Yankees broadcaster in 1978.
+
+## 2026-04-22 - Jim Leyritz
+Fact verification failed for the following claims:
+- The player was born on December 27, 1963.
+- The player was born in Lakewood, Ohio.
+- The player hit a game-tying three-run home run in the eighth inning of Game 4 of the 1996 World Series.
+
+## 2026-04-23 - Jackie Jensen
+Fact verification failed for the following claims:
+- The player helped his college team win the inaugural College World Series in 1947.
+- The player's wife won a Bronze Medal in springboard diving at the 1952 Olympic Games in Helsinki.
+- The player wrote an article titled 'My Ambition Is To Quit' for the Saturday Evening Post in April 1959.
+- The player joined the New York Yankees in 1950.
+- The player was traded to the Washington Senators on May 3, 1952.
+- The player slugged 35 home runs in the 1958 season.
+- The player led the American League with 122 runs batted in during the 1958 season.
+- The player won the American League Most Valuable Player award in 1958.
+
+## 2026-04-24 - José Cruz
+Fact verification failed for the following claims:
+- The player set a Rice University record with 10 RBIs in a game on February 9, 1995.
+- The player was knocked unconscious by a foul ball at the Caribbean World Series at age five.
+- The player won a Gold Glove Award with the San Francisco Giants in 2003.
+- The player recorded a .994 fielding percentage in 2003.
+- The player graduated from Rice University in May 2013.
+- The player had a 12-year professional career in Major League Baseball.
+
+## 2026-04-25 - Octavio Dotel
+Fact verification failed for the following claims:
+- The player was born in Santo Domingo, Distrito Nacional in the Dominican Republic.
+- The player was born on November 25, 1973.
+- The player played for 13 different major league franchises.
+- The player made over 700 appearances in Major League Baseball.
+
+## 2026-04-26 - Jim Wynn
+Fact verification failed for the following claims:
+- This player was drafted by the Houston Colt .45s in November 1962.
+- This player drew 148 walks during the 1969 season.
+- This player is 5-feet-9 inches tall.
+- This player led the league in road home runs in 1967.
+- This player led the league in road home runs in 1968.
+- The nickname associated with this player was first used by John Wilson in 1967.
+- The manager Harry Walker attempted to change this player's hitting style in 1968.
+
+## 2026-04-27 - Jim Mason
+Fact verification failed for the following claims:
+- On September 1, 1970, the player started a triple play and hit an inside-the-park home run.
+- On July 8, 1974, the player hit four doubles in a game against the Texas Rangers.
+- The player tied a major-league record for doubles in a single game on July 8, 1974.
+- The player hit a home run in his only World Series plate appearance.
+- The player lost his starting shortstop position under Billy Martin in both Texas and New York.
+- The player hit the only home run for the Yankees in the 1976 World Series.
+
+## 2026-04-29 - John Charles Ellis
+Fact verification failed for the following claims:
+- John Charles Ellis played for the Yankees from 1974 to 1976.
+- John Charles Ellis attended McQuaid Jesuit High School.
+- John Charles Ellis was a catcher.
+
+## 2026-05-01 - Tim Stoddard
+Fact verification failed for the following claims:
+- This player won an NCAA Division I basketball title and a World Series ring.
+- In the 1972-73 ACC tournament final, he hit two free throws with 39 seconds left.
+- He played for the 1973-74 North Carolina State Wolfpack.
+- He won the 1974 NCAA basketball championship.
+- He won Game Four of the 1979 World Series.
+- He recorded an RBI single in his first major-league at-bat during the 1979 World Series.
+- He played for the Baltimore Orioles in 1979.
+- His playing weight for most of his big-league career was 250 pounds.
+
+## 2026-05-02 - Bob Turley
+Fact verification failed for the following claims:
+- The player was banned from pitching in a youth league at age 12.
+- The player signed with the St. Louis Browns for $200 a month in 1948.
+- The player received $1.75 a day for meal money during his first professional season.
+- The player won the Cy Young Award in 1958.
+- The player finished second to Jackie Jensen in the 1958 MVP voting.
+- The Yankees signed the player's uncle, Ralph Turley, by mistake after finding his name in a phone book.
+- The player adopted a no-windup delivery in 1956 under the guidance of pitching coach Jim Turner.
+
+## 2026-05-03 - Mason Jordan Williams
+Fact verification failed for the following claims:
+- The player was drafted in the 2010 draft.
+- The player was drafted as an outfielder.
+- The player was drafted in the fourth round.
+
+## 2026-05-06 - Fritz Peterson
+Fact verification failed for the following claims:
+- The player played semipro hockey during his professional career.
+- The player debuted in 1966.
+- The player's lifetime ERA at the original Yankee Stadium was 2.52.
+- The player recorded his 20th win during the 1970 season.
+- The player earned a master's degree in physical education in 1967.
+- The player taught courses at Northern Illinois University during the offseason.
+
+## 2026-05-08 - Gary Sheffield
+Fact verification failed for the following claims:
+- The player led the National League in batting average in 1992.
+- The player's uncle was former New York Mets pitcher Dwight Gooden.
+- The player grew up in the Belmont Heights section of Tampa, Florida.
+- The player sponsored a program called Sheff's Kitchen for underprivileged kids while playing for the Marlins.
+- The player paid $100,000 for a man's liver transplant.
+
+## 2026-05-09 - Willie Randolph
+Fact verification failed for the following claims:
+- The player never won a Gold Glove award.
+- The player finished his career with a .979 fielding percentage.
+- The player appeared in 2,202 major league games.
+- The player set an All-Star Game record for most assists by a second baseman in a nine-inning game in 1977.
+- The player never committed an error in a postseason game.
+- The player wore number 12 while playing for the Mets.
+
+## 2026-05-10 - Graeme Lloyd
+Fact verification failed for the following claims:
+- This player worked as an electrician by trade.
+- This player worked as a sales representative for Pony.
+- This player earned a win in Game Four of the 1996 World Series.
+- This player induced a double play against Fred McGriff in the 1996 World Series.
+- This player was the first Australian to win a World Series ring.
+- This player is 6'8" tall.
+- The Yankees acquired this player in a trade in 1996.
+- This player had a bone spur in his elbow and a shoulder that required a cortisone shot in 1996.
+- In 1998, this player held right-handed hitters to a .182 batting average.
+
+## 2026-05-17 - Marv Throneberry
+Fact verification failed for the following claims:
+- The player won the American Association MVP award in 1956.
+- The player hit 36 home runs for the Denver Bears in 1955.
+- The player was the first person to play for both the New York Yankees and the New York Mets.
+- The player was traded to the Kansas City Athletics after the 1959 season.
+- The trade involving the player helped the Yankees acquire Roger Maris.
+- The player hit a 450-foot pinch-hit home run against the Pittsburgh Pirates on August 21, 1962.
+- The player committed 17 errors at first base in 97 games during the 1962 season.
+
+## 2025-03-29 - James Edward Key
+Fact verification failed for the following claims:
+- The player was drafted by the Chicago White Sox in the 10th round of the 1979 amateur draft.
+- The player did not sign with the White Sox in 1979.
+- The player won an ERA title.
+- The player pitched in 470 games and 389 games started.
+- The player is a two-time World Series champion.
+- The player recorded a 6.3 WAR in 1993.
+- The player recorded 2,591.2 innings pitched in his career.
+- The player recorded 1,538 career strikeouts.
+- The player has a career 3.51 ERA.
+- The player recorded a 4.6 WAR in 1997 with the Baltimore Orioles.
+
+## 2025-04-01 - Scott Brosius
+Fact verification failed for the following claims:
+- The player was drafted in the 20th round of the 1987 amateur draft.
+- The player signed with the Oakland Athletics on June 9, 1987.
+- The player was acquired by the New York Yankees on November 18, 1997.
+- The player was involved in a trade for Kenny Rogers.
+- The player won the World Series MVP award.
+- The player won three World Series titles.
+- The player earned a Gold Glove award.
+- The player was a one-time All-Star.
+- The player was granted free agency on November 5, 2001.
+
+## 2025-04-03 - Todd Greene
+Fact verification failed for the following claims:
+- The player was drafted by the Atlanta Braves in the 27th round of the 1989 amateur draft but did not sign.
+- The player was a member of the New York Yankees in 2001.
+- The player signed with the New York Yankees on April 5, 2001.
+- The player was released by the New York Yankees on March 27, 2002.
+- The player hit 71 career home runs.
+- The player had 1,573 career at-bats.
+- The player had 397 career hits.
+- The player had 217 career RBIs.
+- The player had a career batting average of .252.
+- The player had a career OPS of .730.
+- The player was released by the Toronto Blue Jays on March 28, 2001.
+
+## 2025-04-04 - Tony Kubek
+Fact verification failed for the following claims:
+- The player signed with the New York Yankees in 1954 for a $1,500 bonus.
+- The player attended Bay View High School.
+- The player hit two home runs in the 1957 World Series.
+- The player hit three home runs during the 1957 regular season.
+- The player was struck in the throat by a baseball during the 1960 World Series.
+- Ralph Houk managed the player in the minor leagues at Denver in 1956.
+- The player won the Rookie of the Year award.
+- The player was a four-time All-Star.
+- The player won three World Series titles.
+
+## 2025-04-06 - Ralph Terry
+Fact verification failed for the following claims:
+- Branch Rickey offered a $100 bill as a target to this player during a tryout in 1953.
+- This player was involved in a near-fatal car accident during the 1957-58 offseason.
+- This player spent seven weeks in traction following his 1957-58 car accident.
+- This player recorded the highest number of 'Golden Pitches' in World Series history.
+- This player helped the Yankees win the World Series in 1962.
+- This player was advanced from second to fourth grade by Mrs. Edmonds.
+- This player earned approximately 140 college credits without receiving a degree.
+- This player struck out 21 batters in a high school game where he also recorded seven RBIs.
+
+## 2025-04-07 - Iván Nova
+Fact verification failed for the following claims:
+- This player was drafted by the San Diego Padres from the New York Yankees in the 2008 Rule 5 draft.
+- This player was returned by the San Diego Padres to the New York Yankees on March 29, 2009.
+- This player recorded a 3.4 WAR in the 2013 season.
+- This player recorded a -0.7 WAR in the 2014 season.
+- This player was traded by the New York Yankees to the Pittsburgh Pirates on August 1, 2016.
+- Tito Polo and Stephen Tarpley were sent to the New York Yankees to complete the trade on August 30, 2016.
+- This player accumulated 90 career wins.
+- This player recorded 963 career strikeouts.
+- This player played for the Chicago White Sox in 2019.
+- This player played for the Detroit Tigers in 2020.
+
+## 2025-04-11 - Nick Johnson
+Fact verification failed for the following claims:
+- This player was drafted by the New York Yankees in the 3rd round of the 1996 amateur draft.
+- This player signed with the New York Yankees on June 14, 1996.
+- This player was traded to the Montreal Expos on December 16, 2003, along with Randy Choate and Juan Rivera.
+- The New York Yankees acquired Javier Vázquez in the 2003 trade involving this player.
+- This player retired with a career .399 on-base percentage.
+- This player finished his career with a .268 batting average.
+- This player recorded a 5.0 WAR during the 2006 season.
+- This player recorded a career total of 2,698 at-bats.
+- This player had a career OPS+ of 123.
+- This player signed a free agent contract with the New York Yankees on December 18, 2009.
+
+## 2025-04-12 - Santos Alomar
+Fact verification failed for the following claims:
+- This player was signed by the San Diego Padres as an amateur free agent on October 21, 1983.
+- This player won the Rookie of the Year award.
+- This player was a 6-time All-Star.
+- This player won the All-Star Game MVP award.
+- This player won a Gold Glove award.
+- This player accumulated 1236 hits over his career.
+- This player hit 112 career home runs.
+- On December 6, 1989, this player was traded by the San Diego Padres to the Cleveland Indians along with Carlos Baerga and Chris James for Joe Carter.
+- This player played for the Chicago White Sox, Colorado Rockies, Texas Rangers, Los Angeles Dodgers, and New York Mets.
+- This player signed with the New York Mets on March 1, 2007.
+
+## 2025-04-13 - Bob Melvin
+Fact verification failed for the following claims:
+- The player won 350 pounds of yams by hitting seven home runs in an American Legion tournament.
+- The player attended Menlo-Atherton High School.
+- Stevie Nicks and Lindsey Buckingham are alumni of Menlo-Atherton High School.
+- The player was inducted into the Menlo-Atherton Athletic Hall of Fame in 1994.
+- The player won three Manager of the Year awards.
+- The player played for the New York Yankees in 1994.
+- Vince Lombardi was a friend of the player's grandfather.
+- Mike McCormick won the 1967 National League Cy Young Award.
+- The player drove in four runs at Yankee Stadium on August 27, 1989.
+- The player hit his only home run and triple of the 1989 season on August 27, 1989.
+- The player began the 1993 season with the record for most plate appearances without being hit by a pitch among active players.
+
+## 2025-04-17 - Ji-Man Choi
+Fact verification failed for the following claims:
+- This player signed as a free agent with the Seattle Mariners on July 2, 2009.
+- This player was drafted by the Los Angeles Angels from the Baltimore Orioles in the 2015 Rule 5 draft.
+- This player has a career OPS of .764.
+- This player played for the New York Yankees in 2017.
+- This player played for the New York Mets in 2024.
+- This player earned 0.1 WAR while playing for the Yankees in 2017.
+- This player had 1,567 career at-bats.
+- This player has a career OPS+ of 112.
+
+## 2025-04-18 - Dioner Navarro
+Fact verification failed for the following claims:
+- This player signed as an amateur free agent with the New York Yankees on August 21, 2000.
+- This player was traded to the Arizona Diamondbacks on January 11, 2005, in exchange for Randy Johnson.
+- Javier Vázquez and Brad Halsey were also included in the January 11, 2005, trade for Randy Johnson.
+- This player is a one-time All-Star.
+- This player recorded 3,207 career at-bats.
+- This player recorded 802 career hits.
+- This player recorded 367 career runs batted in.
+- This player recorded a 2.5 WAR during the 2014 season with the Toronto Blue Jays.
+
+## 2025-04-19 - Richard Monteleone
+Fact verification failed for the following claims:
+- The player was drafted by the Detroit Tigers in the 1st round of the 1982 amateur draft.
+- On April 29, 1990, the player was traded from the California Angels to the New York Yankees.
+- The 1990 trade involved the player and Claudell Washington moving to the Yankees for Luis Polonia.
+- The player made 210 career appearances.
+- The player recorded zero career saves.
+- The player made zero career starts.
+- The player was with the New York Yankees from 1990 to 1993.
+- The player returned to the New York Yankees in February 1996.
+- The player recorded a 1.5 WAR in the 1992 season.
+- The player was traded from the New York Yankees to the California Angels for Mike Aldrete on June 12, 1996.
+- The player was released by the California Angels on September 2, 1996.
+
+## 2025-04-20 - David Robertson
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 17th round of the 2006 amateur draft.
+- He signed his first professional contract on August 21, 2006.
+- He was a member of the 2009 World Series championship team.
+- He has 1,176 career strikeouts.
+- He has pitched 894.1 career innings.
+- His career WHIP is 1.162.
+- He was traded from the Chicago White Sox to the New York Yankees on July 19, 2017.
+- The 2017 trade also involved Todd Frazier and Tommy Kahnle.
+- He has accumulated 179 career saves.
+- He is a one-time All-Star.
+
+## 2025-04-21 - Enrique Wilson
+Fact verification failed for the following claims:
+- This player was signed by the Minnesota Twins as an amateur free agent on April 15, 1992.
+- This player was traded from the Pittsburgh Pirates to the New York Yankees on June 13, 2001.
+- Dámaso Marte was traded to the Pittsburgh Pirates for this player on June 13, 2001.
+- This player had a career total of 22 home runs.
+- This player had a career batting average of .244.
+- This player played for the Yankees from 2001 to 2004.
+- This player had a career total WAR of -5.2.
+- This player had a career OPS+ of 64.
+- This player played for the Cleveland Indians, Pittsburgh Pirates, New York Yankees, Chicago Cubs, and Boston Red Sox during his career.
+- This player's career spanned from 1997 to 2006.
+
+## 2025-04-25 - Ted Lilly
+Fact verification failed for the following claims:
+- The player was drafted in the 23rd round of the 1996 amateur draft.
+- The player was traded to the New York Yankees on March 17, 2000.
+- The player was traded to the Oakland Athletics on July 5, 2002.
+- Jeff Weaver was traded to the New York Yankees in the July 5, 2002, three-team trade.
+- The player accumulated 130 career wins.
+- The player is a two-time All-Star.
+- The player appeared in 356 career games.
+- The player pitched 1,982.2 career innings.
+- The player recorded 1,681 career strikeouts.
+
+## 2025-04-29 - Sidney Ponson
+Fact verification failed for the following claims:
+- He signed as an amateur free agent with the Baltimore Orioles on August 17, 1993.
+- He pitched for the New York Yankees in 2006 and 2008.
+- He was released by the New York Yankees on August 23, 2006.
+- He signed with the New York Yankees on June 19, 2008.
+- He became a free agent on October 30, 2008.
+- His career spanned from 1998 to 2009.
+- He recorded 91 career wins.
+- He pitched 1760.1 career innings.
+- He played for the Baltimore Orioles from 1998 to 2005.
+- He was traded to the San Francisco Giants in 2003.
+- He finished his career with a 5.03 ERA.
+- He recorded 1,031 career strikeouts.
+- He played in 298 total games.
+
+## 2025-04-30 - Gus Triandos
+Fact verification failed for the following claims:
+- This player signed with the New York Yankees in 1948 for a $2,500 bonus.
+- This player served in the US Army in 1951.
+- This player was part of the 17-player trade between the New York Yankees and Baltimore Orioles on November 17, 1954.
+- This player caught a 45-inch circumference mitt to help manage the knuckleball.
+- This player recorded only one stolen base in 1,206 consecutive games.
+- This player hit 167 home runs during his career.
+- This player was a four-time All-Star selection.
+
+## 2025-05-02 - Shane Spencer
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 28th round of the 1990 amateur draft.
+- He won two World Series championships.
+- He finished his career with a 5.0 WAR.
+- He hit 59 career home runs.
+- He recorded 438 hits in his career.
+- He recorded 242 RBIs in his career.
+- He recorded 1.1 WAR in 1998.
+- He signed with the Cleveland Indians on January 14, 2003.
+- He was traded to the Texas Rangers on July 18, 2003.
+- He signed with the New York Mets on January 29, 2004.
+- He returned to the New York Yankees on August 17, 2004.
+
+## 2025-05-03 - Reid Brignac
+Fact verification failed for the following claims:
+- The player was drafted in the 2nd round of the 2004 amateur draft.
+- The player played for the Tampa Bay organization from 2008 to 2012.
+- The player was purchased by the New York Yankees from the Colorado Rockies on May 18, 2013.
+- The player was granted free agency by the New York Yankees on June 25, 2013.
+- The player achieved a 2.5 WAR in the 2010 season.
+- The player recorded 886 at-bats and 194 hits over his career.
+- The player played for the Tampa Bay Rays, Colorado Rockies, New York Yankees, Philadelphia Phillies, Miami Marlins, and Atlanta Braves.
+- The player's major league career spanned from 2008 to 2016.
+
+## 2025-05-04 - Wade Boggs
+Fact verification failed for the following claims:
+- This player participated in a 33-inning game starting on April 18, 1981.
+- This player was selected in the seventh round of the 1976 amateur draft.
+- This player won five batting titles in his career.
+- This player led all of baseball in on-base percentage for five consecutive years ending in 1989.
+- He read the book The Science of Hitting by Ted Williams to improve his discipline.
+- He hit .485 during a high school season after adjusting his approach at the plate.
+- He played for the Boston Red Sox in 1986.
+- He hit .358 over the final 96 games of the 1982 season.
+
+## 2025-05-05 - Dave Winfield
+Fact verification failed for the following claims:
+- The player was selected by five teams in three major sports.
+- He was a two-time All-Big Ten basketball selection in 1971 and 1973.
+- He earned the Babe Ruth Award for the 1992 World Series.
+- He is one of only five players in MLB history to record 3,000 hits and 450 home runs.
+- He played for the Minnesota Gophers basketball team as part of the 'Iron Five'.
+- He was involved in an on-court brawl against Ohio State on January 25, 1972.
+- George Steinbrenner paid a known gambler to discredit the player.
+- The player founded the David M. Winfield Foundation, which operated for 22 years.
+
+## 2025-05-06 - Kerry Wood
+Fact verification failed for the following claims:
+- The player was selected in the first round of the 1995 amateur draft.
+- The player threw 175 pitches in a high school doubleheader two days before the 1995 draft.
+- The player recorded 20 strikeouts in a single game on May 6, 1998.
+- The player joined the New York Yankees in 2010 after being traded by the Cleveland Indians.
+- The player served as a setup man for Mariano Rivera.
+- The player hit a two-run home run in Game 7 of the 2003 National League Championship Series.
+- The player retired on May 18, 2012, after striking out the only batter he faced.
+- The player took a no-hitter into the seventh inning against the Milwaukee Brewers on May 25, 2001.
+
+## 2025-05-10 - Stan Javier
+Fact verification failed for the following claims:
+- The player wore uniform number 6 in the minor leagues.
+- The player was named after Stan Musial.
+- The player requested a demotion while playing for the Yankees in 1984.
+- The player was a member of the 1989 World Series champion Oakland A's.
+- The player batted .500 during the 1989 postseason.
+- The player switch-hit because of field conditions in the Dominican Republic.
+- The player was traded to the Oakland Athletics for Rickey Henderson on December 5, 1984.
+- Walt Jocketty insisted that the player be included in the trade for Rickey Henderson.
+
+## 2025-05-11 - Jim Hunter
+Fact verification failed for the following claims:
+- The player was drafted by the Atlanta Braves in the 23rd round of the 1983 amateur draft.
+- The player was drafted by the Baltimore Orioles in the 2nd round of the 1984 amateur draft.
+- The player was selected by the Montreal Expos in the 1st round (10th pick) of the 1985 amateur draft.
+- The player was purchased by the Milwaukee Brewers from the Montreal Expos on June 9, 1986.
+- The player recorded a -0.7 WAR in 1991.
+- The player played for the Milwaukee Brewers in 1991.
+- The player finished his career with 8 total games played.
+- The player finished his career with 6 games started.
+- The player finished his career with a 7.26 ERA.
+- The player finished his career with 5 losses.
+- The player was granted free agency on October 15, 1991.
+
+## 2025-05-12 - Russ Davis
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 29th round of the 1988 amateur draft.
+- He played for the New York Yankees in 1994 and 1995.
+- He was traded by the New York Yankees with Sterling Hitchcock to the Seattle Mariners on December 7, 1995.
+- The Yankees received Tino Martinez, Jim Mecir, and Jeff Nelson in the December 1995 trade.
+- He hit 84 home runs in his career.
+- He recorded 276 RBI in his career.
+- He had 1,980 career at-bats.
+- His career OPS was .755.
+- He played for the Seattle Mariners from 1996 to 1999.
+- He played for the San Francisco Giants in 2000 and 2001.
+- He was released by the San Francisco Giants on June 21, 2001.
+
+## 2025-05-13 - Henry Cotto
+Fact verification failed for the following claims:
+- He signed as an amateur free agent with the Chicago Cubs on June 7, 1980.
+- He was traded from the Chicago Cubs to the New York Yankees on December 4, 1984.
+- The trade involved Porfi Altamirano, Rich Bordi, Ron Hassey, Brian Dayett, and Ray Fontenot.
+- He finished his career with 130 stolen bases.
+- His career batting average was .261.
+- He was traded from the New York Yankees to the Seattle Mariners on December 22, 1987.
+- The 1987 trade involved Steve Trout, Lee Guetterman, Clay Parker, and Wade Taylor.
+- He signed as a free agent with the Baltimore Orioles on February 3, 1994.
+
+## 2025-05-14 - Larry Milbourne
+Fact verification failed for the following claims:
+- The player was drafted by the California Angels in the 1971 minor league draft.
+- The player was drafted by the St. Louis Cardinals in the 1972 minor league draft.
+- The player was drafted by the Houston Astros in the 1973 Rule 5 draft.
+- The player was traded to the Yankees in November 1980 for Brad Gulden and $150,000.
+- The player recorded a 1.2 WAR with the Yankees in 1981.
+- The player was purchased by the Yankees from the Philadelphia Phillies in July 1983.
+- The player played for the Houston Astros, Seattle Mariners, New York Yankees, Minnesota Twins, Cleveland Indians, and Philadelphia Phillies.
+
+## 2025-05-23 - Jerry Coleman
+Fact verification failed for the following claims:
+- The Brooklyn Dodgers offered him a $2,500 bonus to sign.
+- He was a student athlete at USC.
+- He hit a 'dying swan' double in the 1949 pennant race.
+- He is the only major-league ballplayer to see combat in both World War II and the Korean Conflict.
+- He flew 57 missions in a dive bomber in World War II.
+- He flew 63 missions in a fighter plane in Korea.
+- He was named the MVP of the 1950 World Series.
+- He hit a walk-off single in Game Three of the 1950 World Series.
+- He played for the New York Yankees.
+- He hit a career-high 69 RBIs in the 1950 season.
+
+## 2025-05-28 - John Candelaria
+Fact verification failed for the following claims:
+- The player was the second all-time leading rebounder at his high school behind Kareem Abdul-Jabbar.
+- The player threw a no-hitter against the Los Angeles Dodgers on August 9, 1976.
+- The player won the ERA title with a 2.34 ERA in 1977.
+- The player signed with the Pittsburgh Pirates for $40,000.
+- Roberto Clemente acted as a translator for the Pittsburgh Pirates during the signing process.
+
+## 2025-06-04 - Ron Hassey
+Fact verification failed for the following claims:
+- This player attended the University of Arizona.
+- This player is the all-time RBI leader at the University of Arizona with 235 RBIs.
+- This player was drafted in the 23rd round of the 1972 amateur draft.
+- This player was drafted in the 22nd round of the 1975 June draft.
+- This player is the only catcher to have caught two perfect games in major league history.
+- This player's career spanned 14 years in the major leagues.
+- This player played for six different franchises.
+- This player had two passed balls while catching for Phil Niekro on August 13, 1985.
+- This player hit a home run in the same game he caught for Phil Niekro on August 13, 1985.
+
+## 2025-06-05 - Walt Williams
+Fact verification failed for the following claims:
+- This player was born on December 19, 1943.
+- This player was born in Brownwood, Texas.
+- This player died in Abilene, Texas, on January 23, 2016.
+- This player played for the Yankees from 1974 to 1976.
+
+## 2025-06-10 - Johnny Damon
+Fact verification failed for the following claims:
+- This player impersonated his older brother to a police officer after taking his mother's car at age 14.
+- This player won the J.G. Taylor Spink Award as the National Association Minor League Player of the Year in 1995.
+- This player won a World Series title with the 2004 Boston Red Sox.
+- This player won a World Series title with the 2009 New York Yankees.
+- The Kansas City Royals drafted this player with the 35th pick in the first round of the 1992 draft.
+- This player declined a baseball scholarship to the University of Florida to sign with the Royals for $300,000.
+- This player called his 2004 Red Sox teammates 'idiots' to describe their carefree team culture.
+- This player suffered a concussion in the 2003 ALDS after colliding with Damian Jackson.
+
+## 2025-06-11 - Dick Howser
+Fact verification failed for the following claims:
+- This player attended Florida State University on a $500 scholarship.
+- This player hit .422 during his sophomore year at Florida State in 1956.
+- This player recorded his first major-league hit against Mike Fornieles in 1961.
+- This player was named team captain by manager Hank Bauer in 1961.
+- This player won the World Series as a manager in 1985.
+- This player suffered two cracked ribs during batting practice on April 22, 1963.
+- The Kansas City Royals retired this player's number 10 on July 3, 1987.
+- A bronze statue of this player was unveiled at Kauffman Stadium on April 10, 2009.
+
+## 2025-06-13 - George Scott
+Fact verification failed for the following claims:
+- This player was temporarily removed from a Little League team for being too good.
+- In 1965, the player achieved a Triple Crown in the Double-A Eastern League.
+- The player batted .319 in 1965.
+- The player hit 25 home runs in 1965.
+- The player recorded 94 RBIs in 1965.
+- This player won eight Gold Glove awards.
+- The player's major league career lasted 14 seasons.
+- The player hit a home run off Whitey Ford in 1966.
+- Mickey Mantle suggested the player's 1966 home run off Whitey Ford could be estimated at 550 feet.
+
+## 2025-06-15 - Clay Bellinger
+Fact verification failed for the following claims:
+- The player was born in Oneonta, New York, on November 18, 1968.
+- The player was a member of the 2000 New York Yankees World Series championship team.
+- The player was associated with the 2002 Anaheim Angels.
+
+## 2025-06-17 - Aaron Hicks
+Fact verification failed for the following claims:
+- The player was born on October 2, 1989.
+- The player was born in San Pedro, California.
+- The player was drafted in 2008.
+- The player played as an outfielder for the New York Yankees.
+
+## 2025-06-18 - Andrew Heaney
+Fact verification failed for the following claims:
+- The player was born on June 5, 1991, in Oklahoma City, Oklahoma.
+- The player was acquired by the New York Yankees in 2021.
+- The player previously competed for the Los Angeles Angels.
+- The player is a left-handed pitcher.
+
+## 2025-06-19 - Jim Abbott
+Fact verification failed for the following claims:
+- This player was drafted by the Toronto Blue Jays in the 36th round.
+- This player attended the University of Michigan.
+- This player was the first U.S. pitcher to beat the Cuban national team in Cuba in 25 years.
+- This player finished third in the 1991 American League Cy Young Award voting.
+- This player led the American League in 'tough losses' in 1991.
+- This player hit a 375-foot triple against the San Francisco Giants during 1991 spring training.
+- Baseball America ranked this player's 1989 major league debut as the second most historically significant debut behind Jackie Robinson.
+
+## 2025-06-20 - Eddie Lopat
+Fact verification failed for the following claims:
+- This player was originally a first baseman.
+- This player was rejected by the New York Giants because he could not make the throw to second base.
+- This player effectively possessed a repertoire of 72 different deliveries.
+- This player led the American League with a 2.42 ERA in 1953.
+- This player led the American League with an .800 winning percentage in 1953.
+- Ted Williams ranked this player as one of the five toughest pitchers he faced.
+- This player helped Whitey Ford identify a 'tell' in his delivery that revealed his pitch type to coaches.
+
+## 2025-06-21 - George Stirnweiss
+Fact verification failed for the following claims:
+- The player attended the University of North Carolina.
+- The player earned letters in baseball and football at the University of North Carolina.
+- The player led the American League in batting average in 1945.
+- The player led the American League in hits in 1945.
+- The player led the American League in triples in 1945.
+- The player hit .309 in 1945.
+- The player led the American League in stolen bases in 1944.
+- The player led the American League in stolen bases in 1945.
+- The player played for the St. Louis Browns.
+- The player played for the Cleveland Indians.
+- The player concluded his major league career in 1952.
+
+## 2025-06-23 - Paul O'Neill
+Fact verification failed for the following claims:
+- The player's great-grandfather married Mary Clemens, a cousin to Mark Twain.
+- In the 1990 NLCS, the player recorded a 1.324 OPS.
+- The Cincinnati Reds won their first pennant since 1976 in the 1990 season.
+- In 1992, the player batted .246 with 19 doubles, 14 home runs, and 66 RBIs.
+- The Reds traded the player to the New York Yankees on November 3, 1992.
+
+## 2025-06-24 - Mariano Duncan
+Fact verification failed for the following claims:
+- The player committed 15 errors in 30 appearances in the Pioneer League.
+- The player and his teammate hit grand slams in consecutive innings on August 23, 1985.
+- The player won a World Series title with the 1990 Cincinnati Reds.
+- The player won a World Series title with the 1996 New York Yankees.
+- In 1990, the player batted .306 with an NL-high 11 triples.
+
+## 2025-06-28 - Al Downing
+Fact verification failed for the following claims:
+- The player was born on June 28, 1941.
+- The player was born in Trenton, New Jersey.
+- The player surrendered Hank Aaron's 715th career home run in 1974.
+- The player was an All-Star in 1967.
+- The player had a professional career spanning 17 seasons.
+
+## 2025-07-02 - Jesse Barfield
+Fact verification failed for the following claims:
+- This player won a statewide drafting contest to earn a scholarship at Bradley University.
+- This player was called up to the major leagues on September 3, 1981.
+- This player had his jersey number stapled to his uniform for his major league debut.
+- This player recorded 162 outfield assists during his 12-season career.
+- This player played in the major leagues from 1981 to 1992.
+- This player hit 40 home runs during the 1986 season.
+- This player led the major leagues in home runs in 1986.
+
+## 2025-07-05 - Daryl Boston
+Fact verification failed for the following claims:
+- The player was born in Cincinnati, Ohio.
+- The player was born on January 4, 1963.
+- The player was selected in the 1981 MLB Draft.
+- The player appeared in over 1,000 Major League Baseball games.
+- The player served as a Major League coach.
+
+## 2025-07-06 - Darryl Strawberry
+Fact verification failed for the following claims:
+- This player played for the rookie-level Appalachian League team in Kingsport, Tennessee, in 1980.
+- This player attended Crenshaw High School in Los Angeles.
+- This player played in the 1979 Los Angeles city championship game at Dodger Stadium.
+- John Elway played third base and pitched for Granada Hills in the 1979 city championship game.
+- A national sports magazine likened this player to Ted Williams during his senior year of high school.
+- This player was selected by the New York Mets in the June 1980 draft.
+- The New York Mets gave this player a $200,000 signing bonus in 1980.
+
+## 2025-07-08 - Jay Buhner
+Fact verification failed for the following claims:
+- This player attended McLennan Community College.
+- This player hit for the cycle on June 23, 1993.
+- From 1995 through 1997, this player hit 124 home runs.
+- Ken Griffey Jr. hit 122 home runs from 1995 through 1997.
+- Mo Vaughn hit 118 home runs from 1995 through 1997.
+- Juan Gonzalez hit 116 home runs from 1995 through 1997.
+- Frank Thomas hit 115 home runs from 1995 through 1997.
+- The 'Buhner Buzz Cut Night' promotion ran from 1994 to 2001.
+- In 1994, 512 fans participated in the buzz cut promotion.
+- In 2001, 6,246 fans participated in the buzz cut promotion.
+
+## 2025-07-09 - Jim Beattie
+Fact verification failed for the following claims:
+- This player was born on July 4, 1954, in Hampton, Virginia.
+- This player attended Dartmouth College.
+- This player earned a victory in Game 5 of the 1978 World Series by tossing a complete game.
+- This player served as the General Manager for the Montreal Expos.
+- This player served as the General Manager for the Baltimore Orioles.
+- This player began his professional career in 1974.
+
+## 2025-07-11 - Rick Reuschel
+Fact verification failed for the following claims:
+- This player attended Western Illinois University.
+- In his 1970 junior year, he posted a 1.94 ERA.
+- He achieved a 40-inning scoreless streak in 1970.
+- The player combined with his brother for a 7-0 shutout against the Dodgers in 1975.
+- He led all pitchers in WAR in 1977.
+- He ranked sixth in sacrifice bunts over the 1946-2024 seasons.
+- He was traded to the Yankees on June 12, 1981.
+- He was sidelined for the entire 1982 season due to two rotator cuff surgeries.
+
+## 2025-07-18 - Mark Wohlers
+Fact verification failed for the following claims:
+- The player worked as a dishwasher at Mel's Restaurant at age 14.
+- The player contributed to a combined no-hitter on September 11, 1991.
+- The player told the Braves 400 Club in January 1991 that he wanted to throw 100 miles per hour.
+- In 1988, the player walked 50 batters in 59 2/3 innings for the Pulaski Braves.
+- The player recorded his first major-league save on August 17, 1991.
+- The player's 1989 season with the Sumter Braves resulted in a 2-7 record and a 6.49 ERA.
+
+## 2025-07-21 - Vernon Wells
+Fact verification failed for the following claims:
+- This player was born in Shreveport, Louisiana.
+- This player was born on December 8, 1978.
+- This player was drafted in the first round of the 1997 MLB June Amateur Draft.
+- This player was the fifth overall pick in the 1997 MLB June Amateur Draft.
+- This player joined the New York Yankees via trade in 2013.
+
+## 2025-07-26 - Al Holland
+Fact verification failed for the following claims:
+- This player led the nation with 143 strikeouts in 1972.
+- This player finished the 1972 season with a 0.54 earned run average.
+- Branch Rickey III offered the player a steak dinner if he reached the major leagues before 1978.
+- The reliever was nicknamed 'Mr. T' by Ed Farmer in 1983.
+- The player pitched the ninth inning of Steve Carlton's 300th major league win on September 23, 1983.
+
+## 2025-07-28 - Roy White
+Fact verification failed for the following claims:
+- In 1962, the player batted .284 for the Greensboro Class A club.
+- The player won the James P. Dawson Award in 1966.
+- The player set an American League record with 17 sacrifice flies in 1971.
+- Ralph Houk moved the player to the cleanup spot on August 13, 1968.
+- The player was moved to a part-time designated hitter role during the 1974 season.
+
+## 2025-07-29 - Randy Choate
+Fact verification failed for the following claims:
+- The player was born on September 5, 1975.
+- The player was born in San Antonio, Texas.
+- The player was drafted in the 1996 amateur draft.
+
+## 2025-07-30 - Rey Sánchez
+Fact verification failed for the following claims:
+- This player graduated from Live Oak High School in Morgan Hill, California.
+- This player was ranked tops in the American League in defensive WAR from 1989 to 1991.
+- This player hit a 10th-inning walk-off inside-the-park home run on June 11, 2004.
+- In 2003, this player and Roberto Alomar served as the starting shortstop and second baseman for the New York Mets.
+- This player hit a game-winning sacrifice fly for the Chicago Cubs in May 1992.
+
+## 2025-07-31 - Sam Militello
+Fact verification failed for the following claims:
+- Sam Militello was born in Tampa, Florida on November 26, 1969.
+- Sam Militello made his major league debut in 1992.
+- Sam Militello won his first major league start in 1992.
+
+## 2025-08-04 - Billy Sample
+Fact verification failed for the following claims:
+- This player was born on April 2, 1955, in Roanoke, Virginia.
+- This player was part of the Yankees organization from 1974 to 1976.
+
+## 2025-08-06 - Mark Leiter
+Fact verification failed for the following claims:
+- This player sat out professional baseball during 1986, 1987, and 1988.
+- This player worked as a corrections officer at the Ocean County Jail.
+- This player won the Tony Conigliaro Award in 1994.
+- The player's son, Ryan Leiter, died on April 4, 1994.
+- The player was traded from the Yankees to the Tigers for Torey Lovullo in March 1991.
+- The player signed a two-year, $3.9 million deal with the Philadelphia Phillies after the 1996 season.
+- The player appeared in 335 games over 11 major-league seasons between 1990 and 2001.
+
+## 2025-08-10 - Andy Pettitte
+Fact verification failed for the following claims:
+- The player was a 22nd-round draft pick in 1990.
+- The player has a career WAR of 60.2.
+- No other player picked in the 22nd round in 1990 recorded a WAR above zero.
+- The player threw a knuckleball under the tutelage of Hoyt Wilhelm in the Gulf Coast League.
+- The player holds the all-time record for postseason wins with 19.
+- The player pitched 276 2/3 innings in the postseason.
+- The player's ERA was 5.53 at the end of June 1999.
+
+## 2025-08-11 - Phil Hughes
+Fact verification failed for the following claims:
+- This player was born in Mission Viejo, California.
+- This player was selected in the first round of the 2004 Major League Baseball draft.
+- This player made his Major League debut in 2007.
+
+## 2025-08-12 - Kevin Maas
+Fact verification failed for the following claims:
+- The player was born in Castro Valley, California.
+- The player was a left-handed hitter.
+- The player performed for the New York Yankees in the early 1990s.
+- The player provided high-impact offensive performance during the 1990 season.
+
+## 2025-08-19 - Bobby Richardson
+Fact verification failed for the following claims:
+- The player traveled to Norfolk, Virginia, by bus with $85 in coins.
+- The player won the Sport Magazine World Series MVP award in 1960.
+- The player is the only person to win the World Series MVP while playing for the losing team.
+- The player recorded 6 RBIs in a single World Series game in 1960.
+- The player was known as one of the 'Milkshake Twins' alongside Tony Kubek.
+- Casey Stengel managed the New York Yankees from 1949 to 1960.
+
+## 2025-08-22 - Luis Tiant
+Fact verification failed for the following claims:
+- The pitcher had a 5-19 record with the Mexico City Tigers in 1959.
+- Reggie Jackson called the player 'the Fred Astaire of baseball'.
+- The player led the American League with a 1.60 ERA in 1968.
+- The player won the Comeback Player of the Year award in 1972.
+- In 1972, the player had a 9-1 record with six shutouts and a 0.82 ERA over a 10-start stretch.
+- The player was released by the Minnesota Twins on March 31, 1971.
+- Luis Eleuterio Tiant was a legendary pitcher in the Cuban Leagues and American Negro Leagues.
+- The player did not return to Cuba in 1961 on his father's advice.
+- The player finished the 1968 season with a 21-9 record.
+- The player struck out 19 batters in 10 innings against the Twins on July 3, 1968.
+
+## 2025-08-26 - Ricky Bones
+Fact verification failed for the following claims:
+- The player was born on April 7, 1969, in Salinas, Puerto Rico.
+- The player made his Major League Baseball debut in 1991.
+- The player appeared in 34 games for the New York Yankees during the 2001 season.
+
+## 2025-08-27 - Graig Nettles
+Fact verification failed for the following claims:
+- This player attended San Diego State University.
+- This player played semipro baseball for the Alaska Goldpanners in Fairbanks.
+- This player set the record for most double plays by a third baseman in a season with 54.
+- This player set the record for most assists by a third baseman in a season with 412.
+- This player recorded five assists in Game Three of the 1978 World Series.
+- This player's mother combined the names Craig and Greg to create his name.
+- This player was caught using a corked bat on September 7, 1974.
+- This player's relationship with Billy Martin began in the minor leagues with the Denver Bears.
+
+## 2025-08-30 - Andrew Arthur Carey
+Fact verification failed for the following claims:
+- He was signed by the New York Yankees as an amateur free agent in 1951.
+- He made his Major League debut in 1952.
+- He was a member of the 1960 American League pennant-winning New York Yankees.
+- He was involved in a seven-player trade with the Kansas City Athletics following the 1960 season.
+
+## 2025-08-31 - Orlando Hernández
+Fact verification failed for the following claims:
+- The player was a star for Industriales in the Cuban National Series.
+- The player defected from Cuba by boat in 1997.
+- The player was banned from his national team in 1996.
+
+## 2025-09-02 - Marwin González
+Fact verification failed for the following claims:
+- The player originated from Venezuela as an international amateur signee.
+- The player broke up a potential no-hitter in the ninth inning of a 2017 World Series game.
+- The player was a utility player for the New York Yankees.
+- The player hit a solo home run in the ninth inning of a 2017 World Series game.
+
+## 2025-09-03 - Lance Berkman
+Fact verification failed for the following claims:
+- This player was required to alternate batting sides in youth league games.
+- In 1996, this player hit six home runs in a doubleheader and nine in one week.
+- This player ranks 22nd all-time in career OPS.
+- This player's career OPS is higher than Willie Mays and lower than Ty Cobb.
+- This player was a member of the Houston Astros 'Killer B's'.
+- In 1997, this player led the NCAA with 41 home runs and 134 RBIs.
+- This player was named the 1997 NCAA Player of the Year by the National Collegiate Baseball Writers Association.
+- This player batted right-handed in the 2004 Home Run Derby.
+
+## 2025-09-04 - Jim Bouton
+Fact verification failed for the following claims:
+- In high school, the player was nicknamed 'Warmup' because he only pitched in practice until the final game.
+- The player wore jersey number 56 for his entire career as a reminder of the hard work required to reach the major leagues.
+- In 1963, the player finished with a 21-7 record and a 2.53 ERA.
+- On September 13, 1963, the player threw a shutout against the Minnesota Twins.
+- The player won two games during the 1964 World Series.
+- The player's 1964 season ended with a 18-13 record and a 3.02 ERA.
+
+## 2025-09-06 - Bob MacDonald
+Fact verification failed for the following claims:
+- The player attended Rutgers University.
+- The player's sophomore ERA at Rutgers was 7.74.
+- The player's senior ERA at Rutgers was 2.97.
+- Nolan Ryan recorded his seventh career no-hitter on May 1, 1991.
+- The player pitched in the game where Nolan Ryan recorded his seventh no-hitter.
+- The player held left-handed hitters to a .143 batting average in 1992.
+- The Toronto Blue Jays traded Tony Castillo to the Atlanta Braves for Jim Acker in August 1989.
+- The player was sold to the Detroit Tigers for $20,000 at the end of 1993 spring training.
+
+## 2025-09-07 - Don Mattingly
+Fact verification failed for the following claims:
+- The player was selected in the 19th round of the 1979 amateur draft.
+- The player participated in the 1983 Pine Tar Game.
+- The player played second base during the 1983 Pine Tar Game.
+- The player has a career fielding percentage of .9959.
+- The player won nine Gold Glove awards.
+- The player won the American League batting title in 1984 with a .343 average.
+- The player hit 207 hits in 1984.
+
+## 2025-09-10 - Cecil Fielder
+Fact verification failed for the following claims:
+- This player averaged 27 points, 12 rebounds, and 10 assists per game in his senior year of high school.
+- This player became the first American League player in 29 years to hit 50 home runs in 1990.
+- This player signed a contract with the Hanshin Tigers in 1989 for $1,000,050.
+- This player was traded to the Yankees in 1996.
+- This player helped the Yankees win the World Series in 1996.
+- This player finished his career with 319 home runs.
+- This player's son finished his career with 319 home runs.
+
+## 2025-09-15 - Roy Smalley III
+Fact verification failed for the following claims:
+- He played collegiate baseball at the University of Southern California.
+- He is the son of former major leaguer Roy Smalley Jr.
+- He is the nephew of Hall of Famer Gene Mauch.
+- He was the first overall pick in the secondary phase of the 1973 MLB Draft.
+- He was traded from the New York Yankees to the Minnesota Twins in 1976.
+
+## 2025-09-17 - Vernon Gomez
+Fact verification failed for the following claims:
+- The player was a member of the New York Yankees from 1974 to 1976.
+- The player served as a relief pitcher for the Yankees.
+- The player's time in the major leagues with the team included the seasons 1974, 1975, and 1976.
+
+## 2025-09-20 - Elliott Maddox
+Fact verification failed for the following claims:
+- In 1969, this player and four teammates slept in their cars for three days due to housing discrimination.
+- In 1974, this player was moved to center field, forcing Bobby Murcer to right field.
+- The 1975 Topps baseball card discussed the controversy of the position switch between this player and Bobby Murcer.
+- This player led all American League outfielders in 1971 with a 3.05 Range Factor per Nine Innings.
+- This player played for the Detroit Tigers in 1970.
+- This player attended the University of Michigan during the 1970 season.
+- The final Washington Senators game at RFK Stadium took place in 1971.
+- Bob Short owned the Washington Senators in 1971.
+- Ted Williams managed the Washington Senators.
+
+## 2025-09-21 - Mike Mussina
+Fact verification failed for the following claims:
+- The player attended Stanford University.
+- The player earned a degree in economics.
+- The player was the first American League pitcher to win 10 or more games in 17 consecutive seasons.
+- Cal Ripken Jr. broke Lou Gehrig’s consecutive-game record in 1995.
+- The Orioles gifted Cal Ripken Jr. a 2,131-pound engraved chunk of white marble.
+- A plane crash in 1996 took the lives of 16 students and 5 chaperones from Montoursville.
+- The player had 21 names inscribed on his cap in 1996.
+- The player hit Seattle Mariners catcher Bill Haselman with a pitch on June 6, 1993.
+
+## 2025-09-26 - Gene Woodling
+Fact verification failed for the following claims:
+- This player won five straight World Series with the Yankees from 1949 through 1953.
+- This player led American League outfielders in fielding percentage with .996 in both 1952 and 1953.
+- This player hit .385 while playing for the San Francisco Seals in 1948.
+- This player was selected as the Minor League Player of the Year by The Sporting News in 1948.
+- This player served at the Great Lakes Naval Training Station in 1944.
+- This player was one of twelve individuals to remain with the Yankees through the entire 1949-1953 World Series run.
+
+## 2025-09-27 - Bobby Shantz
+Fact verification failed for the following claims:
+- This player won the American League Most Valuable Player Award in 1952.
+- This player stood 5-feet-6½ tall as an adult.
+- This player was signed to an A-Ball contract in November 1947.
+- This player was managed by Connie Mack, who forbade him from throwing the knuckleball.
+- Jimmie Dykes succeeded Connie Mack as manager in 1952.
+- This player pitched 28 games for the Lincoln A's in 1948, going 18-7 with a 2.82 ERA.
+
+## 2025-09-28 - Zach Britton
+Fact verification failed for the following claims:
+- The player was drafted as a starting pitcher out of high school in Texas.
+- The player posted a 0.54 ERA in 2016.
+- The 0.54 ERA is the lowest in a single season for any pitcher with at least 50 innings pitched in MLB history.
+- The player recorded 47 saves in 2016.
+- The player finished fourth in the AL Cy Young Award voting in 2016.
+
+## 2026-03-06 - Paul Blackburn
+Fact verification failed for the following claims:
+- The player was born on December 4, 1993.
+- The player was born in Antioch, California.
+- The player was a participant in the 2012 MLB Draft.
+
+## 2026-03-11 - José Caballero
+Fact verification failed for the following claims:
+- This player signed as an international amateur free agent in 2017.
+
+## 2026-03-22 - Aaron Boone
+Fact verification failed for the following claims:
+- Aaron Boone was born on March 9, 1973.
+- He was born in La Mesa, California.
+- He hit a walk-off home run in the 2003 American League Championship Series.
+- He began serving as the New York Yankees manager in 2018.
+- His father is Bob Boone.
+- His brother is Bret Boone.
+
+## 2026-03-27 - Joe DiMaggio
+Fact verification failed for the following claims:
+- The player suffered a knee injury in 1934.
+- The player hit .398 with 34 homers and 154 RBIs in 1935.
+- The player recorded a 56-game hitting streak in 1941.
+- The hitting streak ended in Cleveland on July 17, 1941.
+- Ken Keltner was the third baseman who ended the 1941 hitting streak.
+- Joe McCarthy managed the Yankees from 1931 to 1946.
+- Al Gionfriddo made a spectacular catch against the player in the 1947 World Series.
+- The player had a three-inch bone spur removed from his left heel on January 7, 1947.
+- The player received a medical discharge from the Army Air Force in September 1945.
+
+## 2026-03-30 - David Weathers
+Fact verification failed for the following claims:
+- The player was reprimanded by manager Eddie Dennis for saying 'coach' during his first professional day.
+- The player debuted at Fenway Park in August 1991.
+- The player served as the bullpen ace during the 1996 ALDS.
+- Tino Martinez advised the player to throw a slider to Juan Gonzalez in the 1996 ALDS.
+- The player replaced Mike Timlin on the Toronto Blue Jays roster in 1991.
+- The player played in two regular-season games for the 1992 Toronto Blue Jays.
+- The 1992 Toronto Blue Jays players voted to give the player 19 percent of a full World Series share.
+- The player received a $22,800 payout as part of his 1992 World Series share.
+
+## 2026-03-31 - Ken Clay
+Fact verification failed for the following claims:
+- The player was born in Lynchburg, Virginia, in 1954.
+- The player was drafted in 1974.
+- The player joined the New York Yankees organization in 1974.
+
+## 2026-04-01 - Mike Morgan
+Fact verification failed for the following claims:
+- Mike Morgan was born on October 8, 1959.
+- Mike Morgan was born in Tulare, California.
+- Mike Morgan played for 12 different major league franchises.
+- Mike Morgan's professional career lasted from 1978 to 2002.
+
+## 2026-04-07 - Rickey Henderson
+Fact verification failed for the following claims:
+- The player was a standout in baseball, basketball, and football at Oakland Technical High School.
+- In 1977, while playing for Modesto in the Class A California League, the player batted .345.
+- The player recorded 104 walks in the 1977 season with Modesto.
+- The player stole 95 bases during the 1977 season with Modesto.
+- On May 1, 1991, the player broke the all-time career stolen base record.
+- The player stole his 939th career base against the New York Yankees on May 1, 1991.
+- The player was traded back to the Oakland Athletics on June 21, 1989.
+
+## 2026-04-14 - Don Baylor
+Fact verification failed for the following claims:
+- This player was nicknamed 'Groove' by his teammates.
+- This player holds the record for being hit by 267 pitches in the 20th century.
+- This player won the American League Most Valuable Player award in 1979.
+- In 1979, this player led both leagues in runs scored and RBIs.
+- Frank Robinson served as a mentor and manager for this player.
+- This player was a member of the Baltimore Orioles organization early in his career.
+
+## 2026-04-16 - Mike Witt
+Fact verification failed for the following claims:
+- The player won all 14 of his pitching decisions during his senior year at Servite High School.
+- The player was chosen by California in the fourth round of the 1978 amateur draft.
+- The player joined the Angels' Opening Day roster in 1981.
+- General Manager Buzzie Bavasi previously worked for the Brooklyn and Los Angeles Dodgers.
+- The player finished his 1981 rookie season with an 8-9 record.
+- The player had an ERA of 3.28 during the 1981 season.
+- The player appeared in relief in Game Three of the 1982 American League Championship Series.
+- Sportswriter Peter Gammons praised the player's curveball in 1982.
+
+## 2026-04-18 - Fran Healy
+Fact verification failed for the following claims:
+- This player attended Tabor Academy.
+- This player signed with the Cleveland Indians for a $40,000 bonus in 1964.
+- In 1974, this player appeared in 138 games behind the plate.
+- In 1974, this player appeared in 138 games behind the plate, which was more than any other big-league catcher that season.
+- Reggie Jackson credited this player for providing vital support during their time with the Yankees.
+- In 1977, a public confrontation occurred between Reggie Jackson and Billy Martin at Fenway Park.
+- In 1978, this player played only once on April 21.
+- This player retired from playing in 1978 due to recurring neck problems.
+- This player became a Yankees broadcaster in 1978.
+
+## 2026-04-22 - Jim Leyritz
+Fact verification failed for the following claims:
+- The player was born on December 27, 1963.
+- The player was born in Lakewood, Ohio.
+- The player hit a game-tying three-run home run in the eighth inning of Game 4 of the 1996 World Series.
+
+## 2026-04-23 - Jackie Jensen
+Fact verification failed for the following claims:
+- The player helped his college team win the inaugural College World Series in 1947.
+- The player's wife won a Bronze Medal in springboard diving at the 1952 Olympic Games in Helsinki.
+- The player wrote an article titled 'My Ambition Is To Quit' for the Saturday Evening Post in April 1959.
+- The player joined the New York Yankees in 1950.
+- The player was traded to the Washington Senators on May 3, 1952.
+- The player slugged 35 home runs in the 1958 season.
+- The player led the American League with 122 runs batted in during the 1958 season.
+- The player won the American League Most Valuable Player award in 1958.
+
+## 2026-04-24 - José Cruz
+Fact verification failed for the following claims:
+- The player set a Rice University record with 10 RBIs in a game on February 9, 1995.
+- The player was knocked unconscious by a foul ball at the Caribbean World Series at age five.
+- The player won a Gold Glove Award with the San Francisco Giants in 2003.
+- The player recorded a .994 fielding percentage in 2003.
+- The player graduated from Rice University in May 2013.
+- The player had a 12-year professional career in Major League Baseball.
+
+## 2026-04-25 - Octavio Dotel
+Fact verification failed for the following claims:
+- The player was born in Santo Domingo, Distrito Nacional in the Dominican Republic.
+- The player was born on November 25, 1973.
+- The player played for 13 different major league franchises.
+- The player made over 700 appearances in Major League Baseball.
+
+## 2026-04-26 - Jim Wynn
+Fact verification failed for the following claims:
+- This player was drafted by the Houston Colt .45s in November 1962.
+- This player drew 148 walks during the 1969 season.
+- This player is 5-feet-9 inches tall.
+- This player led the league in road home runs in 1967.
+- This player led the league in road home runs in 1968.
+- The nickname associated with this player was first used by John Wilson in 1967.
+- The manager Harry Walker attempted to change this player's hitting style in 1968.
+
+## 2026-04-27 - Jim Mason
+Fact verification failed for the following claims:
+- On September 1, 1970, the player started a triple play and hit an inside-the-park home run.
+- On July 8, 1974, the player hit four doubles in a game against the Texas Rangers.
+- The player tied a major-league record for doubles in a single game on July 8, 1974.
+- The player hit a home run in his only World Series plate appearance.
+- The player lost his starting shortstop position under Billy Martin in both Texas and New York.
+- The player hit the only home run for the Yankees in the 1976 World Series.
+
+## 2026-04-29 - John Charles Ellis
+Fact verification failed for the following claims:
+- John Charles Ellis played for the Yankees from 1974 to 1976.
+- John Charles Ellis attended McQuaid Jesuit High School.
+- John Charles Ellis was a catcher.
+
+## 2026-05-01 - Tim Stoddard
+Fact verification failed for the following claims:
+- This player won an NCAA Division I basketball title and a World Series ring.
+- In the 1972-73 ACC tournament final, he hit two free throws with 39 seconds left.
+- He played for the 1973-74 North Carolina State Wolfpack.
+- He won the 1974 NCAA basketball championship.
+- He won Game Four of the 1979 World Series.
+- He recorded an RBI single in his first major-league at-bat during the 1979 World Series.
+- He played for the Baltimore Orioles in 1979.
+- His playing weight for most of his big-league career was 250 pounds.
+
+## 2026-05-02 - Bob Turley
+Fact verification failed for the following claims:
+- The player was banned from pitching in a youth league at age 12.
+- The player signed with the St. Louis Browns for $200 a month in 1948.
+- The player received $1.75 a day for meal money during his first professional season.
+- The player won the Cy Young Award in 1958.
+- The player finished second to Jackie Jensen in the 1958 MVP voting.
+- The Yankees signed the player's uncle, Ralph Turley, by mistake after finding his name in a phone book.
+- The player adopted a no-windup delivery in 1956 under the guidance of pitching coach Jim Turner.
+
+## 2026-05-03 - Mason Jordan Williams
+Fact verification failed for the following claims:
+- The player was drafted in the 2010 draft.
+- The player was drafted as an outfielder.
+- The player was drafted in the fourth round.
+
+## 2026-05-06 - Fritz Peterson
+Fact verification failed for the following claims:
+- The player played semipro hockey during his professional career.
+- The player debuted in 1966.
+- The player's lifetime ERA at the original Yankee Stadium was 2.52.
+- The player recorded his 20th win during the 1970 season.
+- The player earned a master's degree in physical education in 1967.
+- The player taught courses at Northern Illinois University during the offseason.
+
+## 2026-05-08 - Gary Sheffield
+Fact verification failed for the following claims:
+- The player led the National League in batting average in 1992.
+- The player's uncle was former New York Mets pitcher Dwight Gooden.
+- The player grew up in the Belmont Heights section of Tampa, Florida.
+- The player sponsored a program called Sheff's Kitchen for underprivileged kids while playing for the Marlins.
+- The player paid $100,000 for a man's liver transplant.
+
+## 2026-05-09 - Willie Randolph
+Fact verification failed for the following claims:
+- The player never won a Gold Glove award.
+- The player finished his career with a .979 fielding percentage.
+- The player appeared in 2,202 major league games.
+- The player set an All-Star Game record for most assists by a second baseman in a nine-inning game in 1977.
+- The player never committed an error in a postseason game.
+- The player wore number 12 while playing for the Mets.
+
+## 2026-05-10 - Graeme Lloyd
+Fact verification failed for the following claims:
+- This player worked as an electrician by trade.
+- This player worked as a sales representative for Pony.
+- This player earned a win in Game Four of the 1996 World Series.
+- This player induced a double play against Fred McGriff in the 1996 World Series.
+- This player was the first Australian to win a World Series ring.
+- This player is 6'8" tall.
+- The Yankees acquired this player in a trade in 1996.
+- This player had a bone spur in his elbow and a shoulder that required a cortisone shot in 1996.
+- In 1998, this player held right-handed hitters to a .182 batting average.
+
+## 2026-05-17 - Marv Throneberry
+Fact verification failed for the following claims:
+- The player won the American Association MVP award in 1956.
+- The player hit 36 home runs for the Denver Bears in 1955.
+- The player was the first person to play for both the New York Yankees and the New York Mets.
+- The player was traded to the Kansas City Athletics after the 1959 season.
+- The trade involving the player helped the Yankees acquire Roger Maris.
+- The player hit a 450-foot pinch-hit home run against the Pittsburgh Pirates on August 21, 1962.
+- The player committed 17 errors at first base in 97 games during the 1962 season.
+
+## 2025-03-29 - James Edward Key
+Fact verification failed for the following claims:
+- The player was drafted by the Chicago White Sox in the 10th round of the 1979 amateur draft.
+- The player did not sign with the White Sox in 1979.
+- The player won an ERA title.
+- The player pitched in 470 games and 389 games started.
+- The player is a two-time World Series champion.
+- The player recorded a 6.3 WAR in 1993.
+- The player recorded 2,591.2 innings pitched in his career.
+- The player recorded 1,538 career strikeouts.
+- The player has a career 3.51 ERA.
+- The player recorded a 4.6 WAR in 1997 with the Baltimore Orioles.
+
+## 2025-04-03 - Todd Greene
+Fact verification failed for the following claims:
+- The player was drafted by the Atlanta Braves in the 27th round of the 1989 amateur draft but did not sign.
+- The player was a member of the New York Yankees in 2001.
+- The player signed with the New York Yankees on April 5, 2001.
+- The player was released by the New York Yankees on March 27, 2002.
+- The player hit 71 career home runs.
+- The player had 1,573 career at-bats.
+- The player had 397 career hits.
+- The player had 217 career RBIs.
+- The player had a career batting average of .252.
+- The player had a career OPS of .730.
+- The player was released by the Toronto Blue Jays on March 28, 2001.
+
+## 2025-04-04 - Tony Kubek
+Fact verification failed for the following claims:
+- The player signed with the New York Yankees in 1954 for a $1,500 bonus.
+- The player attended Bay View High School.
+- The player hit two home runs in the 1957 World Series.
+- The player hit three home runs during the 1957 regular season.
+- The player was struck in the throat by a baseball during the 1960 World Series.
+- Ralph Houk managed the player in the minor leagues at Denver in 1956.
+- The player won the Rookie of the Year award.
+- The player was a four-time All-Star.
+- The player won three World Series titles.
+
+## 2025-04-06 - Ralph Terry
+Fact verification failed for the following claims:
+- Branch Rickey offered a $100 bill as a target to this player during a tryout in 1953.
+- This player was involved in a near-fatal car accident during the 1957-58 offseason.
+- This player spent seven weeks in traction following his 1957-58 car accident.
+- This player recorded the highest number of 'Golden Pitches' in World Series history.
+- This player helped the Yankees win the World Series in 1962.
+- This player was advanced from second to fourth grade by Mrs. Edmonds.
+- This player earned approximately 140 college credits without receiving a degree.
+- This player struck out 21 batters in a high school game where he also recorded seven RBIs.
+
+## 2025-04-07 - Iván Nova
+Fact verification failed for the following claims:
+- This player was drafted by the San Diego Padres from the New York Yankees in the 2008 Rule 5 draft.
+- This player was returned by the San Diego Padres to the New York Yankees on March 29, 2009.
+- This player recorded a 3.4 WAR in the 2013 season.
+- This player recorded a -0.7 WAR in the 2014 season.
+- This player was traded by the New York Yankees to the Pittsburgh Pirates on August 1, 2016.
+- Tito Polo and Stephen Tarpley were sent to the New York Yankees to complete the trade on August 30, 2016.
+- This player accumulated 90 career wins.
+- This player recorded 963 career strikeouts.
+- This player played for the Chicago White Sox in 2019.
+- This player played for the Detroit Tigers in 2020.
+
+## 2025-04-08 - Tony Clark
+Fact verification failed for the following claims:
+- This player was drafted 2nd overall in the 1990 amateur draft.
+- This player earned one All-Star selection in his career.
+- This player's major league career spanned from 1995 to 2009.
+- This player hit 251 career home runs.
+- This player signed with the New York Yankees on January 12, 2004.
+- This player became a free agent from the Yankees on October 29, 2004.
+- This player achieved a 3.4 WAR with the Arizona Diamondbacks in 2005.
+- This player was selected off waivers by the Boston Red Sox in 2001.
+- This player played for the New York Mets in 2003.
+- This player was released by the Arizona Diamondbacks in 2009.
+
+## 2025-04-11 - Nick Johnson
+Fact verification failed for the following claims:
+- This player was drafted by the New York Yankees in the 3rd round of the 1996 amateur draft.
+- This player signed with the New York Yankees on June 14, 1996.
+- This player was traded to the Montreal Expos on December 16, 2003, along with Randy Choate and Juan Rivera.
+- The New York Yankees acquired Javier Vázquez in the 2003 trade involving this player.
+- This player retired with a career .399 on-base percentage.
+- This player finished his career with a .268 batting average.
+- This player recorded a 5.0 WAR during the 2006 season.
+- This player recorded a career total of 2,698 at-bats.
+- This player had a career OPS+ of 123.
+- This player signed a free agent contract with the New York Yankees on December 18, 2009.
+
+## 2025-04-13 - Bob Melvin
+Fact verification failed for the following claims:
+- The player won 350 pounds of yams by hitting seven home runs in an American Legion tournament.
+- The player attended Menlo-Atherton High School.
+- Stevie Nicks and Lindsey Buckingham are alumni of Menlo-Atherton High School.
+- The player was inducted into the Menlo-Atherton Athletic Hall of Fame in 1994.
+- The player won three Manager of the Year awards.
+- The player played for the New York Yankees in 1994.
+- Vince Lombardi was a friend of the player's grandfather.
+- Mike McCormick won the 1967 National League Cy Young Award.
+- The player drove in four runs at Yankee Stadium on August 27, 1989.
+- The player hit his only home run and triple of the 1989 season on August 27, 1989.
+- The player began the 1993 season with the record for most plate appearances without being hit by a pitch among active players.
+
+## 2025-04-15 - John Mayberry
+Fact verification failed for the following claims:
+- This player was drafted by the Houston Astros in the 1st round of the 1967 amateur draft with the 6th pick.
+- He earned two All-Star selections during his career.
+- He recorded 255 career home runs.
+- He recorded 879 career RBI.
+- He played for the New York Yankees in 1982.
+- He was traded from the Toronto Blue Jays to the New York Yankees on May 5, 1982.
+- The trade for the player involved Jeff Reynolds, Tom Dodd, and Dave Revering.
+- He achieved 7.2 WAR in the 1975 season with the Kansas City Royals.
+- He was released by the New York Yankees on March 24, 1983.
+
+## 2025-04-17 - Ji-Man Choi
+Fact verification failed for the following claims:
+- This player signed as a free agent with the Seattle Mariners on July 2, 2009.
+- This player was drafted by the Los Angeles Angels from the Baltimore Orioles in the 2015 Rule 5 draft.
+- This player has a career OPS of .764.
+- This player played for the New York Yankees in 2017.
+- This player played for the New York Mets in 2024.
+- This player earned 0.1 WAR while playing for the Yankees in 2017.
+- This player had 1,567 career at-bats.
+- This player has a career OPS+ of 112.
+
+## 2025-04-18 - Dioner Navarro
+Fact verification failed for the following claims:
+- This player signed as an amateur free agent with the New York Yankees on August 21, 2000.
+- This player was traded to the Arizona Diamondbacks on January 11, 2005, in exchange for Randy Johnson.
+- Javier Vázquez and Brad Halsey were also included in the January 11, 2005, trade for Randy Johnson.
+- This player is a one-time All-Star.
+- This player recorded 3,207 career at-bats.
+- This player recorded 802 career hits.
+- This player recorded 367 career runs batted in.
+- This player recorded a 2.5 WAR during the 2014 season with the Toronto Blue Jays.
+
+## 2025-04-20 - David Robertson
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 17th round of the 2006 amateur draft.
+- He signed his first professional contract on August 21, 2006.
+- He was a member of the 2009 World Series championship team.
+- He has 1,176 career strikeouts.
+- He has pitched 894.1 career innings.
+- His career WHIP is 1.162.
+- He was traded from the Chicago White Sox to the New York Yankees on July 19, 2017.
+- The 2017 trade also involved Todd Frazier and Tommy Kahnle.
+- He has accumulated 179 career saves.
+- He is a one-time All-Star.
+
+## 2025-04-21 - Enrique Wilson
+Fact verification failed for the following claims:
+- This player was signed by the Minnesota Twins as an amateur free agent on April 15, 1992.
+- This player was traded from the Pittsburgh Pirates to the New York Yankees on June 13, 2001.
+- Dámaso Marte was traded to the Pittsburgh Pirates for this player on June 13, 2001.
+- This player had a career total of 22 home runs.
+- This player had a career batting average of .244.
+- This player played for the Yankees from 2001 to 2004.
+- This player had a career total WAR of -5.2.
+- This player had a career OPS+ of 64.
+- This player played for the Cleveland Indians, Pittsburgh Pirates, New York Yankees, Chicago Cubs, and Boston Red Sox during his career.
+- This player's career spanned from 1997 to 2006.
+
+## 2025-04-22 - Fred Stanley
+Fact verification failed for the following claims:
+- The player was drafted in the 8th round of the 1966 amateur draft by the Houston Astros.
+- The player played for the Seattle Pilots.
+- The player won two World Series championships.
+- The player has a career batting average of .216.
+- The player accumulated 1.7 WAR over a 14-season career.
+- The player was traded from the San Diego Padres to the New York Yankees on October 24, 1972.
+- George Pena was traded to the San Diego Padres for the player on October 24, 1972.
+- The player was traded to the Oakland Athletics on November 3, 1980.
+- Mike Morgan was traded to the New York Yankees for the player on November 3, 1980.
+- The player earned 1.0 WAR in 1975.
+- The player earned 1.3 WAR in 1976.
+
+## 2025-04-25 - Ted Lilly
+Fact verification failed for the following claims:
+- The player was drafted in the 23rd round of the 1996 amateur draft.
+- The player was traded to the New York Yankees on March 17, 2000.
+- The player was traded to the Oakland Athletics on July 5, 2002.
+- Jeff Weaver was traded to the New York Yankees in the July 5, 2002, three-team trade.
+- The player accumulated 130 career wins.
+- The player is a two-time All-Star.
+- The player appeared in 356 career games.
+- The player pitched 1,982.2 career innings.
+- The player recorded 1,681 career strikeouts.
+
+## 2025-04-29 - Sidney Ponson
+Fact verification failed for the following claims:
+- He signed as an amateur free agent with the Baltimore Orioles on August 17, 1993.
+- He pitched for the New York Yankees in 2006 and 2008.
+- He was released by the New York Yankees on August 23, 2006.
+- He signed with the New York Yankees on June 19, 2008.
+- He became a free agent on October 30, 2008.
+- His career spanned from 1998 to 2009.
+- He recorded 91 career wins.
+- He pitched 1760.1 career innings.
+- He played for the Baltimore Orioles from 1998 to 2005.
+- He was traded to the San Francisco Giants in 2003.
+- He finished his career with a 5.03 ERA.
+- He recorded 1,031 career strikeouts.
+- He played in 298 total games.
+
+## 2025-04-30 - Gus Triandos
+Fact verification failed for the following claims:
+- This player signed with the New York Yankees in 1948 for a $2,500 bonus.
+- This player served in the US Army in 1951.
+- This player was part of the 17-player trade between the New York Yankees and Baltimore Orioles on November 17, 1954.
+- This player caught a 45-inch circumference mitt to help manage the knuckleball.
+- This player recorded only one stolen base in 1,206 consecutive games.
+- This player hit 167 home runs during his career.
+- This player was a four-time All-Star selection.
+
+## 2025-05-02 - Shane Spencer
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 28th round of the 1990 amateur draft.
+- He won two World Series championships.
+- He finished his career with a 5.0 WAR.
+- He hit 59 career home runs.
+- He recorded 438 hits in his career.
+- He recorded 242 RBIs in his career.
+- He recorded 1.1 WAR in 1998.
+- He signed with the Cleveland Indians on January 14, 2003.
+- He was traded to the Texas Rangers on July 18, 2003.
+- He signed with the New York Mets on January 29, 2004.
+- He returned to the New York Yankees on August 17, 2004.
+
+## 2025-05-03 - Reid Brignac
+Fact verification failed for the following claims:
+- The player was drafted in the 2nd round of the 2004 amateur draft.
+- The player played for the Tampa Bay organization from 2008 to 2012.
+- The player was purchased by the New York Yankees from the Colorado Rockies on May 18, 2013.
+- The player was granted free agency by the New York Yankees on June 25, 2013.
+- The player achieved a 2.5 WAR in the 2010 season.
+- The player recorded 886 at-bats and 194 hits over his career.
+- The player played for the Tampa Bay Rays, Colorado Rockies, New York Yankees, Philadelphia Phillies, Miami Marlins, and Atlanta Braves.
+- The player's major league career spanned from 2008 to 2016.
+
+## 2025-05-04 - Wade Boggs
+Fact verification failed for the following claims:
+- This player participated in a 33-inning game starting on April 18, 1981.
+- This player was selected in the seventh round of the 1976 amateur draft.
+- This player won five batting titles in his career.
+- This player led all of baseball in on-base percentage for five consecutive years ending in 1989.
+- He read the book The Science of Hitting by Ted Williams to improve his discipline.
+- He hit .485 during a high school season after adjusting his approach at the plate.
+- He played for the Boston Red Sox in 1986.
+- He hit .358 over the final 96 games of the 1982 season.
+
+## 2025-05-05 - Dave Winfield
+Fact verification failed for the following claims:
+- The player was selected by five teams in three major sports.
+- He was a two-time All-Big Ten basketball selection in 1971 and 1973.
+- He earned the Babe Ruth Award for the 1992 World Series.
+- He is one of only five players in MLB history to record 3,000 hits and 450 home runs.
+- He played for the Minnesota Gophers basketball team as part of the 'Iron Five'.
+- He was involved in an on-court brawl against Ohio State on January 25, 1972.
+- George Steinbrenner paid a known gambler to discredit the player.
+- The player founded the David M. Winfield Foundation, which operated for 22 years.
+
+## 2025-05-06 - Kerry Wood
+Fact verification failed for the following claims:
+- The player was selected in the first round of the 1995 amateur draft.
+- The player threw 175 pitches in a high school doubleheader two days before the 1995 draft.
+- The player recorded 20 strikeouts in a single game on May 6, 1998.
+- The player joined the New York Yankees in 2010 after being traded by the Cleveland Indians.
+- The player served as a setup man for Mariano Rivera.
+- The player hit a two-run home run in Game 7 of the 2003 National League Championship Series.
+- The player retired on May 18, 2012, after striking out the only batter he faced.
+- The player took a no-hitter into the seventh inning against the Milwaukee Brewers on May 25, 2001.
+
+## 2025-05-10 - Stan Javier
+Fact verification failed for the following claims:
+- The player wore uniform number 6 in the minor leagues.
+- The player was named after Stan Musial.
+- The player requested a demotion while playing for the Yankees in 1984.
+- The player was a member of the 1989 World Series champion Oakland A's.
+- The player batted .500 during the 1989 postseason.
+- The player switch-hit because of field conditions in the Dominican Republic.
+- The player was traded to the Oakland Athletics for Rickey Henderson on December 5, 1984.
+- Walt Jocketty insisted that the player be included in the trade for Rickey Henderson.
+
+## 2025-05-12 - Russ Davis
+Fact verification failed for the following claims:
+- He was drafted by the New York Yankees in the 29th round of the 1988 amateur draft.
+- He played for the New York Yankees in 1994 and 1995.
+- He was traded by the New York Yankees with Sterling Hitchcock to the Seattle Mariners on December 7, 1995.
+- The Yankees received Tino Martinez, Jim Mecir, and Jeff Nelson in the December 1995 trade.
+- He hit 84 home runs in his career.
+- He recorded 276 RBI in his career.
+- He had 1,980 career at-bats.
+- His career OPS was .755.
+- He played for the Seattle Mariners from 1996 to 1999.
+- He played for the San Francisco Giants in 2000 and 2001.
+- He was released by the San Francisco Giants on June 21, 2001.
+
+## 2025-05-13 - Henry Cotto
+Fact verification failed for the following claims:
+- He signed as an amateur free agent with the Chicago Cubs on June 7, 1980.
+- He was traded from the Chicago Cubs to the New York Yankees on December 4, 1984.
+- The trade involved Porfi Altamirano, Rich Bordi, Ron Hassey, Brian Dayett, and Ray Fontenot.
+- He finished his career with 130 stolen bases.
+- His career batting average was .261.
+- He was traded from the New York Yankees to the Seattle Mariners on December 22, 1987.
+- The 1987 trade involved Steve Trout, Lee Guetterman, Clay Parker, and Wade Taylor.
+- He signed as a free agent with the Baltimore Orioles on February 3, 1994.
+
+## 2025-05-14 - Larry Milbourne
+Fact verification failed for the following claims:
+- The player was drafted by the California Angels in the 1971 minor league draft.
+- The player was drafted by the St. Louis Cardinals in the 1972 minor league draft.
+- The player was drafted by the Houston Astros in the 1973 Rule 5 draft.
+- The player was traded to the Yankees in November 1980 for Brad Gulden and $150,000.
+- The player recorded a 1.2 WAR with the Yankees in 1981.
+- The player was purchased by the Yankees from the Philadelphia Phillies in July 1983.
+- The player played for the Houston Astros, Seattle Mariners, New York Yankees, Minnesota Twins, Cleveland Indians, and Philadelphia Phillies.
+
+## 2025-05-23 - Jerry Coleman
+Fact verification failed for the following claims:
+- The Brooklyn Dodgers offered him a $2,500 bonus to sign.
+- He was a student athlete at USC.
+- He hit a 'dying swan' double in the 1949 pennant race.
+- He is the only major-league ballplayer to see combat in both World War II and the Korean Conflict.
+- He flew 57 missions in a dive bomber in World War II.
+- He flew 63 missions in a fighter plane in Korea.
+- He was named the MVP of the 1950 World Series.
+- He hit a walk-off single in Game Three of the 1950 World Series.
+- He played for the New York Yankees.
+- He hit a career-high 69 RBIs in the 1950 season.
+
+## 2025-05-28 - John Candelaria
+Fact verification failed for the following claims:
+- The player was the second all-time leading rebounder at his high school behind Kareem Abdul-Jabbar.
+- The player threw a no-hitter against the Los Angeles Dodgers on August 9, 1976.
+- The player won the ERA title with a 2.34 ERA in 1977.
+- The player signed with the Pittsburgh Pirates for $40,000.
+- Roberto Clemente acted as a translator for the Pittsburgh Pirates during the signing process.
+
+## 2025-06-04 - Ron Hassey
+Fact verification failed for the following claims:
+- This player attended the University of Arizona.
+- This player is the all-time RBI leader at the University of Arizona with 235 RBIs.
+- This player was drafted in the 23rd round of the 1972 amateur draft.
+- This player was drafted in the 22nd round of the 1975 June draft.
+- This player is the only catcher to have caught two perfect games in major league history.
+- This player's career spanned 14 years in the major leagues.
+- This player played for six different franchises.
+- This player had two passed balls while catching for Phil Niekro on August 13, 1985.
+- This player hit a home run in the same game he caught for Phil Niekro on August 13, 1985.
+
+## 2025-06-05 - Walt Williams
+Fact verification failed for the following claims:
+- This player was born on December 19, 1943.
+- This player was born in Brownwood, Texas.
+- This player died in Abilene, Texas, on January 23, 2016.
+- This player played for the Yankees from 1974 to 1976.
+
+## 2025-06-10 - Johnny Damon
+Fact verification failed for the following claims:
+- This player impersonated his older brother to a police officer after taking his mother's car at age 14.
+- This player won the J.G. Taylor Spink Award as the National Association Minor League Player of the Year in 1995.
+- This player won a World Series title with the 2004 Boston Red Sox.
+- This player won a World Series title with the 2009 New York Yankees.
+- The Kansas City Royals drafted this player with the 35th pick in the first round of the 1992 draft.
+- This player declined a baseball scholarship to the University of Florida to sign with the Royals for $300,000.
+- This player called his 2004 Red Sox teammates 'idiots' to describe their carefree team culture.
+- This player suffered a concussion in the 2003 ALDS after colliding with Damian Jackson.
+
+## 2025-06-11 - Dick Howser
+Fact verification failed for the following claims:
+- This player attended Florida State University on a $500 scholarship.
+- This player hit .422 during his sophomore year at Florida State in 1956.
+- This player recorded his first major-league hit against Mike Fornieles in 1961.
+- This player was named team captain by manager Hank Bauer in 1961.
+- This player won the World Series as a manager in 1985.
+- This player suffered two cracked ribs during batting practice on April 22, 1963.
+- The Kansas City Royals retired this player's number 10 on July 3, 1987.
+- A bronze statue of this player was unveiled at Kauffman Stadium on April 10, 2009.
+
+## 2025-06-13 - George Scott
+Fact verification failed for the following claims:
+- This player was temporarily removed from a Little League team for being too good.
+- In 1965, the player achieved a Triple Crown in the Double-A Eastern League.
+- The player batted .319 in 1965.
+- The player hit 25 home runs in 1965.
+- The player recorded 94 RBIs in 1965.
+- This player won eight Gold Glove awards.
+- The player's major league career lasted 14 seasons.
+- The player hit a home run off Whitey Ford in 1966.
+- Mickey Mantle suggested the player's 1966 home run off Whitey Ford could be estimated at 550 feet.
+
+## 2025-06-15 - Clay Bellinger
+Fact verification failed for the following claims:
+- The player was born in Oneonta, New York, on November 18, 1968.
+- The player was a member of the 2000 New York Yankees World Series championship team.
+- The player was associated with the 2002 Anaheim Angels.
+
+## 2025-06-17 - Aaron Hicks
+Fact verification failed for the following claims:
+- The player was born on October 2, 1989.
+- The player was born in San Pedro, California.
+- The player was drafted in 2008.
+- The player played as an outfielder for the New York Yankees.
+
+## 2025-06-18 - Andrew Heaney
+Fact verification failed for the following claims:
+- The player was born on June 5, 1991, in Oklahoma City, Oklahoma.
+- The player was acquired by the New York Yankees in 2021.
+- The player previously competed for the Los Angeles Angels.
+- The player is a left-handed pitcher.
+
+## 2025-06-19 - Jim Abbott
+Fact verification failed for the following claims:
+- This player was drafted by the Toronto Blue Jays in the 36th round.
+- This player attended the University of Michigan.
+- This player was the first U.S. pitcher to beat the Cuban national team in Cuba in 25 years.
+- This player finished third in the 1991 American League Cy Young Award voting.
+- This player led the American League in 'tough losses' in 1991.
+- This player hit a 375-foot triple against the San Francisco Giants during 1991 spring training.
+- Baseball America ranked this player's 1989 major league debut as the second most historically significant debut behind Jackie Robinson.
+
+## 2025-06-20 - Eddie Lopat
+Fact verification failed for the following claims:
+- This player was originally a first baseman.
+- This player was rejected by the New York Giants because he could not make the throw to second base.
+- This player effectively possessed a repertoire of 72 different deliveries.
+- This player led the American League with a 2.42 ERA in 1953.
+- This player led the American League with an .800 winning percentage in 1953.
+- Ted Williams ranked this player as one of the five toughest pitchers he faced.
+- This player helped Whitey Ford identify a 'tell' in his delivery that revealed his pitch type to coaches.
+
+## 2025-06-21 - George Stirnweiss
+Fact verification failed for the following claims:
+- The player attended the University of North Carolina.
+- The player earned letters in baseball and football at the University of North Carolina.
+- The player led the American League in batting average in 1945.
+- The player led the American League in hits in 1945.
+- The player led the American League in triples in 1945.
+- The player hit .309 in 1945.
+- The player led the American League in stolen bases in 1944.
+- The player led the American League in stolen bases in 1945.
+- The player played for the St. Louis Browns.
+- The player played for the Cleveland Indians.
+- The player concluded his major league career in 1952.
+
+## 2025-06-23 - Paul O'Neill
+Fact verification failed for the following claims:
+- The player's great-grandfather married Mary Clemens, a cousin to Mark Twain.
+- In the 1990 NLCS, the player recorded a 1.324 OPS.
+- The Cincinnati Reds won their first pennant since 1976 in the 1990 season.
+- In 1992, the player batted .246 with 19 doubles, 14 home runs, and 66 RBIs.
+- The Reds traded the player to the New York Yankees on November 3, 1992.
+
+## 2025-06-24 - Mariano Duncan
+Fact verification failed for the following claims:
+- The player committed 15 errors in 30 appearances in the Pioneer League.
+- The player and his teammate hit grand slams in consecutive innings on August 23, 1985.
+- The player won a World Series title with the 1990 Cincinnati Reds.
+- The player won a World Series title with the 1996 New York Yankees.
+- In 1990, the player batted .306 with an NL-high 11 triples.
+
+## 2025-06-28 - Al Downing
+Fact verification failed for the following claims:
+- The player was born on June 28, 1941.
+- The player was born in Trenton, New Jersey.
+- The player surrendered Hank Aaron's 715th career home run in 1974.
+- The player was an All-Star in 1967.
+- The player had a professional career spanning 17 seasons.
+
+## 2025-07-02 - Jesse Barfield
+Fact verification failed for the following claims:
+- This player won a statewide drafting contest to earn a scholarship at Bradley University.
+- This player was called up to the major leagues on September 3, 1981.
+- This player had his jersey number stapled to his uniform for his major league debut.
+- This player recorded 162 outfield assists during his 12-season career.
+- This player played in the major leagues from 1981 to 1992.
+- This player hit 40 home runs during the 1986 season.
+- This player led the major leagues in home runs in 1986.
+
+## 2025-07-05 - Daryl Boston
+Fact verification failed for the following claims:
+- The player was born in Cincinnati, Ohio.
+- The player was born on January 4, 1963.
+- The player was selected in the 1981 MLB Draft.
+- The player appeared in over 1,000 Major League Baseball games.
+- The player served as a Major League coach.
+
+## 2025-07-06 - Darryl Strawberry
+Fact verification failed for the following claims:
+- This player played for the rookie-level Appalachian League team in Kingsport, Tennessee, in 1980.
+- This player attended Crenshaw High School in Los Angeles.
+- This player played in the 1979 Los Angeles city championship game at Dodger Stadium.
+- John Elway played third base and pitched for Granada Hills in the 1979 city championship game.
+- A national sports magazine likened this player to Ted Williams during his senior year of high school.
+- This player was selected by the New York Mets in the June 1980 draft.
+- The New York Mets gave this player a $200,000 signing bonus in 1980.
+
+## 2025-07-08 - Jay Buhner
+Fact verification failed for the following claims:
+- This player attended McLennan Community College.
+- This player hit for the cycle on June 23, 1993.
+- From 1995 through 1997, this player hit 124 home runs.
+- Ken Griffey Jr. hit 122 home runs from 1995 through 1997.
+- Mo Vaughn hit 118 home runs from 1995 through 1997.
+- Juan Gonzalez hit 116 home runs from 1995 through 1997.
+- Frank Thomas hit 115 home runs from 1995 through 1997.
+- The 'Buhner Buzz Cut Night' promotion ran from 1994 to 2001.
+- In 1994, 512 fans participated in the buzz cut promotion.
+- In 2001, 6,246 fans participated in the buzz cut promotion.
+
+## 2025-07-09 - Jim Beattie
+Fact verification failed for the following claims:
+- This player was born on July 4, 1954, in Hampton, Virginia.
+- This player attended Dartmouth College.
+- This player earned a victory in Game 5 of the 1978 World Series by tossing a complete game.
+- This player served as the General Manager for the Montreal Expos.
+- This player served as the General Manager for the Baltimore Orioles.
+- This player began his professional career in 1974.
+
+## 2025-07-10 - Luis Sojo
+Fact verification failed for the following claims:
+- This player signed his first professional contract in 1986.
+- This player received a $2,000 signing bonus in 1986.
+- The Yankees acquired or signed this player six times.
+- The Toronto Blue Jays traded for this player in exchange for Kelly Gruber after the 1992 season.
+- Kelly Gruber suffered from a degenerative disk condition in his neck.
+- Derek Jeter and Bernie Williams approached Brian Cashman to reacquire this player in 2000.
+- This player hit a game-winning RBI single off Al Leiter in Game Five of the 2000 World Series.
+- George Steinbrenner offered this player a $1.9 million contract in 1998.
+
+## 2025-07-11 - Rick Reuschel
+Fact verification failed for the following claims:
+- This player attended Western Illinois University.
+- In his 1970 junior year, he posted a 1.94 ERA.
+- He achieved a 40-inning scoreless streak in 1970.
+- The player combined with his brother for a 7-0 shutout against the Dodgers in 1975.
+- He led all pitchers in WAR in 1977.
+- He ranked sixth in sacrifice bunts over the 1946-2024 seasons.
+- He was traded to the Yankees on June 12, 1981.
+- He was sidelined for the entire 1982 season due to two rotator cuff surgeries.
+
+## 2025-07-18 - Mark Wohlers
+Fact verification failed for the following claims:
+- The player worked as a dishwasher at Mel's Restaurant at age 14.
+- The player contributed to a combined no-hitter on September 11, 1991.
+- The player told the Braves 400 Club in January 1991 that he wanted to throw 100 miles per hour.
+- In 1988, the player walked 50 batters in 59 2/3 innings for the Pulaski Braves.
+- The player recorded his first major-league save on August 17, 1991.
+- The player's 1989 season with the Sumter Braves resulted in a 2-7 record and a 6.49 ERA.
+
+## 2025-07-21 - Vernon Wells
+Fact verification failed for the following claims:
+- This player was born in Shreveport, Louisiana.
+- This player was born on December 8, 1978.
+- This player was drafted in the first round of the 1997 MLB June Amateur Draft.
+- This player was the fifth overall pick in the 1997 MLB June Amateur Draft.
+- This player joined the New York Yankees via trade in 2013.
+
+## 2025-07-26 - Al Holland
+Fact verification failed for the following claims:
+- This player led the nation with 143 strikeouts in 1972.
+- This player finished the 1972 season with a 0.54 earned run average.
+- Branch Rickey III offered the player a steak dinner if he reached the major leagues before 1978.
+- The reliever was nicknamed 'Mr. T' by Ed Farmer in 1983.
+- The player pitched the ninth inning of Steve Carlton's 300th major league win on September 23, 1983.
+
+## 2025-07-28 - Roy White
+Fact verification failed for the following claims:
+- In 1962, the player batted .284 for the Greensboro Class A club.
+- The player won the James P. Dawson Award in 1966.
+- The player set an American League record with 17 sacrifice flies in 1971.
+- Ralph Houk moved the player to the cleanup spot on August 13, 1968.
+- The player was moved to a part-time designated hitter role during the 1974 season.
+
+## 2025-07-29 - Randy Choate
+Fact verification failed for the following claims:
+- The player was born on September 5, 1975.
+- The player was born in San Antonio, Texas.
+- The player was drafted in the 1996 amateur draft.
+
+## 2025-07-30 - Rey Sánchez
+Fact verification failed for the following claims:
+- This player graduated from Live Oak High School in Morgan Hill, California.
+- This player was ranked tops in the American League in defensive WAR from 1989 to 1991.
+- This player hit a 10th-inning walk-off inside-the-park home run on June 11, 2004.
+- In 2003, this player and Roberto Alomar served as the starting shortstop and second baseman for the New York Mets.
+- This player hit a game-winning sacrifice fly for the Chicago Cubs in May 1992.
+
+## 2025-07-31 - Sam Militello
+Fact verification failed for the following claims:
+- Sam Militello was born in Tampa, Florida on November 26, 1969.
+- Sam Militello made his major league debut in 1992.
+- Sam Militello won his first major league start in 1992.
+
+## 2025-08-04 - Billy Sample
+Fact verification failed for the following claims:
+- This player was born on April 2, 1955, in Roanoke, Virginia.
+- This player was part of the Yankees organization from 1974 to 1976.
+
+## 2025-08-06 - Mark Leiter
+Fact verification failed for the following claims:
+- This player sat out professional baseball during 1986, 1987, and 1988.
+- This player worked as a corrections officer at the Ocean County Jail.
+- This player won the Tony Conigliaro Award in 1994.
+- The player's son, Ryan Leiter, died on April 4, 1994.
+- The player was traded from the Yankees to the Tigers for Torey Lovullo in March 1991.
+- The player signed a two-year, $3.9 million deal with the Philadelphia Phillies after the 1996 season.
+- The player appeared in 335 games over 11 major-league seasons between 1990 and 2001.
+
+## 2025-08-10 - Andy Pettitte
+Fact verification failed for the following claims:
+- The player was a 22nd-round draft pick in 1990.
+- The player has a career WAR of 60.2.
+- No other player picked in the 22nd round in 1990 recorded a WAR above zero.
+- The player threw a knuckleball under the tutelage of Hoyt Wilhelm in the Gulf Coast League.
+- The player holds the all-time record for postseason wins with 19.
+- The player pitched 276 2/3 innings in the postseason.
+- The player's ERA was 5.53 at the end of June 1999.
+
+## 2025-08-11 - Phil Hughes
+Fact verification failed for the following claims:
+- This player was born in Mission Viejo, California.
+- This player was selected in the first round of the 2004 Major League Baseball draft.
+- This player made his Major League debut in 2007.
+
+## 2025-08-12 - Kevin Maas
+Fact verification failed for the following claims:
+- The player was born in Castro Valley, California.
+- The player was a left-handed hitter.
+- The player performed for the New York Yankees in the early 1990s.
+- The player provided high-impact offensive performance during the 1990 season.
+
+## 2025-08-19 - Bobby Richardson
+Fact verification failed for the following claims:
+- The player traveled to Norfolk, Virginia, by bus with $85 in coins.
+- The player won the Sport Magazine World Series MVP award in 1960.
+- The player is the only person to win the World Series MVP while playing for the losing team.
+- The player recorded 6 RBIs in a single World Series game in 1960.
+- The player was known as one of the 'Milkshake Twins' alongside Tony Kubek.
+- Casey Stengel managed the New York Yankees from 1949 to 1960.
+
+## 2025-08-22 - Luis Tiant
+Fact verification failed for the following claims:
+- The pitcher had a 5-19 record with the Mexico City Tigers in 1959.
+- Reggie Jackson called the player 'the Fred Astaire of baseball'.
+- The player led the American League with a 1.60 ERA in 1968.
+- The player won the Comeback Player of the Year award in 1972.
+- In 1972, the player had a 9-1 record with six shutouts and a 0.82 ERA over a 10-start stretch.
+- The player was released by the Minnesota Twins on March 31, 1971.
+- Luis Eleuterio Tiant was a legendary pitcher in the Cuban Leagues and American Negro Leagues.
+- The player did not return to Cuba in 1961 on his father's advice.
+- The player finished the 1968 season with a 21-9 record.
+- The player struck out 19 batters in 10 innings against the Twins on July 3, 1968.
+
+## 2025-08-25 - Tim Raines
+Fact verification failed for the following claims:
+- The player was drafted in the fifth round by the Montreal Expos in 1977.
+- The player made his season debut on May 2, 1987, against the New York Mets.
+- The player had 4 hits, a stolen base, and a 10th-inning grand slam in his 1987 season debut.
+- The player holds an 84.7 stolen base percentage.
+- The player had 7.8 percent body fat when he earned his nickname.
+- The player named his second son after teammate Andre Dawson.
+- The player's brothers formed an entire infield for an all-star team during his childhood.
+
+## 2025-08-26 - Ricky Bones
+Fact verification failed for the following claims:
+- The player was born on April 7, 1969, in Salinas, Puerto Rico.
+- The player made his Major League Baseball debut in 1991.
+- The player appeared in 34 games for the New York Yankees during the 2001 season.
+
+## 2025-08-27 - Graig Nettles
+Fact verification failed for the following claims:
+- This player attended San Diego State University.
+- This player played semipro baseball for the Alaska Goldpanners in Fairbanks.
+- This player set the record for most double plays by a third baseman in a season with 54.
+- This player set the record for most assists by a third baseman in a season with 412.
+- This player recorded five assists in Game Three of the 1978 World Series.
+- This player's mother combined the names Craig and Greg to create his name.
+- This player was caught using a corked bat on September 7, 1974.
+- This player's relationship with Billy Martin began in the minor leagues with the Denver Bears.
+
+## 2025-08-30 - Andrew Arthur Carey
+Fact verification failed for the following claims:
+- He was signed by the New York Yankees as an amateur free agent in 1951.
+- He made his Major League debut in 1952.
+- He was a member of the 1960 American League pennant-winning New York Yankees.
+- He was involved in a seven-player trade with the Kansas City Athletics following the 1960 season.
+
+## 2025-08-31 - Orlando Hernández
+Fact verification failed for the following claims:
+- The player was a star for Industriales in the Cuban National Series.
+- The player defected from Cuba by boat in 1997.
+- The player was banned from his national team in 1996.
+
+## 2025-09-02 - Marwin González
+Fact verification failed for the following claims:
+- The player originated from Venezuela as an international amateur signee.
+- The player broke up a potential no-hitter in the ninth inning of a 2017 World Series game.
+- The player was a utility player for the New York Yankees.
+- The player hit a solo home run in the ninth inning of a 2017 World Series game.
+
+## 2025-09-03 - Lance Berkman
+Fact verification failed for the following claims:
+- This player was required to alternate batting sides in youth league games.
+- In 1996, this player hit six home runs in a doubleheader and nine in one week.
+- This player ranks 22nd all-time in career OPS.
+- This player's career OPS is higher than Willie Mays and lower than Ty Cobb.
+- This player was a member of the Houston Astros 'Killer B's'.
+- In 1997, this player led the NCAA with 41 home runs and 134 RBIs.
+- This player was named the 1997 NCAA Player of the Year by the National Collegiate Baseball Writers Association.
+- This player batted right-handed in the 2004 Home Run Derby.
+
+## 2025-09-04 - Jim Bouton
+Fact verification failed for the following claims:
+- In high school, the player was nicknamed 'Warmup' because he only pitched in practice until the final game.
+- The player wore jersey number 56 for his entire career as a reminder of the hard work required to reach the major leagues.
+- In 1963, the player finished with a 21-7 record and a 2.53 ERA.
+- On September 13, 1963, the player threw a shutout against the Minnesota Twins.
+- The player won two games during the 1964 World Series.
+- The player's 1964 season ended with a 18-13 record and a 3.02 ERA.
+
+## 2025-09-06 - Bob MacDonald
+Fact verification failed for the following claims:
+- The player attended Rutgers University.
+- The player's sophomore ERA at Rutgers was 7.74.
+- The player's senior ERA at Rutgers was 2.97.
+- Nolan Ryan recorded his seventh career no-hitter on May 1, 1991.
+- The player pitched in the game where Nolan Ryan recorded his seventh no-hitter.
+- The player held left-handed hitters to a .143 batting average in 1992.
+- The Toronto Blue Jays traded Tony Castillo to the Atlanta Braves for Jim Acker in August 1989.
+- The player was sold to the Detroit Tigers for $20,000 at the end of 1993 spring training.
+
+## 2025-09-07 - Don Mattingly
+Fact verification failed for the following claims:
+- The player was selected in the 19th round of the 1979 amateur draft.
+- The player participated in the 1983 Pine Tar Game.
+- The player played second base during the 1983 Pine Tar Game.
+- The player has a career fielding percentage of .9959.
+- The player won nine Gold Glove awards.
+- The player won the American League batting title in 1984 with a .343 average.
+- The player hit 207 hits in 1984.
+
+## 2025-09-10 - Cecil Fielder
+Fact verification failed for the following claims:
+- This player averaged 27 points, 12 rebounds, and 10 assists per game in his senior year of high school.
+- This player became the first American League player in 29 years to hit 50 home runs in 1990.
+- This player signed a contract with the Hanshin Tigers in 1989 for $1,000,050.
+- This player was traded to the Yankees in 1996.
+- This player helped the Yankees win the World Series in 1996.
+- This player finished his career with 319 home runs.
+- This player's son finished his career with 319 home runs.
+
+## 2025-09-15 - Roy Smalley III
+Fact verification failed for the following claims:
+- He played collegiate baseball at the University of Southern California.
+- He is the son of former major leaguer Roy Smalley Jr.
+- He is the nephew of Hall of Famer Gene Mauch.
+- He was the first overall pick in the secondary phase of the 1973 MLB Draft.
+- He was traded from the New York Yankees to the Minnesota Twins in 1976.
+
+## 2025-09-17 - Vernon Gomez
+Fact verification failed for the following claims:
+- The player was a member of the New York Yankees from 1974 to 1976.
+- The player served as a relief pitcher for the Yankees.
+- The player's time in the major leagues with the team included the seasons 1974, 1975, and 1976.
+
+## 2025-09-20 - Elliott Maddox
+Fact verification failed for the following claims:
+- In 1969, this player and four teammates slept in their cars for three days due to housing discrimination.
+- In 1974, this player was moved to center field, forcing Bobby Murcer to right field.
+- The 1975 Topps baseball card discussed the controversy of the position switch between this player and Bobby Murcer.
+- This player led all American League outfielders in 1971 with a 3.05 Range Factor per Nine Innings.
+- This player played for the Detroit Tigers in 1970.
+- This player attended the University of Michigan during the 1970 season.
+- The final Washington Senators game at RFK Stadium took place in 1971.
+- Bob Short owned the Washington Senators in 1971.
+- Ted Williams managed the Washington Senators.
+
+## 2025-09-21 - Mike Mussina
+Fact verification failed for the following claims:
+- The player attended Stanford University.
+- The player earned a degree in economics.
+- The player was the first American League pitcher to win 10 or more games in 17 consecutive seasons.
+- Cal Ripken Jr. broke Lou Gehrig’s consecutive-game record in 1995.
+- The Orioles gifted Cal Ripken Jr. a 2,131-pound engraved chunk of white marble.
+- A plane crash in 1996 took the lives of 16 students and 5 chaperones from Montoursville.
+- The player had 21 names inscribed on his cap in 1996.
+- The player hit Seattle Mariners catcher Bill Haselman with a pitch on June 6, 1993.
+
+## 2025-09-26 - Gene Woodling
+Fact verification failed for the following claims:
+- This player won five straight World Series with the Yankees from 1949 through 1953.
+- This player led American League outfielders in fielding percentage with .996 in both 1952 and 1953.
+- This player hit .385 while playing for the San Francisco Seals in 1948.
+- This player was selected as the Minor League Player of the Year by The Sporting News in 1948.
+- This player served at the Great Lakes Naval Training Station in 1944.
+- This player was one of twelve individuals to remain with the Yankees through the entire 1949-1953 World Series run.
+
+## 2025-09-27 - Bobby Shantz
+Fact verification failed for the following claims:
+- This player won the American League Most Valuable Player Award in 1952.
+- This player stood 5-feet-6½ tall as an adult.
+- This player was signed to an A-Ball contract in November 1947.
+- This player was managed by Connie Mack, who forbade him from throwing the knuckleball.
+- Jimmie Dykes succeeded Connie Mack as manager in 1952.
+- This player pitched 28 games for the Lincoln A's in 1948, going 18-7 with a 2.82 ERA.
+
+## 2025-09-28 - Zach Britton
+Fact verification failed for the following claims:
+- The player was drafted as a starting pitcher out of high school in Texas.
+- The player posted a 0.54 ERA in 2016.
+- The 0.54 ERA is the lowest in a single season for any pitcher with at least 50 innings pitched in MLB history.
+- The player recorded 47 saves in 2016.
+- The player finished fourth in the AL Cy Young Award voting in 2016.
+
+## 2026-03-06 - Paul Blackburn
+Fact verification failed for the following claims:
+- The player was born on December 4, 1993.
+- The player was born in Antioch, California.
+- The player was a participant in the 2012 MLB Draft.
+
+## 2026-03-11 - José Caballero
+Fact verification failed for the following claims:
+- This player signed as an international amateur free agent in 2017.
+
+## 2026-03-22 - Aaron Boone
+Fact verification failed for the following claims:
+- Aaron Boone was born on March 9, 1973.
+- He was born in La Mesa, California.
+- He hit a walk-off home run in the 2003 American League Championship Series.
+- He began serving as the New York Yankees manager in 2018.
+- His father is Bob Boone.
+- His brother is Bret Boone.
+
+## 2026-03-27 - Joe DiMaggio
+Fact verification failed for the following claims:
+- The player suffered a knee injury in 1934.
+- The player hit .398 with 34 homers and 154 RBIs in 1935.
+- The player recorded a 56-game hitting streak in 1941.
+- The hitting streak ended in Cleveland on July 17, 1941.
+- Ken Keltner was the third baseman who ended the 1941 hitting streak.
+- Joe McCarthy managed the Yankees from 1931 to 1946.
+- Al Gionfriddo made a spectacular catch against the player in the 1947 World Series.
+- The player had a three-inch bone spur removed from his left heel on January 7, 1947.
+- The player received a medical discharge from the Army Air Force in September 1945.
+
+## 2026-03-30 - David Weathers
+Fact verification failed for the following claims:
+- The player was reprimanded by manager Eddie Dennis for saying 'coach' during his first professional day.
+- The player debuted at Fenway Park in August 1991.
+- The player served as the bullpen ace during the 1996 ALDS.
+- Tino Martinez advised the player to throw a slider to Juan Gonzalez in the 1996 ALDS.
+- The player replaced Mike Timlin on the Toronto Blue Jays roster in 1991.
+- The player played in two regular-season games for the 1992 Toronto Blue Jays.
+- The 1992 Toronto Blue Jays players voted to give the player 19 percent of a full World Series share.
+- The player received a $22,800 payout as part of his 1992 World Series share.
+
+## 2026-03-31 - Ken Clay
+Fact verification failed for the following claims:
+- The player was born in Lynchburg, Virginia, in 1954.
+- The player was drafted in 1974.
+- The player joined the New York Yankees organization in 1974.
+
+## 2026-04-01 - Mike Morgan
+Fact verification failed for the following claims:
+- Mike Morgan was born on October 8, 1959.
+- Mike Morgan was born in Tulare, California.
+- Mike Morgan played for 12 different major league franchises.
+- Mike Morgan's professional career lasted from 1978 to 2002.
+
+## 2026-04-07 - Rickey Henderson
+Fact verification failed for the following claims:
+- The player was a standout in baseball, basketball, and football at Oakland Technical High School.
+- In 1977, while playing for Modesto in the Class A California League, the player batted .345.
+- The player recorded 104 walks in the 1977 season with Modesto.
+- The player stole 95 bases during the 1977 season with Modesto.
+- On May 1, 1991, the player broke the all-time career stolen base record.
+- The player stole his 939th career base against the New York Yankees on May 1, 1991.
+- The player was traded back to the Oakland Athletics on June 21, 1989.
+
+## 2026-04-14 - Don Baylor
+Fact verification failed for the following claims:
+- This player was nicknamed 'Groove' by his teammates.
+- This player holds the record for being hit by 267 pitches in the 20th century.
+- This player won the American League Most Valuable Player award in 1979.
+- In 1979, this player led both leagues in runs scored and RBIs.
+- Frank Robinson served as a mentor and manager for this player.
+- This player was a member of the Baltimore Orioles organization early in his career.
+
+## 2026-04-16 - Mike Witt
+Fact verification failed for the following claims:
+- The player won all 14 of his pitching decisions during his senior year at Servite High School.
+- The player was chosen by California in the fourth round of the 1978 amateur draft.
+- The player joined the Angels' Opening Day roster in 1981.
+- General Manager Buzzie Bavasi previously worked for the Brooklyn and Los Angeles Dodgers.
+- The player finished his 1981 rookie season with an 8-9 record.
+- The player had an ERA of 3.28 during the 1981 season.
+- The player appeared in relief in Game Three of the 1982 American League Championship Series.
+- Sportswriter Peter Gammons praised the player's curveball in 1982.
+
+## 2026-04-18 - Fran Healy
+Fact verification failed for the following claims:
+- This player attended Tabor Academy.
+- This player signed with the Cleveland Indians for a $40,000 bonus in 1964.
+- In 1974, this player appeared in 138 games behind the plate.
+- In 1974, this player appeared in 138 games behind the plate, which was more than any other big-league catcher that season.
+- Reggie Jackson credited this player for providing vital support during their time with the Yankees.
+- In 1977, a public confrontation occurred between Reggie Jackson and Billy Martin at Fenway Park.
+- In 1978, this player played only once on April 21.
+- This player retired from playing in 1978 due to recurring neck problems.
+- This player became a Yankees broadcaster in 1978.
+
+## 2026-04-22 - Jim Leyritz
+Fact verification failed for the following claims:
+- The player was born on December 27, 1963.
+- The player was born in Lakewood, Ohio.
+- The player hit a game-tying three-run home run in the eighth inning of Game 4 of the 1996 World Series.
+
+## 2026-04-23 - Jackie Jensen
+Fact verification failed for the following claims:
+- The player helped his college team win the inaugural College World Series in 1947.
+- The player's wife won a Bronze Medal in springboard diving at the 1952 Olympic Games in Helsinki.
+- The player wrote an article titled 'My Ambition Is To Quit' for the Saturday Evening Post in April 1959.
+- The player joined the New York Yankees in 1950.
+- The player was traded to the Washington Senators on May 3, 1952.
+- The player slugged 35 home runs in the 1958 season.
+- The player led the American League with 122 runs batted in during the 1958 season.
+- The player won the American League Most Valuable Player award in 1958.
+
+## 2026-04-24 - José Cruz
+Fact verification failed for the following claims:
+- The player set a Rice University record with 10 RBIs in a game on February 9, 1995.
+- The player was knocked unconscious by a foul ball at the Caribbean World Series at age five.
+- The player won a Gold Glove Award with the San Francisco Giants in 2003.
+- The player recorded a .994 fielding percentage in 2003.
+- The player graduated from Rice University in May 2013.
+- The player had a 12-year professional career in Major League Baseball.
+
+## 2026-04-25 - Octavio Dotel
+Fact verification failed for the following claims:
+- The player was born in Santo Domingo, Distrito Nacional in the Dominican Republic.
+- The player was born on November 25, 1973.
+- The player played for 13 different major league franchises.
+- The player made over 700 appearances in Major League Baseball.
+
+## 2026-04-26 - Jim Wynn
+Fact verification failed for the following claims:
+- This player was drafted by the Houston Colt .45s in November 1962.
+- This player drew 148 walks during the 1969 season.
+- This player is 5-feet-9 inches tall.
+- This player led the league in road home runs in 1967.
+- This player led the league in road home runs in 1968.
+- The nickname associated with this player was first used by John Wilson in 1967.
+- The manager Harry Walker attempted to change this player's hitting style in 1968.
+
+## 2026-04-27 - Jim Mason
+Fact verification failed for the following claims:
+- On September 1, 1970, the player started a triple play and hit an inside-the-park home run.
+- On July 8, 1974, the player hit four doubles in a game against the Texas Rangers.
+- The player tied a major-league record for doubles in a single game on July 8, 1974.
+- The player hit a home run in his only World Series plate appearance.
+- The player lost his starting shortstop position under Billy Martin in both Texas and New York.
+- The player hit the only home run for the Yankees in the 1976 World Series.
+
+## 2026-04-29 - John Charles Ellis
+Fact verification failed for the following claims:
+- John Charles Ellis played for the Yankees from 1974 to 1976.
+- John Charles Ellis attended McQuaid Jesuit High School.
+- John Charles Ellis was a catcher.
+
+## 2026-05-01 - Tim Stoddard
+Fact verification failed for the following claims:
+- This player won an NCAA Division I basketball title and a World Series ring.
+- In the 1972-73 ACC tournament final, he hit two free throws with 39 seconds left.
+- He played for the 1973-74 North Carolina State Wolfpack.
+- He won the 1974 NCAA basketball championship.
+- He won Game Four of the 1979 World Series.
+- He recorded an RBI single in his first major-league at-bat during the 1979 World Series.
+- He played for the Baltimore Orioles in 1979.
+- His playing weight for most of his big-league career was 250 pounds.
+
+## 2026-05-02 - Bob Turley
+Fact verification failed for the following claims:
+- The player was banned from pitching in a youth league at age 12.
+- The player signed with the St. Louis Browns for $200 a month in 1948.
+- The player received $1.75 a day for meal money during his first professional season.
+- The player won the Cy Young Award in 1958.
+- The player finished second to Jackie Jensen in the 1958 MVP voting.
+- The Yankees signed the player's uncle, Ralph Turley, by mistake after finding his name in a phone book.
+- The player adopted a no-windup delivery in 1956 under the guidance of pitching coach Jim Turner.
+
+## 2026-05-03 - Mason Jordan Williams
+Fact verification failed for the following claims:
+- The player was drafted in the 2010 draft.
+- The player was drafted as an outfielder.
+- The player was drafted in the fourth round.
+
+## 2026-05-06 - Fritz Peterson
+Fact verification failed for the following claims:
+- The player played semipro hockey during his professional career.
+- The player debuted in 1966.
+- The player's lifetime ERA at the original Yankee Stadium was 2.52.
+- The player recorded his 20th win during the 1970 season.
+- The player earned a master's degree in physical education in 1967.
+- The player taught courses at Northern Illinois University during the offseason.
+
+## 2026-05-08 - Gary Sheffield
+Fact verification failed for the following claims:
+- The player led the National League in batting average in 1992.
+- The player's uncle was former New York Mets pitcher Dwight Gooden.
+- The player grew up in the Belmont Heights section of Tampa, Florida.
+- The player sponsored a program called Sheff's Kitchen for underprivileged kids while playing for the Marlins.
+- The player paid $100,000 for a man's liver transplant.
+
+## 2026-05-09 - Willie Randolph
+Fact verification failed for the following claims:
+- The player never won a Gold Glove award.
+- The player finished his career with a .979 fielding percentage.
+- The player appeared in 2,202 major league games.
+- The player set an All-Star Game record for most assists by a second baseman in a nine-inning game in 1977.
+- The player never committed an error in a postseason game.
+- The player wore number 12 while playing for the Mets.
+
+## 2026-05-10 - Graeme Lloyd
+Fact verification failed for the following claims:
+- This player worked as an electrician by trade.
+- This player worked as a sales representative for Pony.
+- This player earned a win in Game Four of the 1996 World Series.
+- This player induced a double play against Fred McGriff in the 1996 World Series.
+- This player was the first Australian to win a World Series ring.
+- This player is 6'8" tall.
+- The Yankees acquired this player in a trade in 1996.
+- This player had a bone spur in his elbow and a shoulder that required a cortisone shot in 1996.
+- In 1998, this player held right-handed hitters to a .182 batting average.
+
+## 2026-05-17 - Marv Throneberry
+Fact verification failed for the following claims:
+- The player won the American Association MVP award in 1956.
+- The player hit 36 home runs for the Denver Bears in 1955.
+- The player was the first person to play for both the New York Yankees and the New York Mets.
+- The player was traded to the Kansas City Athletics after the 1959 season.
+- The trade involving the player helped the Yankees acquire Roger Maris.
+- The player hit a 450-foot pinch-hit home run against the Pittsburgh Pirates on August 21, 1962.
+- The player committed 17 errors at first base in 97 games during the 1962 season.
+
+## 2025-03-29 - James Edward Key
+Fact verification failed for the following claims:
+- The player was drafted by the Chicago White Sox in the 10th round of the 1979 amateur draft but did not sign.
+- The player recorded a 7.4 WAR during the 1987 season.
+- The player signed as a free agent with the New York Yankees on December 10, 1992.
+- The player recorded a 6.3 WAR during the 1993 season.
+- The player appeared in 470 games and 389 games started throughout his career.
+- The player finished his career with 186 wins.
+- The player finished his career with a 48.9 WAR.
+- The player signed as a free agent with the Baltimore Orioles on December 10, 1996.
+- The player recorded a 4.6 WAR during the 1997 season.
+
+## 2025-04-01 - Scott Brosius
+Fact verification failed for the following claims:
+- The player was drafted by the Oakland Athletics in the 20th round of the 1987 amateur draft.
+- The player was traded to the Yankees on November 18, 1997, to complete a deal involving Kenny Rogers.
+- The player recorded a 5.3 WAR during the 1996 season with the Oakland Athletics.
+- The player recorded a 5.3 WAR during the 1998 season with the New York Yankees.
+- The player was granted free agency by the New York Yankees on November 5, 2001.
+
+## 2025-04-03 - Todd Greene
+Fact verification failed for the following claims:
+- He was drafted by the Atlanta Braves in the 27th round of the 1989 amateur draft.
+- He debuted with the California Angels in 1996.
+- He signed as a free agent with the New York Yankees on April 5, 2001.
+- He was released by the Toronto Blue Jays on March 28, 2001.
+- He was released by the New York Yankees on March 27, 2002.
+- He signed with the Texas Rangers on May 16, 2002.
+- He finished his career with 1,573 at-bats.
+- He hit 71 career home runs.
+- He maintained a career batting average of .252.
+
+## 2025-04-04 - Tony Kubek
+Fact verification failed for the following claims:
+- The player participated in the 1952 Hearst Sandlot Classic.
+- The player signed with the New York Yankees for a $1,500 bonus in 1954.
+- The player hit two home runs in Game Three of the 1957 World Series.
+- The player was named the American League Rookie of the Year in 1957.
+- The player suffered a throat injury during Game Seven of the 1960 World Series.
+- Ralph Houk managed the player in Denver in 1956 and in New York in the 1960s.
+
+## 2025-04-07 - Iván Nova
+Fact verification failed for the following claims:
+- The player was drafted by the San Diego Padres in the 2008 Rule 5 draft.
+- The San Diego Padres returned the player to the New York Yankees on March 29, 2009.
+- The player recorded a 3.4 WAR in 2013.
+- The player recorded 963 career strikeouts.
+- The player made 240 career appearances.
+- The player was traded to the Pittsburgh Pirates on August 1, 2016.
+- Tito Polo and Stephen Tarpley were sent to the New York Yankees to complete the trade on August 30, 2016.
+- The player pitched for the Chicago White Sox in 2019.
+- The player pitched for the Detroit Tigers in 2020.
+
+## 2025-04-08 - Tony Clark
+Fact verification failed for the following claims:
+- This player was drafted by the Detroit Tigers as the 2nd pick in the 1st round of the 1990 amateur draft.
+- This player signed with the Detroit Tigers on July 10, 1990.
+- This player hit 251 career home runs.
+- This player was released by the Arizona Diamondbacks on July 13, 2009.
+- This player signed with the New York Yankees on January 12, 2004.
+- This player was granted free agency by the New York Yankees on October 29, 2004.
+- This player achieved a career WAR of 12.3.
+- This player recorded 4,532 career at-bats.
+- In 1997, this player recorded a 3.5 WAR.
+- This player played for both the San Diego Padres and the Arizona Diamondbacks in 2008.
+- The San Diego Padres traded this player to the Arizona Diamondbacks for Evan Scribner on July 17, 2008.
+
+## 2025-04-11 - Nick Johnson
+Fact verification failed for the following claims:
+- The player was drafted by the New York Yankees in the 3rd round of the 1996 amateur draft.
+- The player was traded by the New York Yankees to the Montreal Expos for Javier Vázquez on December 16, 2003.
+- The player signed as a free agent with the New York Yankees on December 18, 2009.
+- The player finished his career with a .399 On-Base Percentage.
+- The player recorded a 5.0 WAR during the 2006 season.
+
+## 2025-04-12 - Santos Alomar
+Fact verification failed for the following claims:
+- This player signed as an amateur free agent with the San Diego Padres on October 21, 1983.
+- He was traded from the San Diego Padres to the Cleveland Indians on December 6, 1989.
+- Joe Carter was the player received by the San Diego Padres in the December 1989 trade.
+- This player recorded 1236 hits during his career.
+- This player hit 112 home runs during his career.
+- This player logged 4530 at-bats during his career.
+- He finished his career with a total WAR of 13.7.
+- He played for the Cleveland Indians from 1990 through 2000.
+- He achieved a WAR of 3.9 in 1997.
+- He recorded a 0.0 WAR in 1988.
+- His career spanned from 1988 through 2007.
+
+## 2025-04-13 - Bob Melvin
+Fact verification failed for the following claims:
+- This player earned 350 pounds of yams by hitting seven home runs in a minor league tournament.
+- This player served as a manager and won the Manager of the Year Award in both the American and National Leagues.
+- He played catch with Vince Lombardi during the coach's final season.
+- He was released by the Boston Red Sox on April 12, 1994.
+- He signed with the New York Yankees on April 26, 1994.
+- He was selected off waivers by the California Angels from the New York Yankees on July 22, 1994.
+- He was traded by the California Angels to the Chicago White Sox on July 22, 1994.
+- He formed an all-Jewish battery with José Bautista while playing for the Baltimore Orioles.
+
+## 2025-04-15 - John Mayberry
+Fact verification failed for the following claims:
+- This player was drafted 6th overall by the Houston Astros in 1967.
+- This player recorded a 7.2 WAR with the Kansas City Royals in 1975.
+- This player finished his career with 255 home runs.
+- This player had a career on-base percentage of .360.
+- This player was traded to the New York Yankees from the Toronto Blue Jays on May 5, 1982.
+- The New York Yankees released this player on March 24, 1983.
+- This player was traded from the Houston Astros to the Kansas City Royals on December 2, 1971.
+
+## 2025-04-17 - Ji-Man Choi
+Fact verification failed for the following claims:
+- The player signed as a free agent with the Seattle Mariners on July 2, 2009.
+- The player was drafted by the Los Angeles Angels of Anaheim from the Baltimore Orioles in the 2015 Rule 5 draft.
+- The player signed as a free agent with the New York Yankees on January 16, 2017.
+- The player has a career OPS of .764.
+- The player has 1,567 career at-bats.
+- The player has an OPS+ of 112.
+- The player has a career WAR of 4.8.
+
+## 2025-04-18 - Dioner Navarro
+Fact verification failed for the following claims:
+- This player signed with the New York Yankees as an amateur free agent in August 2000.
+- This player was traded to the Arizona Diamondbacks on January 11, 2005.
+- The trade involving this player included Javier Vázquez and Brad Halsey.
+- Randy Johnson was acquired by the New York Yankees in the January 11, 2005 trade.
+- This player had 3,207 career at-bats.
+- This player recorded a 2.0 WAR during the 2008 season with the Tampa Bay Rays.
+- This player was traded from the Chicago White Sox to the Toronto Blue Jays on August 26, 2016.
+
+## 2025-04-20 - David Robertson
+Fact verification failed for the following claims:
+- The player was drafted by the New York Yankees in the 17th round of the 2006 amateur draft.
+- The player was traded by the Chicago White Sox to the New York Yankees on July 19, 2017.
+- Todd Frazier and Tommy Kahnle were traded alongside the player to the New York Yankees in 2017.
+- The player has 881 total game appearances.
+- The player has 179 career saves.
+- The player has 1,176 career strikeouts.
+- The player has a career ERA of 2.93.
+- The player played for the Yankees from 2008 to 2014 and again from 2017 to 2018.
+
+## 2025-04-22 - Fred Stanley
+Fact verification failed for the following claims:
+- He was drafted by the Houston Astros in the 8th round of the 1966 amateur draft.
+- His contract was purchased by the Seattle Pilots on September 8, 1969.
+- He played for the Yankees from 1973 to 1980.
+- He was traded from the San Diego Padres to the New York Yankees for George Pena on October 24, 1972.
+- His career batting average is .216.
+- His career OPS is .564.
+- He hit 10 home runs over his professional career.
+- He was traded to the Oakland Athletics on November 3, 1980, in exchange for Mike Morgan.
+
+## 2025-04-25 - Ted Lilly
+Fact verification failed for the following claims:
+- The player was drafted in the 23rd round of the 1996 amateur draft.
+- The player joined the New York Yankees in March 2000.
+- Hideki Irabu was traded to the Montreal Expos on December 22, 1999.
+- The player accumulated 1,681 strikeouts in his career.
+- The player pitched 1,982.2 career innings.
+- The player was traded to the Oakland Athletics on July 5, 2002.
+- Jeff Weaver was acquired by the New York Yankees on July 5, 2002.
+- The player recorded a 5.0 WAR in 2009.
+- The player recorded a 4.2 WAR in 2004.
+- The player finished his career with a total WAR of 27.1.
+
+## 2025-04-29 - Sidney Ponson
+Fact verification failed for the following claims:
+- The player signed as an amateur free agent with the Baltimore Orioles on August 17, 1993.
+- The player accumulated 91 career wins in Major League Baseball.
+- The player had two separate stints with the New York Yankees in 2006 and 2008.
+- The player was released by the New York Yankees on August 23, 2006.
+- The player signed with the New York Yankees on July 14, 2006.
+- The player signed with the New York Yankees on June 19, 2008.
+- The player played for the Baltimore Orioles from 1998 through 2005.
+- The player achieved a 4.5 WAR in 2003.
+- The player appeared in 298 career games.
+- The player made 278 career starts.
+- The player struck out 1,031 batters in his career.
+- The player pitched 1,760.1 career innings.
+- The player was released by the Texas Rangers on June 16, 2008.
+
+## 2025-04-30 - Gus Triandos
+Fact verification failed for the following claims:
+- The player was drafted into the US Army in 1951.
+- The player played baseball for the Brooke Army Medical Center in San Antonio, Texas.
+- Author Bill James called the player the slowest player of the 1950s.
+- The player recorded one stolen base in 1,206 consecutive games.
+- A 17-player trade occurred on November 17, 1954, between the Yankees and the Orioles.
+- The player caught a no-hitter thrown by Hoyt Wilhelm on September 20, 1958.
+- The player hit a 425-foot home run on September 20, 1958.
+- The player requested a trade from the Baltimore Orioles after the 1961 season.
+
+## 2025-05-02 - Shane Spencer
+Fact verification failed for the following claims:
+- This player was drafted by the New York Yankees on June 4, 1990.
+- The player was a 28th-round draft pick in the 1990 amateur draft.
+- The player recorded a WAR of 2.1 in 2001.
+- The player played for the Cleveland Indians in 2003.
+- The player played for the Texas Rangers in 2003.
+- The player played for the New York Mets in 2004.
+- The player returned to the New York Yankees in 2004.
+- The player finished his career with 59 home runs.
+- The player finished his career with 242 RBIs.
+- The player finished his career with a .262 batting average.
+
+## 2025-05-03 - Reid Brignac
+Fact verification failed for the following claims:
+- This player was drafted by the Tampa Bay Devil Rays in the 2nd round of the 2004 amateur draft.
+- The New York Yankees purchased this player from the Colorado Rockies on May 18, 2013.
+- This player had 886 career at-bats.
+- This player had a career batting average of .219.
+- This player had a career OPS+ of 59.
+- This player had a career WAR of -1.2.
+- This player was sent to the Colorado Rockies by the Tampa Bay Rays on February 14, 2013.
+- This player signed with the Philadelphia Phillies on November 20, 2013.
+- This player signed with the Miami Marlins on November 19, 2014.
+- This player signed with the Atlanta Braves on November 5, 2015.
+- This player signed with the Houston Astros on December 9, 2016.
+- This player signed with the Washington Nationals on January 31, 2018.
+
+## 2025-05-04 - Wade Boggs
+Fact verification failed for the following claims:
+- The 33-inning professional baseball game took place in 1981.
+- The 33-inning game involved the Pawtucket Red Sox and the Rochester Red Wings.
+- Ted Williams wrote the book 'The Science of Hitting'.
+- The player was drafted in the 7th round of the 1976 amateur draft.
+- The player signed with the Red Sox on June 10, 1976.
+- The player hit .263 for Elmira in his 1976 rookie season.
+- The player hit .354 while playing third base in Puerto Rico.
+- The player's mother died on June 17, 1986.
+
+## 2025-05-06 - Kerry Wood
+Fact verification failed for the following claims:
+- This player was drafted in the first round of the 1995 amateur draft.
+- The player threw 175 pitches in a high school doubleheader in 1995.
+- The player struck out 20 batters in a single game on May 6, 1998.
+- The player struck out the only batter he faced in his final game on May 18, 2012.
+- The player pitched for the New York Yankees in 2010.
+- The player hit a two-run home run in Game 7 of the 2003 NLCS.
+- The player saved 34 games for the Chicago Cubs in 2008.
+
+## 2025-05-10 - Stan Javier
+Fact verification failed for the following claims:
+- This player taught himself to switch-hit as a teenager in the Dominican Republic.
+- The player made his major-league debut in 1984.
+- He requested a demotion to the minor leagues in 1984 while with the Yankees.
+- The player participated in 17 major-league seasons.
+- The player was the seventh second-generation major leaguer to play in a World Series.
+- The player was traded to the Oakland Athletics on December 5, 1984.
+- The player was involved in a 1984 trade that brought Rickey Henderson to the Yankees.
+- The player set an American League record with 334 errorless chances in 1995.
+- Brian Downing held the previous American League record of 330 errorless chances.
+
+## 2025-05-12 - Russ Davis
+Fact verification failed for the following claims:
+- The player was drafted by the New York Yankees in the 29th round of the 1988 amateur draft.
+- The player was traded to the Seattle Mariners on December 7, 1995.
+- The Yankees received Tino Martinez, Jim Mecir, and Jeff Nelson in exchange for the player and Sterling Hitchcock.
+- The player recorded a -0.3 WAR in the 1994 season.
+- The player finished his career with 84 home runs.
+- The player recorded 508 hits in his career.
+- The player finished with a career batting average of .257.
+- The player had 1,980 career at-bats.
+- The player was released by the San Francisco Giants on June 21, 2001.
+
+## 2025-05-13 - Henry Cotto
+Fact verification failed for the following claims:
+- This player signed with the Chicago Cubs as an amateur free agent on June 7, 1980.
+- The Chicago Cubs traded this player to the New York Yankees on December 4, 1984.
+- The trade on December 4, 1984, involved players Brian Dayett and Ray Fontenot.
+- This player played for the New York Yankees during the 1985, 1986, and 1987 seasons.
+- This player was traded by the New York Yankees to the Seattle Mariners on December 22, 1987.
+- The trade on December 22, 1987, involved Steve Trout, Lee Guetterman, Clay Parker, and Wade Taylor.
+- This player recorded 2,178 career at-bats.
+- This player finished his career with 130 stolen bases.
+- This player recorded 569 career hits.
+- This player had a career batting average of .261.
+- This player was traded by the Seattle Mariners to the Florida Marlins on June 27, 1993.
+
+## 2025-05-14 - Larry Milbourne
+Fact verification failed for the following claims:
+- The player was selected in the 1971 minor league draft by the California Angels.
+- The player was selected in the 1972 minor league draft by the St. Louis Cardinals.
+- The player was selected in the 1973 Rule 5 draft by the Houston Astros.
+- The player recorded a 1.2 WAR with the Yankees in 1981.
+- The player played for the Yankees, Twins, and Indians in 1982.
+- The player played for the Philadelphia Phillies and the New York Yankees in 1983.
+- The player returned to the Seattle Mariners in 1984.
+- The player was released by the Seattle Mariners in 1985.
+
+## 2025-05-20 - Willie Calhoun
+Fact verification failed for the following claims:
+- This player was drafted by the Tampa Bay Rays in the 17th round of the 2013 amateur draft.
+- This player did not sign with the Tampa Bay Rays in 2013.
+- This player was traded to the Texas Rangers for Yu Darvish on July 31, 2017.
+- This player signed as a free agent with the New York Yankees on January 12, 2023.
+- This player has 42 career home runs.
+- This player has 293 career hits.
+- This player was drafted by the Los Angeles Dodgers in the 4th round of the 2015 amateur draft.
+- This player finished his 2024 season with the Los Angeles Angels.
+- This player has a career batting average of .241.
+- This player has a career OPS of .703.
+
+## 2025-05-21 - Mike Stanley
+Fact verification failed for the following claims:
+- This player was drafted by the Texas Rangers in the 16th round of the 1985 amateur draft.
+- This player achieved a single-season WAR of 4.8 in 1993.
+- This player was traded from the Boston Red Sox to the New York Yankees on August 13, 1997.
+- Tony Armas and Jim Mecir were involved in the August 13, 1997 trade involving this player.
+- This player recorded 187 career home runs.
+- This player finished his career with a .827 OPS.
+- This player played for the Texas Rangers, New York Yankees, Boston Red Sox, Toronto Blue Jays, and Oakland Athletics.
+- This player's major league career spanned from 1986 to 2000.
+
+## 2025-05-22 - George Medich
+Fact verification failed for the following claims:
+- The player was drafted by the New York Yankees in the 30th round of the 1970 amateur draft.
+- The player debuted with the New York Yankees in 1972.
+- The player was traded to the Pittsburgh Pirates on December 11, 1975.
+- The trade on December 11, 1975, involved Ken Brett, Dock Ellis, and Willie Randolph.
+- The player achieved a 4.8 WAR in 1973.
+
+## 2025-05-23 - Jerry Coleman
+Fact verification failed for the following claims:
+- This player was offered a $2,500 bonus by the Brooklyn Dodgers.
+- This player was named the American League Rookie of the Year by the Associated Press in 1949.
+- This player flew 57 combat missions in World War II.
+- This player flew 63 combat missions in the Korean Conflict.
+- This player was the MVP of the 1950 World Series.
+- The Yankees defeated the Philadelphia Phillies in the 1950 World Series.
+- The Yankees defeated the Boston Red Sox to win the 1949 American League pennant.
+
+## 2025-05-24 - Ralph Houk
+Fact verification failed for the following claims:
+- The player signed his first professional contract with the Yankees in 1938 for a $200 bonus.
+- The player was involved in a controversial tag play involving Johnny Pesky during a 1949 game against the Boston Red Sox.
+- The player won World Series titles as a manager in 1961 and 1962.
+- The player earned the nickname 'the Major' after his military service.
+- The player served as the manager of the 1981 Boston Red Sox.
+- The player was a manager for both the New York Yankees and the Boston Red Sox.
+
+## 2025-05-25 - Phil Rizzuto
+Fact verification failed for the following claims:
+- A New York Giants coach once suggested this player should shine shoes instead of playing professional baseball.
+- Joe DiMaggio intervened to let this player hit in the batting cage during his rookie season.
+- This player was the American League's Most Valuable Player in 1950.
+- This player handled 238 consecutive chances at shortstop without an error.
+- The player was nicknamed 'Scooter' by teammate Billy Hitchcock while playing in Kansas City.
+- The player joined the Bassett Furnituremakers in 1937.
+- The player's professional career with the New York Yankees ended on August 25, 1956.
+- The player spent thirteen years with the New York Yankees.
+
+## 2025-05-26 - Whitey Ford
+Fact verification failed for the following claims:
+- The player was fined five dollars by Lefty Gomez for missing curfew in 1947.
+- The player holds the record for the most World Series wins with 10.
+- The player holds the record for 33 2/3 consecutive scoreless World Series innings.
+- The nickname 'Whitey' was popularized by Lefty Gomez in 1947.
+- The player became ill with amoebic dysentery after playing winter ball in Mexico.
+- The player weighed 130 pounds after recovering from his illness in 1949.
+- The player stands 5'10" tall.
+- The player debuted with the Yankees in 1950.
+
+## 2025-05-27 - Mike Heath
+Fact verification failed for the following claims:
+- The player was drafted by the New York Yankees in the 2nd round of the 1973 amateur draft.
+- On November 10, 1978, the player was traded to the Texas Rangers with Sparky Lyle, Larry McCall, Dave Rajsich, and Domingo Ramos.
+- The 1978 trade brought Dave Righetti to the New York Yankees.
+- The player finished his career with 1,061 hits.
+- The player recorded 469 career RBIs.
+- The player achieved a career WAR of 13.4.
+- The player played for the Oakland Athletics between 1979 and 1985.
+- The player played for the Detroit Tigers between 1986 and 1990.
+
+## 2025-05-28 - John Candelaria
+Fact verification failed for the following claims:
+- The player was drafted in the 2nd round of the 1972 amateur draft by the Pittsburgh Pirates.
+- The player threw a no-hitter against the Los Angeles Dodgers on August 9, 1976.
+- The player won 20 games during the 1977 season.
+- The player led the major leagues with a 2.34 ERA in 1977.
+- The player suffered an arm injury in 1981.
+- The player was traded by the Pittsburgh Pirates to the California Angels on August 2, 1985.
+- The player signed with the New York Yankees on January 15, 1988.
+
+## 2025-06-03 - CC Sabathia
+Fact verification failed for the following claims:
+- The player was selected 20th overall in the 1998 amateur draft.
+- The player joined the New York Yankees on December 20, 2008.
+- The player was traded from the Cleveland Indians to the Milwaukee Brewers on July 7, 2008.
+- Michael Brantley was sent to the Cleveland Indians on October 3, 2008, to complete the trade.
+- The player recorded 3,093 career strikeouts.
+- The player pitched 3,577.1 career innings.
+- The player recorded a 6.4 WAR in 2011.
+- The player recorded a -0.6 WAR in 2014.
+
+## 2025-06-04 - Ron Hassey
+Fact verification failed for the following claims:
+- The player holds the University of Arizona all-time record of 235 RBIs.
+- The player is the only catcher in MLB history to catch two perfect games.
+- The player caught Len Barker's perfect game on May 15, 1981.
+- The player caught Dennis Martínez's perfect game on July 28, 1991.
+- The player was traded between the Yankees and the White Sox three times in less than a year starting in December 1985.
+- The player caught for Phil Niekro during the 1985 season.
+- The player played for six different major league franchises.
+
+## 2025-06-05 - Walt Williams
+Fact verification failed for the following claims:
+- The player signed with the Houston Colt .45s as an amateur free agent before the 1963 season.
+- The player recorded a 1.6 WAR during the 1969 season with the Chicago White Sox.
+- The player accumulated 640 career hits.
+- The player accumulated 33 career home runs.
+- The player finished his career with a .270 batting average.
+- The player was involved in a three-team trade on March 19, 1974.
+- The player played for the New York Yankees in 1974 and 1975.
+- The player was released by the New York Yankees on January 27, 1976.
+- The player's professional career spanned from 1964 to 1975.
+
+## 2025-06-10 - Johnny Damon
+Fact verification failed for the following claims:
+- The player was born in Kansas in 1973.
+- The player's older brother was born in Bangkok in 1971.
+- The player won the J.G. Taylor Spink Award in 1995.
+- The player led the American League in runs and stolen bases in 2000.
+- The player suffered a concussion during the 2003 ALDS after colliding with Damian Jackson.
+- The Red Sox won a championship in 2004, ending an 86-year drought.
+
+## 2025-06-11 - Dick Howser
+Fact verification failed for the following claims:
+- The scholarship award mentioned was valued at $500.
+- The player served as the New York Yankees third-base coach from 1969 to 1978.
+- The Kansas City Royals won the World Series in 1985.
+- The player was born on May 14, 1936.
+- The player was 5-foot-7 and weighed 150 pounds as an adult.
+- The Kansas City Royals retired the player's number 10 on July 3, 1987.
+- A statue of the player was unveiled at Kauffman Stadium on April 10, 2009.
+
+## 2025-06-12 - Don Slaught
+Fact verification failed for the following claims:
+- This player was drafted in the 20th round by the Milwaukee Brewers in 1979.
+- This player did not sign with the Milwaukee Brewers after the 1979 draft.
+- This player was part of a four-team trade on January 18, 1985.
+- The 1985 trade involved the Kansas City Royals, Texas Rangers, Milwaukee Brewers, and New York Mets.
+- This player played for the New York Yankees in 1988 and 1989.
+- This player had a 1.8 WAR in 1988.
+- This player had a 1.8 WAR in 1989.
+- This player was traded to the Pittsburgh Pirates on December 4, 1989.
+- Jeff Robinson and Willie Smith were traded to the Yankees in exchange for this player.
+- This player finished his career with a .283 batting average.
+- This player finished his career with 1,151 hits.
+- This player had a 2.6 WAR in 1992.
+- This player played his final major league season in 1997.
+
+## 2025-06-13 - George Scott
+Fact verification failed for the following claims:
+- This player was temporarily removed from his Little League team due to his size and performance.
+- This player hit a home run off Whitey Ford in New York on April 26, 1966.
+- Mickey Mantle estimated the distance of that home run as 550 feet.
+- This player won eight Gold Glove Awards during his career.
+- This player signed as an amateur free agent on May 28, 1962.
+- This player began his professional career with the Class-D Olean club in 1962.
+- Billy Herman threatened to bench this player on July 19, 1966.
+- This player played for the New York Yankees in 1979.
+
+## 2025-06-15 - Clay Bellinger
+Fact verification failed for the following claims:
+- This player was drafted by the San Francisco Giants in the 2nd round of the 1989 amateur draft.
+- The player has a career batting average of .193.
+- The player was a member of the New York Yankees.
+- The player was released by the New York Yankees on January 17, 2002.
+- The player signed with the Anaheim Angels on February 7, 2002.
+- The player has a career OPS of .621.
+- The player hit 12 career home runs.
+- The player signed with the Baltimore Orioles on November 22, 1995.
+- The player signed with the San Francisco Giants on March 18, 2003.
+- The player signed with the Baltimore Orioles on February 5, 2004.
+
+## 2025-06-16 - Austin Romine
+Fact verification failed for the following claims:
+- This player was drafted by the New York Yankees in the 2nd round of the 2007 amateur draft.
+- This player signed his first contract with the New York Yankees on August 14, 2007.
+- This player recorded a 1.4 WAR during the 2018 season.
+- This player was granted free agency on October 31, 2019.
+- This player signed as a free agent with the Detroit Tigers on December 13, 2019.
+- This player signed as a free agent with the Chicago Cubs on January 22, 2021.
+- This player played for three teams during the 2022 season.
+- This player was released by the Cincinnati Reds on March 18, 2023.
+
+## 2025-06-17 - Aaron Hicks
+Fact verification failed for the following claims:
+- This player was drafted by the Minnesota Twins in the 1st round of the 2008 amateur draft.
+- He was the 14th pick in the 2008 amateur draft.
+- He was traded to the New York Yankees on November 11, 2015.
+- John Ryan Murphy was traded to the Minnesota Twins on November 11, 2015.
+- This player had a WAR of 4.3 in 2018.
+- This player was released by the New York Yankees on May 26, 2023.
+- He signed with the Baltimore Orioles on May 30, 2023.
+- He has 109 career home runs.
+- He has 392 career RBIs.
+- He has 3,135 career at-bats.
+- He has a career WAR of 13.2.
+
+## 2025-06-18 - Andrew Heaney
+Fact verification failed for the following claims:
+- The player was drafted by the Tampa Bay Rays in the 24th round of the 2009 amateur draft but did not sign.
+- The player was selected in the 1st round of the 2012 amateur draft by the Miami Marlins.
+- On December 11, 2014, the player was traded from the Marlins to the Dodgers.
+- On December 11, 2014, the player was traded from the Dodgers to the Angels.
+- The player has 230 career appearances.
+- The player has 1,156 career strikeouts.
+- The player has 1,136.2 career innings pitched.
+- The player was traded to the Yankees on July 30, 2021.
+- The Yankees traded Janson Junk and Elvis Peguero to the Angels in exchange for the player on July 30, 2021.
+- The player signed with the Pittsburgh Pirates on February 22, 2025.
+- The player signed with the Los Angeles Dodgers on September 1, 2025.
+
+## 2025-06-19 - Jim Abbott
+Fact verification failed for the following claims:
+- This player was drafted by the Toronto Blue Jays in the 36th round of the 1985 amateur draft.
+- This player refused a $50,000 bonus offer from the Toronto Blue Jays.
+- In 1991, this player recorded 18 wins and 11 losses.
+- In 1991, this player maintained a 2.89 earned run average.
+- This player led the American League in 'tough losses' with eight in 1991.
+- In 1989, this player won 12 games during his rookie season.
+- This player hit a 375-foot triple during a 1991 spring training game against the San Francisco Giants.
+
+## 2025-06-20 - Eddie Lopat
+Fact verification failed for the following claims:
+- The New York Giants rejected the player after a tryout because he could not make the throw to second base.
+- The player claimed a pitcher could have 72 different pitches by varying four pitches by speed, arm motion, and release angle.
+- The player led the league with a 2.42 ERA in 1953.
+- The player had a .800 winning percentage in 1953.
+- The Yankees acquired the player from the Chicago White Sox on February 24, 1948.
+- The trade for the player involved Aaron Robinson, Bill Wight, and Fred Bradley.
+- The player was traded to the Baltimore Orioles on July 30, 1955.
+- The player died on June 15, 1992.
+
+## 2025-06-21 - George Stirnweiss
+Fact verification failed for the following claims:
+- The player was signed by the New York Yankees as an amateur free agent before the 1940 season.
+- The player was traded by the New York Yankees on June 15, 1950, to the St. Louis Browns.
+- The trade on June 15, 1950, involved Jim Delsing, Don Johnson, Duane Pillette, and $50,000.
+- The player recorded a WAR of 8.6 in 1944.
+- The player recorded a WAR of 8.8 in 1945.
+- The player recorded a career WAR of 27.5.
+- The player recorded 989 career hits.
+- The player recorded 134 career stolen bases.
+- The player recorded a career on-base percentage of .362.
+- The player joined the Cleveland Indians in 1951.
+- The player played for the Cleveland Indians until 1952.
+
+## 2025-06-27 - Greg Cadaret
+Fact verification failed for the following claims:
+- He was drafted in the 11th round of the 1983 amateur draft by the Oakland Athletics.
+- He was traded to the New York Yankees on June 21, 1989.
+- The 1989 trade included Eric Plunk, Luis Polonia, and Rickey Henderson.
+- He recorded a 2.2 WAR in 1991.
+- His career total WAR is 6.6.
+- He played for the Cincinnati Reds, Kansas City Royals, Toronto Blue Jays, and Detroit Tigers after leaving the Yankees.
+- He signed with the Los Angeles Dodgers on January 12, 1999.
+
+## 2025-06-28 - Al Downing
+Fact verification failed for the following claims:
+- The player was signed by the New York Yankees as an amateur free agent before the 1961 season.
+- The player was traded by the New York Yankees to the Oakland Athletics on December 5, 1969.
+- The player was traded by the Oakland Athletics to the Milwaukee Brewers on June 11, 1970.
+- The player was traded by the Milwaukee Brewers to the Los Angeles Dodgers on February 10, 1971.
+- The player achieved a 4.5 WAR in the 1967 season.
+- The player finished his career with 405 games played.
+- The player pitched 2,268.1 innings in his career.
+- The player recorded 1,639 strikeouts in his career.
+- The player had a career ERA of 3.22.
+
+## 2025-06-30 - Roger Clemens
+Fact verification failed for the following claims:
+- The player was drafted by the New York Mets in the 12th round in 1981.
+- The player attended San Jacinto Junior College.
+- The player won a record seven Cy Young Awards.
+- The player recorded 354 career victories.
+- The player recorded 4,672 career strikeouts.
+- The Mitchell Report was released on December 13, 2007.
+- The player's final major league start occurred on October 7, 2007.
+- The player pitched 2 1/3 innings in his final major league game.
+- In 2014, the player was named on 35.4 percent of Hall of Fame ballots.
+
+## 2025-07-03 - Lyle Overbay
+Fact verification failed for the following claims:
+- The player was drafted in the 18th round of the 1999 amateur draft.
+- The player signed with the Arizona Diamondbacks on June 8, 1999.
+- The player was released by the Boston Red Sox on March 26, 2013.
+- The player signed with the New York Yankees on March 26, 2013.
+- The player had 5,102 at-bats in his career.
+- The player had 1,355 career hits.
+- The player had 151 career home runs.
+- The player finished his career with a .266 batting average.
+- The player achieved a 3.3 WAR in 2006 while playing for the Toronto Blue Jays.
+- The player drove in 675 career runs.
+
+## 2025-07-05 - Daryl Boston
+Fact verification failed for the following claims:
+- The player was drafted 7th overall in the 1981 amateur draft by the Chicago White Sox.
+- The player played for the Chicago White Sox, New York Mets, Colorado Rockies, and New York Yankees.
+- The player moved from the Chicago White Sox to the New York Mets in 1990.
+- The player played for the New York Yankees in 1994.
+- The player accumulated 83 career home runs.
+- The player accumulated 98 career stolen bases.
+- The player signed with the New York Yankees on January 13, 1994.
+- The player became a free agent on October 21, 1994.
+- The player had a 1.5 WAR in 1990.
+- The player had 655 career hits.
+- The player had 278 career RBIs.
+- The player had a lifetime batting average of .249.
+
+## 2025-07-08 - Jay Buhner
+Fact verification failed for the following claims:
+- The player attended McLennan Community College.
+- The trade involving the player was referenced in the television show Seinfeld.
+- The player hit 124 home runs from 1995 through 1997.
+- Ken Griffey Jr. hit 122 home runs from 1995 through 1997.
+- The player attended Clear Creek High School.
+- The player's nickname was 'Bone'.
+- The Mariners hosted 'Buhner Buzz Cut Night' from 1994 to 2001.
+- In 1994, 512 fans participated in the first Buzz Cut Night.
+- In 2001, 6,246 fans participated in the final Buzz Cut Night.
+- The player hit 19 home runs at Yankee Stadium in his career.
+- The player hit a 479-foot home run at Yankee Stadium on July 25, 1991.
+
+## 2025-07-09 - Jim Beattie
+Fact verification failed for the following claims:
+- This player was born on July 4, 1954.
+- This player was born in Hampton, Virginia.
+- This player pitched for the New York Yankees in the late 1970s.
+- This player made his major league debut in 1978.
+
+## 2025-07-10 - Luis Sojo
+Fact verification failed for the following claims:
+- The player received a $2,000 signing bonus in 1986.
+- The player helped the Mariners win the AL West title in 1995.
+- The player secured a $1.9 million contract with the Yankees in 1998.
+- Derek Jeter and Bernie Williams approached Brian Cashman to reacquire the player in 2000.
+- The player hit a game-winning RBI single off Al Leiter in Game Five of the 2000 World Series.
+- The player signed with the Yankees five separate times throughout his career.
+
+## 2025-07-11 - Rick Reuschel
+Fact verification failed for the following claims:
+- This player attended Western Illinois University.
+- He posted a 1.94 ERA at Western Illinois University.
+- He had a 40-inning scoreless streak in 1970.
+- This player and his brother combined for a shutout on August 21, 1975.
+- This player led all MLB pitchers with a 9.5 WAR in 1977.
+- He was traded to the Yankees on June 12, 1981.
+- The player did not pitch in the 1981 ALCS.
+
+## 2025-07-20 - Clete Boyer
+Fact verification failed for the following claims:
+- This player signed a professional baseball contract for a $35,000 bonus on May 30, 1955.
+- The 1964 World Series was a seven-game contest between the St. Louis Cardinals and the New York Yankees.
+- This player and his brother Ken both homered in Game Seven of the 1964 World Series.
+- This player led the American League in assists with 353 in 1961.
+- This player led the American League in assists with 396 in 1962.
+- This player was removed for pinch-hitter Dale Long during Game One of the 1960 World Series.
+
+## 2025-07-22 - Brandon Drury
+Fact verification failed for the following claims:
+- The player was born on August 21, 1992.
+- The player was born in Grants Pass, Oregon.
+- The player was a member of the Yankees organization in 2018.
+
+## 2025-07-23 - Dale Murray
+Fact verification failed for the following claims:
+- The player was born on February 2, 1950.
+- The player was born in Cuero, Texas.
+- The player pitched for the New York Yankees from 1974 to 1976.
+
+## 2025-07-26 - Al Holland
+Fact verification failed for the following claims:
+- The player led the nation in strikeouts with 143 during the 1972 baseball season.
+- The player finished the 1972 season with a 0.54 earned run average.
+- The player attended North Carolina A&T State University.
+- The player made his major league debut on September 5, 1977.
+- The player was drafted by the Texas Rangers in the 30th round of the June 1974 draft.
+- The player was drafted by the San Diego Padres in the fourth round of the January 1975 draft.
+- The player signed with the Pittsburgh Pirates in the summer of 1975.
+- The player helped close out Steve Carlton’s 300th major league win on September 23, 1983.
+
+## 2025-07-28 - Roy White
+Fact verification failed for the following claims:
+- In 1962, this player batted .210 before finishing the season with a .284 average.
+- In 1971, this player set an American League record for sacrifice flies with 17.
+- On August 13, 1968, manager Ralph Houk moved this player into the cleanup spot.
+- This player was born on December 27, 1943, in Compton, California.
+
+## 2025-07-29 - Randy Choate
+Fact verification failed for the following claims:
+- The player was born in San Antonio, Texas.
+- The player held a professional career spanning over 15 years.
+- The player debuted in Major League Baseball in the year 2000.
+- The player served as a situational left-handed relief specialist.
+
+## 2025-07-30 - Rey Sánchez
+Fact verification failed for the following claims:
+- The player attended Live Oak High School in Morgan Hill, California.
+- The player was involved in an accusation of receiving a haircut in the Mets clubhouse during the April 30, 2003 game.
+- The player led the American League in defensive WAR from 1989 to 1991.
+- The player hit a 10th-inning bases-loaded sacrifice fly to win a game in early May 1992.
+- The player hit a walk-off inside-the-park home run on June 11, 2004.
+- The player was part of a middle-infield duo with Roberto Alomar for the Mets in 2003.
+
+## 2025-08-03 - Jorge Posada
+Fact verification failed for the following claims:
+- The player leveled a backyard field in two weeks at age 12.
+- He was the first Yankee to hit grand slams in consecutive games since Bill Dickey in 1937.
+- The player's feat of hitting grand slams in consecutive games occurred in June 2010.
+- He is one of five major-league catchers with 1,500 hits, 350 doubles, 275 homers, and 1,000 RBIs.
+- He hit 30 home runs in 2003.
+- Yogi Berra was the only other Yankee catcher to hit 30 home runs in a season as of 2003.
+- The player asked to be removed from the lineup on May 14, 2011, after being moved to the ninth batting spot.
+
+## 2025-08-04 - Billy Sample
+Fact verification failed for the following claims:
+- William Amos Sample was born on April 2, 1955.
+- William Amos Sample was born in Roanoke, Virginia.
+- The player was part of the New York Yankees organization from 1974 to 1976.
+
+## 2025-08-09 - Bob Watson
+Fact verification failed for the following claims:
+- The player slept on a wooden bench in a Black-owned funeral parlor in Salisbury, North Carolina, due to racial segregation.
+- The player scored the 1 millionth run in Major League Baseball history on May 4, 1975.
+- The player's nickname is 'Bull'.
+- The player hit .312 during the 1972 Major League Baseball season.
+- The player hit .312 during the 1973 Major League Baseball season.
+- The player received 70 stitches after crashing into a wall in Cincinnati in 1974.
+- The player attended Fremont High School.
+- Phil Pote was the head coach of the player's high school baseball team.
+
+## 2025-08-10 - Andy Pettitte
+Fact verification failed for the following claims:
+- The player was a 22nd-round draft pick in 1990.
+- The player has a career WAR of 60.2 as the 594th pick in the draft.
+- The player holds the record for 19 postseason wins.
+- The player threw 276 2/3 innings in the postseason.
+- The player signed his first professional contract for $80,000.
+- The player won 12 games as a rookie in 1995.
+- The player was nearly traded to the Philadelphia Phillies in 1999.
+
+## 2025-08-11 - Phil Hughes
+Fact verification failed for the following claims:
+- This player was born in Mission Viejo, California.
+- This player was selected in the 2004 amateur draft.
+- This player made his major league debut in 2007.
+- This player was a member of the 2009 World Series championship team.
+
+## 2025-08-12 - Kevin Maas
+Fact verification failed for the following claims:
+- The player was born in Castro Valley, California.
+- The player reached 10 home runs in 72 at-bats during his rookie season.
+- The player set a record for the fastest reaching of 10 home runs in Major League history at the time of his streak.
+
+## 2025-08-15 - Lindy McDaniel
+Fact verification failed for the following claims:
+- The player attended Abilene Christian College.
+- The player was signed by the St. Louis Cardinals for $50,000 as a bonus baby.
+- The player was the first reliever to receive a Cy Young Award vote.
+- The player reached 907 career appearances on September 23, 1973.
+- The player pitched in both games of a doubleheader against the Cubs on May 10, 1959.
+- The player and his younger brother Von pitched for the Cardinals in 1957.
+- The player and Sparky Lyle were teammates on the New York Yankees.
+
+## 2025-08-19 - Bobby Richardson
+Fact verification failed for the following claims:
+- The player traveled to Norfolk for his first minor league assignment with $85 in coins.
+- The player won the Sport Magazine World Series MVP award.
+- The player holds the major-league record for most RBIs in a single World Series game with six.
+- The player is the only player from a losing team to win the World Series MVP award.
+- The player hit .300 in the 1959 season.
+- The player and Tony Kubek were known as the Milkshake Twins.
+- The player made his major league debut on August 5, 1955.
+
+## 2025-08-20 - Phil Linz
+Fact verification failed for the following claims:
+- The player was born on June 4, 1939.
+- The player was born in Baltimore, Maryland.
+- The player died on December 9, 2020.
+- The player died in Leesburg, Virginia.
+- The harmonica incident occurred in 1964.
+- The manager involved in the harmonica incident was Yogi Berra.
+- The fine issued during the 1964 incident was $250.
+
+## 2025-08-22 - Luis Tiant
+Fact verification failed for the following claims:
+- This player pitched for the Mexico City Tigers in 1959.
+- This player finished the 1959 season with a 5-19 record and a 5.92 ERA.
+- This player set a Pacific Coast League record with a .938 winning percentage in 1964.
+- This player finished the 1964 season with a 15-1 record for the Portland Beavers.
+- This player led the American League with a 1.60 ERA in 1968.
+- This player led the American League with nine shutouts in 1968.
+- This player did not return to Cuba in 1961 due to government travel bans.
+- The Minnesota Twins released this player on March 31, 1971.
+- This player won the Comeback Player of the Year award in 1972.
+- This player recorded a 1.91 ERA in 1972.
+- This player threw a one-hit, 11-strikeout game against the Yankees in 1968.
+
+## 2025-08-25 - Tim Raines
+Fact verification failed for the following claims:
+- The player holds the record for the best stolen base percentage of 84.7 percent among players with 400-plus steals since 1951.
+- The player's second son was named Andre after his mentor and teammate, Andre Dawson.
+- The player's son Andre was nicknamed 'Little Hawk' in honor of Andre Dawson's 'Hawk' nickname.
+- The player returned to the Montreal Expos on May 2, 1987.
+- In his first game back on May 2, 1987, the player went 4-for-5 with a triple and a 10th-inning grand slam.
+- The player earned the nickname 'Rock' because he had only 7.8 percent body fat.
+
+## 2025-08-27 - Graig Nettles
+Fact verification failed for the following claims:
+- This player played basketball and baseball at San Diego State University.
+- This player played semipro ball for the Alaska Goldpanners.
+- This player set the record for most double plays by a third baseman in a season with 54 in 1971.
+- This player set the record for most assists by a third baseman in a season with 412 in 1971.
+- Both the 1971 double play and assist records were intact in 2011.
+- This player recorded five assists in Game Three of the 1978 World Series.
+- This player played for the Denver Bears under manager Billy Martin.
+- This player was caught using a corked bat on September 7, 1974.
+
+## 2025-08-30 - Andrew Arthur Carey
+Fact verification failed for the following claims:
+- The player was signed as an amateur free agent by the Kansas City Athletics in 1952.
+- The player joined the New York Yankees in 1962.
+
+## 2025-09-02 - Marwin González
+Fact verification failed for the following claims:
+- This player was signed as an amateur free agent from Venezuela in 2005.
+- This player was a member of the 2017 Houston Astros.
+- This player hit a game-tying home run in the ninth inning of Game 2 of the 2017 World Series.
+- This player made his major league debut in 2012.
+
+## 2025-09-06 - Bob MacDonald
+Fact verification failed for the following claims:
+- The player pitched for Rutgers University for three seasons.
+- The player's senior season ERA at Rutgers was 2.97.
+- The player's sophomore season ERA at Rutgers was 7.74.
+- The player was on the Toronto Blue Jays roster on May 1, 1991.
+- Nolan Ryan threw his seventh career no-hitter on May 1, 1991.
+- The player was sold to the Detroit Tigers for $20,000 in 1993.
+
+## 2025-09-07 - Don Mattingly
+Fact verification failed for the following claims:
+- The player was selected by the New York Yankees in the 19th round of the 1979 amateur draft.
+- The player participated in the 'Pine Tar Game' on August 18, 1983.
+- The player played one-third of an inning at second base during the 'Pine Tar Game'.
+- The player has a career fielding percentage of .9959.
+- The player won nine Gold Glove awards.
+- The player won the 1984 American League batting title with a .343 average.
+- Dave Winfield finished second in the 1984 American League batting race with a .340 average.
+
+## 2025-09-10 - Cecil Fielder
+Fact verification failed for the following claims:
+- In 1983, a minor league team hosted a 'Get [This Player] Out Night' where fans received free beer if the player failed to reach base.
+- The player reached the 50 home run milestone in 1990 at the original Yankee Stadium.
+- The player was the first American League hitter to reach 50 home runs in a season since 1961.
+- The player led the major leagues in RBIs for three consecutive seasons during the 20th century.
+- As a 13-year-old, the player was 6-foot-1 and 175 pounds.
+- In 1989, the player signed with the Hanshin Tigers for a salary of $1,000,050.
+- The player hit his first 'home run' at age three.
+
+## 2025-09-15 - Roy Smalley III
+Fact verification failed for the following claims:
+- Roy Smalley III was born in Los Angeles on October 25, 1952.
+- Roy Smalley III played for the New York Yankees from 1974 to 1976.
+- Roy Smalley III was traded from the New York Yankees to the Minnesota Twins in 1976.
+
+## 2025-09-16 - Ron Davis
+Fact verification failed for the following claims:
+- Ron Davis was born on October 21, 1941.
+- Ron Davis was born in Roanoke Rapids, North Carolina.
+- Ron Davis played for the New York Yankees from 1974 to 1976.
+- Ron Davis died on September 5, 1992.
+- Ron Davis died in Houston, Texas.
+
+## 2025-09-17 - Vernon Gomez
+Fact verification failed for the following claims:
+- The player joined the New York organization in 1974.
+- The player served as a relief pitcher for the team from 1974 to 1976.
+- The player's tenure with the team concluded in 1976.
+
+## 2025-09-19 - Paul Blair
+Fact verification failed for the following claims:
+- The Dodgers rejected this player at age 17.
+- This player recorded more than 400 putouts as a center fielder in 1969.
+- This player won eight Gold Glove Awards.
+- This player made a leaping catch to preserve a 1-0 win in the 1966 World Series.
+- The player's batting average was .233 in 1972.
+- The player hit .522 over a dozen games after undergoing hypnosis therapy.
+- The nickname 'Motormouth' was inspired by manager Harry Dunlop in 1963.
+- The Orioles traded this player to the New York Yankees on January 20, 1977.
+- Elliott Maddox and Rick Bladt were traded to the Orioles for this player.
+
+## 2025-09-21 - Mike Mussina
+Fact verification failed for the following claims:
+- The player attended Stanford University.
+- The player helped create a 2,131-pound marble gift for Cal Ripken Jr. in 1995.
+- The player was the first American League pitcher to win 10 or more games in 17 consecutive seasons.
+- A plane crash in 1996 killed 16 students and 5 chaperones from the player's hometown of Montoursville.
+- The player took a perfect game into the ninth inning against the Cleveland Indians on May 30, 1997.
+
+## 2025-09-23 - Nick Swisher
+Fact verification failed for the following claims:
+- The player was born on November 25, 1980.
+- The player was born in Columbus, Ohio.
+- The player was a key contributor to the 2009 championship team.
+
+## 2025-09-26 - Gene Woodling
+Fact verification failed for the following claims:
+- The player broke his ankle sliding into home plate in 1942.
+- The player played for the Class A Wilkes-Barre Barons in 1942.
+- The player played for the San Francisco Seals in 1948.
+- Lefty O'Doul managed the San Francisco Seals in 1948.
+- The player batted .318 in the five World Series from 1949 through 1953.
+- The player recorded 27 postseason hits for the Yankees from 1949 through 1953.
+- The player served in the Navy during World War II.
+- The player played for the Great Lakes Naval Training Station team in 1944.
+- Mickey Cochrane managed the Great Lakes Naval Training Station baseball team.
+- The player served on Saipan during World War II.
+- Casey Stengel managed the New York Yankees from 1949 through 1953.
+
+## 2025-09-28 - Zach Britton
+Fact verification failed for the following claims:
+- This player was a third-round selection in the 2006 amateur draft.
+- He attended Weatherford College.
+- He was an All-Star in 2015.
+- He was an All-Star in 2016.
+- He recorded a 0.54 ERA during the 2016 season.
+- He pitched 67 innings during the 2016 season.
+- He played for the Baltimore Orioles.
+- He played for the New York Yankees.
+
+## 2026-03-22 - Aaron Boone
+Fact verification failed for the following claims:
+- Aaron Boone was born on March 9, 1973.
+- Aaron Boone was born in La Mesa, California.
+- Aaron Boone hit a walk-off home run in the 2003 American League Championship Series.
+- Aaron Boone is a former Major League Baseball player.
+- Aaron Boone is a former manager of the New York Yankees.
+
+## 2026-03-27 - Joe DiMaggio
+Fact verification failed for the following claims:
+- The player signed a professional contract for $225 a month in 1933.
+- The player hit 29 home runs and drove in 125 runs in 1936.
+- The player won the American League MVP award in 1939, 1941, and 1947.
+- The player set a record by hitting in 56 consecutive games in 1941.
+- The player struck out only 13 times in the 1941 season.
+- The player missed the first 65 games of the 1949 season due to a bone spur.
+- The player was a member of teams that won nine World Series titles between 1936 and 1951.
+- Al Gionfriddo made a famous catch against the player in Game Six of the 1947 World Series.
+
+## 2026-03-30 - David Weathers
+Fact verification failed for the following claims:
+- This player was born on September 25, 1969, in Lawrenceburg, Tennessee.
+- He played for the 1996 World Series champion New York Yankees.
+- He retired after the 2009 season with 964 pitching appearances.
+- Toronto drafted this player in the third round of the 1988 June amateur draft.
+- He made his major-league debut against the Boston Red Sox at Fenway Park.
+- In the 1996 ALDS against Texas, he led all relievers on both teams with five shutout innings.
+- He earned a $22,800 share of the 1992 World Series title.
+- He was a member of the 1992 Toronto Blue Jays championship team.
+
+## 2026-04-08 - José Canseco
+Fact verification failed for the following claims:
+- This player was selected as a 15th-round draft choice by the Oakland A's in 1982.
+- This player batted .263 in 28 games for Idaho Falls in 1982.
+- This player recorded a 40-homer, 40-stolen-base season in 1988.
+- This player won the American League Rookie of the Year Award in 1986.
+- This player won the American League Most Valuable Player Award in 1988.
+- This player claimed to have introduced steroids into the big leagues in 1985.
+- This player's mother died in 1984 from complications due to diabetes and hepatitis.
+- This player and Mark McGwire were known as the 'Bash Brothers' during their time with the Oakland A's.
+- This player received 1.1 percent of the Hall of Fame vote in 2007.
+- This player finished his career with 462 home runs.
+- This player finished his career with 1,407 runs batted in.
+
+## 2026-04-13 - Reggie Jackson
+Fact verification failed for the following claims:
+- The player attended Arizona State University on a football scholarship.
+- The player could run a 60-yard dash in 6.3 seconds.
+- The player was a member of the Birmingham A's in 1967.
+- The player won the MVP award in 1973.
+- The player hit 32 home runs and recorded 117 RBIs in 1973.
+- The player was a unanimous selection for the 1973 league MVP award.
+
+## 2026-04-14 - Don Baylor
+Fact verification failed for the following claims:
+- The player earned the nickname 'Groove' from teammates while with the Baltimore Orioles.
+- The player retired as the modern record-holder with 267 hit-by-pitches.
+- The player led the American League in hit-by-pitches eight times.
+- The player won the American League Most Valuable Player award in 1979.
+- In 1979, the player led both leagues in runs scored and RBIs.
+- The player was traded from the Baltimore Orioles to the Oakland Athletics for Reggie Jackson in 1976.
+
+## 2026-04-16 - Mike Witt
+Fact verification failed for the following claims:
+- This player won all 14 of his decisions during his senior year at Servite High School in 1978.
+- Servite High School won the 1978 CIF Southern Section 4-A baseball championship with a 6-1 victory.
+- This player joined the Angels' Opening Day roster in 1981.
+- Buzzie Bavasi served as a general manager for the Angels.
+- In 1981, this player recorded a 3-0 record and a 1.44 ERA over 25 innings during spring training.
+- Peter Gammons was a sportswriter who praised this player's curveball in the American League.
+
+## 2026-04-18 - Fran Healy
+Fact verification failed for the following claims:
+- This player was in the Cleveland farm system from 1965 through 1968.
+- This player was the 28th choice in the expansion draft by the Kansas City Royals.
+- In 1974, this player appeared in 138 games as a catcher.
+- This player transitioned to the broadcast booth in 1978.
+- This player advised Reggie Jackson to leave the clubhouse during a conflict with Billy Martin in 1977.
+- This player developed the 'yips' during 1970 spring training.
+- This player spent time in the minor leagues in Omaha in 1970.
+
+## 2026-04-22 - Jim Leyritz
+Fact verification failed for the following claims:
+- The player was born in Lakewood, Ohio.
+- The player was born on December 27, 1963.
+- The player hit a game-tying three-run home run in Game 4 of the 1996 World Series.
+
+## 2026-04-24 - José Cruz
+Fact verification failed for the following claims:
+- This player set a school record with 10 RBIs in a game against Southwest Texas State on February 9, 1995.
+- This player committed a pivotal fielding error in the 11th inning of the 2003 Division Series against the Florida Marlins.
+- This player attended Rice University from 1992 to 1995.
+- This player graduated from Rice University in May 2013.
+- This player hit .353 with a .476 on-base percentage in five games during the 2006 World Baseball Classic.
+- This player was five years old when he was hit by a foul ball during the Caribbean World Series.
+
+## 2026-04-25 - Octavio Dotel
+Fact verification failed for the following claims:
+- The player was born on November 25, 1973.
+- The player was born in Santo Domingo, Distrito Nacional, in the Dominican Republic.
+- The player played for 13 different Major League Baseball franchises during his career.
+
+## 2026-04-26 - Jim Wynn
+Fact verification failed for the following claims:
+- The player was drafted by the Houston Colt .45s in November 1962.
+- The player drew 148 walks during the 1969 season.
+- The player achieved a .436 on-base percentage in 1969.
+- The player hit three home runs in the Astrodome on June 15, 1967.
+- The player stood 5-feet-9 tall.
+- The player's father coached him in Little League and helped him develop his hitting style.
+- Harry Walker was a manager who criticized the player's free-swinging style.
+
+## 2026-04-27 - Jim Mason
+Fact verification failed for the following claims:
+- In 1970, the player hit an inside-the-park home run and started a triple play in the same game.
+- The player hit four doubles in a single game on July 8, 1974.
+- The player hit a home run in his first World Series at-bat in 1976.
+- The player's 1976 home run came off pitcher Pat Zachry.
+- The player felt his personality did not click with manager Billy Martin.
+- The player recorded a batting average of .152 during the 1975 season.
+
+## 2026-04-29 - John Charles Ellis
+Fact verification failed for the following claims:
+- The player was a catcher who transitioned to relief pitching.
+- The player was a member of the New York Yankees from 1974 to 1976.
+- The player began his professional career in the Cleveland organization.
+
+## 2026-05-01 - Tim Stoddard
+Fact verification failed for the following claims:
+- This player won an NCAA Division I basketball championship in 1974.
+- This player is the only person to hold both an NCAA Division I basketball title and a World Series ring.
+- This player set an Orioles club record with 26 saves in 1980.
+- This player recorded an RBI single in his first big-league at-bat during the 1979 World Series.
+- This player's preferred playing weight during his major league career was 250 pounds.
+
+## 2026-05-03 - Mason Jordan Williams
+Fact verification failed for the following claims:
+- The player was drafted by the New York Yankees in the fourth round of the 2010 MLB Draft.
+- The player made his Major League Baseball debut in 2015.
+- The player recorded his first career MLB hit as a home run in 2015.
+
+## 2026-05-08 - Gary Sheffield
+Fact verification failed for the following claims:
+- The player was expelled from his Little League team for chasing his coach with a bat.
+- The player recorded 509 home runs over his 22-year major-league career.
+- The player grew up with his uncle, Dwight Gooden.
+- The player donated $200 for every home run to the Florida RBI program.
+- The player paid $100,000 for a man's liver transplant.
+- The player felt racial bias influenced his treatment by the Milwaukee Brewers.
+- The player was misdiagnosed by the Brewers after suffering a broken bone in his foot in 1989.
+
+## 2026-05-09 - Willie Randolph
+Fact verification failed for the following claims:
+- The player played for the Thetford Mines Pirates in 1974.
+- The player had a .397 on-base percentage in 1974 while with the Thetford Mines Pirates.
+- The player never won a Gold Glove award.
+- The player never committed an error in a postseason game.
+- The player grew up in the Tilden Housing Projects in the Brownsville section of Brooklyn.
+- The player practiced diving for balls on a mat in the gym at Samuel J. Tilden High School.
+- The player was named manager of the New York Mets in November 2004.
+
+## 2026-05-10 - Graeme Lloyd
+Fact verification failed for the following claims:
+- The player was trained as an electrician.
+- The player worked as a sales representative for the athletic shoe company Pony.
+- The player was the first Australian to win a World Series ring.
+- The player won a World Series ring with the Yankees in 1996.
+- The player was the first pitcher from Australia to reach the major leagues in 1993.
+- The player had a 0.00 ERA in 13 career postseason appearances.
+- The player had a bone spur in his elbow in 1996.
+- The player earned a win in Game Four of the 1996 World Series.
+
+## 2026-05-11 - Pat Dobson
+Fact verification failed for the following claims:
+- The player struck out 137 batters in 157 innings for the Durham Bulls in 1960.
+- The player struck out 21 batters in a game in Puerto Rico on December 10, 1967.
+- Johnny Sain taught the player a new grip for his slider.
+- The player's 1969 season ended after Wayne Redmond stepped on his toe.
+- The player received a $25,000 signing bonus at the age of 17.
+- The player nicknamed John Hiller 'Ratso' after a character in the movie Midnight Cowboy.
+
+## 2026-05-17 - Marv Throneberry
+Fact verification failed for the following claims:
+- This player signed with the Yankees in 1952.
+- He turned down a contract offer from the Boston Red Sox.
+- He led the American Association in home runs in 1955 with 36.
+- He led the American Association in home runs in 1956 with 42.
+- He led the American Association in home runs in 1957 with 40.
+- He was the first player to play for both the New York Yankees and the New York Mets.
+- He was traded to the Mets on May 9, 1962.
+- On August 21, 1962, he hit a 450-foot game-winning home run against Elroy Face.
+
