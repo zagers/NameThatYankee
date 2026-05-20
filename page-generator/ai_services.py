@@ -367,7 +367,8 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     5. **Non-Rectangular / Perspective:** REJECT (Priority 0) any baseball card that is die-cut, non-rectangular, OR is a photo of a card sitting on a surface/table. The card MUST be the full frame of the image (no visible backgrounds, shadows, or angled perspective). Standard rectangular cards only.
     6. **Holders & Grading:** REJECT (Priority 0) any image that shows a card inside a plastic holder, protector, top-loader, or grading slab (e.g., PSA, Beckett/BGS, SGC).
     7. **Card Backs:** REJECT (Priority 0) any image that shows the BACK of a baseball card (text-heavy, stats-only, or no player photo). Priority 1 MUST be the FRONT of the card showing the player's face.
-    8. **Unofficial Uniforms:** REJECT (Priority 0) if the player is in a generic pinstripe jersey without official Yankees branding or if it's a promotional/fantasy jersey. Relax rejection for players from before 1990 if the uniform is a standard road/home pinstripe or gray uniform from that era, even if branding is subtle.
+    9. **Rotation/Upside Down:** REJECT (Priority 0) any image that is rotated sideways or upside down. The player and card MUST be correctly oriented vertically.
+    10. **Unofficial Uniforms:** REJECT (Priority 0) if the player is in a generic pinstripe jersey without official Yankees branding or if it's a promotional/fantasy jersey. Relax rejection for players from before 1990 if the uniform is a standard road/home pinstripe or gray uniform from that era, even if branding is subtle.
 
     Rate the image based on the following priority levels:
 
@@ -396,6 +397,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
       "is_clean_scan": true/false,
       "is_in_holder": true/false,
       "is_autographed": true/false,
+      "is_upside_down": true/false,
       "is_portrait": true/false,
       "is_single_player": true/false,
       "has_transient_text": true/false,
@@ -430,6 +432,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             is_clean_scan = data.get('is_clean_scan', True)
             is_in_holder = data.get('is_in_holder', False)
             is_autographed = data.get('is_autographed', False)
+            is_upside_down = data.get('is_upside_down', False)
             is_front_of_card = data.get('is_front_of_card', True)
             is_official_uniform = data.get('is_official_uniform', True)
             has_transient_text = data.get('has_transient_text', False)
@@ -440,7 +443,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             
             # Final Override Logic: If the AI sets Priority 0, we respect it.
             # If the AI sets Priority 1/2/3, we do a sanity check on critical "unfixable" rejections.
-            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player
+            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down
             
             if unfixable_rejection:
                 priority = 0
@@ -449,6 +452,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
                 if is_autographed: reasons.append("autographed")
                 if has_transient_text: reasons.append("transient/event text")
                 if not is_single_player: reasons.append("multiple players/collage")
+                if is_upside_down: reasons.append("upside down/sideways")
                 reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
             elif priority in [1, 2, 3]:
                 # If it's landscape or not a clean scan, it MUST have a crop box to be Priority 1/2
