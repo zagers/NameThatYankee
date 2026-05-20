@@ -85,7 +85,7 @@ class BatchClient:
         if "SUCCEEDED" not in state_str:
             raise ValueError(f"Job {job_name} is not in SUCCEEDED state (current state: {job.state})")
         
-        # In the new SDK, the destination file is in job.dest.file_name
+        # Retrieve destination file path from the job destination metadata.
         result_file = None
         if hasattr(job, 'dest') and hasattr(job.dest, 'file_name'):
             result_file = job.dest.file_name

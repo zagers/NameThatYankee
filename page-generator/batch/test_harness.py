@@ -1,3 +1,5 @@
+# ABOUTME: Evaluation harness for Grounded Enthusiast trivia generation.
+# ABOUTME: Validates factual precision and quality criteria across a sample player pool.
 import os
 import json
 import sys

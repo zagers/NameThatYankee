@@ -3,9 +3,6 @@
 
 import re
 import logging
-
-import re
-import logging
 from datetime import datetime
 
 def verify_claims(claims, raw_data):
@@ -55,7 +52,7 @@ def verify_claims(claims, raw_data):
         if teams:
             valid_numbers.add(str(len(teams)))
 
-    # 2c. EXTRACT NUMBERS FROM BIO/TRANSACTIONS (New Improvement)
+    # 2c. Extract numbers from bio and transaction narratives to augment totals.
     # This catches numbers mentioned in the narrative that might be missing from career_totals
     narrative_numbers = re.findall(r'\b(\d+\.\d{1,3}|\.\d{3}|\d{2,})\b', raw_text_for_matching)
     for num in narrative_numbers:
