@@ -183,3 +183,33 @@ def test_analyze_player_image_rejection_non_yankee_uniform(mock_genai_client, mo
     assert result["priority"] == 0
     assert "REJECTED due to not in a Yankee uniform" in result["reasoning"]
 
+
+def test_analyze_player_image_rejection_incorrect_player(mock_genai_client, mocker):
+    mocker.patch("ai_services.Image.open")
+    
+    # Gemini returns priority 1 but says it is the wrong player
+    mock_response = MagicMock()
+    mock_response.text = json.dumps({
+        "is_yankee_uniform": True,
+        "is_official_uniform": True,
+        "is_baseball_card": True,
+        "is_front_of_card": True,
+        "is_rectangular": True,
+        "is_clean_scan": True,
+        "is_in_holder": False,
+        "is_portrait": True,
+        "is_single_player": True,
+        "has_transient_text": False,
+        "is_correct_player": False, # Incorrect player!
+        "priority_level": 1,
+        "confidence": "high",
+        "reasoning": "This card shows Oswald Peraza, not Sal Fasano."
+    })
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake.jpg", "Sal Fasano", "key")
+    
+    assert result["priority"] == 0
+    assert "incorrect player (not Sal Fasano)" in result["reasoning"]
+
+

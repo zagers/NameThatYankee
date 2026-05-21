@@ -354,10 +354,10 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     
     generation_config = types.GenerateContentConfig(temperature=0.1)
     prompt = f"""
-    Analyze the provided baseball player image and determine if the player is in a New York Yankees uniform, if the image is a baseball card, and if it is in portrait orientation.
+    Analyze the provided baseball player image and determine if the player is indeed {player_name}, if the player is in a New York Yankees uniform, if the image is a baseball card, and if it is in portrait orientation.
     
-    You do NOT need to verify the player's identity; assume the image is of the correct player.
-    Focus ONLY on the uniform, the format (card vs photo), the text content, and the orientation.
+    You MUST verify the player's identity. Check any visible text in the image (especially names on baseball cards, jerseys, logos, etc.) to confirm if the player in the image is indeed {player_name}. If the image clearly identifies a different player (for example, showing another player's name like "Oswald Peraza" or "Gleyber Torres"), you MUST set "is_correct_player" to false. If there is no visible text or identifiable features indicating a different player, and the player matches the general description, you may assume they are correct.
+    Focus ONLY on the player identity, the uniform, the format (card vs photo), the text content, and the orientation.
 
     **CRITICAL REJECTION CRITERIA:**
     1. **Orientation:** If the image is in landscape orientation (width > height), you MUST determine if a clear, portrait-oriented baseball card or player is present that can be cropped out. If a crop is possible, provide the `crop_box` and continue. If the image is landscape and NO portrait-oriented player/card can be cropped, REJECT (Priority 0).
@@ -369,6 +369,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     7. **Card Backs:** REJECT (Priority 0) any image that shows the BACK of a baseball card (text-heavy, stats-only, or no player photo). Priority 1 MUST be the FRONT of the card showing the player's face.
     9. **Rotation/Upside Down:** REJECT (Priority 0) any image that is rotated sideways or upside down. The player and card MUST be correctly oriented vertically.
     10. **Unofficial Uniforms:** REJECT (Priority 0) if the player is in a generic pinstripe jersey without official Yankees branding or if it's a promotional/fantasy jersey. Relax rejection for players from before 1990 if the uniform is a standard road/home pinstripe or gray uniform from that era, even if branding is subtle.
+    11. **Identity Mismatch:** REJECT (Priority 0) if the image or card features a player other than {player_name}.
 
     Rate the image based on the following priority levels:
 
@@ -400,6 +401,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
       "is_portrait": true/false,
       "is_single_player": true/false,
       "has_transient_text": true/false,
+      "is_correct_player": true/false,
       "priority_level": 0 | 1 | 2 | 3,
       "crop_box": [ymin, xmin, ymax, xmax],
       "confidence": "high/medium/low",
@@ -436,6 +438,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             is_official_uniform = data.get('is_official_uniform', True)
             is_yankee_uniform = data.get('is_yankee_uniform', True)
             has_transient_text = data.get('has_transient_text', False)
+            is_correct_player = data.get('is_correct_player', True)
             
             # Smart Crop Logic: If we have a crop box and it's otherwise a good image, 
             # we can potentially promote it even if it's not a clean scan or is landscape.
@@ -443,7 +446,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             
             # Final Override Logic: If the AI sets Priority 0, we respect it.
             # If the AI sets Priority 1/2/3, we do a sanity check on critical "unfixable" rejections.
-            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down or not is_yankee_uniform
+            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down or not is_yankee_uniform or not is_correct_player
             
             if unfixable_rejection:
                 priority = 0
@@ -454,6 +457,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
                 if not is_single_player: reasons.append("multiple players/collage")
                 if is_upside_down: reasons.append("upside down/sideways")
                 if not is_yankee_uniform: reasons.append("not in a Yankee uniform")
+                if not is_correct_player: reasons.append(f"incorrect player (not {player_name})")
                 reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
             elif priority in [1, 2, 3]:
                 # If it's landscape or not a clean scan, it MUST have a crop box to be Priority 1/2
