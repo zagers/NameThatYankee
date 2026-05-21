@@ -32,6 +32,7 @@ except ImportError:
     print("⚠️  Automation modules not available - using manual workflow only")
 
 
+
 # --- Automation Helper Functions ---
 
 def handle_config_mode():
@@ -430,6 +431,12 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                 scraped_data = scraper.search_and_scrape_player(player_name, automated=True, driver=shared_driver)
                 sabr_bio = scraper.get_sabr_bio(player_name)
                 
+                # Enrichment fallback for thin/missing biography
+                if not sabr_bio or len(sabr_bio) < 500:
+                    wiki_summary = scraper.get_wikipedia_summary(player_name)
+                    if wiki_summary:
+                        sabr_bio = (sabr_bio or "") + "\n\nWikipedia Summary:\n" + wiki_summary
+                
                 if not scraped_data:
                     print(f"  ❌ Failed to scrape BR stats for {player_name}")
                     continue
@@ -440,6 +447,7 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                     "yearly_war": scraped_data.get('yearly_war', []),
                     "transactions": scraped_data.get('transactions', []),
                     "awards": scraped_data.get('awards', []),
+                    "positions": scraped_data.get('positions', {}),
                     "bio": sabr_bio
                 }
 
@@ -472,7 +480,19 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                         print(f"  ❌ Verification failed.")
 
                 if not generation_success:
-                    print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts.")
+                    print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts. Using dynamic stats fallback.")
+                    fallback_facts = scraper.generate_stats_fallback(player_dossier)
+                    player_data = {
+                        'name': player_name,
+                        'nickname': player_entry.get('nickname', ''),
+                        'facts': fallback_facts,
+                        'followup_qa': [],
+                        'career_totals': scraped_data['career_totals'],
+                        'yearly_war': scraped_data['yearly_war']
+                    }
+                    dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                    formatted_date = dt_obj.strftime("%B %d, %Y")
+                    html_generator.generate_detail_page(player_data, date_str, formatted_date, project_dir)
 
             except Exception as e:
                 print(f"  ❌ Error processing {date_str}: {e}")
@@ -794,6 +814,12 @@ Notes:
                     scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated, driver=shared_driver)
                     sabr_bio = scraper.get_sabr_bio(player_info['name'])
                     
+                    # Enrichment fallback for thin/missing biography
+                    if not sabr_bio or len(sabr_bio) < 500:
+                        wiki_summary = scraper.get_wikipedia_summary(player_info['name'])
+                        if wiki_summary:
+                            sabr_bio = (sabr_bio or "") + "\n\nWikipedia Summary:\n" + wiki_summary
+                    
                     if scraped_data:
                         player_info['career_totals'] = scraped_data['career_totals']
                         player_info['yearly_war'] = scraped_data['yearly_war']
@@ -806,6 +832,7 @@ Notes:
                         "yearly_war": scraped_data.get('yearly_war', []) if scraped_data else [],
                         "transactions": scraped_data.get('transactions', []) if scraped_data else [],
                         "awards": scraped_data.get('awards', []) if scraped_data else [],
+                        "positions": scraped_data.get('positions', {}) if scraped_data else {},
                         "bio": sabr_bio
                     }
 
@@ -837,7 +864,7 @@ Notes:
                         
                         if not generation_success:
                             print("  ⚠️ All generation attempts failed verification. Using basic fallback.")
-                            player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                            player_info['facts'] = scraper.generate_stats_fallback(player_dossier)
                             player_info['followup_qa'] = []
 
                     verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
