@@ -56,6 +56,36 @@ def test_generate_grounded_trivia():
         if isinstance(prompt, list):
             prompt = prompt[0]
         
-        assert "Skeptical Copy Editor" in prompt
+        assert "Yankees historian and fan" in prompt
         assert "Tippy Martinez" in prompt
-        assert "ONLY use information provided in the dossier" in prompt
+        assert "THE SOURCE OF TRUTH" in prompt
+
+def test_is_invalid_hint():
+    from grounded_ai import is_invalid_hint
+    
+    # 1. Spoilers with player name
+    assert is_invalid_hint("Played with Tippy Martinez", "Tippy Martinez") is True
+    assert is_invalid_hint("A great catcher named Martinez", "Tippy Martinez") is True
+    
+    # 2. Years (4-digit starting with 19 or 20)
+    assert is_invalid_hint("Won the MVP in 1999", "Tippy Martinez") is True
+    assert is_invalid_hint("Made debut in 2005", "Tippy Martinez") is True
+    assert is_invalid_hint("Had 30 saves in 1983", "Tippy Martinez") is True
+    
+    # 3. Geographical or team names
+    assert is_invalid_hint("Played for the Yankees in his career", "Tippy Martinez") is True
+    assert is_invalid_hint("Spent a season in the Bronx", "Tippy Martinez") is True
+    assert is_invalid_hint("Born in Brooklyn", "Tippy Martinez") is True
+    assert is_invalid_hint("Wore the famous pinstripes", "Tippy Martinez") is True
+    
+    # 4. Team count or stint counts
+    assert is_invalid_hint("Played for 9 different franchises", "Tippy Martinez") is True
+    assert is_invalid_hint("Played for 9 teams during his career", "Tippy Martinez") is True
+    assert is_invalid_hint("Spent two separate stints with the team", "Tippy Martinez") is True
+    assert is_invalid_hint("A member of the organization", "Tippy Martinez") is True
+    assert is_invalid_hint("Had multiple stints with the franchise", "Tippy Martinez") is True
+    
+    # 5. Valid facts
+    assert is_invalid_hint("Known for a signature thick handlebar mustache", "Tippy Martinez") is False
+    assert is_invalid_hint("Won the World Series as a backup catcher", "Tippy Martinez") is False
+

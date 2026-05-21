@@ -3,6 +3,7 @@
 
 import json
 import time
+import re
 from google import genai  # type: ignore
 from google.genai import types  # type: ignore
 
@@ -56,6 +57,60 @@ def contains_hall_of_shame(result):
             return True, word
     return False, None
 
+def is_invalid_hint(fact: str, player_name: str) -> bool:
+    """
+    Returns True if a quiz hint contains spoilers, years, geographical locations,
+    team names, or team/stint count indicators.
+    """
+    fact_lower = fact.lower()
+    
+    # 1. Check for player name or parts of the player name (excluding short initials)
+    name_parts = [p.lower() for p in player_name.split() if len(p) > 2]
+    for part in name_parts:
+        if part in fact_lower:
+            return True
+            
+    # 2. Check for years (any 4-digit number starting with 19 or 20)
+    if re.search(r'\b(?:19|20)\d{2}\b', fact):
+        return True
+        
+    # 3. Check for geographical or team name references, or pinstripes
+    forbidden_words = [
+        "yankee", "bronx", "new york", "pinstripe", "brooklyn", "queens", "manhattan",
+        "red sox", "boston", "dodger", "mets", "kansas city", "royals", "oakland",
+        "athletics", "colorado", "rockies", "tampa bay", "devil rays", "brewers",
+        "milwaukee", "angels", "anaheim", "baltimore", "orioles", "phillies",
+        "philadelphia", "toronto", "blue jays", "cleveland", "indians", "atlanta",
+        "braves", "chicago", "cubs", "white sox", "cincinnati", "reds", "detroit",
+        "tigers", "houston", "astros", "miami", "marlins", "minnesota", "twins",
+        "pittsburgh", "pirates", "san diego", "padres", "san francisco", "giants",
+        "seattle", "mariners", "st. louis", "cardinals", "texas", "rangers", "washington",
+        "nationals", "montreal", "expos", "arizona", "diamondbacks", "california"
+    ]
+    for word in forbidden_words:
+        if word in fact_lower:
+            return True
+            
+    # 4. Check for team counts or stint counts
+    stint_patterns = [
+        r'\b\d+\s+different\b',
+        r'\bplayed\s+for\s+\d+\b',
+        r'\b\d+\s+franchises\b',
+        r'\b\d+\s+teams\b',
+        r'\b\d+\s+organizations\b',
+        r'\bstint\b',
+        r'\bstints\b',
+        r'\bfranchise\b',
+        r'\bfranchises\b',
+        r'\borganization\b',
+        r'\borganizations\b'
+    ]
+    for pattern in stint_patterns:
+        if re.search(pattern, fact_lower):
+            return True
+            
+    return False
+
 def generate_grounded_trivia(player_dossier, api_key: str):
     """
     Generates trivia facts and Q&A pairs anchored strictly to the provided player dossier.
@@ -76,17 +131,23 @@ You are a passionate New York Yankees historian and fan. Your goal is to generat
 **STRICT ACCURACY RULES FOR STATS**:
 1. Every statistic, year, and team name MUST match the dossier exactly. Do NOT round numbers.
 2. **NO META-COMMENTARY**: Never mention "SABR," "biography," or "database."
+3. **DO NOT HALLUCINATE OR INVENT STORIES**: All follow-up Q&A stories MUST be factually correct and fully grounded in real historical baseball records or the dossier. Never claim a player had multiple stints with an organization if they did not.
 
 **QUIZ CHALLENGE RULES (FOR HINTS)**:
 The "Facts" (Hints) are for a quiz where the user sees a visual clue card (which typically shows name, team logo, stats like BA/HR/RBI/ERA/W-L, and a list of teams played for). 
-1. **NO SPOILERS**: In the 3 primary "Facts", you MUST NOT mention:
+1. **NO SPOILERS**: In the 3 primary "Facts" (Hints), you MUST NOT mention:
    - The player's name or nicknames.
-   - Any team names or city names (e.g., do NOT say "Yankees" or "Detroit").
-   - Any specific years (e.g., do NOT say "1995").
+   - Any team names or city/geographical names (e.g., do NOT say "Yankees", "Detroit", "Bronx", "New York", "Boston", etc.).
+   - Any specific years or decades (e.g., do NOT say "1995" or "the 90s").
    - **NO CARD BACK STATS**: Do NOT include career batting average (BA), total career home runs (HR), total career RBI, or specific win/loss records. 
-   - **NO TEAM LISTS**: Do NOT mention how many teams they played for.
+   - **NO TEAM, FRANCHISE, OR STINT LISTINGS/COUNTS**: Do NOT count, mention, or list how many teams, organizations, franchises, or stints the player had. Do NOT use the words "stint", "organization", "franchise", "different teams", etc.
+   - **NEGATIVE EXAMPLES (DO NOT SAY THESE)**:
+     * "Served as a journeyman catcher for 11 different major league organizations."
+     * "Played for 9 different franchises over a 12-year career."
+     * "Had two separate stints with the Bronx organization."
+     * "Wore the pinstripes during a division-winning season."
 2. **CATEGORIZED HINTS**: Pick the 3 BEST hints from these categories:
-   - Awards & Honors, Positions & Specialties, Family Relationships, or Notable Achievements.
+   - Awards & Honors, Positions & Specialties, Family Relationships, or Notable Achievements (e.g., striking out a specific famous player, unique rule situation, signature look/style like a thick handlebar mustache).
 3. Format: Short, punchy sentences. Use digits for numbers. Do NOT use pronouns ("he", "his").
 
 **FOLLOW-UP RULES (FOR Q&A) - THE "GENERATIVE MEMORY" MANDATE**:
@@ -96,6 +157,7 @@ The "Facts" (Hints) are for a quiz where the user sees a visual clue card (which
    - NEVER mention the "SABR BioProject," "biography status," or "unassigned records."
    - NEVER use "Full Names" or "Birthplace/Birthdate" as a fact or Q&A unless it is truly extraordinary.
    - NEVER say "He was born in [City]" or "His full name is [Name]." This is low-quality filler.
+   - NEVER invent false or unverified rumors (e.g. do NOT say Sal Fasano had two separate stints with the Yankees; he had exactly one stint).
 4. Examples of "Good" Q&A anecdotes (What we want):
    - "He was the #1 overall prospect in baseball according to Baseball America."
    - "He was a centerpiece in a blockbuster trade for a future Hall of Famer."
@@ -141,6 +203,15 @@ Return ONLY a JSON object:
             has_junk, word = contains_hall_of_shame(result)
             if has_junk:
                 print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Hall of Shame filler detected ('{word}').")
+                continue
+                
+            invalid_fact = False
+            for fact in result.get("facts", []):
+                if is_invalid_hint(fact, player_name):
+                    print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Invalid hint detected: '{fact}'")
+                    invalid_fact = True
+                    break
+            if invalid_fact:
                 continue
                 
             return result

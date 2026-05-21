@@ -382,10 +382,9 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform.
     - Contains NO autographs, NO transient/event-based text, intrusive graphics, or multiple players.
 
-    **Priority 3: Any Other Image (Non-Yankee, Ambiguous, or Graphic)**
-    - The player is NOT in an official Yankees uniform.
-    - OR the image is otherwise clean but doesn't meet Priority 1 or 2.
-    - NOTE: Images meeting ANY Rejection Criteria above MUST be Priority 0, NOT Priority 3.
+    **Priority 3: Any Other Image (Ambiguous or Graphic)**
+    - The player is in an official Yankees uniform but the image doesn't meet Priority 1 or 2.
+    - NOTE: Images where the player is NOT in an official Yankees uniform or meeting ANY Rejection Criteria above MUST be Priority 0, NOT Priority 3.
 
     Your response must be a valid JSON object with the following structure, and nothing else:
     {{
@@ -435,6 +434,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             is_upside_down = data.get('is_upside_down', False)
             is_front_of_card = data.get('is_front_of_card', True)
             is_official_uniform = data.get('is_official_uniform', True)
+            is_yankee_uniform = data.get('is_yankee_uniform', True)
             has_transient_text = data.get('has_transient_text', False)
             
             # Smart Crop Logic: If we have a crop box and it's otherwise a good image, 
@@ -443,7 +443,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             
             # Final Override Logic: If the AI sets Priority 0, we respect it.
             # If the AI sets Priority 1/2/3, we do a sanity check on critical "unfixable" rejections.
-            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down
+            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down or not is_yankee_uniform
             
             if unfixable_rejection:
                 priority = 0
@@ -453,6 +453,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
                 if has_transient_text: reasons.append("transient/event text")
                 if not is_single_player: reasons.append("multiple players/collage")
                 if is_upside_down: reasons.append("upside down/sideways")
+                if not is_yankee_uniform: reasons.append("not in a Yankee uniform")
                 reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
             elif priority in [1, 2, 3]:
                 # If it's landscape or not a clean scan, it MUST have a crop box to be Priority 1/2

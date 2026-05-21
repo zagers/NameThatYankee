@@ -2,6 +2,12 @@
 
 ## Journal
 
+### 2026-05-21: Journeyman Fact Grounding & Image Search Fallbacks - "Uniform & Claim Integrity"
+*   **Prompt Grounding and Hallucination Prevention**: Integrated explicit negative prompt constraints in `page-generator/grounded_ai.py` to prevent LLM hallucinations about stint counts, franchise lists, and geographical locations, resolving the false Sal Fasano Q&A claim about "two separate stints."
+*   **Uniform Verification & Fallbacks**: Hardened player image selection in `page-generator/ai_services.py` to strictly enforce `is_yankee_uniform: false` Priority 0 rejections, and added secondary search fallback logic in `page-generator/automation/player_image_search.py` to query alternative terms when Yankees cards are not found on the primary search.
+*   **Daily Quiz Generation**: Regenerated the Sal Fasano quiz detail page (`2026-05-20.html`) and associated image (`images/answer-2026-05-20.webp`), verifying with vision models that the selected and cropped player card is a high-quality scan in an official Yankees uniform.
+*   **Regression Integrity**: Fixed nested mock targets in `tests/unit/page_generator/test_main_integration.py` to prevent Selenium hangs, and verified that 100% of the Vitest, Firestore rules, and Python integration tests pass cleanly.
+
 ### 2026-05-20: PR Review & Local Conformity Rectification - "Pipelines & Compliance"
 *   **PR Review Submission**: Performed a thorough architectural and conformity review on PR #112 (`feature/upgrade-ai-facts` branch) and submitted feedback via `gh pr review`.
 *   **Conformity Remediation**: Resolving all identified conformity violations:

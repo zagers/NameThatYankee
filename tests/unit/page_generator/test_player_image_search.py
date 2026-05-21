@@ -183,3 +183,41 @@ class TestPlayerImageSearch:
             assert len(results) == 0
             assert mock_analyze.called
             assert not test_img.exists() # Should be unlinked after rejection
+
+    def test_find_first_yankee_image_secondary_fallback(self, player_search, temp_dir):
+        """Test that secondary search is triggered when primary search yields no Yankee uniform images."""
+        test_img = temp_dir / "test.jpg"
+        test_img.touch()
+
+        with patch.object(player_search, '_get_image_candidates_from_bing') as mock_bing, \
+             patch.object(player_search, '_get_image_candidates_from_google') as mock_google, \
+             patch.object(player_search, '_download_full_size_image') as mock_download, \
+             patch.object(player_search.image_processor, 'get_image_info') as mock_info, \
+             patch('ai_services.analyze_player_image') as mock_analyze:
+            
+            def side_effect_bing(query):
+                if "card" in query:
+                    return [{'direct_url': 'http://ex.com/primary.jpg', 'source_page': 'http://ex.com/primary'}]
+                elif "topps" in query:
+                    return [{'direct_url': 'http://ex.com/secondary.jpg', 'source_page': 'http://ex.com/secondary'}]
+                return []
+                
+            mock_bing.side_effect = side_effect_bing
+            mock_google.return_value = []
+            mock_download.return_value = test_img
+            mock_info.return_value = {'width': 400, 'height': 600}
+            
+            mock_analyze.side_effect = [
+                {'priority': 0, 'reasoning': 'not in a Yankee uniform'},
+                {'priority': 1, 'reasoning': 'Perfect Yankee Uniform'}
+            ]
+            
+            results = player_search.find_first_yankee_image("Sal Fasano", "fake_key")
+            
+            assert len(results) == 1
+            assert results[0]['priority'] == 1
+            assert results[0]['direct_url'] == 'http://ex.com/secondary.jpg'
+            
+            mock_bing.assert_any_call("Sal Fasano yankees card")
+            mock_bing.assert_any_call("Sal Fasano topps yankees")
+
