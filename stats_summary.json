@@ -4,16 +4,16 @@
         "name": "Sal Fasano",
         "nickname": "",
         "teams": [
-            "TOR",
-            "BAL",
-            "COL",
-            "OAK",
             "PHI",
-            "KCR",
-            "2TM",
-            "CLE",
             "ANA",
-            "NYY"
+            "OAK",
+            "COL",
+            "KCR",
+            "NYY",
+            "BAL",
+            "TOR",
+            "2TM",
+            "CLE"
         ],
         "years": [
             "1996",

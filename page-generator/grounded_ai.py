@@ -57,6 +57,26 @@ def contains_hall_of_shame(result):
             return True, word
     return False, None
 
+def contains_generic_questions(result):
+    """Checks for generic or trivial questions about playing for the Yankees."""
+    qa = result.get("qa", [])
+    for item in qa:
+        q_lower = item.get("question", "").lower()
+        # Look for questions asking if they played for the Yankees/New York/Bronx or wore pinstripes
+        forbidden_patterns = [
+            r"\bdid he (ever )?play for the (new york )?yankees?\b",
+            r"\bdid he (ever )?wear the pinstripes\b",
+            r"\bdid he (ever )?play in the bronx\b",
+            r"\bdid he (ever )?play in new york\b",
+            r"\bwas he a (member of the )?yankees?\b",
+            r"\bdid he play for new york\b",
+            r"\bdid he play for the yankees?\b"
+        ]
+        for pattern in forbidden_patterns:
+            if re.search(pattern, q_lower):
+                return True, item.get("question")
+    return False, None
+
 def is_invalid_hint(fact: str, player_name: str) -> bool:
     """
     Returns True if a quiz hint contains spoilers, years, geographical locations,
@@ -158,6 +178,7 @@ The "Facts" (Hints) are for a quiz where the user sees a visual clue card (which
    - NEVER use "Full Names" or "Birthplace/Birthdate" as a fact or Q&A unless it is truly extraordinary.
    - NEVER say "He was born in [City]" or "His full name is [Name]." This is low-quality filler.
    - NEVER invent false or unverified rumors (e.g. do NOT say Sal Fasano had two separate stints with the Yankees; he had exactly one stint).
+   - NEVER ask generic questions about whether the player played for the Yankees, wore the pinstripes, or played in New York/Bronx (e.g., "Did he ever play for the New York Yankees?" or "Did he wear the pinstripes?"). Since ALL players in this quiz are former Yankees, these questions are redundant, uninteresting, and lack trivia value.
 4. Examples of "Good" Q&A anecdotes (What we want):
    - "He was the #1 overall prospect in baseball according to Baseball America."
    - "He was a centerpiece in a blockbuster trade for a future Hall of Famer."
@@ -203,6 +224,11 @@ Return ONLY a JSON object:
             has_junk, word = contains_hall_of_shame(result)
             if has_junk:
                 print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Hall of Shame filler detected ('{word}').")
+                continue
+                
+            has_generic_q, q_text = contains_generic_questions(result)
+            if has_generic_q:
+                print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Generic/redundant question detected: '{q_text}'")
                 continue
                 
             invalid_fact = False
