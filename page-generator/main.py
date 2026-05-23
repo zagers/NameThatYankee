@@ -63,23 +63,37 @@ def get_project_directory(config: dict) -> Path:
     config_manager.save_config(config)
     return project_dir
 
-def enrich_player_bio(player_name: str, existing_bio: Optional[str]) -> str:
+def enrich_player_bio(player_name: str, existing_bio: Optional[str], force: bool = False) -> str:
     """
     Enrich a player's biography with Wikipedia data if necessary.
     
     Args:
         player_name: Name of the player
         existing_bio: Current biography text (e.g. from SABR)
+        force: If True, enrich even if existing bio is long enough
         
     Returns:
         Enriched biography string
     """
     bio = existing_bio or ""
     # Enrichment fallback for thin/missing biography
-    if not bio or len(bio) < 500:
+    if force or not bio or len(bio) < 500:
+        if force:
+            print(f"  ℹ️  Forcing biography enrichment for {player_name}...")
+        elif not bio:
+            print(f"  ℹ️  No biography found for {player_name}. Fetching from Wikipedia...")
+        else:
+            print(f"  ℹ️  Biography for {player_name} is short ({len(bio)} chars). Enriching from Wikipedia...")
+            
         wiki_summary = scraper.get_wikipedia_summary(player_name)
         if wiki_summary:
             bio = (bio + "\n\nWikipedia Summary:\n" + wiki_summary).strip()
+            print(f"  ✅ Successfully enriched biography for {player_name}.")
+        else:
+            print(f"  ⚠️  Could not find Wikipedia summary for {player_name}.")
+    else:
+        print(f"  ℹ️  Biography for {player_name} is sufficient ({len(bio)} chars). Skipping enrichment.")
+        
     return bio
 
 def handle_config_mode():
