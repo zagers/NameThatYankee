@@ -22,6 +22,16 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     display_name = html.escape(f'{name} "{nickname}"' if nickname else name)
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
 
+    # Dynamic SEO description
+    meta_description = f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle."
+    if facts:
+        facts_preview = ", ".join(facts[:2])
+        meta_description = f"Trivia and career highlights for New York Yankees player {name}. Learn about their {facts_preview}, and more."
+    
+    # Truncate for SEO best practices (approx 160 chars)
+    if len(meta_description) > 160:
+        meta_description = meta_description[:157] + "..."
+
     followup_section_html = ""
     if followup_qa:
         items_html_parts: List[str] = []
@@ -192,16 +202,16 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     <link rel="canonical" href="https://namethatyankeequiz.com/{date_str}">
     
     <!-- Meta tags for better social sharing -->
-    <meta name="description" content="Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.">
+    <meta name="description" content="{html.escape(meta_description)}">
     <meta property="og:title" content="Name That Yankee - {formatted_date}">
-    <meta property="og:description" content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?">
+    <meta property="og:description" content="{html.escape(meta_description)}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Name That Yankee">
     <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Name That Yankee - {formatted_date}">
-    <meta name="twitter:description" content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?">
+    <meta name="twitter:description" content="{html.escape(meta_description)}">
     <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
     
     <meta name="apple-mobile-web-app-title" content="NameThatYankee">
@@ -210,8 +220,8 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     {{
       "@context": "https://schema.org",
       "@type": "Article",
-      "headline": "Name That Yankee Answer for {formatted_date}",
-      "description": {json.dumps(f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle.")},
+      "headline": {json.dumps(f"Name That Yankee Answer for {formatted_date}")},
+      "description": {json.dumps(meta_description)},
       "image": "https://namethatyankeequiz.com/images/social-card.webp",
       "author": {{
         "@type": "Person",

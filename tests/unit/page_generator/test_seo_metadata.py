@@ -1,3 +1,5 @@
+# ABOUTME: Unit tests for SEO metadata generation (Meta Description, JSON-LD, Canonical tags).
+# ABOUTME: Verifies dynamic description generation and JSON-LD schema correctness.
 import pytest
 from bs4 import BeautifulSoup
 import os
@@ -44,7 +46,19 @@ def test_meta_description_in_detail_page(sample_player_data):
     
     meta_desc = soup.find("meta", attrs={"name": "description"})
     assert meta_desc is not None
-    assert meta_desc["content"] == f"Discover the career highlights and statistics for Derek Jeter, the featured New York Yankee for the {formatted_date} trivia puzzle."
+    # The full description is > 160 chars, so it should be truncated
+    expected_full = "Trivia and career highlights for New York Yankees player Derek Jeter. Learn about their Hit a home run for his 3000th hit, Won 5 World Series championships, and more."
+    if len(expected_full) > 160:
+        expected_desc = expected_full[:157] + "..."
+    else:
+        expected_desc = expected_full
+    assert meta_desc["content"] == expected_desc
+    
+    # Verify OG and Twitter tags use the same description
+    og_desc = soup.find("meta", attrs={"property": "og:description"})
+    assert og_desc["content"] == expected_desc
+    twitter_desc = soup.find("meta", attrs={"name": "twitter:description"})
+    assert twitter_desc["content"] == expected_desc
 
 def test_json_ld_in_detail_page(sample_player_data):
     date_str = "1999-05-15"
@@ -61,6 +75,7 @@ def test_json_ld_in_detail_page(sample_player_data):
     assert data["@type"] == "Article"
     assert data["headline"] == f"Name That Yankee Answer for {formatted_date}"
     assert "Derek Jeter" in data["description"]
+    assert "Hit a home run" in data["description"]
     assert data["datePublished"] == date_str
 
 def test_json_ld_with_quoted_name(sample_player_data):
@@ -77,7 +92,31 @@ def test_json_ld_with_quoted_name(sample_player_data):
     
     # This should be valid JSON
     data = json.loads(script_tag.string)
-    assert data["description"] == f'Discover the career highlights and statistics for Babe "The Bambino" Ruth, the featured New York Yankee for the {formatted_date} trivia puzzle.'
+    expected_full = 'Trivia and career highlights for New York Yankees player Babe "The Bambino" Ruth. Learn about their Hit a home run for his 3000th hit, Won 5 World Series championships, and more.'
+    if len(expected_full) > 160:
+        expected_desc = expected_full[:157] + "..."
+    else:
+        expected_desc = expected_full
+    assert data["description"] == expected_desc
+
+def test_meta_description_truncation(sample_player_data):
+    # Test that very long facts are truncated in the meta description
+    sample_player_data["facts"] = [
+        "This is an extremely long fact that goes on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on and on.",
+        "Short fact"
+    ]
+    date_str = "1999-05-15"
+    formatted_date = "May 15, 1999"
+    
+    html_content = html_generator.build_detail_page_html(sample_player_data, date_str, formatted_date)
+    soup = BeautifulSoup(html_content, "html.parser")
+    
+    meta_desc = soup.find("meta", attrs={"name": "description"})
+    content = meta_desc["content"]
+    
+    # Check that it's within reasonable length (e.g., 160 chars)
+    assert len(content) <= 170
+    assert content.endswith("...")
 
 def test_robots_txt_existence():
     # Resolving path relative to the test file for robustness across environments
