@@ -1,5 +1,8 @@
 # _config.yml
 
+# Disable github metadata to avoid API authentication errors in CI
+skip_github_metadata: true
+
 # Use clean URLs (remove .html extension)
 permalink: /:basename
 

@@ -80,14 +80,14 @@ class TestMainIntegrationWorkflows:
     def test_automated_mode_workflow(self, temp_project_dir, sample_clue_image, sample_config, sample_player_data, sample_scraped_data):
         """Test automated mode workflow end-to-end"""
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', return_value=sample_player_data), \
-             patch('main.scraper.search_and_scrape_player', return_value=sample_scraped_data), \
-             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
-             patch('main.grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
-             patch('main.fact_verifier.verify_claims', return_value=True), \
-             patch('main.user_interaction.review_and_edit_data', return_value=sample_player_data), \
-             patch('main.html_generator.generate_detail_page') as mock_generate, \
-             patch('main.html_generator.rebuild_index_page') as mock_rebuild:
+             patch('ai_services.get_player_info_from_image', return_value=sample_player_data), \
+             patch('scraper.search_and_scrape_player', return_value=sample_scraped_data), \
+             patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
+             patch('grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
+             patch('fact_verifier.verify_claims', return_value=True), \
+             patch('user_interaction.review_and_edit_data', return_value=sample_player_data), \
+             patch('html_generator.generate_detail_page') as mock_generate, \
+             patch('html_generator.rebuild_index_page') as mock_rebuild:
             
             # Simulate the main workflow for automated mode
             project_dir = temp_project_dir
@@ -127,11 +127,11 @@ class TestMainIntegrationWorkflows:
     def test_id_only_mode_workflow(self, temp_project_dir, sample_clue_image, sample_config, sample_player_data, sample_scraped_data):
         """Test ID-only mode workflow"""
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', return_value=sample_player_data), \
-             patch('main.scraper.search_and_scrape_player', return_value=sample_scraped_data), \
-             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
-             patch('main.user_interaction.review_and_edit_data', return_value=sample_player_data), \
-             patch('main.html_generator.generate_detail_page') as mock_generate:
+             patch('ai_services.get_player_info_from_image', return_value=sample_player_data), \
+             patch('scraper.search_and_scrape_player', return_value=sample_scraped_data), \
+             patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
+             patch('user_interaction.review_and_edit_data', return_value=sample_player_data), \
+             patch('html_generator.generate_detail_page') as mock_generate:
             
             # Simulate ID-only mode workflow
             project_dir = temp_project_dir
@@ -165,13 +165,13 @@ class TestMainIntegrationWorkflows:
     def test_facts_only_mode_workflow(self, temp_project_dir, sample_clue_image, sample_config, sample_player_data, sample_scraped_data):
         """Test facts-only mode workflow"""
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', return_value=sample_player_data), \
-             patch('main.scraper.search_and_scrape_player', return_value=sample_scraped_data), \
-             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
-             patch('main.grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
-             patch('main.fact_verifier.verify_claims', return_value=True), \
-             patch('main.user_interaction.review_and_edit_data', return_value=sample_player_data), \
-             patch('main.html_generator.generate_detail_page') as mock_generate:
+             patch('ai_services.get_player_info_from_image', return_value=sample_player_data), \
+             patch('scraper.search_and_scrape_player', return_value=sample_scraped_data), \
+             patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
+             patch('grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
+             patch('fact_verifier.verify_claims', return_value=True), \
+             patch('user_interaction.review_and_edit_data', return_value=sample_player_data), \
+             patch('html_generator.generate_detail_page') as mock_generate:
             
             # Simulate facts-only mode workflow
             project_dir = temp_project_dir
@@ -251,9 +251,9 @@ class TestMainIntegrationWorkflows:
     def test_gemini_quota_exceeded_handling(self, temp_project_dir, sample_clue_image, sample_config):
         """Test handling of Gemini quota exceeded exception"""
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', side_effect=ai_services.GeminiDailyQuotaExceeded("Quota exceeded")), \
-             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"), \
-             patch('main.html_generator.rebuild_index_page') as mock_rebuild, \
+             patch('ai_services.get_player_info_from_image', side_effect=ai_services.GeminiDailyQuotaExceeded("Quota exceeded")), \
+             patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
+             patch('html_generator.rebuild_index_page') as mock_rebuild, \
              patch('builtins.print') as mock_print:
             
             # Simulate processing with quota exceeded
@@ -291,8 +291,8 @@ class TestMainIntegrationWorkflows:
 
         # Test AI service failure
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', return_value=None), \
-             patch('main.scraper.get_sabr_bio', return_value="Sample SABR bio"):
+             patch('ai_services.get_player_info_from_image', return_value=None), \
+             patch('scraper.get_sabr_bio', return_value="Sample SABR bio"):
             # Process should continue even if AI fails
             clue_path = sample_clue_image
             player_info = ai_services.get_player_info_from_image(clue_path, sample_config['gemini_api_key'])
@@ -305,11 +305,11 @@ class TestMainIntegrationWorkflows:
         
         # Test scraper failure
         with patch('config_manager.load_config', return_value=sample_config), \
-             patch('main.ai_services.get_player_info_from_image', return_value={'name': 'Test Player'}), \
-             patch('main.scraper.search_and_scrape_player', return_value=None), \
-             patch('main.ai_services.get_facts_and_followup_from_gemini', return_value={'facts': [], 'qa': []}), \
-             patch('main.user_interaction.review_and_edit_data') as mock_review, \
-             patch('main.html_generator.generate_detail_page') as mock_generate:
+             patch('ai_services.get_player_info_from_image', return_value={'name': 'Test Player'}), \
+             patch('scraper.search_and_scrape_player', return_value=None), \
+             patch('ai_services.get_facts_and_followup_from_gemini', return_value={'facts': [], 'qa': []}), \
+             patch('user_interaction.review_and_edit_data') as mock_review, \
+             patch('html_generator.generate_detail_page') as mock_generate:
             
             # Process should continue even if scraping fails
             project_dir = temp_project_dir
@@ -356,7 +356,7 @@ class TestMainIntegrationWorkflows:
 
     def test_player_list_generation_integration(self, temp_project_dir):
         """Test player list generation integration"""
-        with patch('main.scraper.generate_master_player_list') as mock_generate:
+        with patch('scraper.generate_master_player_list') as mock_generate:
             # Simulate player list generation
             scraper.generate_master_player_list(temp_project_dir)
             

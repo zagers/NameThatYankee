@@ -1,3 +1,5 @@
+# ABOUTME: Orchestrates the automated puzzle addition workflow from screenshot to HTML.
+# ABOUTME: Integrates image processing, player identification, stats scraping, and AI generation.
 """
 Automated workflow orchestrator for puzzle addition.
 
@@ -169,6 +171,12 @@ class AutomatedWorkflow:
             scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
             sabr_bio = scraper.get_sabr_bio(player_name)
             
+            # Enrichment fallback for thin/missing biography
+            if not sabr_bio or len(sabr_bio) < 500:
+                wiki_summary = scraper.get_wikipedia_summary(player_name)
+                if wiki_summary:
+                    sabr_bio = (sabr_bio or "") + "\n\nWikipedia Summary:\n" + wiki_summary
+            
             if scraped_data:
                 logger.info(f"Successfully scraped stats for {player_name}")
                 scraped_data['bio'] = sabr_bio
@@ -197,6 +205,7 @@ class AutomatedWorkflow:
                 "yearly_war": scraped.get('yearly_war', []),
                 "transactions": scraped.get('transactions', []),
                 "awards": scraped.get('awards', []),
+                "positions": scraped.get('positions', {}),
                 "bio": scraped.get('bio', '')
             }
 
@@ -218,8 +227,8 @@ class AutomatedWorkflow:
                     logger.warning(f"❌ Verification failed on attempt {attempt + 1}.")
             
             if not generation_success:
-                logger.error("All generation attempts failed verification. Using basic fallback.")
-                player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                logger.error("All generation attempts failed verification. Using dynamic stats fallback.")
+                player_info['facts'] = scraper.generate_stats_fallback(player_dossier)
                 player_info['followup_qa'] = []
 
         except Exception as e:

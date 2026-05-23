@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from typing import List, Tuple, Optional, Any
 import re
 import subprocess
 import sys
@@ -32,7 +33,54 @@ except ImportError:
     print("⚠️  Automation modules not available - using manual workflow only")
 
 
+
 # --- Automation Helper Functions ---
+
+def get_project_directory(config: dict) -> Path:
+    """
+    Get the project directory from config or user input.
+    
+    Args:
+        config: Current configuration dictionary
+        
+    Returns:
+        Resolved Path to the project directory
+    """
+    last_path = config.get("last_project_path")
+    if last_path:
+        project_dir_str = last_path
+        print(f"Using default path: {project_dir_str}")
+    else:
+        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
+    
+    project_dir = Path(project_dir_str).resolve()
+    if not project_dir.is_dir():
+        print(f"❌ Error: Directory not found at '{project_dir}'")
+        sys.exit(1)
+    
+    # Save the path for next time
+    config["last_project_path"] = str(project_dir)
+    config_manager.save_config(config)
+    return project_dir
+
+def enrich_player_bio(player_name: str, existing_bio: Optional[str]) -> str:
+    """
+    Enrich a player's biography with Wikipedia data if necessary.
+    
+    Args:
+        player_name: Name of the player
+        existing_bio: Current biography text (e.g. from SABR)
+        
+    Returns:
+        Enriched biography string
+    """
+    bio = existing_bio or ""
+    # Enrichment fallback for thin/missing biography
+    if not bio or len(bio) < 500:
+        wiki_summary = scraper.get_wikipedia_summary(player_name)
+        if wiki_summary:
+            bio = (bio + "\n\nWikipedia Summary:\n" + wiki_summary).strip()
+    return bio
 
 def handle_config_mode():
     """Handle configuration mode for automation settings."""
@@ -93,22 +141,8 @@ def handle_automation_mode(config: dict, automate_workflow: bool, batch_automate
     """Handle automation mode for puzzle processing."""
     print("\n--- Automated Workflow ---")
     
-    # Get project directory - use cached path without prompting for automation
-    last_path = config.get("last_project_path")
-    if last_path:
-        project_dir_str = last_path
-        print(f"Using default path: {project_dir_str}")
-    else:
-        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
-    
-    project_dir = Path(project_dir_str).resolve()
-    if not project_dir.is_dir():
-        print(f"❌ Error: Directory not found at '{project_dir}'")
-        exit()
-    
-    # Save the path for next time
-    config["last_project_path"] = str(project_dir)
-    config_manager.save_config(config)
+    # Get project directory
+    project_dir = get_project_directory(config)
     
     # Get API key
     api_key = config.get("gemini_api_key")
@@ -317,17 +351,7 @@ def handle_find_image(config: dict):
         exit()
 
     # Get project directory
-    last_path = config.get("last_project_path")
-    if last_path:
-        project_dir_str = last_path
-        print(f"Using default path: {project_dir_str}")
-    else:
-        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
-    
-    project_dir = Path(project_dir_str).resolve()
-    if not project_dir.is_dir():
-        print(f"❌ Error: Directory not found at '{project_dir}'")
-        exit()
+    project_dir = get_project_directory(config)
         
     images_dir = project_dir / "images"
     api_key = config.get("gemini_api_key")
@@ -430,6 +454,9 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                 scraped_data = scraper.search_and_scrape_player(player_name, automated=True, driver=shared_driver)
                 sabr_bio = scraper.get_sabr_bio(player_name)
                 
+                # Enrichment fallback for thin/missing biography
+                sabr_bio = enrich_player_bio(player_name, sabr_bio)
+                
                 if not scraped_data:
                     print(f"  ❌ Failed to scrape BR stats for {player_name}")
                     continue
@@ -440,6 +467,7 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                     "yearly_war": scraped_data.get('yearly_war', []),
                     "transactions": scraped_data.get('transactions', []),
                     "awards": scraped_data.get('awards', []),
+                    "positions": scraped_data.get('positions', {}),
                     "bio": sabr_bio
                 }
 
@@ -472,7 +500,19 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                         print(f"  ❌ Verification failed.")
 
                 if not generation_success:
-                    print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts.")
+                    print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts. Using dynamic stats fallback.")
+                    fallback_facts = scraper.generate_stats_fallback(player_dossier)
+                    player_data = {
+                        'name': player_name,
+                        'nickname': player_entry.get('nickname', ''),
+                        'facts': fallback_facts,
+                        'followup_qa': [],
+                        'career_totals': scraped_data['career_totals'],
+                        'yearly_war': scraped_data['yearly_war']
+                    }
+                    dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+                    formatted_date = dt_obj.strftime("%B %d, %Y")
+                    html_generator.generate_detail_page(player_data, date_str, formatted_date, project_dir)
 
             except Exception as e:
                 print(f"  ❌ Error processing {date_str}: {e}")
@@ -592,6 +632,9 @@ Options:
   --regenerate-facts   Regenerate trivia facts for existing puzzles using 
                        the new grounded pipeline. Requires selecting dates.
 
+  --rebuild-index      Rebuild and re-sort index.html and update 
+                       stats_summary.json from all available clue images.
+
   -h, --help            Show this help message and exit.
 
 Interactive prompts (normal generation mode):
@@ -636,6 +679,7 @@ Notes:
     identify_player = "--identify-player" in sys.argv
     config_mode = "--config" in sys.argv
     regenerate_mode = "--regenerate-facts" in sys.argv
+    rebuild_index_mode = "--rebuild-index" in sys.argv
 
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
@@ -645,6 +689,12 @@ Notes:
     # Handle standalone identification
     if identify_player:
         handle_identify_player(config)
+        exit()
+
+    # Handle index rebuilding
+    if rebuild_index_mode:
+        project_dir = get_project_directory(config)
+        html_generator.rebuild_index_page(project_dir)
         exit()
 
     # Handle standalone image search
@@ -665,45 +715,14 @@ Notes:
 
     # Check for player list refresh flags
     if "--refresh-player-list" in sys.argv or "--generate-player-list" in sys.argv:
-        prompt_message = "Enter the path to your website project folder to save the player list"
-        if last_path:
-            prompt_message += f" [Default: {last_path}]: "
-        else:
-            prompt_message += ": "
-        project_dir_str = input(prompt_message).strip().strip("'\"")
-        if not project_dir_str and last_path:
-            project_dir_str = last_path
-            print(f"Using default path: {project_dir_str}")
-        
-        project_dir = Path(project_dir_str).resolve()
-        if not project_dir.is_dir():
-            print(f"❌ Error: Directory not found at '{project_dir}'")
-            exit()
-        
-        # Save the path for next time
-        config["last_project_path"] = str(project_dir)
-        config_manager.save_config(config)
+        project_dir = get_project_directory(config)
 
         scraper.generate_master_player_list(project_dir)
         exit() # Exit after generating the list
 
     # 1. Get project directory
-    prompt_message = "Enter the path to your website project folder"
-    if last_path:
-        prompt_message += f" [Default: {last_path}]: "
-    else:
-        prompt_message += ": "
-    project_dir_str = input(prompt_message).strip().strip("'\"")
-    if not project_dir_str and last_path:
-        project_dir_str = last_path
-        print(f"Using default path: {project_dir_str}")
+    project_dir = get_project_directory(config)
     
-    project_dir = Path(project_dir_str).resolve()
-    if not project_dir.is_dir():
-        print(f"❌ Error: Directory not found at '{project_dir}'")
-        exit()
-    config["last_project_path"] = str(project_dir)
-
     # 2. Get API Key
     api_key = config.get("gemini_api_key")
     if not api_key:
@@ -794,6 +813,9 @@ Notes:
                     scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated, driver=shared_driver)
                     sabr_bio = scraper.get_sabr_bio(player_info['name'])
                     
+                    # Enrichment fallback for thin/missing biography
+                    sabr_bio = enrich_player_bio(player_info['name'], sabr_bio)
+                    
                     if scraped_data:
                         player_info['career_totals'] = scraped_data['career_totals']
                         player_info['yearly_war'] = scraped_data['yearly_war']
@@ -806,6 +828,7 @@ Notes:
                         "yearly_war": scraped_data.get('yearly_war', []) if scraped_data else [],
                         "transactions": scraped_data.get('transactions', []) if scraped_data else [],
                         "awards": scraped_data.get('awards', []) if scraped_data else [],
+                        "positions": scraped_data.get('positions', {}) if scraped_data else {},
                         "bio": sabr_bio
                     }
 
@@ -837,7 +860,7 @@ Notes:
                         
                         if not generation_success:
                             print("  ⚠️ All generation attempts failed verification. Using basic fallback.")
-                            player_info['facts'] = ["Stats-only fallback: Player played for multiple teams including the Yankees."]
+                            player_info['facts'] = scraper.generate_stats_fallback(player_dossier)
                             player_info['followup_qa'] = []
 
                     verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)

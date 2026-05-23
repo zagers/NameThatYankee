@@ -28,6 +28,28 @@ class ImageProcessor:
         self.max_width = max_width
         self.max_height = max_height
     
+    def _ensure_rgb(self, img: Image.Image) -> Image.Image:
+        """
+        Ensure an image is in RGB mode, flattening transparency to white.
+        
+        Args:
+            img: PIL Image object
+            
+        Returns:
+            RGB PIL Image object
+        """
+        if img.mode in ('RGBA', 'LA', 'P'):
+            background = Image.new('RGB', img.size, (255, 255, 255))
+            if img.mode == 'P':
+                img = img.convert('RGBA')
+            # Use alpha channel as mask for pasting (last channel for RGBA and LA)
+            mask = img.split()[-1] if img.mode in ('RGBA', 'LA') else None
+            background.paste(img, mask=mask)
+            return background
+        elif img.mode != 'RGB':
+            return img.convert('RGB')
+        return img
+
     def convert_to_webp(self, input_path: Path, output_path: Path) -> bool:
         """
         Convert an image to WEBP format with optimization.
@@ -42,14 +64,7 @@ class ImageProcessor:
         try:
             with Image.open(input_path) as img:
                 # Convert to RGB if necessary (for PNG with transparency)
-                if img.mode in ('RGBA', 'LA', 'P'):
-                    background = Image.new('RGB', img.size, (255, 255, 255))
-                    if img.mode == 'P':
-                        img = img.convert('RGBA')
-                    background.paste(img, mask=img.split()[-1] if img.mode == 'RGBA' else None)
-                    img = background
-                elif img.mode != 'RGB':
-                    img = img.convert('RGB')
+                img = self._ensure_rgb(img)
                 
                 # Auto-orient based on EXIF
                 img = ImageOps.exif_transpose(img)
@@ -239,10 +254,18 @@ class ImageProcessor:
                 # Perform crop
                 cropped_img = img.crop((left, top, right, bottom))
                 
-                # Save back to same path (maintain original format for now)
-                cropped_img.save(image_path)
-                logger.info(f"✂️ Successfully cropped image {image_path.name}")
-                return True
+                # Ensure we can save as JPEG if the extension is .jpg/.jpeg
+                if image_path.suffix.lower() in ('.jpg', '.jpeg'):
+                    cropped_img = self._ensure_rgb(cropped_img)
+                
+                # Save to temp file first to prevent corruption if save fails
+                temp_path = image_path.with_name(f"temp_crop_{image_path.name}")
+                cropped_img.save(temp_path)
+                
+            # Replace original after successful save (and file closure)
+            temp_path.replace(image_path)
+            logger.info(f"✂️ Successfully cropped image {image_path.name}")
+            return True
                 
         except Exception as e:
             logger.error(f"Error cropping {image_path}: {e}")

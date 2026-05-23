@@ -2,6 +2,17 @@
 
 ## Journal
 
+### 2026-05-23: Robust Search Engine Fallbacks & Bot-Bypass - "Resilience & Fallbacks"
+*   **Bing Bot-Detection Bypass**: Configured a realistic macOS Chrome user-agent for Bing Images Selenium ChromeOptions. This successfully prevents bot-detection that causes Bing to serve a degraded landing page with trending recommendations instead of actual player cards.
+*   **Structural Google Fallback**: Restructured the candidate evaluation loop inside `find_first_yankee_image`'s nested `search_and_evaluate` function. If Bing returns no candidates or if all candidates fail evaluation (e.g. size check, player identity mismatch), the script immediately falls back to Google Images to search and evaluate.
+
+### 2026-05-21: Journeyman Fact Grounding & Image Search Fallbacks - "Uniform & Claim Integrity"
+*   **Prompt Grounding and Hallucination Prevention**: Integrated explicit negative prompt constraints in `page-generator/grounded_ai.py` to prevent LLM hallucinations about stint counts, franchise lists, and geographical locations, resolving the false Sal Fasano Q&A claim about "two separate stints."
+*   **Uniform Verification & Fallbacks**: Hardened player image selection in `page-generator/ai_services.py` to strictly enforce `is_yankee_uniform: false` Priority 0 rejections, and added secondary search fallback logic in `page-generator/automation/player_image_search.py` to query alternative terms when Yankees cards are not found on the primary search.
+*   **Image Identity Mismatch Hardening**: Addressed the issue where incorrect player cards (such as Oswald Peraza for Sal Fasano) were accepted by prompt-level identity verification. Hardened `page-generator/ai_services.py`'s vision model prompt to explicitly verify the player's identity via visible text/jersey/names, returning an `is_correct_player` boolean, and enforced a strict Python override to reject mismatched players. Added a comprehensive failing-to-passing unit test in `tests/unit/page_generator/test_analyze_image.py`.
+*   **Daily Quiz Generation**: Regenerated the Sal Fasano quiz detail page (`2026-05-20.html`) and associated image (`images/answer-2026-05-20.webp`), verifying with vision models that the selected and cropped player card is a high-quality scan in an official Yankees uniform.
+*   **Regression Integrity**: Fixed nested mock targets in `tests/unit/page_generator/test_main_integration.py` to prevent Selenium hangs, and verified that 100% of the Vitest, Firestore rules, and Python integration tests pass cleanly.
+
 ### 2026-05-20: PR Review & Local Conformity Rectification - "Pipelines & Compliance"
 *   **PR Review Submission**: Performed a thorough architectural and conformity review on PR #112 (`feature/upgrade-ai-facts` branch) and submitted feedback via `gh pr review`.
 *   **Conformity Remediation**: Resolving all identified conformity violations:
