@@ -2,6 +2,10 @@
 
 ## Journal
 
+### 2026-05-23: Robust Search Engine Fallbacks & Bot-Bypass - "Resilience & Fallbacks"
+*   **Bing Bot-Detection Bypass**: Configured a realistic macOS Chrome user-agent for Bing Images Selenium ChromeOptions. This successfully prevents bot-detection that causes Bing to serve a degraded landing page with trending recommendations instead of actual player cards.
+*   **Structural Google Fallback**: Restructured the candidate evaluation loop inside `find_first_yankee_image`'s nested `search_and_evaluate` function. If Bing returns no candidates or if all candidates fail evaluation (e.g. size check, player identity mismatch), the script immediately falls back to Google Images to search and evaluate.
+
 ### 2026-05-21: Journeyman Fact Grounding & Image Search Fallbacks - "Uniform & Claim Integrity"
 *   **Prompt Grounding and Hallucination Prevention**: Integrated explicit negative prompt constraints in `page-generator/grounded_ai.py` to prevent LLM hallucinations about stint counts, franchise lists, and geographical locations, resolving the false Sal Fasano Q&A claim about "two separate stints."
 *   **Uniform Verification & Fallbacks**: Hardened player image selection in `page-generator/ai_services.py` to strictly enforce `is_yankee_uniform: false` Priority 0 rejections, and added secondary search fallback logic in `page-generator/automation/player_image_search.py` to query alternative terms when Yankees cards are not found on the primary search.
