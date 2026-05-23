@@ -612,6 +612,9 @@ Options:
   --regenerate-facts   Regenerate trivia facts for existing puzzles using 
                        the new grounded pipeline. Requires selecting dates.
 
+  --rebuild-index      Rebuild and re-sort index.html and update 
+                       stats_summary.json from all available clue images.
+
   -h, --help            Show this help message and exit.
 
 Interactive prompts (normal generation mode):
@@ -656,6 +659,7 @@ Notes:
     identify_player = "--identify-player" in sys.argv
     config_mode = "--config" in sys.argv
     regenerate_mode = "--regenerate-facts" in sys.argv
+    rebuild_index_mode = "--rebuild-index" in sys.argv
 
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
@@ -665,6 +669,28 @@ Notes:
     # Handle standalone identification
     if identify_player:
         handle_identify_player(config)
+        exit()
+
+    # Handle index rebuilding
+    if rebuild_index_mode:
+        prompt_message = "Enter the path to your website project folder"
+        if last_path:
+            prompt_message += f" [Default: {last_path}]: "
+        else:
+            prompt_message += ": "
+        
+        # In automated context (last_path exists), don't prompt
+        if last_path:
+            project_dir_str = last_path
+        else:
+            project_dir_str = input(prompt_message).strip().strip("'\"")
+            
+        project_dir = Path(project_dir_str).resolve()
+        if not project_dir.is_dir():
+            print(f"❌ Error: Directory not found at '{project_dir}'")
+            exit()
+        
+        html_generator.rebuild_index_page(project_dir)
         exit()
 
     # Handle standalone image search

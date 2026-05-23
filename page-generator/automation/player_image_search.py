@@ -60,126 +60,108 @@ class PlayerImageSearch:
         2. Any image + Yankee uniform
         3. Any image of the player
         """
+        search_term = f"{player_name} yankees card"
+        logger.info(f"🚀 Searching Bing Images for: {search_term}")
+        
+        # Switch to Bing as primary search engine
+        candidates = self._get_image_candidates_from_bing(search_term)
+        
+        if not candidates:
+            logger.info("⚠️ No candidates from Bing. Attempting fallback to Google...")
+            candidates = self._get_image_candidates_from_google(search_term)
+
+        if not candidates:
+            logger.warning("No image candidates found in any search engine.")
+            return []
+
+        logger.info(f"Total candidates available from search: {len(candidates)}")
         best_matches = []
         fallbacks = []
         max_candidates_to_check = 25
+        
+        # Determine actual number to check
+        num_to_check = min(len(candidates), max_candidates_to_check)
+        logger.info(f"🔍 Will evaluate up to {num_to_check} candidates...")
 
-        def evaluate_candidates_list(candidates: List[dict]) -> bool:
-            num_to_check = min(len(candidates), max_candidates_to_check)
-            logger.info(f"🔍 Will evaluate up to {num_to_check} candidates...")
-
-            for i, candidate in enumerate(candidates[:max_candidates_to_check]):
-                current_idx = i + 1
-                logger.info(f"\n--- 🧐 Evaluating Candidate {current_idx}/{num_to_check} ---")
-                logger.info(f"Source: {candidate['source_page'][:80]}...")
+        for i, candidate in enumerate(candidates[:max_candidates_to_check]):
+            current_idx = i + 1
+            logger.info(f"\n--- 🧐 Evaluating Candidate {current_idx}/{num_to_check} ---")
+            logger.info(f"Source: {candidate['source_page'][:80]}...")
+            
+            # Step 2 & 3: Download full scale and check suitability
+            temp_file = self._download_full_size_image(candidate)
+            if not temp_file:
+                continue
                 
-                # Download full scale and check suitability
-                temp_file = self._download_full_size_image(candidate)
-                if not temp_file:
-                    continue
-                    
-                # Check suitability (size & format)
-                img_info = self.image_processor.get_image_info(temp_file)
-                if img_info:
-                    width, height = img_info.get('width', 0), img_info.get('height', 0)
-                    if width < 200 or height < 200:
-                        logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 200x200. Skipping.")
-                        temp_file.unlink(missing_ok=True)
-                        continue
-                else:
-                    logger.info("  ❌ Could not determine image dimensions. Skipping.")
+            # Check suitability (size & format)
+            img_info = self.image_processor.get_image_info(temp_file)
+            if img_info:
+                width, height = img_info.get('width', 0), img_info.get('height', 0)
+                if width < 200 or height < 200:
+                    logger.info(f"  ❌ Image too small ({width}x{height}). Minimum required is 200x200. Skipping.")
                     temp_file.unlink(missing_ok=True)
                     continue
+            else:
+                logger.info("  ❌ Could not determine image dimensions. Skipping.")
+                temp_file.unlink(missing_ok=True)
+                continue
 
-                # Use Gemini to verify priority
-                if api_key:
-                    try:
-                        import ai_services
-                        analysis = ai_services.analyze_player_image(temp_file, player_name, api_key)
-                        priority = analysis.get('priority', 3)
-                        crop_box = analysis.get('crop_box')
-                        
-                        if priority in [1, 2]:
-                            # Perform smart crop if requested by AI
-                            if crop_box:
-                                if self.image_processor.crop_to_bounding_box(temp_file, crop_box):
-                                    # Re-validate dimensions after crop
-                                    img_info = self.image_processor.get_image_info(temp_file)
-                                    if img_info:
-                                        w, h = img_info.get('width', 0), img_info.get('height', 0)
-                                        if w < 100 or h < 100: # Slightly more lenient after crop
-                                            logger.info(f"  ❌ Cropped image too small ({w}x{h}). Skipping.")
-                                            temp_file.unlink(missing_ok=True)
-                                            continue
-                            
-                            logger.info(f"  ✨ Found High Priority Match (Level {priority})!")
-                            candidate['temp_file'] = temp_file
-                            candidate['priority'] = priority
-                            best_matches.append(candidate)
-                            
-                            # Stop ONLY if we have 3 Priority 1 images specifically
-                            p1_count = len([m for m in best_matches if m['priority'] == 1])
-                            if p1_count >= 3:
-                                logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping search early.")
-                                return True
-                        
-                        elif priority == 3:
-                            if len(fallbacks) < 3:
-                                logger.info(f"  📍 Found Priority 3 (Fallback). Staging as option {len(fallbacks)+1}...")
-                                candidate['temp_file'] = temp_file
-                                candidate['priority'] = 3
-                                fallbacks.append(candidate)
-                            else:
-                                logger.info("  ⏭️ Already have 3 fallbacks. Skipping.")
-                                temp_file.unlink(missing_ok=True)
-                        else:
-                            logger.info(f"  ❌ Image rejected by AI (Priority {priority}).")
-                            temp_file.unlink(missing_ok=True)
-                            
-                    except Exception as e:
-                        logger.error(f"  ⚠️ Error during AI analysis: {e}")
-                        temp_file.unlink(missing_ok=True)
-                else:
-                    # No API key, just take the first 3 suitable images
-                    logger.warning("  ⚠️ No API key provided for verification.")
-                    candidate['temp_file'] = temp_file
-                    candidate['priority'] = 99
-                    best_matches.append(candidate)
-                    if len(best_matches) >= 3:
-                        return True
-            return False
-
-        def search_and_evaluate(query: str) -> bool:
-            logger.info(f"🚀 Searching Bing/Google for: {query}")
-            
-            # Try Bing first
-            candidates = self._get_image_candidates_from_bing(query)
-            if candidates:
-                logger.info(f"Total candidates available from Bing search for '{query}': {len(candidates)}")
-                success = evaluate_candidates_list(candidates)
-                if success or best_matches:
-                    return True
-
-            # If Bing returned nothing or all candidates failed, attempt fallback to Google
-            logger.info(f"⚠️ No high-priority matches from Bing. Attempting fallback to Google for: {query}...")
-            candidates = self._get_image_candidates_from_google(query)
-            if candidates:
-                logger.info(f"Total candidates available from Google search for '{query}': {len(candidates)}")
-                success = evaluate_candidates_list(candidates)
-                if success or best_matches:
-                    return True
+            # Step 4: Use Gemini to verify priority
+            if api_key:
+                try:
+                    import ai_services
+                    analysis = ai_services.analyze_player_image(temp_file, player_name, api_key)
+                    priority = analysis.get('priority', 3)
+                    crop_box = analysis.get('crop_box')
                     
-            return False
-
-        # 1. Primary search query
-        primary_query = f"{player_name} yankees card"
-        early_stop = search_and_evaluate(primary_query)
-
-        # 2. Secondary fallback search if no high priority (Priority 1 or 2) matches were found
-        if not early_stop and not best_matches:
-            secondary_query = f"{player_name} topps yankees"
-            logger.info(f"🔄 Primary search yielded no high-priority matches. Trying secondary fallback search: {secondary_query}")
-            search_and_evaluate(secondary_query)
+                    if priority in [1, 2]:
+                        # Perform smart crop if requested by AI
+                        if crop_box:
+                            if self.image_processor.crop_to_bounding_box(temp_file, crop_box):
+                                # Re-validate dimensions after crop
+                                img_info = self.image_processor.get_image_info(temp_file)
+                                if img_info:
+                                    w, h = img_info.get('width', 0), img_info.get('height', 0)
+                                    if w < 100 or h < 100: # Slightly more lenient after crop
+                                        logger.info(f"  ❌ Cropped image too small ({w}x{h}). Skipping.")
+                                        temp_file.unlink(missing_ok=True)
+                                        continue
+                        
+                        logger.info(f"  ✨ Found High Priority Match (Level {priority})!")
+                        candidate['temp_file'] = temp_file
+                        candidate['priority'] = priority
+                        best_matches.append(candidate)
+                        
+                        # Stop ONLY if we have 3 Priority 1 images specifically
+                        p1_count = len([m for m in best_matches if m['priority'] == 1])
+                        if p1_count >= 3:
+                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping search early.")
+                            break
+                    
+                    elif priority == 3:
+                        if len(fallbacks) < 3:
+                            logger.info(f"  📍 Found Priority 3 (Fallback). Staging as option {len(fallbacks)+1}...")
+                            candidate['temp_file'] = temp_file
+                            candidate['priority'] = 3
+                            fallbacks.append(candidate)
+                        else:
+                            logger.info("  ⏭️ Already have 3 fallbacks. Skipping.")
+                            temp_file.unlink(missing_ok=True)
+                    else:
+                        logger.info(f"  ❌ Image rejected by AI (Priority {priority}).")
+                        temp_file.unlink(missing_ok=True)
+                        
+                except Exception as e:
+                    logger.error(f"  ⚠️ Error during AI analysis: {e}")
+                    temp_file.unlink(missing_ok=True)
+            else:
+                # No API key, just take the first 3 suitable images
+                logger.warning("  ⚠️ No API key provided for verification.")
+                candidate['temp_file'] = temp_file
+                candidate['priority'] = 99
+                best_matches.append(candidate)
+                if len(best_matches) >= 3:
+                    return best_matches
 
         # Combine results: Best matches first, then fill with fallbacks until we have 3
         final_results = best_matches + fallbacks
@@ -194,7 +176,7 @@ class PlayerImageSearch:
             logger.info(f"  🏁 Finished search. Providing {len(final_results)} candidates for review.")
             return final_results
             
-        logger.warning(f"  ❌ No suitable images found for {player_name} after primary and secondary searches.")
+        logger.warning(f"  ❌ No suitable images found for {player_name} after checking {max_candidates_to_check} results.")
         return []
 
     def _get_image_candidates_from_google(self, search_term: str) -> List[dict]:
@@ -299,10 +281,6 @@ class PlayerImageSearch:
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--window-size=1920,1080")
-        
-        # Configure macOS Chrome user agent to prevent bot detection
-        user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
-        options.add_argument(f"user-agent={user_agent}")
         
         # Use system chromium/chromedriver if available
         system_chromedriver = "/usr/bin/chromedriver"

@@ -322,3 +322,51 @@ class TestImageProcessor:
         
         # Aspect ratio should be preserved (within small floating point error)
         assert abs(original_aspect - new_aspect) < 0.01
+
+    def test_crop_rgba_image_saved_as_jpeg(self, image_processor, tmp_path):
+        """Test that an RGBA image with a .jpg extension is correctly cropped and saved as RGB."""
+        img_path = tmp_path / "test.jpg"
+        
+        # Create an RGBA image (red with 50% transparency)
+        img = Image.new('RGBA', (400, 400), (255, 0, 0, 128))
+        
+        # Save it as a PNG format but with a .jpg extension to simulate a misnamed download
+        img.save(img_path, format="PNG")
+        
+        # Define a crop box [ymin, xmin, ymax, xmax] in 0-1000 scale
+        # This should result in a 200x200 crop from the center
+        crop_box = [250, 250, 750, 750] 
+        
+        success = image_processor.crop_to_bounding_box(img_path, crop_box)
+        
+        assert success is True
+        assert img_path.exists()
+        
+        # Verify the cropped image
+        with Image.open(img_path) as cropped:
+            assert cropped.width == 200
+            assert cropped.height == 200
+            # PIL should have converted it to RGB when saving as .jpg
+            assert cropped.mode == 'RGB'
+            # The background should be white where there was transparency
+            pixel = cropped.getpixel((100, 100))
+            assert len(pixel) == 3 # RGB
+
+    def test_crop_bounding_box_temp_cleanup(self, image_processor, tmp_path):
+        """Test that temporary crop files are cleaned up after successful replacement."""
+        img_path = tmp_path / "test.png"
+        img = Image.new('RGB', (100, 100), (255, 0, 0))
+        img.save(img_path)
+        
+        crop_box = [0, 0, 500, 500] # Top-left quadrant
+        
+        success = image_processor.crop_to_bounding_box(img_path, crop_box)
+        
+        assert success is True
+        # The temp file should be gone
+        temp_files = list(tmp_path.glob("temp_crop_*"))
+        assert len(temp_files) == 0
+        
+        with Image.open(img_path) as cropped:
+            assert cropped.width == 50
+            assert cropped.height == 50
