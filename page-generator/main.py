@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from typing import List, Tuple, Optional, Any
 import re
 import subprocess
 import sys
