@@ -42,8 +42,8 @@ class ImageProcessor:
             background = Image.new('RGB', img.size, (255, 255, 255))
             if img.mode == 'P':
                 img = img.convert('RGBA')
-            # Use alpha channel as mask for pasting
-            mask = img.split()[-1] if img.mode == 'RGBA' else None
+            # Use alpha channel as mask for pasting (last channel for RGBA and LA)
+            mask = img.split()[-1] if img.mode in ('RGBA', 'LA') else None
             background.paste(img, mask=mask)
             return background
         elif img.mode != 'RGB':
