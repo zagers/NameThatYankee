@@ -59,3 +59,14 @@ def test_build_detail_page_html(sample_player_data):
     assert quiz_data["nickname"] == "The Captain"
     assert "Hit a home run for his 3000th hit" in quiz_data["hints"]
 
+def test_aboutme_headers_in_html(sample_player_data):
+    date_str = "1999-05-15"
+    formatted_date = "May 15, 1999"
+    
+    html_content = html_generator.build_detail_page_html(sample_player_data, date_str, formatted_date)
+    
+    # Verify ABOUTME headers are at the very beginning
+    lines = html_content.splitlines()
+    assert lines[0].strip() == "<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->"
+    assert lines[1].strip() == "<!-- ABOUTME: Contains career highlights, stats, and biography information. -->"
+

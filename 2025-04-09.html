@@ -1,316 +1,168 @@
-<!-- ABOUTME: Historical trivia puzzle page for a specific date. -->
-<!-- ABOUTME: Contains player stats clues and interactive reveal logic. -->
+<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->
+<!-- ABOUTME: Contains career highlights, stats, and biography information. -->
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="https://namethatyankeequiz.com/2025-04-09" rel="canonical"/>
-  <meta content="Discover the career highlights and statistics for Tom Tresh, the featured New York Yankee for the 2025-04-09 trivia puzzle." name="description"/>
-  <title>
-   Tom Tresh Answer - April 09, 2025 | Name That Yankee
-  </title>
-  <link href="style.css" rel="stylesheet"/>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-  <meta content="Name That Yankee - April 09, 2025" property="og:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" property="og:description"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Name That Yankee" property="og:site_name"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" property="og:image"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="Name That Yankee - April 09, 2025" name="twitter:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" name="twitter:description"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" name="twitter:image"/>
-  <script type="application/ld+json">
-   {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Name That Yankee Answer for April 09, 2025",
-  "description": "The player revealed for this New York Yankees trivia puzzle is Tom Tresh.",
-  "image": "https://namethatyankeequiz.com/images/social-card.webp",
-  "author": {
-    "@type": "Person",
-    "name": "Scott Zager"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Name That Yankee",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
-    }
-  },
-  "datePublished": "2025-04-09"
-}
-  </script>
-  <link href="manifest.json" rel="manifest"/>
-  <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <meta content="NameThatYankee" name="apple-mobile-web-app-title"/>
- </head>
- <body>
-  <header>
-   <div class="header-content">
-    <h1>
-     The answer for April 09, 2025 is...
-    </h1>
-   </div>
-   <div class="header-controls">
-    <a class="instructions-link" href="instructions">
-     New Features!
-    </a>
-    <div id="score-display">
-     Your Score:
-     <span id="total-score">
-      0
-     </span>
-     <svg aria-hidden="true" class="chevron-icon" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6 9 12 15 18 9">
-      </polyline>
-     </svg>
-     <div id="score-breakdown-container" style="display: none;">
-      <div class="breakdown-header">
-       Score Breakdown
-      </div>
-      <table>
-       <thead>
-        <tr>
-         <th>
-          Clue
-         </th>
-         <th>
-          Points
-         </th>
-         <th>
-          Count
-         </th>
-        </tr>
-       </thead>
-       <tbody id="breakdown-body">
-       </tbody>
-      </table>
-     </div>
-    </div>
-   </div>
-  </header>
-  <main>
-   <a class="back-link" href="index">
-    ← Back to All Questions
-   </a>
-   <div class="detail-layout">
-    <div class="left-column">
-     <div class="player-profile">
-      <div class="player-photo">
-       <img alt="Photo of Tom Tresh" src="images/answer-2025-04-09.webp"/>
-      </div>
-      <div class="player-info">
-       <h2>
-        Tom Tresh
-       </h2>
-       <div class="facts-header">
-        <h3>
-         Career Highlights &amp; Facts
-        </h3>
-        <p class="disclaimer">
-         (Facts are AI-generated and may require verification)
-        </p>
-       </div>
-       <ul>
-        <li>
-         Before reaching the majors, this player spent time at Central Michigan University, where he maintained a promise to his parents to finish his degree in physical education after every professional baseball season.
-        </li>
-        <li>
-         This player was forced into a permanent outfield role during his career after Mickey Mantle suffered a broken foot from colliding with a chain-link fence in 1963.
-        </li>
-        <li>
-         In 1962, this player earned the American League Rookie of the Year award and cemented his status as a postseason hero by blasting a go-ahead three-run homer in Game 5 of the World Series.
-        </li>
-       </ul>
-       <div class="followup-section" id="followup-section">
-        <h3>
-         Would you like to find out more about Tom Tresh?
-        </h3>
-        <div class="followup-buttons">
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="Mike Tresh, a former big-league catcher, was so nervous that he moved from his seat to the standing-room section to break a perceived jinx; he famously cried the instant his son hit the ball.">
-           How did this player's father react to his pivotal Game 5 World Series home run?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="The player was moved constantly to accommodate team needs, including shifting from shortstop to the outfield and finally to third base, leading him to reflect that he couldn't figure out which position he was supposed to prove he could play.">
-           Why did this player move between so many defensive positions during his time in New York?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="The injury occurred during spring training when the player made a difficult throw across his body to cut off a ball in the corner, resulting in loose cartilage that the team pressured him to play through.">
-           What led to this player's significant knee injury in 1967?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="stats-table-container">
-      <h3>
-       Career Totals
-      </h3>
-      <div class="table-wrapper">
-       <table>
-        <thead>
-         <tr>
-          <th>
-           WAR
-          </th>
-          <th>
-           AB
-          </th>
-          <th>
-           H
-          </th>
-          <th>
-           HR
-          </th>
-          <th>
-           BA
-          </th>
-          <th>
-           R
-          </th>
-          <th>
-           RBI
-          </th>
-          <th>
-           SB
-          </th>
-          <th>
-           OBP
-          </th>
-          <th>
-           SLG
-          </th>
-          <th>
-           OPS
-          </th>
-          <th>
-           OPS+
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-         <tr>
-          <td>
-           21.9
-          </td>
-          <td>
-           4251
-          </td>
-          <td>
-           1041
-          </td>
-          <td>
-           153
-          </td>
-          <td>
-           .245
-          </td>
-          <td>
-           595
-          </td>
-          <td>
-           530
-          </td>
-          <td>
-           45
-          </td>
-          <td>
-           .335
-          </td>
-          <td>
-           .411
-          </td>
-          <td>
-           .746
-          </td>
-          <td>
-           113
-          </td>
-         </tr>
-        </tbody>
-       </table>
-      </div>
-      <p class="citation">
-       Statistics via Baseball-Reference.com
-      </p>
-     </div>
-    </div>
-    <div class="right-column">
-     <div class="original-card">
-      <h3>
-       The Original Clue
-      </h3>
-      <img alt="Original trivia card" src="images/clue-2025-04-09.webp"/>
-     </div>
-     <div class="chart-container">
-      <h3>
-       Career Arc by WAR
-      </h3>
-      <div class="chart-wrapper">
-       <canvas id="careerArcChart">
-       </canvas>
-      </div>
-     </div>
-     <script crossorigin="anonymous" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1">
-     </script>
-     <script>
-      const years = ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969"];
-            const warData = [0.0, 4.3, 4.1, 1.8, 3.8, 5.4, -0.1, 2.1, 0.5];
-            const teamsByYear = ["NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "2TM"];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Tresh Answer - April 09, 2025 | Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="canonical" href="https://namethatyankeequiz.com/2025-04-09">
+    
+    <!-- Meta tags for better social sharing -->
+    <meta name="description" content="Trivia and career highlights for New York Yankees player Tom Tresh. Learn about their Earned top rookie honors after a standout debut season., Secured a defe...">
+    <meta property="og:title" content="Name That Yankee - April 09, 2025">
+    <meta property="og:description" content="Trivia and career highlights for New York Yankees player Tom Tresh. Learn about their Earned top rookie honors after a standout debut season., Secured a defe...">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Name That Yankee">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Name That Yankee - April 09, 2025">
+    <meta name="twitter:description" content="Trivia and career highlights for New York Yankees player Tom Tresh. Learn about their Earned top rookie honors after a standout debut season., Secured a defe...">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
-            const teamColors = {
-                'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
-                'ATL': { bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' },
-                'BAL': { bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' },
-                'BOS': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' },
-                'CHC': { bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' },
-                'CHW': { bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' },
-                'CIN': { bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' },
-                'CLE': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' },
-                'COL': { bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' },
-                'DET': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' },
-                'HOU': { bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' },
-                'KCR': { bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' },
-                'LAA': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'LAD': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'MIA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'MIL': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' },
-                'MIN': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' },
-                'NYM': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' },
-                'NYY': { bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' },
-                'OAK': { bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' },
-                'PHI': { bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' },
-                'PIT': { bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' },
-                'SDP': { bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' },
-                'SFG': { bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' },
-                'SEA': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' },
-                'STL': { bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' },
-                'TBR': { bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' },
-                'TEX': { bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' },
-                'TOR': { bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' },
-                'WSN': { bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' },
-                'MON': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' },
-                'CAL': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'FLA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'BRO': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'SLB': { bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' },
-                '2TM': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' },
-                'Total': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' },
-                'Default': { bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }
-            };
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Name That Yankee Answer for April 09, 2025",
+      "description": "Trivia and career highlights for New York Yankees player Tom Tresh. Learn about their Earned top rookie honors after a standout debut season., Secured a defe...",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
+      "author": {
+        "@type": "Person",
+        "name": "Scott Zager"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Name That Yankee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
+        }
+      },
+      "datePublished": "2025-04-09"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>The answer for April 09, 2025 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions" class="instructions-link">New Features!</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="./" class="back-link">← Back to All Questions</a>
+
+        <div class="detail-layout">
+            <div class="left-column">
+                <div class="player-profile">
+                    <div class="player-photo">
+                        <img src="images/answer-2025-04-09.webp" alt="Photo of Tom Tresh" decoding="async">
+                    </div>
+                    <div class="player-info">
+                        <h2>Tom Tresh</h2>
+                        <div class="facts-header">
+                            <h3>Career Highlights & Facts</h3>
+                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                        </div>
+                        <ul>
+                        <li>Earned top rookie honors after a standout debut season.</li>
+                        <li>Secured a defensive accolade for excellence in the outfield.</li>
+                        <li>Followed in the footsteps of a professional catcher father.</li>
+                        </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Tom Tresh?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="With his father watching from the stands, the rookie blasted a pivotal three-run home run in the bottom of the 8th inning to break a 2-2 tie and lead the team to a 5-3 victory.">What dramatic moment occurred during Game 5 of the 1962 World Series?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In the 7th inning of the decisive Game 7, a fingertip catch on a low liner hit by Willie Mays prevented a potential rally, helping preserve a narrow 1-0 lead.">How did a defensive play in the 1962 World Series help secure a championship?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He hit three home runs in his first three at-bats, with the first coming from the right side of the plate and the subsequent two coming from the left side.">What unique feat did the switch-hitter accomplish against the Chicago White Sox on June 6, 1965?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+
+                        <div class="player-bio">
+                            <h3>Player Biography</h3>
+                            <p>Tom Tresh May 6, 2013 / in BioProject - Person Rookie of the Year 1960s All-Stars / by admin This article was written by Joseph Wancho New York Yankee rookie Tom Tresh was living a dream. He stepped into the lineup of the defending World Champions in 1962, became a key contributor, faced some adversity, and here he was starting in the World Series. Not only was he contributing, he was the favorite to be named the American League Rookie of the Year later that year. The Yankees, facing the San Francisco Giants, were deadlocked at two wins apiece as Game Five dawned on October 10, 1962. It promised to be a close contest, as Game Two starters Jack Sanford of the Giants and Ralph Terry of the Yankees toed the rubber in a rematch of the previous contest, which was won by Sanford and the Giants by a score of 2-0. Sanford was certainly no slouch, having won 24 games that year and at one point 16 in a row. He became locked up in a 2-2 tie with Terry, having posted 10 strikeouts in 7 1/3 innings. Consecutive singles by Tony Kubek and Bobby Richardson put two on with one away in the bottom of the eighth inning as Tresh came to bat. The rookie outfielder had already doubled off of Sanford in the fourth inning, later coming around to score on a wild pitch that knotted the game at one. This time, Tresh went yard, blasting a three-run homer to the right field stands. The partisan crowd of 63,165 erupted at Yankee Stadium as the Bombers were now in front 5-2 and went on to win the game 5-3. They now held a one-game advantage as the game shifted back to the “The City by the Bay.” “It’s the hit that always was my biggest individual thrill,” said Tresh. “It was a pivotal game, and we got to go back to San Francisco ahead, not trailing, 3 games to 2.” 1 The happiest person in the crowd may have been Tom’s father, Mike Tresh , a former big-league catcher. “I was sitting with my wife and Tom’s wife in the lower stand behind home plate. It was 2-2 when the Yankees came to bat and I decided that I might break the jinx if I moved. So I walked back to the standing-room section,” said the elder Tresh. “The instant Tom hit the ball I knew it was going all the way. And the instant he hit it, I cried. I didn’t care who saw me, and when I went back to our seats, I guess there were tears in my wife’s eyes, too.” 2 The Giants evened the series with a win in Game Six. The rubber match between Terry and Sanford was on tap for Game Seven, as they were pitching “for all the marbles.” The Yankees were clinging to a 1-0 lead in the seventh inning, when Willie Mays sent a low liner to the left field corner of Candlestick Park. Tresh raced to his right, reached out and up to snare the liner with a fingertip grab. The catch proved costly to the Giants, as the next batter, Willie McCovey , tripled with the bases empty. The Yankees went on to win the game 1-0, and captured the World Championship. Tom Tresh hoped that he never woke up from his merry dream. Thomas Michael Tresh was born on September 20, 1938 in Detroit Michigan. His parents were Michael and Doris Tresh. Mike Tresh was a major league catcher with the Chicago White Sox (1938-1948) and the Cleveland Indians (1949). “I just can’t remember the time when I didn’t have a baseball in my hands,” says Tresh. “My folks have movies taken when I was 2 years old which show me throwing a ball around our apartment in Chicago.” 3 Another advantage to having a major-league ballplayer for a father was that Tom Tresh became familiar with the major-league experience and lifestyle. “We were with Dad when he was playing in Chicago, and I used to go to the ballpark and hang around the field with the other kids of the players. It was always great fun. I think that gave me an easy adjustment to big-league play.” 4 Tom was a three-sport star at Allen Park High School, earning nine letters between football, basketball, and baseball. He attended Central Michigan University, where he played shortstop his freshman year. “I knew his dad and had seen Tom play high school ball in Detroit,” recalled New York scout Pat Patterson. “He had a lot of ability. At one time there was a lot of competition for him, but then his dad said he was going to college. The others didn’t know about it when he was ready to sign. We were able to give him what he wanted.” 5 What the Yankees gave him was a $30,000 signing bonus. But Tom promised his parents to complete his schoolwork in order to get his degree. True to his word, he went back to Central Michigan after every season, getting his bachelor’s degree in physical education. Tresh worked his way through the Yankee farm chain, beginning with Class D St. Petersburg of the Florida State League in 1958 through Richmond of the International League in 1961. He was named the International League’s Rookie of the Year at Richmond. The young shortstop hit .315, drove in 42 runs and led the team in hits (176) and doubles (23). His big season earned him a call up to the Yankees at the end of the year, making his big league debut as a pinch-runner for Johnny Blanchard on September 3, 1961. Media and fans began comparing the switch-hitting and handsome Tresh with Mickey Mantle , but Tresh shrugged off the comparisons. “I always tried to be the best ballplayer I could be. I never tried to be another Mickey Mantle. I never felt any pressure like that.” 6 Heading into the 1962 season, the Yankees learned that they would be without the services of shortstop Tony Kubek, whose National Guard unit was called up to active duty. Tresh and Phil Linz competed for the open position. Linz also had a solid season the year before. He hit .349 at Amarillo of the Texas League, and was the starting shortstop. At the end of spring training, manager Ralph Houk chose Tresh, partly because of his value as a switch-hitter, something he learned early at the urging of his father. Linz was also kept on the varsity. Second baseman Bobby Richardson took the rookie under his wing, and together they became a formidable combo for the Yankees. “There couldn’t have been a better influence on any rookie than the kind Richardson provided Tresh,” said Houk. “He did so many things for Tom. Without Richardson and Tresh, Lord only knows where we would have been.” 7 Tresh was named to the All-Star game on July 30 at Wrigley Field . He split shortstop duties with Luis Aparicio . In one of his two at-bats, Tresh doubled and knocked in a run. The Yankees got a surprise when Kubek was discharged earlier than expected, re-joining the team on August 6. Houk was now faced with the decision of what to do with Tresh. Hector Lopez , Jack Reed , and Joe Pepitone had all roamed left field for a portion of the season. But it was Tresh who added a defensive flair and offensive punch more than the other players. He received quite an endorsement from his boyhood idol and center field companion, Mickey Mantle. “I don’t think anybody has to worry about Tom,” said Mantle. “I’ve played alongside a lot of leftfielders and Tresh rates as the best one.” 8 The Yankees topped the junior circuit, besting second-place Minnesota by five games. Tresh hit .286 on the year, smacking 20 home runs and driving in 93 runs. He was named American League Rookie of the Year by both the Sporting News and the Baseball Writers Association of America (BWAA). The Yankees dispatched the Giants for their 20th world championship in franchise history. It would be the last one for 15 years. Tresh led the team in batting average (.321), runs (5) and hits (9) for the series. Tresh showed his versatility again the following season, when Mantle was injured on June 5, 1963, in Baltimore. In the sixth inning Mantle gave chase of a Brooks Robinson shot, but his left foot came down in stride, into the outfield’s chain link fence. His foot was bent back. Subsequently it was broken and he was loss to the team for two months. Tresh stepped in, playing center field while Mantle recovered, committing only four errors and fielding the position at .981. On offense, Tresh belted 25 homers and drove in 71 runs. Although they won the pennant with a comfortable 10-game cushion over Chicago, the Yankees were anything but the Bronx Bombers in the World Series against the Los Angeles Dodgers. Sandy Koufax mowed them down in Game One, striking out 15, and dominated again in Game Four with eight Ks to complete a four-game sweep. The Yankees could only muster four runs for the Series. Houk moved upstairs to the front office and Yogi Berra was named manager. The Yankees were getting older, with Elston Howard , Whitey Ford , and Mantle all getting “a little long in the tooth.” They showed their guile when they were in third place, 1 ½ games out of first place on September 15, but won 11 in a row to overtake Baltimore and Chicago, with a four-game lead. Tresh hit a three-run home run off of Cleveland’s Jack Kralick on October 2 that led to a 5-3 Yankee win, helping to salt away the pennant. Even so, Tresh wasn’t happy with his .245 batting average, saying, “I felt that after playing in New York for three years, it was my time to produce” 9 at the levels of Mantle, Maris, and Howard. The Yankees tangled with the Cardinals in the Fall Classic, eventually falling to St. Louis in seven hard-fought games. Redbird ace Bob Gibson won two of the contests. Tresh hit two home runs, touching Gibson for one in Game Five that tied the ballgame in the bottom of the ninth inning. “A fastball down the middle,” said Gibson, “and that’s what happens to fastballs down the middle.” 10 St. Louis manager Johnny Keane joined the Yankees in the off-season, replacing Berra as the skipper. Tresh again was shifted between center and left field. He even started 17 games in right field. “Right now, Tresh is an outfielder and I would say he’s done his job well at each of the three positions he’s played in our outfield this season,” 11 said Keane. The manager knew what he was talking about as Tresh won a Gold Glove for his fine work. But he also provided some juice at the plate, batting .279, clubbing 26 home runs, and driving in 74 runs. He posted career highs in doubles (29) and triples (6). On June 6, the Yankees pasted the Chisox by a score of 12-0. Tresh, showing off his switch-hitting ability, smacked three home runs in his first three at bats: the first one was right-handed, the next two were from the left side of the dish. Keane enjoyed having Tresh to lead off the order, as he could heat up the offense quickly by smashing a home run or simply getting on base. The problem was, when Mantle was out, Tresh had to bat cleanup. The additional problem was that Mantle needed a lot of rest. But despite Tresh’s heroics, 1965 was the first season since 1959 that there would not be a flag, pennant or otherwise, fluttering above Yankee Stadium at season’s end. The Bronx Bombers were sinking into a spiral of disaster. More change was coming Tresh’ way in 1966. Kubek was force to retire at the conclusion of the 1965 season because of a neck injury. Ruben Amaro was imported to replaced Kubek, but in the season’s fifth game, Amaro drifted back to catch a dying swan off of Curt Blefary , and Tresh tried a diving catch, and slammed into Amaro, wrecking the shortstop’s knee. Amaro was out for the season. The Yankees tried rookie Bobby Murcer at short, and in his first game, Murcer made three errors. He was sent to Toledo. Shortly thereafter, the Yankees fired Keane, the first time the Yankees had fired a manager in mid-season in more than 50 years. Ralph Houk returned from the front office to manage, and he moved third baseman Clete Boyer over to shortstop and Tom was sent to third base, giving sophomore Roy White some playing time in the outfield. “Tommy is a fine all-around ballplayer,” said Houk. “You remember he was named rookie-of-the-year in our league a few years ago and he made it at shortstop. So bringing him back into the infield is not the same thing as bringing any outfielder.” 12 Tresh was more philosophical, saying, “I win Rookie of the Year as a shortstop and they move me to the outfield. Then I win a Gold Glove Award there in 1965 and they move me to third. I couldn’t figure out what position I was supposed to prove I could play.” 13 Tresh belted a career high in homers, getting both of his 26 and 27 dingers in both ends of a doubleheader against Washington on September 15. But it didn’t help, as the Yankees finished dead last with a record of 70-89. Tresh himself had little to celebrate, with a .233 average and only 68 RBIs. In the second game of 1967 spring training, Tresh, back in left field, cut off a ball hit by Baltimore’s Mark Belanger , in the corner. His momentum carried him toward the line, and he gunned a throw across his body. As the ball left his hand, Tresh felt a popping sound and felt his right knee give away. Seconds later, he was rolling on the ground in agony. The injury was diagnosed as a strain, but two weeks later, it was ruled as something more serious: loose cartilage. The Yankees told Tresh to play on the injury and see what happened. “I know I run the bases differently because I avoid sharp turns and swing wider,” said Tresh at the time. “That cuts down on my speed on the bases and also on the number of chances I will take. In the outfield, I used to always run straight at the ball, but now I more or less circle towards it so there won’t be any sharp turns.” 14 Years later, Tresh discussed the injury and the team’s order that he play through it. “It was a bad decision, but it wasn’t mine to make. It would have been much wiser had they taken me in for surgery right away, before I had a chance to really destroy the knee. Because over the course of the season, my knee gave out five more times.” 15 Tresh had surgery at the end of the year to remove outside cartilage from his right knee, spending his 30th birthday in Lenox Hill Hospital. The surgery was successful, and Tresh was told he would be ready for spring training the following year. Even so, Tresh wasn’t so sure. That off-season, he returned to Central Michigan University, to continue his pursuit of a bachelor’s degree in physical education. He had been working on it on and off since the late 1950s. “It took me only four terms to graduate,” he said. “Eisenhower, Kennedy, Johnson, and Nixon.” 16 Tresh was increasingly gloomy. “I can’t say that I handled it all that well when I had my knee problems and my statistics went down. That was very hard on me, to know that at one time I was probably as good as most of the guys in the game,” 17 Tresh said. Indeed, in 1966, the Red Sox had contemplated trading their star left fielder, Carl Yastrzemski , to the Yankees for Tresh, even up. Over their first five seasons, Tresh had out-homered and outscored Yaz. When Gene Michael struggled to hit the next season, Tresh once again was called to plug a hole at short. Although, Tresh was not hitting the cover off the ball either, he believed that a change back to his old position might give him a lift offensively. “I think moving to short will help my hitting,” Tresh said. “Some of the recent years I have had here were low for outfielder, but would have been good seasons for a shortstop. I will think like a shortstop when I’m hitting now, which means I’ll just be trying to poke hits and forget the long ball.” 18 But it didn’t work out as planned, Tresh hitting a career low .195 for the season, his knee practically destroyed. He tied his career high in strikeouts (97). Mantle retired at the end of the season, and an era had ended. They finished 20 games behind pennant-winner Detroit. “My numbers fell to where they dragged down my overall statistics to those of an average player,” 19 Tresh recalled. When the Yankee Stadium scoreboard flashed his batting average, Tresh averted his eyes and tried to tune out the fans’ boos. Tresh started 1969 in New York, but the situation was hopeless. “I was a physical wreck. I’d gotten hurt. I’d gotten phlebitis. And I had a strep throat.” 20 He requested a trade to Detroit to be closer to his family and was dealt to his hometown Tigers on June 14 for outfielder Ron Woods . Tresh’s right knee was still giving him trouble, and he had more surgery to repair cartilage damage on the other side of the knee. Despite, the pain, Tresh smacked 13 homers for Detroit in half a season. He went to spring training in 1970, but Tiger management insisted that the eight-year veteran report to the minors to work on rehabilitating his knee. Tresh had had enough. “I said, ‘Give me my release, I’m finished.’” He had planned to retire after 10 seasons, as a concession to his wife. “She didn’t like the game of baseball, basically. So it didn’t make any sense to continue. To leave baseball at 32 was not easy. But I had to get out. I was not happy.” 21 Tresh was released just before the season began. He hit .245 for his career, with 153 home runs and 530 RBI. Tresh remained in Michigan with his wife Cherie and their four children; Michael, Michelle, Heidi, and Kami. He started off owning and operating a Kentucky Fried Chicken franchise. “I did everything there – cooked, cleaned, hired people, opened, closed the place, put in a long workday every day. But I turned it around, and we made some money when we sold the franchise,” 22 he said. After that, he joined the faculty at his alma mater, Central Michigan University, working as an administrator in the business school’s alumni and placement offices. He also served as assistant baseball coach for 14 years at CMU. “It was one of those jobs where I could help the kids and do a little recruiting, but it left me with time to travel to card shows, come back for baseball events, and enjoy some free time. There’s no question that playing with the Yankees gave me identification in later life that really helped me in a lot of ways,” 23 he said. Tresh also participated in Yankees fantasy camps, noting at one camp banquet that a ballplayer who even makes the big leagues even for a day has to be a great baseball player considering the competition along the way. “I might have had a better career if I didn’t hurt my knee,” he said, “But I have no regrets. It was just short of 10 years, and that is pretty good. Sometimes I think I should just sign my name, ‘Tom Tresh, New York Yankee.’ That’s my identification.” 24 Tom Tresh passed away on October 14, 2008, as the result of a heart attack. He was survived by his four children, his second wife Sandra, two stepchildren, and 14 grandchildren. Author’s note I would like to thank SABR member Cecilia Tan with her help on this bio. Sources http://newyork.yankees.mlb.com/index.jsp?c_id=nyy&amp;tcid=mm_cle_sitelist http://www.baseball-reference.com/ http://www.retrosheet.org/ http://www.baseballlibrary.com/homepage/ Tom Tresh, interview conducted by Cecilia Tan, March 2002. Notes 1 Clavin, Tom and Peavy, Danny , Roger Maris: Baseball’s Reluctant Hero , Simon &amp; Schuster, 2010, 254 2 New York Times , October 11, 1962 3 Sports Illustrated , April 2, 1962 4 Allen, Maury, Yankees Where Have You Gone? Sports Publishing, 2004, page 230 5 Sporting News , May 6, 1967 6 Allen, Maury, Ibid., page 230 7 Sporting News , September 22, 1962 8 Sporting News , October 6, 1962 9 Bashe, Philip, Dog Days , Random House, 1994, page 57 10 Halberstam, David , October 1964 , Villard Books, 1994, page 340 11 Sporting News , July 31, 1965 12 Sporting News , May 28, 1965 13 Bashe, Philip, Ibid., page 67 14 Sporting News , August 26, 1967 15 Bashe, Philip, Ibid., page 94 16 Bashe, Philip, Ibid., page 95 17 Bashe, Philip, Ibid., page 96 18 Sporting News , June 8, 1968 19 Bashe, Philip , Ibid., page 96 20 Bashe, Philip, Ibid., page 96 21 Bashe, Philip, Ibid., page 96 22 Allen, Maury, Ibid., page 233 23 Allen, Maury, Ibid., page 233 24 Allen, Maury, Ibid., page 233 Full Name Thomas Michael Tresh Born September 20, 1938 at Detroit, MI (USA) Died October 14, 2008 at Venice, FL (USA) Stats Baseball Reference Retrosheet Oral History If you can help us improve this player’s biography, contact us . Tags Rookie of the Year · 1960s All-Stars · Share this entry Share on Facebook Share on X Share on LinkedIn Share on Reddit Share by Mail</p>
+                        </div>
+        
+                    </div>
+                </div>
+                
+        <div class="stats-table-container">
+            <h3>Career Totals</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>WAR</th><th>AB</th><th>H</th><th>HR</th><th>BA</th><th>R</th><th>RBI</th><th>SB</th><th>OBP</th><th>SLG</th><th>OPS</th><th>OPS+</th></tr></thead>
+                    <tbody><tr><td>22.0</td><td>4251</td><td>1041</td><td>153</td><td>.245</td><td>595</td><td>530</td><td>45</td><td>.335</td><td>.411</td><td>.746</td><td>113</td></tr></tbody>
+                </table>
+            </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
+        </div>
+        
+            </div>
+            <div class="right-column">
+                <div class="original-card">
+                    <h3>The Original Clue</h3>
+                    <img src="images/clue-2025-04-09.webp" alt="Original trivia card" decoding="async">
+                </div>
+                
+        <div class="chart-container">
+            <h3>Career Arc by WAR</h3>
+            <div class="chart-wrapper">
+                <canvas id="careerArcChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
+        <script>
+            const years = ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969"];
+            const warData = [0.0, 4.2, 4.1, 1.8, 3.8, 5.4, -0.1, 2.1, 0.5];
+            const teamsByYear = ["NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "NYY", "2TM"];
+            const teamColors = window.TEAM_COLORS;
 
             const waterfallData = [];
             let cumulativeTotal = 0;
@@ -386,32 +238,16 @@
                     }
                 }
             });
-     </script>
-    </div>
-   </div>
-   <div id="search-data" style="display:none;">
-    {"teams": ["NYY", "DET"], "years": ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969"]}
-   </div>
-   <div id="quiz-data" style="display:none;">
-    {
-    "answer": "Tom Tresh",
-    "hints": [
-        "Before reaching the majors, this player spent time at Central Michigan University, where he maintained a promise to his parents to finish his degree in physical education after every professional baseball season.",
-        "This player was forced into a permanent outfield role during his career after Mickey Mantle suffered a broken foot from colliding with a chain-link fence in 1963.",
-        "In 1962, this player earned the American League Rookie of the Year award and cemented his status as a postseason hero by blasting a go-ahead three-run homer in Game 5 of the World Series."
-    ],
-    "facts": [
-        "Before reaching the majors, this player spent time at Central Michigan University, where he maintained a promise to his parents to finish his degree in physical education after every professional baseball season.",
-        "This player was forced into a permanent outfield role during his career after Mickey Mantle suffered a broken foot from colliding with a chain-link fence in 1963.",
-        "In 1962, this player earned the American League Rookie of the Year award and cemented his status as a postseason hero by blasting a go-ahead three-run homer in Game 5 of the World Series."
-    ]
-}
-   </div>
-  </main>
-  <script src="js/detail.js" type="module">
-  </script>
-  <script>
-   document.addEventListener('DOMContentLoaded', function() {
+        </script>
+        
+            </div>
+        </div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "DET"], "years": ["1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Tom Tresh", "nickname": "", "hints": ["Earned top rookie honors after a standout debut season.", "Secured a defensive accolade for excellence in the outfield.", "Followed in the footsteps of a professional catcher father."]}</div>
+    </main>
+    <script type="module" src="js/detail.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('followup-section');
         if (!container) return;
         const items = container.querySelectorAll('.followup-item');
@@ -434,32 +270,15 @@
                 } else {
                     answerBox.style.display = 'none';
                 }
+
             });
         });
     });
-  </script>
-  <footer>
-   <p class="disclaimer-footer">
-    This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-   </p>
-   Last Updated: 20-Mar-2026
-   <p class="copyright">
-    <a href="https://namethatyankeequiz.com">
-     Name That Yankee Quiz
-    </a>
-    © 2026 by
-    <a href="https://github.com/zagers/NameThatYankee">
-     Scott Zager
-    </a>
-    is licensed under
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-     CC BY-NC-SA 4.0
-    </a>
-    <img alt="CC" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="BY" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="NC" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="SA" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-   </p>
-  </footer>
- </body>
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+    </footer>    
+</body>
 </html>

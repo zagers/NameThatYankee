@@ -1,316 +1,168 @@
-<!-- ABOUTME: Historical trivia puzzle page for a specific date. -->
-<!-- ABOUTME: Contains player stats clues and interactive reveal logic. -->
+<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->
+<!-- ABOUTME: Contains career highlights, stats, and biography information. -->
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="https://namethatyankeequiz.com/2025-07-12" rel="canonical"/>
-  <meta content="Discover the career highlights and statistics for Jay Johnstone, the featured New York Yankee for the 2025-07-12 trivia puzzle." name="description"/>
-  <title>
-   Jay Johnstone Answer - July 12, 2025 | Name That Yankee
-  </title>
-  <link href="style.css" rel="stylesheet"/>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-  <meta content="Name That Yankee - July 12, 2025" property="og:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" property="og:description"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Name That Yankee" property="og:site_name"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" property="og:image"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="Name That Yankee - July 12, 2025" name="twitter:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" name="twitter:description"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" name="twitter:image"/>
-  <script type="application/ld+json">
-   {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Name That Yankee Answer for July 12, 2025",
-  "description": "The player revealed for this New York Yankees trivia puzzle is Jay Johnstone.",
-  "image": "https://namethatyankeequiz.com/images/social-card.webp",
-  "author": {
-    "@type": "Person",
-    "name": "Scott Zager"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Name That Yankee",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
-    }
-  },
-  "datePublished": "2025-07-12"
-}
-  </script>
-  <link href="manifest.json" rel="manifest"/>
-  <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <meta content="NameThatYankee" name="apple-mobile-web-app-title"/>
- </head>
- <body>
-  <header>
-   <div class="header-content">
-    <h1>
-     The answer for July 12, 2025 is...
-    </h1>
-   </div>
-   <div class="header-controls">
-    <a class="instructions-link" href="instructions">
-     New Features!
-    </a>
-    <div id="score-display">
-     Your Score:
-     <span id="total-score">
-      0
-     </span>
-     <svg aria-hidden="true" class="chevron-icon" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6 9 12 15 18 9">
-      </polyline>
-     </svg>
-     <div id="score-breakdown-container" style="display: none;">
-      <div class="breakdown-header">
-       Score Breakdown
-      </div>
-      <table>
-       <thead>
-        <tr>
-         <th>
-          Clue
-         </th>
-         <th>
-          Points
-         </th>
-         <th>
-          Count
-         </th>
-        </tr>
-       </thead>
-       <tbody id="breakdown-body">
-       </tbody>
-      </table>
-     </div>
-    </div>
-   </div>
-  </header>
-  <main>
-   <a class="back-link" href="index">
-    ← Back to All Questions
-   </a>
-   <div class="detail-layout">
-    <div class="left-column">
-     <div class="player-profile">
-      <div class="player-photo">
-       <img alt="Photo of Jay Johnstone" src="images/answer-2025-07-12.webp"/>
-      </div>
-      <div class="player-info">
-       <h2>
-        Jay Johnstone
-       </h2>
-       <div class="facts-header">
-        <h3>
-         Career Highlights &amp; Facts
-        </h3>
-        <p class="disclaimer">
-         (Facts are AI-generated and may require verification)
-        </p>
-       </div>
-       <ul>
-        <li>
-         Known as one of the most legendary pranksters in professional baseball history.
-        </li>
-        <li>
-         Authored multiple books detailing clubhouse antics and the lighter side of the sport.
-        </li>
-        <li>
-         Served in the Marine Corps Reserve during a 20-season professional career.
-        </li>
-       </ul>
-       <div class="followup-section" id="followup-section">
-        <h3>
-         Would you like to find out more about Jay Johnstone?
-        </h3>
-        <div class="followup-buttons">
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="Using carpenter's tools, he once cut a teammate's locker down to 'penguin size' and placed a tiny stool in front of it.">
-           What was the most famous prank involving a teammate's locker?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="He would pad himself with pillows to impersonate the manager, tie the manager's office doorknob to a tree, and steal the mouthpiece from the office telephone.">
-           How did he famously torment his manager during his time in Los Angeles?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="He passed away on September 26, 2020, at the exact time that the stadium of his former team, the Dodgers, was plunged into darkness due to a power outage.">
-           What eerie coincidence occurred at the time of his death?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="stats-table-container">
-      <h3>
-       Career Totals
-      </h3>
-      <div class="table-wrapper">
-       <table>
-        <thead>
-         <tr>
-          <th>
-           WAR
-          </th>
-          <th>
-           AB
-          </th>
-          <th>
-           H
-          </th>
-          <th>
-           HR
-          </th>
-          <th>
-           BA
-          </th>
-          <th>
-           R
-          </th>
-          <th>
-           RBI
-          </th>
-          <th>
-           SB
-          </th>
-          <th>
-           OBP
-          </th>
-          <th>
-           SLG
-          </th>
-          <th>
-           OPS
-          </th>
-          <th>
-           OPS+
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-         <tr>
-          <td>
-           16.5
-          </td>
-          <td>
-           4703
-          </td>
-          <td>
-           1254
-          </td>
-          <td>
-           102
-          </td>
-          <td>
-           .267
-          </td>
-          <td>
-           578
-          </td>
-          <td>
-           531
-          </td>
-          <td>
-           50
-          </td>
-          <td>
-           .329
-          </td>
-          <td>
-           .394
-          </td>
-          <td>
-           .722
-          </td>
-          <td>
-           103
-          </td>
-         </tr>
-        </tbody>
-       </table>
-      </div>
-      <p class="citation">
-       Statistics via Baseball-Reference.com
-      </p>
-     </div>
-    </div>
-    <div class="right-column">
-     <div class="original-card">
-      <h3>
-       The Original Clue
-      </h3>
-      <img alt="Original trivia card" src="images/clue-2025-07-12.webp"/>
-     </div>
-     <div class="chart-container">
-      <h3>
-       Career Arc by WAR
-      </h3>
-      <div class="chart-wrapper">
-       <canvas id="careerArcChart">
-       </canvas>
-      </div>
-     </div>
-     <script crossorigin="anonymous" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1">
-     </script>
-     <script>
-      const years = ["1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984"];
-            const warData = [0.5, 0.5, 0.5, 2.9, 0.6, 1.6, -0.8, -0.2, 0.8, 2.6, 4.3, 1.9, -0.7, -0.2, 1.2, -0.1, 1.0, 0.4, 0.1];
-            const teamsByYear = ["CAL", "CAL", "CAL", "CAL", "CAL", "CHW", "CHW", "OAK", "PHI", "PHI", "PHI", "PHI", "2TM", "2TM", "LAD", "LAD", "2TM", "CHC", "CHC"];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jay Johnstone Answer - July 12, 2025 | Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="canonical" href="https://namethatyankeequiz.com/2025-07-12">
+    
+    <!-- Meta tags for better social sharing -->
+    <meta name="description" content="Trivia and career highlights for New York Yankees player Jay Johnstone. Learn about their Known as a legendary clubhouse prankster who once cut a teammate&#x27;s ...">
+    <meta property="og:title" content="Name That Yankee - July 12, 2025">
+    <meta property="og:description" content="Trivia and career highlights for New York Yankees player Jay Johnstone. Learn about their Known as a legendary clubhouse prankster who once cut a teammate&#x27;s ...">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Name That Yankee">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Name That Yankee - July 12, 2025">
+    <meta name="twitter:description" content="Trivia and career highlights for New York Yankees player Jay Johnstone. Learn about their Known as a legendary clubhouse prankster who once cut a teammate&#x27;s ...">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
-            const teamColors = {
-                'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
-                'ATL': { bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' },
-                'BAL': { bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' },
-                'BOS': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' },
-                'CHC': { bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' },
-                'CHW': { bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' },
-                'CIN': { bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' },
-                'CLE': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' },
-                'COL': { bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' },
-                'DET': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' },
-                'HOU': { bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' },
-                'KCR': { bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' },
-                'LAA': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'LAD': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'MIA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'MIL': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' },
-                'MIN': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' },
-                'NYM': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' },
-                'NYY': { bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' },
-                'OAK': { bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' },
-                'PHI': { bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' },
-                'PIT': { bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' },
-                'SDP': { bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' },
-                'SFG': { bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' },
-                'SEA': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' },
-                'STL': { bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' },
-                'TBR': { bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' },
-                'TEX': { bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' },
-                'TOR': { bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' },
-                'WSN': { bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' },
-                'MON': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' },
-                'CAL': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'FLA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'BRO': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'SLB': { bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' },
-                '2TM': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' },
-                'Total': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' },
-                'Default': { bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }
-            };
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Name That Yankee Answer for July 12, 2025",
+      "description": "Trivia and career highlights for New York Yankees player Jay Johnstone. Learn about their Known as a legendary clubhouse prankster who once cut a teammate's ...",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
+      "author": {
+        "@type": "Person",
+        "name": "Scott Zager"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Name That Yankee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
+        }
+      },
+      "datePublished": "2025-07-12"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>The answer for July 12, 2025 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions" class="instructions-link">New Features!</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="./" class="back-link">← Back to All Questions</a>
+
+        <div class="detail-layout">
+            <div class="left-column">
+                <div class="player-profile">
+                    <div class="player-photo">
+                        <img src="images/answer-2025-07-12.webp" alt="Photo of Jay Johnstone" decoding="async">
+                    </div>
+                    <div class="player-info">
+                        <h2>Jay Johnstone</h2>
+                        <div class="facts-header">
+                            <h3>Career Highlights & Facts</h3>
+                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                        </div>
+                        <ul>
+                        <li>Known as a legendary clubhouse prankster who once cut a teammate's locker down to miniature size.</li>
+                        <li>Served in the Marine Corps Reserve during the early stages of a professional career.</li>
+                        <li>Authored multiple books detailing humorous behind-the-scenes antics from a long professional tenure.</li>
+                        </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Jay Johnstone?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="While accounts vary, one popular version involves the player sneaking back into a hotel room after curfew and telling a roommate to move because they were standing in his moonlight.">What was the origin of the nickname &#x27;Moon Man&#x27;?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="The player once trapped the manager in his office by tying the doorknob to a tree outside and stealing the mouthpiece from the office telephone.">How did the player famously prank manager Tommy Lasorda?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In Game 4 against the Yankees, the player hit a two-run pinch-hit home run that brought the score to 6-5, a pivotal moment in a game the team eventually won 8-7.">What was the significance of the player&#x27;s pinch-hit home run in the 1981 World Series?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+
+                        <div class="player-bio">
+                            <h3>Player Biography</h3>
+                            <p>Jay Johnstone January 4, 2012 / in BioProject - Person 1972-74 Oakland Athletics / by admin This article was written by Rory Costello The flake – “an odd or eccentric player; a kidder or comic” 1 – is an all-but-vanished species in major-league baseball these days. In 2003, writer Dave Joseph lamented, “Sadly, there are fewer creative thinkers these days in baseball. There are fewer flakes, if you will, who break up the monotony of an endless season played, for the most part, by robotic athletes afraid to express opinion or originality.” 2 Outfielder Jay Johnstone was one of the premier flakes in big-league history. As Dave Joseph added, a bunch of tattoos doesn’t fill the bill. “You need talent. You need smarts. You need to have a mind of your own and give something to the game.” Johnstone qualified on all counts. He was good enough to play 15 full seasons in the majors and parts of five others from 1966 to 1985. He was largely a platoon and role player, starting over 100 games in only three of those years – but he had a solid lefty bat, providing 102 career home runs and a .267 batting average. He was also one of the game’s craftiest pranksters and better storytellers, as he recounted in three entertaining books. His gags were innumerable, and among the best was trapping Tommy Lasorda (whom he liked to impersonate by padding himself with pillows) in the manager’s room at Dodgertown by tying his doorknob to a tree and stealing the mouthpiece from his telephone. Johnstone’s maxim was never to hang around to see the results of a prank, because that gives you away as the perpetrator. It’s even better to frame someone else, as he did by surreptitiously wiping chocolate on Jerry Reuss ’s pants leg after sticking a gooey chocolate brownie in Steve Garvey’s glove. “In perhaps his greatest stunt, he slipped into the team’s Dodgertown clubhouse with carpenter’s tools and cut Ron Cey ’s locker down to penguin size, putting a tiny stool in front of it.” 3 John William Johnstone, Jr. was born on November 20, 1945, in Manchester, Connecticut. His family moved to California when Jay was “just a three-year-old pup.” 4 His father, Jack Johnstone, was in combat in the South Pacific with the US Army in World War II. 5 During the war, he met an Australian woman, Audrey Whebell, and they married. “At one time he was an accountant back east,” said Jay in 2011, “but when we moved, he was with Supreme and Driftwood Dairy.” Jack and Audrey had three children, of whom Jay was the first, followed by a brother and a sister. In 1968 Johnstone recalled to Ed Rumill of the Christian Science Monitor that his father greatly influenced his competitive spirit. “I’d get three hits in a Little League game and be afraid to face him. He’d want to know why I didn’t get four. I’d always know what his reaction would be.” 6 Jack Johnstone was good enough to sign with the St. Louis Cardinals, but he never got a chance to play pro ball because he went into the service. For a while, the Johnstone family lived in Arcadia, a northeastern suburb of Los Angeles next to Pasadena. Then they moved to West Covina, which is about 20 miles east of downtown Los Angeles. 7 Author Kevin Nelson described Jay’s early years in his book The Golden Game: The Story of California Baseball . “The lefty-hitting, righty-throwing Johnstone easily moved up through the youth ranks: Little League, Pony League, American Legion, and Edgewood High, where he starred in football and basketball in addition to baseball.” He quoted Johnstone on “the carefree life of a suburban Southern California teenager: ‘Crewcuts, Pendleton shirts, white socks, loafers, cars, hangin’ out in the sunshine, listening to music, playing sports, and looking at girls. What else was there?” 8 In 1976 Johnstone told Allen Lewis of the Philadelphia Inquirer , “I was a T-formation quarterback in football, and that might have been my best sport then. I had 35 college football scholarship offers, and I had already signed a letter of intent for one of them. Then the Angels came along and I decided to play baseball.” On June 30, 1963, the 17-year-old signed for a bonus of $35,000 in progressive installments, “plus a smaller amount for my parents.” 9 The scouts were Tufie Hashem and Ross “Rosey” Gilhousen, who reported to California Angels farm director Roland Hemond . Johnstone reported to San José in the California League, where he batted .252 in 48 games. Returning to the Bees in 1964, he improved to .291 in 126 games. After that season, a month before his 20th birthday, Jay enlisted in the Marine Corps Reserve. He received basic training in Camp Pendleton and was able to play the 1965 season, moving up to El Paso in the Texas League (Double-A) after hitting .301 in 97 more games at San Jose. He then served at a naval base in Los Alamitos, receiving his discharge in the spring of 1966 without ever being called to serve “in country” in Vietnam. 10 In 81 games for Seattle of the Pacific Coast League, Johnstone hit .340 with 7 homers and 42 RBIs in 1966. The Angels called him up after they learned that Rick Reichardt was suffering from a congenital kidney blockage (Reichardt’s right kidney was removed soon afterward, ending his season). Johnstone made his major-league debut on July 30, 1966. In his first three games, he went 6-for-12. His first RBI was a game-winner, a seventh-inning single to center at Anaheim Stadium against the New York Yankees. “I like everything I’ve seen of him,” California manager Bill Rigney said. 11 Though he is best remembered as a corner outfielder, Johnstone came up as a center fielder, and he was well regarded defensively. However, he picked up a lot of pointers on fielding from one of the best in the business at that time: his roommate, veteran Jimmy Piersall . “I thought I had outfielding all figured out,” Johnstone told Ed Rumill. “He changed it completely. He taught me everything. I’d say that conservatively, he made a 50 percent improvement in my fielding.” 12 One wonders how much of Piersall’s zaniness rubbed off on the rookie too – or if in fact there was further for Jay to go there. Eight years later, though, Johnstone said, “Jimmy Piersall once told me that as long as it’s not derogatory, get your name in the paper any way you can. That’s never been my goal, but I never minded all the talk about being a flake.” 13 Johnstone got off to a good start in 1967. As Bill Rigney recalled, “Then he fouled a ball off his ankle and never was right. In fact, he’d taken the center-field job away from José Cardenal , temporarily at least, when he was injured.” 14 He slumped and fell below the Mendoza Line, and after Independence Day the Angels sent him down to Seattle. He returned for September and (after Cardenal had been traded) made the Opening Day roster again in 1968. That May, Joe Gordon (then a special batting instructor for the Angels) said, “Jay has all the abilities you expect in a good young hitter. … He may need a little more time. But he has a natural bat.” Johnstone also gave credit to his minor-league manager, Rocky Bridges . “Rocky knocked the impatience out of me.” 15 It was much the same story in 1968, though, as the Angels optioned him to Triple-A again in June. At some point during his early years with the Angels, Johnstone acquired a lasting nickname: Moon Man. Catcher Bob “Buck” Rodgers liked to tell one version of the story. “One day he lost a ball in the sun, but when he came back to the bench he said, ‘I lost it in the moon.’” 16 The connections with outer space were fitting, especially when the whole nation was watching the Apollo missions. In 1981, though, Johnstone told Jim Murray of the Los Angeles Times that it came about as he sneaked back into his hotel room after curfew, cat-burglar style, and told another roommate, “Out of the way, you’re standing in my moonlight.” 17 Johnstone got his first taste of winter ball in Puerto Rico in 1968-69, helping the Ponce Leones win the league championship. He told author Thomas Van Hyning about having to help push the team bus over mountain roads, adding, “I think I had a better experience, culture-wise, off the field than playing the game.” 18 Johnstone then set a personal high in games played (148) and at-bats (540) during the 1969 season. He posted a batting line that was not bad but not outstanding either: .270-10-59. He tailed off to .238-11-39 in 1970, and that November, the Angels sent him to the Chicago White Sox as part of a six-player deal in which they got back Gold Glove center fielder Ken Berry . “They never seemed willing to give me a steady job and say they’d give me time to develop no matter what I did,” said Jay in 1976. 19 Johnstone’s first season with the White Sox was good: .260 with a career-high 16 homers. But as he said in 1976, “They told me they wanted me swinging for home runs after that, and I got all fouled up.” His average dropped to an anemic .188 in 1972. He corrected his bad batting habits, though, with the help of coaching from Benny Lefebvre, father of Jim Lefebvre . “Benny put me on isometrics and weight training and he changed my stance completely. … He made me shorten [my swing] up, and become a line-drive hitter.” 20 During spring training 1973, Johnstone asked for his release after refusing to take the maximum 20 percent pay cut that the White Sox wanted to impose. At the end of March, he caught on with the Oakland A’s; owner Charles O. Finley was the only one willing to give him a chance. 21 He was on the A’s roster in April and early May, as well as July, but he also had to return to Triple-A for a while, playing 69 games for Tucson in the PCL. He was not on the postseason roster as the A’s won their second of three straight World Series. Returning to the Puerto Rican Winter League for the winter of 1973-74, Johnstone hit over .300 for the Caguas Criollos. He tied for the league lead in RBIs with Benny Ayala at 46. His manager was Bobby Wine , a coach with the Philadelphia Phillies. When spring training came around, since Oakland was overloaded with outfielders, Finley arranged a tryout with the St. Louis Cardinals. Jay hit well and looked to have made the club, but roster machinations kept him from playing a game for the Cards. “I had a chance to go to Japan, for a lot of money,” Johnstone said. “But I knew I could play in the majors and I wanted to prove it.” Shortly thereafter, on Bobby Wine’s recommendation, he signed a minor-league deal with the Phillies. 22 He played 57 games for their top affiliate, Toledo in the International League – but after that, he never had to go back to the minors. Mud Hens manager Jim Bunning recommended him to the big club, even though the two had nearly come to blows because Johnstone liked to push the no-nonsense Bunning’s buttons with his little antics. 23 Johnstone played some of his best ball in Philadelphia, just as the team was climbing from the cellar of the NL East and developing into the club that reached the playoffs in three straight years from 1976 to 1978. In 1975 the Phillies finished second, and Johnstone – coming off a .346-9-46 winter for Caguas – hit .329-7-54 in 122 games. He followed up with a .318-5-53 line for the 1976 club. During the playoffs against the Cincinnati Reds that year, it wasn’t Jay’s fault that the Phillies were swept in three games. He went 7-for-9 with a walk. “I’m proving to a lot of people they were wrong about me,” Johnstone told Allen Lewis after the season. “They’re the reason I’ve worked so hard to get where I am.” Lewis described the hours Johnstone put in taking extra batting practice and honing his swing by hitting the ball off a tee. 24 Johnstone had another good year in 1977 (.284-15-59), but after a poor start the following year, Philadelphia traded him to the New York Yankees on June 14 with Bobby Brown for Rawly Eastwick . There he won his first World Series ring, although he saw no action in the playoffs and got into just two games without a plate appearance as the Yankees beat the Los Angeles Dodgers for the championship. While he was with the Yankees, Johnstone played under manager Billy Martin , whom he described as “when it comes to strategy, the most astute man that I’d ever met.” 25 Although playing time was again scanty for him in the first half of the 1979 season, that changed on June 15, when the Yankees dealt him to the San Diego Padres for reliever Dave Wehrmeister . Jay hit well for the Padres (.294 in 225 at-bats), though he had no homers. He became a free agent that November and signed about a month later with the Dodgers, where he spent two seasons and a fraction of a third – and his exploits as a prankster flowered fully. Johnstone was part of his second World Series champion team during the strike year of 1981. He was hitless in two at-bats during the NL Championship Series against Montreal, but he went 2-for-3 against the Yankees, including a two-run pinch-hit homer in Game Four that brought the Dodgers to within a run at 6-5, in a game that they wound up winning 8-7. The Dodgers Encyclopedia said that it “may have been the key hit of the entire Series.” 26 Los Angeles released the veteran, by then 36 years old, in late May 1982. Within a week, though, he signed with the Chicago Cubs. He spent a couple of moderately productive seasons there, but his at-bats were halved in 1983 and again in 1984, when he served largely as a pinch-hitter (and his pranks failed to amuse manager Jim Frey ). After obtaining Davey Lopes from Oakland, the Cubs released Johnstone in September 1984. Cubs general manager Dallas Green hoped to have him reinstated as a player, or bring him back as a coach, but he was deprived of another chance to go to the playoffs. In February 1985 Johnstone returned to the Dodgers as a free agent. Tom Lasorda had a fondness for keeping veteran pinch-hitters at the end of his bench, men like Manny Mota , Vic Davalillo , and José Morales . The 39-year-old Johnstone spent the entire season with Los Angeles – albeit with a long stretch on the disabled list. He delivered two hits and a walk in 17 games without appearing once in the field. Despite such sparse activity, he remained on the postseason roster, going 0-for-1 against the Cardinals. At the end of October, the Dodgers released him, ending his big-league career. Johnstone then focused on his auto-parts business, which he had been pursuing part-time for several years. Yet even while he was still active, he had begun to make good use of all the stories he had accumulated across his 20 big-league seasons. With co-author Rick Talley, he published his first book, Temporary Insanity , in 1985. Over the Edge followed in 1988, and 1990 brought the duo’s last effort to date, Some of My Best Friends Are Crazy . This last was subtitled “Baseball’s Favorite Lunatic Goes in Search of His Peers.” By then Johnstone had moved into broadcasting. He was the original host of the ESPN show The Lighter Side of Sports in 1987 and 1988. He hosted a couple of other shows in a similar vein, Baseball’s Funniest Pranks and Super Sports Follies. He was also with the Yankees in 1989 and 1990 (working with John Sterling on WABC’s radio broadcasts) and the Phillies in 1992 and 1993 (for the Philadelphia cable channel PRISM, with Chris Wheeler and former teammate Garry Maddox ). Johnstone left PRISM by mutual consent in 1994. He took three years off, visiting US troops in Saudi Arabia, Kuwait, and Germany. He also held clinics in Japan under the aegis of the World Children’s Baseball Federation and visited American children’s schools in London, Paris, and Brussels. 27 After that Johnstone has kept busy in a new variety of ways. In the late 1990s he helped started a part-time sports auction/charity fundraising business called Sporthings, which developed into Sporthings &amp; More, handling items from other areas including entertainment and music. He also traveled the country as a speaker at both corporate and social events. He participated in baseball clinics, fantasy camps, and charity golf tournaments. In 1987 he began hosting his own Charity/Celebrity Golf Tournament every January on Martin Luther King’s birthday to raise money for children in need. He also narrated several videos, including The Hitter’s Commandments , and remained involved in broadcasting with the Fox network. In 2006 Johnstone became part of a group that announced the formation of the independent Continental Baseball League. This circuit operated for four seasons (2007-2010) with four to six teams based in New Mexico, Louisiana, and Texas. He talked about the league in 2011. “Bob Ibach, who was a friend of mine and a PR man with the Cubs, started it with Ron Baron. The idea was to help players get back to the majors or reach a higher level. But it was always set back, either by some unusual act like a flood or by problems with financially unstable owners. They persevered, but it got to be too much. Ron Baron lost about half a million dollars. But it was a great idea for a while, a lot of fun.” August 2010 brought the news that Johnstone had become annual spokesman for Hope4Heroes, a nonprofit organization designed to benefit military veterans. Given his father’s background and his own in the military (he served for four years total in the Marine Reserve), his support for this cause was not surprising. He said, “I am really, really excited about this. … I wanted to come back and do my part to help out.” Johnstone and his wife, Mary Jayne Saunders, were married on November 25, 1967. Mary Jayne was an actress, starting as a girl of 5 in the late 1940s. Her career in movies and later TV continued until she got married, whereupon she retired from acting. The Johnstones had one daughter, Mary Jayne Sarah. As far back as 1990, Johnstone saw flakes and pranksters passing from the major-league scene. He pointed to the media, saying, “[Players] can’t afford to do anything crazy, because they’re afraid it will end up in the papers and make them look bad. … I couldn’t have the overall, wide fun that I used to have when you were able to get away with a lot more. Times change, the game’s changed.” 28 Jay Johnstone, however, remained an easygoing and fan-friendly personality. Johnstone died at the age of 74 on September 26, 2020, in Granada Hills, California. He’d been suffering from dementia, but COVID-19 caused his death. An array of obituaries celebrated his baseball achievements, humorous personality, and pranks. A notable fact was that his time of death occurred around the same time Dodger Stadium was plunged into darkness because of a power outage. An earlier version of this article appeared in “ Mustaches and Mayhem: Charlie O’s Three Time Champions: The Oakland Athletics: 1972-74″ (SABR, 2015), edited by Chip Greene. Acknowledgments Grateful acknowledgment to Jay Johnstone for his memories (telephone interview, June 14, 2011). Quotes on the Flakiness and Pranks of Jay Johnstone “What makes him unusual is that he thinks he’s normal and everyone else is nuts.” — Danny Ozark “I don’t rehearse anything. I just do what my instincts tell me to.” 29 “There are a lot of peaks and valleys in this game, and this was a way for me to come back up. Some guys to turn to drugs; some guys couldn’t cope; some guys, the stress got to them. My way was to make people laugh. And laughter has helped me go on to the next level each time.” 30 Sources baseball-reference.com retrosheet.org sporthings.net imdb.com Crescioni Benítez, José A., El Béisbol Profesional Boricua (San Juan, Puerto Rico: Aurora Comunicación Integral, Inc., 1997). Notes 1 Paul Dickson, The New Dickson Baseball Dictionary (New York: Harvest Books, 1999(, 198. 2 Dave Joseph, “Baseball Aches for Flakes,” Baseball Digest , August 2003, 64. 3 Gordon Edes, “Johnstone back in Dodger Blue, But Who Knows for How Long?” Los Angeles Times/Washington Post News Service, April 13, 1985. 4 Ed Rumill, “Johnstone Learns What ‘Counts’ in Playing Hitters,,” Baseball Digest , May 1968. 5 “Jay Johnstone steps to the plate for U.S. service veterans.” Mysanantonio.com, August 2, 2010. 6 Rumill. 7 Rumill. 8 Kevin Nelson, The Golden Game: The Story of California Baseball (Berkeley, California: Heyday Books, 2004), 310. 9 Alle Lewis, “Jay Johnstone’s Long Journey to Success,” Baseball Digest , December 1976, 57. 10 Nelson, 310. 11 “Angels’ Jay Johnstone Helps Only His Team,” Associated Press, August 2, 1966. 12 Rumill. 13 Lewis, 61. 14 Rumill. 15 Rumill. 16 Paul Dickson, Baseball’s Greatest Quotations (New York: HarperCollins, 2008), 384. 17 Jim Murray, “Jay Johnstone: The Man Who Fell to Earth,” Los Angeles Times , September 4, 1981. 18 Thomas Van Hyning, Puerto Rico’s Winter League (Jefferson, North Carolina: McFarland &amp; Co., 1995), 39. 19 Lewis, 57. 20 Lewis, 58. 21 Lewis, 59. 22 Lewis, 59-60. 23 Frank Dolson, Jim Bunning: Baseball and Beyond (Philadelphia: Temple University Press, 1998), 168-170. 24 Dolson, 57, 60. 25 Brian Jensen, Where Have All Our Yankees Gone? (Lanham, Maryland: Taylor Trade Publishing, 2004), 139. 26 William F. McNeil, The Dodgers Encyclopedia Champaign, Illinois: Sports Publishing LLC, 2003 (second edition), 239. 27 Jensen. 28 Mike McGovern, “Jay Johnstone sees light side.” Reading (Pennsylvania) Eagle , January 19, 1990, 11. 29 Verdi, Bob. “Pranks for the memories.” Chicago Tribune , April 16, 1979: D4. 30 McGovern, op. cit., loc. cit. Full Name John William Johnstone Born November 20, 1945 at Manchester, CT (USA) Died September 26, 2020 at Granada Hills, CA (USA) Stats Baseball Reference Retrosheet If you can help us improve this player’s biography, contact us . Tags 1972-74 Oakland Athletics Share this entry Share on Facebook Share on X Share on LinkedIn Share on Reddit Share by Mail</p>
+                        </div>
+        
+                    </div>
+                </div>
+                
+        <div class="stats-table-container">
+            <h3>Career Totals</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>WAR</th><th>AB</th><th>H</th><th>HR</th><th>BA</th><th>R</th><th>RBI</th><th>SB</th><th>OBP</th><th>SLG</th><th>OPS</th><th>OPS+</th></tr></thead>
+                    <tbody><tr><td>16.5</td><td>4703</td><td>1254</td><td>102</td><td>.267</td><td>578</td><td>531</td><td>50</td><td>.329</td><td>.394</td><td>.722</td><td>103</td></tr></tbody>
+                </table>
+            </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
+        </div>
+        
+            </div>
+            <div class="right-column">
+                <div class="original-card">
+                    <h3>The Original Clue</h3>
+                    <img src="images/clue-2025-07-12.webp" alt="Original trivia card" decoding="async">
+                </div>
+                
+        <div class="chart-container">
+            <h3>Career Arc by WAR</h3>
+            <div class="chart-wrapper">
+                <canvas id="careerArcChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
+        <script>
+            const years = ["1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985"];
+            const warData = [0.5, 0.5, 0.5, 2.9, 0.6, 1.6, -0.8, -0.2, 0.7, 2.7, 4.3, 1.9, -0.7, -0.2, 1.2, -0.1, 0.9, 0.4, 0.1, -0.2];
+            const teamsByYear = ["CAL", "CAL", "CAL", "CAL", "CAL", "CHW", "CHW", "OAK", "PHI", "PHI", "PHI", "PHI", "2TM", "2TM", "LAD", "LAD", "2TM", "CHC", "CHC", "LAD"];
+            const teamColors = window.TEAM_COLORS;
 
             const waterfallData = [];
             let cumulativeTotal = 0;
@@ -386,32 +238,16 @@
                     }
                 }
             });
-     </script>
-    </div>
-   </div>
-   <div id="search-data" style="display:none;">
-    {"teams": ["PHI", "LAD", "CAL", "CHW", "NYY", "SDP", "CHC", "OAK"], "years": ["1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984"]}
-   </div>
-   <div id="quiz-data" style="display:none;">
-    {
-    "answer": "Jay Johnstone",
-    "hints": [
-        "Known as one of the most legendary pranksters in professional baseball history.",
-        "Authored multiple books detailing clubhouse antics and the lighter side of the sport.",
-        "Served in the Marine Corps Reserve during a 20-season professional career."
-    ],
-    "facts": [
-        "Known as one of the most legendary pranksters in professional baseball history.",
-        "Authored multiple books detailing clubhouse antics and the lighter side of the sport.",
-        "Served in the Marine Corps Reserve during a 20-season professional career."
-    ]
-}
-   </div>
-  </main>
-  <script src="js/detail.js" type="module">
-  </script>
-  <script>
-   document.addEventListener('DOMContentLoaded', function() {
+        </script>
+        
+            </div>
+        </div>
+        <div id="search-data" style="display:none;">{"teams": ["CAL", "LAD", "PHI", "CHC", "CHW", "NYY", "OAK", "SDP"], "years": ["1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Jay Johnstone", "nickname": "", "hints": ["Known as a legendary clubhouse prankster who once cut a teammate's locker down to miniature size.", "Served in the Marine Corps Reserve during the early stages of a professional career.", "Authored multiple books detailing humorous behind-the-scenes antics from a long professional tenure."]}</div>
+    </main>
+    <script type="module" src="js/detail.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('followup-section');
         if (!container) return;
         const items = container.querySelectorAll('.followup-item');
@@ -434,32 +270,15 @@
                 } else {
                     answerBox.style.display = 'none';
                 }
+
             });
         });
     });
-  </script>
-  <footer>
-   <p class="disclaimer-footer">
-    This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-   </p>
-   Last Updated: 20-Mar-2026
-   <p class="copyright">
-    <a href="https://namethatyankeequiz.com">
-     Name That Yankee Quiz
-    </a>
-    © 2026 by
-    <a href="https://github.com/zagers/NameThatYankee">
-     Scott Zager
-    </a>
-    is licensed under
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-     CC BY-NC-SA 4.0
-    </a>
-    <img alt="CC" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="BY" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="NC" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="SA" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-   </p>
-  </footer>
- </body>
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+    </footer>    
+</body>
 </html>

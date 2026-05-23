@@ -1,316 +1,168 @@
-<!-- ABOUTME: Historical trivia puzzle page for a specific date. -->
-<!-- ABOUTME: Contains player stats clues and interactive reveal logic. -->
+<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->
+<!-- ABOUTME: Contains career highlights, stats, and biography information. -->
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="https://namethatyankeequiz.com/2025-07-02" rel="canonical"/>
-  <meta content="Discover the career highlights and statistics for Jesse Barfield, the featured New York Yankee for the 2025-07-02 trivia puzzle." name="description"/>
-  <title>
-   Jesse Barfield Answer - July 02, 2025 | Name That Yankee
-  </title>
-  <link href="style.css" rel="stylesheet"/>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-  <meta content="Name That Yankee - July 02, 2025" property="og:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" property="og:description"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Name That Yankee" property="og:site_name"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" property="og:image"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="Name That Yankee - July 02, 2025" name="twitter:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" name="twitter:description"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" name="twitter:image"/>
-  <script type="application/ld+json">
-   {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Name That Yankee Answer for July 02, 2025",
-  "description": "The player revealed for this New York Yankees trivia puzzle is Jesse Barfield.",
-  "image": "https://namethatyankeequiz.com/images/social-card.webp",
-  "author": {
-    "@type": "Person",
-    "name": "Scott Zager"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Name That Yankee",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
-    }
-  },
-  "datePublished": "2025-07-02"
-}
-  </script>
-  <link href="manifest.json" rel="manifest"/>
-  <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <meta content="NameThatYankee" name="apple-mobile-web-app-title"/>
- </head>
- <body>
-  <header>
-   <div class="header-content">
-    <h1>
-     The answer for July 02, 2025 is...
-    </h1>
-   </div>
-   <div class="header-controls">
-    <a class="instructions-link" href="instructions">
-     New Features!
-    </a>
-    <div id="score-display">
-     Your Score:
-     <span id="total-score">
-      0
-     </span>
-     <svg aria-hidden="true" class="chevron-icon" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6 9 12 15 18 9">
-      </polyline>
-     </svg>
-     <div id="score-breakdown-container" style="display: none;">
-      <div class="breakdown-header">
-       Score Breakdown
-      </div>
-      <table>
-       <thead>
-        <tr>
-         <th>
-          Clue
-         </th>
-         <th>
-          Points
-         </th>
-         <th>
-          Count
-         </th>
-        </tr>
-       </thead>
-       <tbody id="breakdown-body">
-       </tbody>
-      </table>
-     </div>
-    </div>
-   </div>
-  </header>
-  <main>
-   <a class="back-link" href="index">
-    ← Back to All Questions
-   </a>
-   <div class="detail-layout">
-    <div class="left-column">
-     <div class="player-profile">
-      <div class="player-photo">
-       <img alt="Photo of Jesse Barfield" src="images/answer-2025-07-02.webp"/>
-      </div>
-      <div class="player-info">
-       <h2>
-        Jesse Barfield
-       </h2>
-       <div class="facts-header">
-        <h3>
-         Career Highlights &amp; Facts
-        </h3>
-        <p class="disclaimer">
-         (Facts are AI-generated and may require verification)
-        </p>
-       </div>
-       <ul>
-        <li>
-         Drafted in the 9th round of the 1977 amateur draft, this player initially planned to use a scholarship to study architectural drawing at Bradley University before turning pro.
-        </li>
-        <li>
-         During his early minor league days in 1977, his mother drove him to a factory to personally load up on two dozen customized bats.
-        </li>
-        <li>
-         Renowned for his incredible arm strength, this outfielder led all major-league peers with 22 assists and eight double plays in 1985.
-        </li>
-       </ul>
-       <div class="followup-section" id="followup-section">
-        <h3>
-         Would you like to find out more about Jesse Barfield?
-        </h3>
-        <div class="followup-buttons">
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="After being drafted in 1977, the Blue Jays tripled their original $2,500 bonus offer, convincing the young prospect to sign instead of pursuing architectural studies.">
-           How did this player secure his spot in professional baseball?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="In 1986, while already established in the big leagues, the player received a phone call revealing that a local man named Evell Kelly, whom he had known his entire life, was actually his biological father.">
-           What personal discovery did this player make at the age of 26?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="After struggling early in the 1983 season, he began backing away from home plate to give himself extra time to extend his arms, which helped him drive the ball to all fields and hit 27 home runs that year.">
-           What defined his transition to becoming a consistent power hitter?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="stats-table-container">
-      <h3>
-       Career Totals
-      </h3>
-      <div class="table-wrapper">
-       <table>
-        <thead>
-         <tr>
-          <th>
-           WAR
-          </th>
-          <th>
-           AB
-          </th>
-          <th>
-           H
-          </th>
-          <th>
-           HR
-          </th>
-          <th>
-           BA
-          </th>
-          <th>
-           R
-          </th>
-          <th>
-           RBI
-          </th>
-          <th>
-           SB
-          </th>
-          <th>
-           OBP
-          </th>
-          <th>
-           SLG
-          </th>
-          <th>
-           OPS
-          </th>
-          <th>
-           OPS+
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-         <tr>
-          <td>
-           39.4
-          </td>
-          <td>
-           4759
-          </td>
-          <td>
-           1219
-          </td>
-          <td>
-           241
-          </td>
-          <td>
-           .256
-          </td>
-          <td>
-           715
-          </td>
-          <td>
-           716
-          </td>
-          <td>
-           66
-          </td>
-          <td>
-           .335
-          </td>
-          <td>
-           .466
-          </td>
-          <td>
-           .802
-          </td>
-          <td>
-           117
-          </td>
-         </tr>
-        </tbody>
-       </table>
-      </div>
-      <p class="citation">
-       Statistics via Baseball-Reference.com
-      </p>
-     </div>
-    </div>
-    <div class="right-column">
-     <div class="original-card">
-      <h3>
-       The Original Clue
-      </h3>
-      <img alt="Original trivia card" src="images/clue-2025-07-02.webp"/>
-     </div>
-     <div class="chart-container">
-      <h3>
-       Career Arc by WAR
-      </h3>
-      <div class="chart-wrapper">
-       <canvas id="careerArcChart">
-       </canvas>
-      </div>
-     </div>
-     <script crossorigin="anonymous" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1">
-     </script>
-     <script>
-      const years = ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992"];
-            const warData = [0.5, 1.1, 2.8, 2.8, 6.9, 7.6, 4.7, 2.9, 4.4, 5.2, 1.9, -1.3];
-            const teamsByYear = ["TOR", "TOR", "TOR", "TOR", "TOR", "TOR", "TOR", "TOR", "2TM", "NYY", "NYY", "NYY"];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jesse Barfield Answer - July 02, 2025 | Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="canonical" href="https://namethatyankeequiz.com/2025-07-02">
+    
+    <!-- Meta tags for better social sharing -->
+    <meta name="description" content="Trivia and career highlights for New York Yankees player Jesse Barfield. Learn about their Led the major leagues in home runs during a single season., Gunned...">
+    <meta property="og:title" content="Name That Yankee - July 02, 2025">
+    <meta property="og:description" content="Trivia and career highlights for New York Yankees player Jesse Barfield. Learn about their Led the major leagues in home runs during a single season., Gunned...">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Name That Yankee">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Name That Yankee - July 02, 2025">
+    <meta name="twitter:description" content="Trivia and career highlights for New York Yankees player Jesse Barfield. Learn about their Led the major leagues in home runs during a single season., Gunned...">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
-            const teamColors = {
-                'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
-                'ATL': { bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' },
-                'BAL': { bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' },
-                'BOS': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' },
-                'CHC': { bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' },
-                'CHW': { bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' },
-                'CIN': { bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' },
-                'CLE': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' },
-                'COL': { bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' },
-                'DET': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' },
-                'HOU': { bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' },
-                'KCR': { bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' },
-                'LAA': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'LAD': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'MIA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'MIL': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' },
-                'MIN': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' },
-                'NYM': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' },
-                'NYY': { bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' },
-                'OAK': { bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' },
-                'PHI': { bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' },
-                'PIT': { bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' },
-                'SDP': { bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' },
-                'SFG': { bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' },
-                'SEA': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' },
-                'STL': { bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' },
-                'TBR': { bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' },
-                'TEX': { bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' },
-                'TOR': { bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' },
-                'WSN': { bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' },
-                'MON': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' },
-                'CAL': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'FLA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'BRO': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'SLB': { bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' },
-                '2TM': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' },
-                'Total': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' },
-                'Default': { bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }
-            };
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Name That Yankee Answer for July 02, 2025",
+      "description": "Trivia and career highlights for New York Yankees player Jesse Barfield. Learn about their Led the major leagues in home runs during a single season., Gunned...",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
+      "author": {
+        "@type": "Person",
+        "name": "Scott Zager"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Name That Yankee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
+        }
+      },
+      "datePublished": "2025-07-02"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>The answer for July 02, 2025 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions" class="instructions-link">New Features!</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="./" class="back-link">← Back to All Questions</a>
+
+        <div class="detail-layout">
+            <div class="left-column">
+                <div class="player-profile">
+                    <div class="player-photo">
+                        <img src="images/answer-2025-07-02.webp" alt="Photo of Jesse Barfield" decoding="async">
+                    </div>
+                    <div class="player-info">
+                        <h2>Jesse Barfield</h2>
+                        <div class="facts-header">
+                            <h3>Career Highlights & Facts</h3>
+                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                        </div>
+                        <ul>
+                        <li>Led the major leagues in home runs during a single season.</li>
+                        <li>Gunned down 162 baserunners throughout a 12-year career with a powerful throwing arm.</li>
+                        <li>Became the first player in a specific club's history to record a 20-20 season.</li>
+                        </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Jesse Barfield?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He holds 21 design patents and was nominated to the Who&#x27;s Who of American Inventors for creating unique items like desks with ballparks carved into them.">What unique design-related achievement did this player earn after his baseball career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="At age 13, while sitting in the right-field upper deck, he told his friends he would one day play right field at that very stadium, a promise he eventually fulfilled.">How did a childhood trip to a ballpark influence his future career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He was traded to the Yankees on April 30, 1989, in exchange for pitcher Al Leiter.">What was the nature of the trade that brought him to the Bronx in 1989?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+
+                        <div class="player-bio">
+                            <h3>Player Biography</h3>
+                            <p>Jesse Barfield July 21, 2021 / in BioProject - Person Home Run Champions 1980s All-Stars Parent-Child / by admin This article was written by Malcolm Allen Arm and wrist strength were Jesse Barfield’s calling cards. Over 12 major-league seasons (1981-1992) with the Toronto Blue Jays and New York Yankees, the two-time Gold Glove right-fielder’s throwing arm was so powerful that he gunned down 162 baserunners. His swing produced a home run every 19.7 at-bats, including an American League-leading 40 in 1986, before a series of injuries and wrist surgeries derailed his career. Jesse Lee Barfield was born on October 29, 1959, in Joliet, Illinois, roughly 30 miles southwest of Chicago. His mother, Annie J. Barfield, had just turned 18. “My father abandoned us and decided to marry another woman. So that’s when my mom met a man named Jesse who stepped in, and he and my mom started dating. I was actually named after him,” Barfield explained. “Everyone in my family told me that he was my dad.” 1 Annie eventually married another man and had three more children: Darryl, Melanie and Eric. Annie divorced around the time Jesse became a teen and worked as a seamstress to support Jesse and his three siblings. “We made a tough situation great,” Jesse said. “I owe my mom a lot of credit because we didn’t actually know we were poor, I don’t think we were, I mean, we didn’t miss any meals.” 2 The George Werden Buck Boys Club was Jesse’s home away from home. “It was a lifesaver for me,” he said. 3 He perfected his ping pong skills enough to win some events and finish second in a city tournament. Basketball, shooting pool and swimming also kept him out of trouble. Despite pressure to root for either the Cubs or White Sox, he recalled, “I had heroes on both teams.” 4 White Sox’ slugger Dick Allen was one, but Ernie Banks was his favorite. He watched Mr. Cub play every day on WGN-TV and imitated his batting stance. Jesse was 12 when he joined his first baseball team at the repeated prodding of his friend Rick, who urged him to try out for the Belmont Little League. He started as a shortstop and pitcher. 5 Jesse’s passion for the sport developed quickly. On a Boys Club trip to Comiskey Park when he was 13, Barfield recalled, “We used to sit up in the right-field upper deck area…I told the guys, no joke, ‘Man, one day I’m going to playing right out there. You watch.’” 6 They laughed. Jesse played Pony League and Colt League ball in Ingalls Park, and made both the basketball and baseball teams at Joliet Central High School. As a junior, he ripped a game-winning double off Joliet Catholic pitcher Bill Gullickson .” 7 Since Gullickson would be the number-two overall draft pick the following year, scouts from a handful of big-league teams witnessed it, including Bobby Mattick –who joined the expansion Toronto Blue Jays a few months later. “Bobby liked the way Jesse swung the bat,” recalled scout Al LaMacchia . “The ball he hit was a double that put a hole in the wooden fence.” 8 After Barfield earned first team All-American honors as a senior, the Blue Jays selected him in the ninth round of the 1977 June Amateur Draft. Toronto offered $2,500, but Barfield had other options. He’d won a statewide drafting contest and earned a scholarship to study architectural drawing at Bradley University in Peoria. 9 After the Blue Jays tripled their bonus offer, he signed with scout Bob Engle. 10 Jesse bought his mother a new Ford Thunderbird. 11 He debuted with Utica (New York) in the short-season, Single-A New York-Pennsylvania League in 1977. Jesse’s mom drove him to the Rawlings Adirondack factory 35 miles away in Dolgeville and loaded him up with two dozen customized bats. 12 Barfield’s first professional homer was a game-winning, three-run shot, but he went deep only five times in 70 games and batted .226. 13 “The first time I saw a slider in the rookie league, I couldn’t hit it,” he recalled. “I just made a half-swing.” 14 That fall in the Florida Instructional League, the Blue Jays opened up his stance to help him track the ball better.” 15 Barfield’s first full-length season was 1978 with Dunedin in the Single-A Florida State League, where chronic losing in front of small crowds made baseball feel more like a job. 16 In 133 games, he produced only two home runs and a .206 batting average while striking out a league-high 125 times. “You’re not going to do well every day,” he reflected. “If you can’t accept this game the way it is, then you might as well get into something else.” 17 Barfield’s throwing arm was already big-league, as evidenced by his circuit-best 22 outfield assists. “I believe my fielding is what kept me in the game until I learned how to hit,” he said. 18 In 1979, Barfield led the Kinston (North Carolina) Eagles of the Single-A Carolina League with 37 extra-base hits and raised his average to .264 in 136 games. The Blue Jays added him to their 40-man roster. He became an offseason resident of Houston, where his mother had moved for work. 19 Toronto had a Double-A affiliate for the first time in 1980, and Barfield hit the first home run in the history of the Knoxville Blue Jays. 20 Despite missing the last three weeks with a broken thumb, he paced the Southern League team with 14 homers, 65 RBIs, and 63 runs scored in 124 contests. 21 Barfield healed in time for winter ball in Colombia and returned wearing a gold pendant featuring the Blue Jays logo. 22 “The guys give me a lot of noise over it,” he admitted. “They say, ‘What you gonna do if you get traded?’” 23 Billy Smith , Toronto’s player development director, encouraged him, saying, “You’re a can’t-miss if you keep the right attitude.” 24 Barfield returned to Knoxville in 1981 and earned team MVP honors, batting .261 with 16 homers in 141 games. 25 His all-around display included professional highs in triples (13), stolen bases (25), and a league-best 23 outfield assists. The Blue Jays were on the road when they called Barfield up to the majors. He was to join the team at Comiskey Park, where his Boys Club friends had laughed at him. “After I called my mom first, you’d better believe I got on the horn to talk to those guys,” he said. 26 For his debut on September 3, Barfield recalled, “I was so fresh that they had to staple my number to the uniform. 27 He stroked an RBI single to center against lefty Steve Trout in his second at-bat and stole second base after reaching first base on a fielder’s choice in the seventh inning. In the series finale on September 6, Barfield blasted his first big-league homer off Britt Burns . He hit safely in his first eight contests and finished the season with a .232 average and two homers in 25 games, plus lessons from hitting coach and Hall-of-Famer Bobby Doerr . “Bobby talked to me about picking the right pitch, swinging at strikes,” Barfield recalled. 28 That winter, Toronto GM Pat Gillick said he wanted Barfield to gain Triple-A experience in 1982. 29 Barfield led the Venezuelan League’s Cardenales de Lara in RBIs despite coming home early after losing 18 pounds from a virus. 30 He gained the weight back and more working out with a Nautilus machine. 31 “He’s put on 10 pounds, and it’s all muscle,” Gillick remarked in spring training. Barfield’s Grapefruit League performance convinced manager Bobby Cox to make him Toronto’s Opening Day right fielder. “I just like everything I’ve seen about him,” Cox explained. 32 “All Jesse needs is experience here. If he’s struggling with his bat, he’s still going to help you defensively.” 33 Sharing outfield time with lefty Hosken Powell , Barfield batted .268 in 46 games before hyperextending his left knee diving and sliding onto Exhibition Stadium’s artificial turf to snare a line drive on June 3. After returning 10 days later, he hit .236 in 93 appearances. 34 Barfield’s first homer of the season was a pinch-hit grand slam on April 24. During the final week of the season, he launched what he called “the longest hit I’ve ever had in my life” – a 450-foot blast off Minnesota’s Jack O’Connor . 35 Overall, the rookie produced 18 homers in 394 at-bats to rank second on the Blue Jays. Barfield also enjoyed a breakthrough year off the field. Though he’d never been a heavy drinker or a smoker, he described his early career priorities as “myself, money, and women” and said, “If you called me a no-good so-and-so, we were gonna throw down.” That changed when he became a committed Christian during a Bible study at the home of pitcher Roy Lee Jackson . “[Jackson] seemed to have this inner peace, whether he gave up one hit or nine runs, that I’d never seen before,” 36 Barfield remarked. That summer, Jesse married Marla Travis, a Houstonian. Their first child, Josh, was born that December in Venezuela, where Jesse slugged 12 homers in 44 games (including playoffs) for Lara. 37 “I think eight of my 12 homers there were against right-handed pitchers,” he said. 38 He platooned again in 1983 and kept working with hitting instructor Cito Gaston . “Cito was like a big brother to me,” Barfield said. 39 “He took me from basically a pull hitter to a guy that can drive the ball to all fields.” 40 Through July 21, however, Barfield was batting only .197. Jackson and centerfielder Lloyd Moseby encouraged him. “We kept [Barfield] up spiritually,” Moseby explained. “We didn’t even talk baseball because we knew he had all the ability.” 41 On July 26, Barfield went deep in each game of a doubleheader against the White Sox, including his first career opposite-field homer. “That showed me something,” he said. “I can drive the ball the other way and be successful.” 42 Beginning that night, Barfield batted .317 with 16 home runs in his final 56 games. Between August 29 and September 2, he went deep seven times in five days. He explained that he’d backed away from home plate slightly to give himself an extra split-second to extend his arms and drive the ball. 43 By connecting for 27 homers in 388 at-bats during the Blue Jays’ first-ever winning season, he earned a two-year contract. He’d produced both a better slugging percentage and OPS against righthanders, so he wanted to play every day in 1984. “You’ve got to find a spot for me,” Barfield said. “I want to be an All-Star.” 44 After a poor April, however, the 6-foot-1, 200-pounder wound up playing less frequently, starting fewer than half the games. Midway through a season in which Barfield batted .284 with 14 homers in 320 at-bats, Angels slugger Reggie Jackson said, “I’d compare Jesse Barfield to me, a guy who hits the ball a mile and strikes out a lot. The thing about Jesse, he doesn’t play enough. You’ve got to be up at that plate, learning.” 45 After the Blue Jays dealt outfielder Dave Collins and shortstop Alfredo Griffin to Oakland for All-Star closer Bill Caudill that offseason, they told Barfield that right field was his to lose. “I didn’t like the sound of that, so I’ve got to go out and win it,” he said. 46 On April 17, his sudden death homer against the Rangers lifted Toronto back to .500. The team moved into first place to stay during Barfield’s personal-best 16-game hitting streak in May. He finished the season batting .289 in 155 games, with 27 homers and a career-high 22 steals to become the first 20-20 player in franchise history. 47 The Blue Jays made the playoffs for the first time, and the local writers voted him the club’s player of the year. 48 Barfield went deep once and batted .280 in the ALCS against the Royals, but Toronto fell in seven games. It was to be his only postseason experience. Though they’d started together the night of Barfield’s big-league debut, 1985 was the first year that George Bell , Lloyd Moseby, and Barfield were Toronto’s regular outfield trio. They soon became the AL’s top such unit. Bell, a hard-hitting Dominican, played left. Moseby, a speedy lefty, manned center. Barfield had the most power and defensive ability. “You can never play any better right field. It’s impossible,” insisted Cox. 49 “There is little in baseball, there is little in any sport, to match the splendid thrill of watching Jesse Barfield make a play in right field and make one of his glorious throws to catch the runner at the plate,” wrote John Slinger in the Toronto Star . 50 Barfield led all major-league outfielders with 22 assists and eight double plays in 1985. Barfield and the Blue Jays started slowly under new manager Jimy Williams in 1986. “The pitchers try to find different ways to get you out,” Barfield observed. “They put you under a microscope looking for a weakness they can exploit.” 51 Though pitching struggles doomed Toronto to a fourth-place finish, Barfield adjusted and belted 40 home runs to lead the majors. “I’m just trying to drive the ball,” he said. “And when I do that, the homers usually come on their own.” 52 He played in his only All-Star Game that year at the Houston Astrodome , won the first of two straight Gold Gloves and edged Montreal Expos’ star Tim Raines to become the first Blue Jay ever honored as Canada’s Baseball Man of the Year. 53 That summer, Barfield received a phone call from a woman who identified herself as his grandmother. She revealed that a neighborhood man he’d known growing up named Evell Kelly was his biological father. Jesse’s mother confirmed it. “I guess for many reasons she never wanted me to know,” Barfield said. He got to know Evell, and they shared a resemblance as well as outgoing personalities, but Jesse was already 26 when he learned the truth. “A father-son relationship is something I was deprived of,” he said. 54 Barfield’s $1,525,000 salary for 1987 made him the highest paid non-pitcher in Blue Jays history at the time. 55 By June 27, Toronto boasted the majors’ best record and he had gone deep 19 times. After combining with Bell to bash 71 homers the previous year, they’d hit 75 in 1987. “[Bell] hits the crowd pleasers, high and you have time to stand and cheer,” Barfield said. “Mine just jump. Usually line drives.” 56 Barfield hit two-homers against the Rangers on consecutive Friday nights in early May, including a sudden-death shot off Mitch Williams . In June, he beat Baltimore with another walk-off. “The biggest thing about Jesse Barfield, as far as baseball, is his work habits. He does things with a purpose,” Jimy Williams noted. “He has no waste of physical or mental energy. And this is a young man just entering his prime.” Barfield often led the team’s Bible studies and chapel services. “Jesse is one of the greatest ball players I’ve ever played with,” said shortstop Tony Fernández . “He also has a wonderful heart, compassion.” 57 Though it wasn’t publicized until fall, the Blue Jays inked Barfield to a three-year, $4.2 million contract that summer. 58 The left wrist that Barfield had broken playing high school basketball was becoming increasingly troublesome, however. He needed seven cortisone shots to get through the 1987 season, making an estimated 20 since he turned pro. After the All-Star break, he managed only nine homers. “I couldn’t get on top of the ball,” he explained. Shortly after the Blue Jays lost their final seven contests to blow a three-and-a-half game lead and miss the playoffs, Barfield had wrist surgery to remove a bone chip and move a tendon. He also underwent an arthroscopic procedure on his left knee. 59 On Opening Day 1988, Barfield was in the lineup, but persistent trade rumors had him heading to New York for Dave Winfield . When the Yankees visited for Toronto’s home opener, Barfield and his wife hosted Winfield for dinner, lobbying him to veto the proposed deal. 60 Jesse and Marla’s baby, Jeremy, was due that summer, joining five-year-old Josh and three-year-old Jessica. Barfield spent the second half of May on the disabled list with a swollen, inflamed wrist. “I messed up by trying to lift too many heavy weights,” he said. “I never let the tissue heal properly.” 61 In the first half, he batted only .209 with seven homers. “I was trying to mend and play,” he said. 62 As Toronto underperformed with a losing record into early September, trade rumors kept swirling around Barfield, including one that he started himself as a joke. “I felt like a scapegoat,” he said. 63 “I wasn’t even 30, and I was being written off.” 64 In July, he requested a deal, telling Toronto’s Globe and Mail , “I think the writing’s on the wall.” 65 Barfield’s wrist improved enough for him to produce a .500 slugging percentage in the second half. He was still a Blue Jay to begin 1989, but Williams platooned him with rookie Rob Ducey three weeks into the season. Barfield belted his franchise record 179th homer on Saturday night, April 29, in Anaheim. The next day, Toronto traded him to the Yankees. 66 New York Vice President Syd Thrift said, “This should stop our opponents from pitching around Don Mattingly to get to somebody else.” 67 With Winfield out for the season following back surgery, the Blue Jays received southpaw Al Leiter in return. While Leiter later developed into an All-Star for the Marlins and Mets, shoulder woes prevented him from winning any games for Toronto until 1993. “I shed some tears leaving. But I know it’s the best thing for me,” Barfield said. Unlike the previous year, he was mentally ready and had decided with his wife that it was a great opportunity. 68 The happiest Barfield of all was his son Josh, a big fan of Yankees left-fielder Rickey Henderson . On May 17, Barfield suffered a mild concussion after crashing into the wall at the Oakland Coliseum. 69 He missed a week and struggled through his first two-dozen games with New York. After studying old video, he realized that he was wrapping his bat too far around his head, lengthening his swing. 70 Former Yankees manager Lou Piniella worked with him in June after noticing something about the Sadaharu Oh -like leg lift Barfield had adopted as a timing mechanism. “It made him turn his head off the ball,” noted Piniella. 71 Barfield soon found his form, going deep twice in the last game of the first half, and lifting New York’s record over .500 with a three-run, walk-off shot in the first series after the All-Star break. “I heard a lot of negatives, but I like being a Yankee,” he said. In a 21-game span from June 13 to July 4, he gunned down 10 opposing baserunners. “I don’t mean to sound cocky, but I’ve been doing that my entire career,” he told reporters. 72 Though the club finished in fifth place, Barfield’s defense and 18 homers in 129 games with New York convinced the club to sign him to a three-year contract worth $5.7 million. 73 Heading into 1990, Yankees owner George Steinbrenner repeatedly called Barfield, “The best right fielder we’ve ever had,” which the press interpreted as a jab at Winfield. 74 At Barfield’s suggestion, Steinbrenner hired four full-time batting practice pitchers to travel with the team. 75 Winfield became a designated hitter and left fielder until he was traded to the Angels on May 11. On April 26, Barfield achieved a milestone at Yankee Stadium . After blasting his 199th career home run in his first at-bat, he was robbed the next up by a leaping grab at the left-centerfield wall by Seattle’s Ken Griffey, Jr. After Barfield bashed a Randy Johnson pitch 20 rows into the seats for his 200th homer next time up, he told Mariners catcher Scott Bradley , “If [Griffey] catches that one, I’m checking his urine.” 76 Commissioner Fay Vincent suspended Steinbrenner on July 30 after it was revealed that the owner had paid a gambler $40,000 to dig up dirt on Winfield. 77 New York went on to lose more games (95) in 1990 than any club in Yankees history. 78 “All the distractions really hurt us,” Barfield said. “All the news was off the field, and it was hard to concentrate on baseball.” 79 Nevertheless, he led the team with 25 homers and 78 RBIs in 153 games. As he had after the 1986 season, Barfield toured Japan with a major-league All-Star team. Based on conversations there with Oakland pitcher Dave Stewart and his own self-analysis, Barfield adjusted his workout routine to make his upper body less bulky and more flexible. 80 His .291 April batting average in 1991 was the best of his career, but the Yankees continued to play losing baseball. In mid-May, he hurled a ball out of Yankee Stadium onto the nearby elevated subway tracks on River Avenue in frustration. Though Barfield’s batting average had fallen below .230 by July 13, New York had a winning record, and his defense and 17 homers prompted Yankees GM Gene Michael to insist, “Jesse is the best right fielder in baseball.” Barfield pulled a hamstring that night, however, and hurt the front of his left foot trying to play a few days later. Initially, the team thought it was a sprain, but it was diagnosed as a stress-type fracture that ended his season after only 84 games. 81 Barfield began 1992 in right field but got off to a miserable start. He was batting only .141 when he slipped in the sauna on May 23 and dislocated a bone in his left wrist. He tried to play on June 17 but reinjured himself swinging. Arthroscopic surgery on June 30 didn’t help, so Barfield underwent a radical procedure in August in which two tendons were divided and woven through a hole in his ulna bone to provide stability. Doctors weren’t sure if he’d play again. 82 In December, Barfield signed with the Japan Central League’s Yomiuri Giants for $1.7 million. 83 His 1993 teammates included Moseby and teenage rookie Hideki Matsui . In 104 games, Barfield batted only .215 and whiffed 127 times in 344 at-bats, but his 26 home runs earned him an invitation to spring training with the Houston Astros in 1994. “I didn’t like sushi, but I liked Japan,” he said upon arriving at camp. “I gave up a long-term contract and guaranteed money over there, which should tell you how much this means to me.” 84 Houston manager Terry Collins said, “If his hand is healthy, I think he will be our right fielder.” 85 It wasn’t to be, however. Barfield missed the beginning of the exhibition season with a strained groin. 86 Then he missed a week after an inside pitch clipped his thumb. 87 The Astros released him before Opening Day, and Barfield’s 12-year major league career ended with a .256 batting average and 241 home runs in 1,428 games. In 1995, Barfield joined the Astros as a first-base coach and outfield instructor. He spent the next two years as a hitting coordinator for Texas Rangers’ minor-leaguers. In 1998 and 1999, Barfield was the Seattle Mariners’ hitting coach under manager Lou Piniella. “I was impressed with his play on the field and his comprehension for being a total package. I’m talking about helping in the clubhouse and being an example for the rest of the kids,” Piniella said. “The enthusiasm he has, the love he shows for the game, that’s something you can’t teach.” 88 Barfield retired to spend more time with his family. His oldest son, Josh , played four years in the majors as a second baseman with the Padres and Indians. Son Jeremy spent more than a decade in pro ball, peaking in Triple-A. Playing for Double-A Portland in 2017, he hit 27 homers, one of which was the first (and only one until 2021) to go over the center field wall at Hartford’s Dunkin’ Donuts Park. In addition to appearing at fantasy camps, old-timer’s games, and baseball clinics, Barfield continues to work as a private hitting instructor and motivational speaker as of 2021. Through Sports Designs by Jesse Barfield, he creates customized furniture – desks with ballparks carved into them and lamps made out of bats, for example. He owns 21 design patents and was nominated to Who’s Who of American Inventors . 89 “I could have opened a restaurant or a sports bar like a lot of players, but I wanted to do something unique,” he said. 90 Since May 21, 2003, a bronze sculpture of Barfield, standing on one leg with his glove hand stretched upward, has greeted visitors to Silver Cross Field, the minor-league ballpark in Joliet, Illinois. 91 Last revised: July 22, 2021 Acknowledgments This article was reviewed by Paul Proia and David H. Lippman and fact checked by David Kritzler. Sources In addition to the sources cited in the Notes, the author also consulted www.ancestry.com , www.baseball-reference.com and www.retrosheet.org . The author is grateful for feedback and clarifications contributed by Jesse Barfield in a phone conversion on February 5, 2021. Notes 1 Jesse Barfield, Twitter post, October 20, 2019, https://twitter. (last accessed January 25, 2021). 2 Barry Davis, “Jesse Barfield: Outta the Park with Barry Davis,” August 6, 2018, https://www.youtube.com/watch?v=TQX0GEn9Ksk (last accessed January 5, 2021). 3 Davis, “Jesse Barfield: Outta the Park with Barry Davis.” 4 Davis, “Jesse Barfield: Outta the Park with Barry Davis.” 5 Dave Bidini, “An Evening with Jesse Barfield,” May 5, 2015, https://www.youtube.com/watch?v=mOB2P9pBJIQ , (last accessed January 5, 2021). 6 Eddie Mata, “Jesse Barfield Where are They Now in Sports Full Interview,” https://www.youtube.com/watch?v=kYmgT2A_6SQ&amp;t=328s (last accessed January 5, 2021). 7 Jesse Barfield, Publicity Questionnaire for William J. Weiss, February 9, 1978. 8 Trent Frayne, “Play at Plate Sparks Jays,” Globe and Mail (Toronto), September 10, 1985: S1. 9 Kelly Whiteside, “Sports Desk, Please,” Sports Illustrated , October 19, 1992: 11. 10 Mata, “Jesse Barfield Where are They Now in Sports Full Interview.” 11 Davis, “Jesse Barfield: Outta the Park with Barry Davis.” 12 Davis, “Jesse Barfield: Outta the Park with Barry Davis.” 13 Barfield, Publicity Questionnaire for William J. Weiss. 14 Larry Millson, “Barfield’s Lost Step Will Get Winter Attention,” Globe and Mail , September 4, 1982: S4. 15 “Florida No Rest for Jay Coaches,” Globe and Mail , October 25, 1977: 38. 16 Allen Abel, “There Was Fun in Jay Fantasy,” Globe and Mail , September 24, 1981: S1. 17 Abel, “There Was Fun in Jay Fantasy.” 18 Larry Milson, “Will Mo Make It? Will Barfield Do it Again?” Globe and Mail , February 28, 1983: S4. 19 Jose De Jesus Ortiz, “Barfield Sons Make Mom and Dad Proud,” Houston Chronicle , August 12, 2011, https: (last accessed January 25, 2021). 20 “First for Toronto,” The Sporting News , May 10, 1980: 39. 21 Paul Patton, “Blue Jays Call Up Three Farmhands,” Globe and Mail , September 1, 1980: S5. 22 Paul Patton, “Blue Jays Open Winter Season,” Globe and Mail , October 25, 1980: S4. 23 Abel, “There Was Fun in Jay Fantasy.” 24 Tommy George, “Barfield’s Great at Making Something Out of Nothing,” Ottawa Citizen , June 25, 1987: F4. 25 Paul Patton, “Two Minor Leaguers Join Jays in Chicago,” Globe and Mail , September 3, 1981: 48. 26 Mata, “Jesse Barfield Where are They Now in Sports Full Interview.” 27 Millson, “Barfield’s Lost Step Will Get Winter Attention.” 28 Mata, “Jesse Barfield Where are They Now in Sports Full Interview.” 29 James Golla, “Players Impress Blue Jays Official,” Globe and Mail , January 12, 1982: P44. 30 “Roster de Cardenales de Lara en la Temorada 1981-82,” http://www.pelotabinaria.com.ve/beisbol/tem_equ.php?EQ=CDL&amp;TE=1981-82 (last accessed January 25, 1982). 31 Neil MacCarl, “Hustling Barfield a Big Asset to Jays,” The Sporting News , May 3, 1982: 31. 32 “Jesse Barfield is Lone Rookie in Jay Lineup,” Globe and Mail , April 5, 1982: S3. 33 Larry Millson, “Jays Master Basics in Beating Red Sox,” Globe and Mail , April 17, 1982: S3. 34 Millson, “Barfield’s Lost Step Will Get Winter Attention.” 35 Paul Patton, “Barfield’s Long Homer Sparks Jays’ 75th Win,” Globe and Mail , October 1, 1982: P18. 36 George, “Barfield’s Great at Making Something Out of Nothing.” 37 Jesse Barfield’s Venezuelan statistics from http://www.pelotabinaria.com.ve/beisbol/mostrar.php?ID=barfjes001 (last accessed January 26, 2021). 38 Milson, “Will Mo Make It? Will Barfield Do it Again?” 39 Jack O’Donnell, “Barfield Not Surprised by Firing,” Hartford Courant , May 16, 1989: D1. 40 Mata, “Jesse Barfield Where are They Now in Sports Full Interview.” 41 Kevin Boland, “Barfield’s Emotions Mixed after Heady Honor,” Globe and Mail , September 7, 1983: S3. 42 Neil MacCarl, “Old Lefty Hoodoo Big Threat to Jays,” The Sporting News , August 8, 1983: 12. 43 Boland, “Barfield’s Emotions Mixed after Heady Honor.” 44 Kevin Boland, “Barfield Eyes 40 Hrs and a Series,” Globe and Mail , March 1, 1984: 23. 45 Trent Frayne, “Reggie’s Todays Gone Tomorrow,” Globe and Mail , July 4, 1984: S1. 46 “Barfield a Regular Slugger,” Chicago Tribune , April 18, 1985: C2. 47 Nine days after Barfield achieved the feat on September 23, George Bell became the second Blue Jays player to do it. Lloyd Moseby joined the club in 1986. 48 John Slinger, “Creating, Reporting Then Making Waves with the News,” Toronto Star , December 6, 1985: A6. 49 Neil MacCarl, “Barfield Raises Toast, Ignores Spill,” The Sporting News , December 16, 1985: 47. 50 Slinger, “Creating, Reporting Then Making Waves with the News.” 51 Neil MacCarl, “Mature Barfield Reaches a Power Peak with Jays,” The Sporting News , July 21, 1986: 21. 52 Murray Malkin, “40th HR Makes Fans’ Day,” Globe and Mail , October 4, 1986: C5. 53 “Blue Jays,” The Sporting News , March 30,1987: 32. 54 Tommy George, “Jesse Barfield Shocked That Friend is Father,” Toronto Star , June 24, 1987: C1. 55 Neil MacCarl, “Blue Jays’ Boom-Boom Boys Avoid Arbitration,” The Sporting News , March 2, 1987: 26. 56 Joe Donnelly, “Jesse Barfield’s Long Trip is Ending,” Los Angeles Times , May 13, 1989: 1. 57 George, “Barfield’s Great at Making Something Out of Nothing.” 58 “Barfield is Not a Free Agent; He Signed Three-Year Contract,” Baltimore Sun , October 10, 1987: 4B. 59 Neil MacCarl, “Jesse Barfield Suffers Agony of De Feet,” Toronto Star , February 20, 1988: B9. 60 Marty Noble, “Barfield Thrilled by New Address,” Newsday (Long Island, New York), May 2, 1989: 115. 61 Noble, “Barfield Thrilled by New Address.” 62 Mike Payne, “With Spring Comes a New Start,” St. Petersburg Times , March 4, 1989: 1C. 63 Payne, “With Spring Comes a New Start.” 64 Jim Donaghy, “Barfield Boosts Yankees’ Hopes,” Globe and Mail , June 4, 1991: D12. 65 Larry Millson, “Barfield Has Own Season of Quiet Turmoil,” Globe and Mail , August 1, 1988: C5. 66 George Bell hit his 180th home run for the Blue Jays later in the 1989 season. As of 2021, Bell and Barfield rank sixth and seventh in Toronto’s franchise history. 67 “Barfield Traded to Yanks for Leiter,” The Sporting News , May 8, 1989: 12. 68 Noble, “Barfield Thrilled by New Address.” 69 Marty Noble, “Concussion Leaves Barfield Befuddled,” Newsday , May 19, 1989: 162. 70 Donnelly, “Jesse Barfield’s Long Trip is Ending.” 71 Jack O’Connell, “Starting to Hit it Off,” Hartford Courant , June 20, 1989: C3. 72 Jim Brady, “Barfield Has Smoking Gun,” Newsday , July 5, 1989: 93. 73 “Yankees,” The Sporting News , July 24, 1989: 23. 74 “Yankees,” The Sporting News , November 13, 1989: 52. 75 “Yankees and Deion: A Parting of Ways?” The Sporting News , March 5, 1990: 20. 76 Mark Herrmann, “Ken Sr.: Mine’s Better,” Newsday , April 27, 1990: 156. 77 Kevin McCoy and Richard T. Pienciak, “The Boss Gets Benched,” Daily News (New York, New York), July 31, 1990: 4. 78 As of 2020, New York’s 95 losses in 1990 are the most in franchise history since the team became known as the Yankees in 1913. They lost 103 in 1908 and 102 in 1912 when they were known as the Highlanders. 79 “After the Storm: Kinder, Gentler Yanks,” The Sporting News , March 18, 1991: 43. 80 Jon Heyman, “Big Start for Smaller Jesse,” Newsday , May 4, 1991: 99. 81 Filip Bondy, “Injury to Barfield Leaves Yanks with Empty Feeling,” New York Times , July 30, 1991: B9. 82 Mel Antonen, “Barfield Adjusting to Ways of Japanese Ball,” USA Today , April 16, 1993: 4C. 83 “Barfield to Play in Japan,” New York Times , December 3, 1992: B20. 84 Jerry Greene, “Astros Have Hole Without Barfield,” Orlando Sentinel , March 13, 1994: C12. 85 Neil Hohlfeld, “The Right Choice,” The Sporting News , January 3, 1994: 29. 86 Neil Hohlfeld, “Barfield on Hold,” The Sporting News , March 14, 1994: 21. 87 Reid Creager, “Big Bad John,” The Sporting News , March 21, 1994: 17. 88 John McGrath, “Barfield’s Enthusiasm Still a Big Hit in Majors,” Globe and Mail , February 5, 1998: S10. 89 Bidini, “An Evening with Jesse Barfield.” 90 Kelly Whiteside, “Sports Desk, Please,” Sports Illustrated , October 19, 1992: 11. 91 As of 2020, the ballpark has been renamed DuPage Medical Group Field. Full Name Jesse Lee Barfield Born October 29, 1959 at Joliet, IL (USA) Stats Baseball Reference Retrosheet If you can help us improve this player’s biography, contact us . Tags Home Run Champions · 1980s All-Stars · Parent-Child · Share this entry Share on Facebook Share on X Share on LinkedIn Share on Reddit Share by Mail</p>
+                        </div>
+        
+                    </div>
+                </div>
+                
+        <div class="stats-table-container">
+            <h3>Career Totals</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>WAR</th><th>AB</th><th>H</th><th>HR</th><th>BA</th><th>R</th><th>RBI</th><th>SB</th><th>OBP</th><th>SLG</th><th>OPS</th><th>OPS+</th></tr></thead>
+                    <tbody><tr><td>39.4</td><td>4759</td><td>1219</td><td>241</td><td>.256</td><td>715</td><td>716</td><td>66</td><td>.335</td><td>.466</td><td>.802</td><td>117</td></tr></tbody>
+                </table>
+            </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
+        </div>
+        
+            </div>
+            <div class="right-column">
+                <div class="original-card">
+                    <h3>The Original Clue</h3>
+                    <img src="images/clue-2025-07-02.webp" alt="Original trivia card" decoding="async">
+                </div>
+                
+        <div class="chart-container">
+            <h3>Career Arc by WAR</h3>
+            <div class="chart-wrapper">
+                <canvas id="careerArcChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
+        <script>
+            const years = ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992"];
+            const warData = [0.5, 1.1, 2.8, 2.8, 6.8, 7.6, 4.7, 2.9, 4.4, 5.2, 1.9, -1.3];
+            const teamsByYear = ["TOR", "TOR", "TOR", "TOR", "TOR", "TOR", "TOR", "TOR", "2TM", "NYY", "NYY", "NYY"];
+            const teamColors = window.TEAM_COLORS;
 
             const waterfallData = [];
             let cumulativeTotal = 0;
@@ -386,32 +238,16 @@
                     }
                 }
             });
-     </script>
-    </div>
-   </div>
-   <div id="search-data" style="display:none;">
-    {"teams": ["NYY", "TOR"], "years": ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992"]}
-   </div>
-   <div id="quiz-data" style="display:none;">
-    {
-    "answer": "Jesse Barfield",
-    "hints": [
-        "Drafted in the 9th round of the 1977 amateur draft, this player initially planned to use a scholarship to study architectural drawing at Bradley University before turning pro.",
-        "During his early minor league days in 1977, his mother drove him to a factory to personally load up on two dozen customized bats.",
-        "Renowned for his incredible arm strength, this outfielder led all major-league peers with 22 assists and eight double plays in 1985."
-    ],
-    "facts": [
-        "Drafted in the 9th round of the 1977 amateur draft, this player initially planned to use a scholarship to study architectural drawing at Bradley University before turning pro.",
-        "During his early minor league days in 1977, his mother drove him to a factory to personally load up on two dozen customized bats.",
-        "Renowned for his incredible arm strength, this outfielder led all major-league peers with 22 assists and eight double plays in 1985."
-    ]
-}
-   </div>
-  </main>
-  <script src="js/detail.js" type="module">
-  </script>
-  <script>
-   document.addEventListener('DOMContentLoaded', function() {
+        </script>
+        
+            </div>
+        </div>
+        <div id="search-data" style="display:none;">{"teams": ["NYY", "TOR"], "years": ["1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Jesse Barfield", "nickname": "", "hints": ["Led the major leagues in home runs during a single season.", "Gunned down 162 baserunners throughout a 12-year career with a powerful throwing arm.", "Became the first player in a specific club's history to record a 20-20 season."]}</div>
+    </main>
+    <script type="module" src="js/detail.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('followup-section');
         if (!container) return;
         const items = container.querySelectorAll('.followup-item');
@@ -434,32 +270,15 @@
                 } else {
                     answerBox.style.display = 'none';
                 }
+
             });
         });
     });
-  </script>
-  <footer>
-   <p class="disclaimer-footer">
-    This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-   </p>
-   Last Updated: 20-Mar-2026
-   <p class="copyright">
-    <a href="https://namethatyankeequiz.com">
-     Name That Yankee Quiz
-    </a>
-    © 2026 by
-    <a href="https://github.com/zagers/NameThatYankee">
-     Scott Zager
-    </a>
-    is licensed under
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-     CC BY-NC-SA 4.0
-    </a>
-    <img alt="CC" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="BY" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="NC" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="SA" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-   </p>
-  </footer>
- </body>
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+    </footer>    
+</body>
 </html>

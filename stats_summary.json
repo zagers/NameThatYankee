@@ -4,12 +4,12 @@
         "name": "Tommy John",
         "nickname": "The Bionic Man",
         "teams": [
-            "CAL",
             "LAD",
+            "CAL",
+            "OAK",
             "CHW",
             "CLE",
-            "NYY",
-            "OAK"
+            "NYY"
         ],
         "years": [
             "1963",
@@ -45,10 +45,10 @@
         "name": "Al Leiter",
         "nickname": "",
         "teams": [
-            "FLA",
+            "NYY",
             "NYM",
             "TOR",
-            "NYY"
+            "FLA"
         ],
         "years": [
             "1987",
@@ -77,16 +77,16 @@
         "name": "Sal Fasano",
         "nickname": "",
         "teams": [
-            "BAL",
-            "PHI",
-            "CLE",
-            "OAK",
-            "KCR",
             "ANA",
+            "PHI",
+            "BAL",
+            "CLE",
+            "KCR",
             "NYY",
-            "2TM",
             "TOR",
-            "COL"
+            "COL",
+            "2TM",
+            "OAK"
         ],
         "years": [
             "1996",
@@ -107,8 +107,8 @@
         "name": "Chad Green",
         "nickname": "Greeny",
         "teams": [
-            "TOR",
-            "NYY"
+            "NYY",
+            "TOR"
         ],
         "years": [
             "2016",
@@ -128,14 +128,14 @@
         "name": "Kelly Johnson",
         "nickname": "",
         "teams": [
-            "ARI",
-            "NYM",
             "BOS",
-            "BAL",
             "TBR",
-            "TOR",
             "NYY",
-            "ATL"
+            "ARI",
+            "TOR",
+            "BAL",
+            "ATL",
+            "NYM"
         ],
         "years": [
             "2005",
@@ -176,9 +176,9 @@
         "name": "Tippy Martinez",
         "nickname": "Tippy",
         "teams": [
+            "BAL",
             "NYY",
-            "MIN",
-            "BAL"
+            "MIN"
         ],
         "years": [
             "1974",
@@ -202,10 +202,10 @@
         "name": "Gary Roenicke",
         "nickname": "",
         "teams": [
+            "BAL",
             "NYY",
-            "MON",
             "ATL",
-            "BAL"
+            "MON"
         ],
         "years": [
             "1976",
@@ -227,12 +227,12 @@
         "name": "Pat Dobson",
         "nickname": "Dobber",
         "teams": [
-            "SDP",
             "DET",
-            "ATL",
-            "BAL",
             "CLE",
-            "NYY"
+            "NYY",
+            "BAL",
+            "ATL",
+            "SDP"
         ],
         "years": [
             "1967",
@@ -253,12 +253,12 @@
         "name": "Graeme Lloyd",
         "nickname": "",
         "teams": [
-            "TOR",
-            "NYY",
-            "KCR",
-            "MON",
             "MIL",
             "FLA",
+            "MON",
+            "KCR",
+            "TOR",
+            "NYY",
             "NYM"
         ],
         "years": [
@@ -279,12 +279,12 @@
         "name": "Willie Randolph",
         "nickname": "Mickey",
         "teams": [
-            "NYM",
-            "PIT",
+            "MIL",
             "LAD",
+            "PIT",
             "NYY",
             "OAK",
-            "MIL"
+            "NYM"
         ],
         "years": [
             "1975",
@@ -312,14 +312,14 @@
         "name": "Gary Sheffield",
         "nickname": "Sheff",
         "teams": [
-            "NYY",
-            "NYM",
-            "FLA",
-            "LAD",
-            "SDP",
-            "DET",
             "MIL",
-            "ATL"
+            "LAD",
+            "FLA",
+            "DET",
+            "NYY",
+            "ATL",
+            "NYM",
+            "SDP"
         ],
         "years": [
             "1988",
@@ -366,9 +366,9 @@
         "name": "Fritz Peterson",
         "nickname": "Fritz",
         "teams": [
+            "CLE",
             "NYY",
-            "TEX",
-            "CLE"
+            "TEX"
         ],
         "years": [
             "1966",
@@ -389,10 +389,10 @@
         "name": "Toby Harrah",
         "nickname": "",
         "teams": [
-            "TEX",
+            "NYY",
             "CLE",
             "WSA",
-            "NYY"
+            "TEX"
         ],
         "years": [
             "1969",
@@ -418,18 +418,22 @@
         "date": "2026-05-04",
         "name": "John Sterling",
         "nickname": "",
-        "teams": [],
-        "years": []
+        "teams": [
+            "PHA"
+        ],
+        "years": [
+            "1890"
+        ]
     },
     {
         "date": "2026-05-03",
         "name": "Mason Jordan Williams",
         "nickname": "No Neck or Mase",
         "teams": [
-            "NYM",
-            "BAL",
             "CIN",
-            "NYY"
+            "NYY",
+            "NYM",
+            "BAL"
         ],
         "years": [
             "2015",
@@ -447,10 +451,10 @@
         "nickname": "Bullet Bob",
         "teams": [
             "BOS",
-            "LAA",
             "SLB",
-            "NYY",
-            "BAL"
+            "LAA",
+            "BAL",
+            "NYY"
         ],
         "years": [
             "1951",
@@ -473,11 +477,11 @@
         "nickname": "",
         "teams": [
             "CHC",
-            "BAL",
             "CHW",
             "CLE",
-            "SDP",
-            "NYY"
+            "BAL",
+            "NYY",
+            "SDP"
         ],
         "years": [
             "1975",
@@ -500,8 +504,8 @@
         "name": "John Charles Ellis",
         "nickname": "Moose",
         "teams": [
-            "NYY",
             "CLE",
+            "NYY",
             "TEX"
         ],
         "years": [
@@ -525,12 +529,12 @@
         "name": "Steve Hamilton",
         "nickname": "",
         "teams": [
-            "WSA",
-            "NYY",
             "CHC",
-            "CLE",
             "CHW",
-            "SFG"
+            "NYY",
+            "SFG",
+            "CLE",
+            "WSA"
         ],
         "years": [
             "1961",
@@ -553,8 +557,8 @@
         "nickname": "",
         "teams": [
             "MON",
-            "TOR",
             "TEX",
+            "TOR",
             "NYY",
             "WSA"
         ],
@@ -575,11 +579,11 @@
         "name": "Jim Wynn",
         "nickname": "The Toy Cannon",
         "teams": [
-            "HOU",
-            "ATL",
-            "NYY",
+            "MIL",
             "LAD",
-            "MIL"
+            "HOU",
+            "NYY",
+            "ATL"
         ],
         "years": [
             "1963",
@@ -604,19 +608,19 @@
         "name": "Octavio Dotel",
         "nickname": "",
         "teams": [
-            "PIT",
-            "NYM",
-            "KCR",
-            "OAK",
             "LAD",
-            "COL",
-            "TOR",
-            "CHW",
+            "PIT",
             "HOU",
+            "ATL",
+            "CHW",
             "DET",
-            "STL",
+            "KCR",
             "NYY",
-            "ATL"
+            "TOR",
+            "COL",
+            "OAK",
+            "NYM",
+            "STL"
         ],
         "years": [
             "1999",
@@ -642,8 +646,8 @@
         "nickname": "Cheo",
         "teams": [
             "HOU",
-            "STL",
-            "NYY"
+            "NYY",
+            "STL"
         ],
         "years": [
             "1970",
@@ -695,12 +699,12 @@
         "name": "Jim Leyritz",
         "nickname": "The King",
         "teams": [
-            "TEX",
             "LAD",
             "ANA",
+            "BOS",
+            "TEX",
             "NYY",
-            "SDP",
-            "BOS"
+            "SDP"
         ],
         "years": [
             "1990",
@@ -743,10 +747,10 @@
         "name": "Lou Piniella",
         "nickname": "Sweet Lou",
         "teams": [
-            "NYY",
             "BAL",
-            "KCR",
-            "CLE"
+            "NYY",
+            "CLE",
+            "KCR"
         ],
         "years": [
             "1964",
@@ -775,8 +779,8 @@
         "nickname": "",
         "teams": [
             "NYY",
-            "KCR",
-            "SFG"
+            "SFG",
+            "KCR"
         ],
         "years": [
             "1969",
@@ -823,8 +827,8 @@
         "name": "Mike Witt",
         "nickname": "",
         "teams": [
-            "NYY",
-            "CAL"
+            "CAL",
+            "NYY"
         ],
         "years": [
             "1981",
@@ -846,9 +850,9 @@
         "name": "Mickey Rivers",
         "nickname": "Mick the Quick",
         "teams": [
-            "TEX",
             "CAL",
-            "NYY"
+            "NYY",
+            "TEX"
         ],
         "years": [
             "1970",
@@ -873,12 +877,12 @@
         "name": "Don Baylor",
         "nickname": "Groove",
         "teams": [
-            "MIN",
             "CAL",
             "BOS",
+            "NYY",
+            "MIN",
             "BAL",
-            "OAK",
-            "NYY"
+            "OAK"
         ],
         "years": [
             "1970",
@@ -907,11 +911,11 @@
         "name": "Reggie Jackson",
         "nickname": "Mr. October",
         "teams": [
-            "NYY",
-            "KCA",
             "CAL",
-            "OAK",
-            "BAL"
+            "KCA",
+            "NYY",
+            "BAL",
+            "OAK"
         ],
         "years": [
             "1967",
@@ -961,11 +965,11 @@
         "name": "Bubba Trammell",
         "nickname": "",
         "teams": [
-            "NYM",
-            "DET",
             "TBD",
-            "SDP",
-            "NYY"
+            "DET",
+            "NYY",
+            "NYM",
+            "SDP"
         ],
         "years": [
             "1997",
@@ -983,10 +987,10 @@
         "nickname": "",
         "teams": [
             "CAL",
-            "NYY",
-            "OAK",
             "ANA",
-            "TEX"
+            "NYY",
+            "TEX",
+            "OAK"
         ],
         "years": [
             "1987",
@@ -1012,13 +1016,13 @@
         "name": "Jos\u00e9 Canseco",
         "nickname": "The Chemist",
         "teams": [
-            "OAK",
-            "TOR",
-            "CHW",
-            "NYY",
             "TBD",
             "BOS",
-            "TEX"
+            "CHW",
+            "TEX",
+            "NYY",
+            "TOR",
+            "OAK"
         ],
         "years": [
             "1985",
@@ -1045,15 +1049,15 @@
         "name": "Rickey Henderson",
         "nickname": "Man of Steal",
         "teams": [
-            "OAK",
-            "ANA",
-            "TOR",
-            "BOS",
-            "SDP",
-            "NYY",
             "LAD",
+            "ANA",
+            "BOS",
+            "NYY",
+            "TOR",
+            "SEA",
+            "OAK",
             "NYM",
-            "SEA"
+            "SDP"
         ],
         "years": [
             "1979",
@@ -1088,13 +1092,14 @@
         "name": "Austin Slater",
         "nickname": "",
         "teams": [
-            "CIN",
-            "NYY",
-            "2TM",
+            "BAL",
             "CHW",
-            "MIA",
             "SFG",
-            "BAL"
+            "CIN",
+            "MIA",
+            "2TM",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "2017",
@@ -1114,10 +1119,10 @@
         "name": "Mark Hutton",
         "nickname": "",
         "teams": [
-            "CIN",
             "COL",
-            "FLA",
-            "NYY"
+            "CIN",
+            "NYY",
+            "FLA"
         ],
         "years": [
             "1993",
@@ -1133,9 +1138,9 @@
         "nickname": "Birdman",
         "teams": [
             "NYY",
-            "MIA",
+            "TOR",
             "CHC",
-            "TOR"
+            "MIA"
         ],
         "years": [
             "2018",
@@ -1153,18 +1158,18 @@
         "name": "Mike Morgan",
         "nickname": "The Nomad",
         "teams": [
-            "OAK",
             "LAD",
+            "CHC",
+            "NYY",
             "TEX",
             "MIN",
-            "CHC",
-            "TOR",
-            "STL",
-            "BAL",
-            "NYY",
             "ARI",
+            "TOR",
+            "SEA",
             "CIN",
-            "SEA"
+            "BAL",
+            "OAK",
+            "STL"
         ],
         "years": [
             "1978",
@@ -1196,8 +1201,8 @@
         "name": "Ken Clay",
         "nickname": "",
         "teams": [
-            "SEA",
             "NYY",
+            "SEA",
             "TEX"
         ],
         "years": [
@@ -1213,15 +1218,15 @@
         "name": "David Weathers",
         "nickname": "Stormy",
         "teams": [
-            "TOR",
-            "NYY",
-            "HOU",
             "MIL",
-            "CLE",
-            "NYM",
-            "CHC",
             "FLA",
-            "CIN"
+            "CHC",
+            "HOU",
+            "TOR",
+            "CIN",
+            "CLE",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "1991",
@@ -1273,11 +1278,11 @@
         "name": "Aaron Boone",
         "nickname": "",
         "teams": [
-            "WSN",
             "FLA",
             "HOU",
-            "CIN",
             "CLE",
+            "WSN",
+            "CIN",
             "NYY"
         ],
         "years": [
@@ -1300,9 +1305,9 @@
         "name": "Paul Goldschmidt",
         "nickname": "Goldy",
         "teams": [
-            "STL",
+            "ARI",
             "NYY",
-            "ARI"
+            "STL"
         ],
         "years": [
             "2011",
@@ -1319,7 +1324,8 @@
             "2022",
             "2023",
             "2024",
-            "2025"
+            "2025",
+            "2026"
         ]
     },
     {
@@ -1327,14 +1333,15 @@
         "name": "Fernando Cruz",
         "nickname": "",
         "teams": [
-            "NYY",
-            "CIN"
+            "CIN",
+            "NYY"
         ],
         "years": [
             "2022",
             "2023",
             "2024",
-            "2025"
+            "2025",
+            "2026"
         ]
     },
     {
@@ -1342,8 +1349,8 @@
         "name": "Trent Grisham",
         "nickname": "Grish",
         "teams": [
-            "NYY",
             "MIL",
+            "NYY",
             "SDP"
         ],
         "years": [
@@ -1353,7 +1360,8 @@
             "2022",
             "2023",
             "2024",
-            "2025"
+            "2025",
+            "2026"
         ]
     },
     {
@@ -1362,13 +1370,14 @@
         "nickname": "",
         "teams": [
             "TBR",
-            "NYY",
-            "SEA"
+            "SEA",
+            "NYY"
         ],
         "years": [
             "2023",
             "2024",
-            "2025"
+            "2025",
+            "2026"
         ]
     },
     {
@@ -1376,8 +1385,8 @@
         "name": "Paul Blackburn",
         "nickname": "",
         "teams": [
-            "NYM",
             "OAK",
+            "NYM",
             "NYY"
         ],
         "years": [
@@ -1389,7 +1398,8 @@
             "2022",
             "2023",
             "2024",
-            "2025"
+            "2025",
+            "2026"
         ]
     },
     {
@@ -1409,14 +1419,14 @@
         "name": "Amed Rosario",
         "nickname": "",
         "teams": [
-            "WSN",
-            "NYM",
-            "CLE",
-            "CIN",
-            "2TM",
-            "NYY",
             "LAD",
-            "TBR"
+            "TBR",
+            "WSN",
+            "2TM",
+            "CIN",
+            "CLE",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "2017",
@@ -1427,7 +1437,8 @@
             "2022",
             "2023",
             "2024",
-            "2025"
+            "2025",
+            "2026"
         ]
     },
     {
@@ -1435,8 +1446,8 @@
         "name": "Zach Britton",
         "nickname": "",
         "teams": [
-            "NYY",
-            "BAL"
+            "BAL",
+            "NYY"
         ],
         "years": [
             "2011",
@@ -1458,14 +1469,14 @@
         "name": "Bobby Shantz",
         "nickname": "The Little Lefty",
         "teams": [
-            "NYY",
-            "STL",
-            "HOU",
-            "PHA",
             "KCA",
             "PHI",
             "PIT",
-            "CHC"
+            "CHC",
+            "HOU",
+            "PHA",
+            "NYY",
+            "STL"
         ],
         "years": [
             "1949",
@@ -1491,12 +1502,12 @@
         "name": "Gene Woodling",
         "nickname": "Old Faithful",
         "teams": [
+            "PIT",
+            "BAL",
             "CLE",
             "NYY",
             "NYM",
-            "BAL",
-            "WSA",
-            "PIT"
+            "WSA"
         ],
         "years": [
             "1943",
@@ -1523,9 +1534,9 @@
         "name": "Richard Dotson",
         "nickname": "",
         "teams": [
-            "KCR",
+            "NYY",
             "CHW",
-            "NYY"
+            "KCR"
         ],
         "years": [
             "1979",
@@ -1547,8 +1558,8 @@
         "name": "Joel Skinner",
         "nickname": "",
         "teams": [
-            "NYY",
             "CLE",
+            "NYY",
             "CHW"
         ],
         "years": [
@@ -1568,10 +1579,10 @@
         "name": "Nick Swisher",
         "nickname": "Swish",
         "teams": [
-            "NYY",
-            "CLE",
             "CHW",
             "ATL",
+            "NYY",
+            "CLE",
             "OAK"
         ],
         "years": [
@@ -1594,8 +1605,8 @@
         "name": "Mike Mussina",
         "nickname": "Moose",
         "teams": [
-            "NYY",
-            "BAL"
+            "BAL",
+            "NYY"
         ],
         "years": [
             "1991",
@@ -1623,12 +1634,12 @@
         "name": "Elliott Maddox",
         "nickname": "",
         "teams": [
+            "DET",
             "TEX",
+            "BAL",
             "NYY",
             "NYM",
-            "BAL",
-            "WSA",
-            "DET"
+            "WSA"
         ],
         "years": [
             "1970",
@@ -1649,8 +1660,8 @@
         "name": "Paul Blair",
         "nickname": "Motormouth",
         "teams": [
-            "NYY",
             "BAL",
+            "NYY",
             "CIN"
         ],
         "years": [
@@ -1678,8 +1689,8 @@
         "name": "Vernon Gomez",
         "nickname": "Lefty",
         "teams": [
-            "WSH",
-            "NYY"
+            "NYY",
+            "WSH"
         ],
         "years": [
             "1930",
@@ -1703,10 +1714,10 @@
         "name": "Ron Davis",
         "nickname": "The Vulture",
         "teams": [
-            "SFG",
             "LAD",
-            "MIN",
             "CHC",
+            "MIN",
+            "SFG",
             "NYY"
         ],
         "years": [
@@ -1728,10 +1739,10 @@
         "name": "Roy Smalley III",
         "nickname": "",
         "teams": [
+            "MIN",
             "NYY",
             "CHW",
-            "TEX",
-            "MIN"
+            "TEX"
         ],
         "years": [
             "1975",
@@ -1754,10 +1765,10 @@
         "name": "Bill Monbouquette",
         "nickname": "Monbo",
         "teams": [
-            "DET",
             "BOS",
-            "SFG",
-            "NYY"
+            "NYY",
+            "DET",
+            "SFG"
         ],
         "years": [
             "1958",
@@ -1778,9 +1789,9 @@
         "name": "Cecil Fielder",
         "nickname": "Big Daddy",
         "teams": [
-            "TOR",
-            "DET",
             "ANA",
+            "DET",
+            "TOR",
             "CLE",
             "NYY"
         ],
@@ -1805,9 +1816,9 @@
         "name": "Joba Chamberlain",
         "nickname": "Joba",
         "teams": [
-            "DET",
             "CLE",
             "NYY",
+            "DET",
             "KCR"
         ],
         "years": [
@@ -1852,10 +1863,10 @@
         "name": "Bob MacDonald",
         "nickname": "",
         "teams": [
+            "NYY",
             "DET",
-            "NYM",
             "TOR",
-            "NYY"
+            "NYM"
         ],
         "years": [
             "1990",
@@ -1871,14 +1882,14 @@
         "name": "Alberto Castillo",
         "nickname": "",
         "teams": [
-            "NYM",
-            "NYY",
+            "OAK",
+            "KCR",
+            "SFG",
             "TOR",
             "BAL",
-            "OAK",
-            "STL",
-            "KCR",
-            "SFG"
+            "NYY",
+            "NYM",
+            "STL"
         ],
         "years": [
             "1995",
@@ -1924,9 +1935,9 @@
         "nickname": "Big Puma",
         "teams": [
             "HOU",
-            "TEX",
+            "NYY",
             "STL",
-            "NYY"
+            "TEX"
         ],
         "years": [
             "1999",
@@ -1951,10 +1962,10 @@
         "name": "Marwin Gonz\u00e1lez",
         "nickname": "",
         "teams": [
-            "HOU",
-            "MIN",
             "BOS",
-            "NYY"
+            "HOU",
+            "NYY",
+            "MIN"
         ],
         "years": [
             "2012",
@@ -1975,10 +1986,10 @@
         "name": "Orlando Hern\u00e1ndez",
         "nickname": "El Duque",
         "teams": [
-            "CHW",
             "ARI",
-            "NYM",
-            "NYY"
+            "NYY",
+            "CHW",
+            "NYM"
         ],
         "years": [
             "1998",
@@ -1997,10 +2008,10 @@
         "name": "Andrew Arthur Carey",
         "nickname": "Handy Andy",
         "teams": [
-            "NYY",
-            "KCA",
             "LAD",
-            "CHW"
+            "NYY",
+            "CHW",
+            "KCA"
         ],
         "years": [
             "1952",
@@ -2023,8 +2034,8 @@
         "teams": [
             "CLE",
             "NYY",
-            "BAL",
-            "CHW"
+            "CHW",
+            "BAL"
         ],
         "years": [
             "1982",
@@ -2065,12 +2076,12 @@
         "name": "Graig Nettles",
         "nickname": "Puff",
         "teams": [
+            "MON",
             "ATL",
             "MIN",
+            "CLE",
             "NYY",
-            "SDP",
-            "MON",
-            "CLE"
+            "SDP"
         ],
         "years": [
             "1967",
@@ -2102,13 +2113,13 @@
         "name": "Ricky Bones",
         "nickname": "",
         "teams": [
-            "SDP",
-            "NYY",
-            "CIN",
+            "MIL",
+            "FLA",
             "BAL",
             "KCR",
-            "FLA",
-            "MIL"
+            "CIN",
+            "NYY",
+            "SDP"
         ],
         "years": [
             "1991",
@@ -2129,12 +2140,12 @@
         "name": "Tim Raines",
         "nickname": "Rock",
         "teams": [
-            "MON",
-            "BAL",
-            "NYY",
-            "OAK",
             "FLA",
-            "CHW"
+            "MON",
+            "CHW",
+            "NYY",
+            "BAL",
+            "OAK"
         ],
         "years": [
             "1979",
@@ -2167,13 +2178,13 @@
         "name": "Danny Cater",
         "nickname": "",
         "teams": [
+            "KCA",
+            "PHI",
             "BOS",
-            "STL",
+            "CHW",
             "NYY",
             "OAK",
-            "PHI",
-            "KCA",
-            "CHW"
+            "STL"
         ],
         "years": [
             "1964",
@@ -2195,12 +2206,12 @@
         "name": "Luis Tiant",
         "nickname": "El Tiante",
         "teams": [
-            "BOS",
-            "NYY",
-            "CLE",
             "CAL",
             "PIT",
-            "MIN"
+            "BOS",
+            "MIN",
+            "CLE",
+            "NYY"
         ],
         "years": [
             "1964",
@@ -2229,8 +2240,8 @@
         "name": "Phil Linz",
         "nickname": "",
         "teams": [
-            "NYM",
             "NYY",
+            "NYM",
             "PHI"
         ],
         "years": [
@@ -2271,9 +2282,9 @@
         "nickname": "",
         "teams": [
             "STL",
+            "SFG",
             "PHI",
-            "NYG",
-            "SFG"
+            "NYG"
         ],
         "years": [
             "1956",
@@ -2297,8 +2308,8 @@
         "nickname": "Lindy",
         "teams": [
             "CHC",
-            "SFG",
             "KCR",
+            "SFG",
             "NYY",
             "STL"
         ],
@@ -2331,12 +2342,12 @@
         "name": "Jeff Reardon",
         "nickname": "The Terminator",
         "teams": [
+            "MON",
+            "BOS",
+            "NYY",
             "MIN",
             "CIN",
-            "BOS",
             "ATL",
-            "MON",
-            "NYY",
             "NYM"
         ],
         "years": [
@@ -2432,8 +2443,8 @@
         "name": "Bob Watson",
         "nickname": "The Bull",
         "teams": [
-            "HOU",
             "BOS",
+            "HOU",
             "NYY",
             "ATL"
         ],
@@ -2464,14 +2475,14 @@
         "name": "Mark Leiter",
         "nickname": "",
         "teams": [
-            "SFG",
-            "DET",
-            "MON",
             "MIL",
             "CAL",
-            "NYY",
+            "PHI",
+            "MON",
+            "DET",
+            "SFG",
             "SEA",
-            "PHI"
+            "NYY"
         ],
         "years": [
             "1990",
@@ -2492,15 +2503,21 @@
         "name": "Wayne Tolleson",
         "nickname": "",
         "teams": [
-            "TOR",
-            "BAL",
-            "OAK"
+            "NYY",
+            "CHW",
+            "TEX"
         ],
         "years": [
-            "2010",
-            "2012",
-            "2014",
-            "2015"
+            "1981",
+            "1982",
+            "1983",
+            "1984",
+            "1985",
+            "1986",
+            "1987",
+            "1988",
+            "1989",
+            "1990"
         ]
     },
     {
@@ -2558,11 +2575,11 @@
         "teams": [
             "LAD",
             "FLA",
+            "TBR",
             "ARI",
-            "STL",
-            "NYY",
             "MIA",
-            "TBR"
+            "NYY",
+            "STL"
         ],
         "years": [
             "2000",
@@ -2587,8 +2604,8 @@
         "name": "Mike Lowell",
         "nickname": "",
         "teams": [
-            "NYY",
             "BOS",
+            "NYY",
             "FLA"
         ],
         "years": [
@@ -2624,15 +2641,15 @@
         "name": "Rey S\u00e1nchez",
         "nickname": "",
         "teams": [
-            "SEA",
             "TBD",
-            "SFG",
-            "BOS",
-            "NYM",
-            "NYY",
-            "ATL",
             "CHC",
-            "KCR"
+            "BOS",
+            "NYY",
+            "KCR",
+            "SFG",
+            "SEA",
+            "ATL",
+            "NYM"
         ],
         "years": [
             "1991",
@@ -2659,11 +2676,11 @@
         "teams": [
             "LAD",
             "FLA",
+            "TBR",
             "ARI",
-            "STL",
-            "NYY",
             "MIA",
-            "TBR"
+            "NYY",
+            "STL"
         ],
         "years": [
             "2000",
@@ -2713,10 +2730,10 @@
         "name": "Ronald Torreyes",
         "nickname": "Toe",
         "teams": [
-            "NYY",
-            "PHI",
             "LAD",
-            "MIN"
+            "NYY",
+            "MIN",
+            "PHI"
         ],
         "years": [
             "2015",
@@ -2733,12 +2750,12 @@
         "name": "Al Holland",
         "nickname": "Mr. T",
         "teams": [
-            "SFG",
-            "NYY",
-            "2TM",
-            "PIT",
+            "CAL",
             "PHI",
-            "CAL"
+            "PIT",
+            "SFG",
+            "2TM",
+            "NYY"
         ],
         "years": [
             "1977",
@@ -2759,11 +2776,11 @@
         "nickname": "",
         "teams": [
             "MON",
-            "NYM",
-            "TOR",
-            "NYY",
             "TEX",
-            "CIN"
+            "TOR",
+            "CIN",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "1974",
@@ -2786,11 +2803,11 @@
         "nickname": "",
         "teams": [
             "ARI",
-            "LAA",
-            "NYM",
-            "NYY",
-            "CIN",
             "TOR",
+            "LAA",
+            "CIN",
+            "NYY",
+            "NYM",
             "SDP"
         ],
         "years": [
@@ -2811,9 +2828,9 @@
         "name": "Vernon Wells",
         "nickname": "",
         "teams": [
+            "LAA",
             "NYY",
-            "TOR",
-            "LAA"
+            "TOR"
         ],
         "years": [
             "1999",
@@ -2838,9 +2855,9 @@
         "name": "Clete Boyer",
         "nickname": "",
         "teams": [
-            "NYY",
+            "KCA",
             "ATL",
-            "KCA"
+            "NYY"
         ],
         "years": [
             "1955",
@@ -2866,10 +2883,10 @@
         "name": "Paul Zuvella",
         "nickname": "",
         "teams": [
-            "NYY",
-            "ATL",
             "CLE",
-            "KCR"
+            "ATL",
+            "KCR",
+            "NYY"
         ],
         "years": [
             "1982",
@@ -2888,10 +2905,10 @@
         "name": "Mark Wohlers",
         "nickname": "",
         "teams": [
-            "NYY",
             "CIN",
             "ATL",
-            "CLE"
+            "CLE",
+            "NYY"
         ],
         "years": [
             "1991",
@@ -2913,10 +2930,10 @@
         "name": "Joe Pepitone",
         "nickname": "Pepi",
         "teams": [
+            "HOU",
             "NYY",
-            "CHC",
             "ATL",
-            "HOU"
+            "CHC"
         ],
         "years": [
             "1962",
@@ -2938,14 +2955,14 @@
         "name": "Jay Johnstone",
         "nickname": "",
         "teams": [
-            "PHI",
-            "LAD",
             "CAL",
+            "LAD",
+            "PHI",
+            "CHC",
             "CHW",
             "NYY",
-            "SDP",
-            "CHC",
-            "OAK"
+            "OAK",
+            "SDP"
         ],
         "years": [
             "1966",
@@ -2966,7 +2983,8 @@
             "1981",
             "1982",
             "1983",
-            "1984"
+            "1984",
+            "1985"
         ]
     },
     {
@@ -2975,9 +2993,9 @@
         "nickname": "Big Daddy",
         "teams": [
             "NYY",
-            "CHC",
             "SFG",
-            "PIT"
+            "PIT",
+            "CHC"
         ],
         "years": [
             "1972",
@@ -3006,11 +3024,11 @@
         "name": "Luis Sojo",
         "nickname": "",
         "teams": [
-            "SEA",
             "CAL",
             "PIT",
-            "NYY",
-            "TOR"
+            "TOR",
+            "SEA",
+            "NYY"
         ],
         "years": [
             "1990",
@@ -3081,8 +3099,8 @@
         "teams": [
             "LAD",
             "NYY",
-            "SFG",
-            "NYM"
+            "NYM",
+            "SFG"
         ],
         "years": [
             "1983",
@@ -3109,9 +3127,9 @@
         "name": "Daryl Boston",
         "nickname": "",
         "teams": [
+            "COL",
             "NYY",
             "CHW",
-            "COL",
             "NYM"
         ],
         "years": [
@@ -3133,11 +3151,11 @@
         "name": "Neil Allen",
         "nickname": "",
         "teams": [
-            "NYM",
-            "STL",
-            "NYY",
             "CHW",
-            "CLE"
+            "CLE",
+            "NYY",
+            "NYM",
+            "STL"
         ],
         "years": [
             "1979",
@@ -3158,14 +3176,16 @@
         "name": "Lyle Overbay",
         "nickname": "",
         "teams": [
-            "ARI",
+            "MIL",
             "PIT",
             "NYY",
-            "ATL",
-            "MIL",
-            "TOR"
+            "ARI",
+            "TOR",
+            "ATL"
         ],
         "years": [
+            "2001",
+            "2002",
             "2003",
             "2004",
             "2005",
@@ -3208,13 +3228,13 @@
         "name": "Paul Quantrill",
         "nickname": "Q",
         "teams": [
-            "PHI",
             "LAD",
-            "2TM",
+            "PHI",
             "FLA",
             "BOS",
-            "NYY",
             "TOR",
+            "2TM",
+            "NYY",
             "SDP"
         ],
         "years": [
@@ -3276,10 +3296,10 @@
         "name": "Steve Sax",
         "nickname": "",
         "teams": [
-            "NYY",
-            "CHW",
+            "OAK",
             "LAD",
-            "OAK"
+            "NYY",
+            "CHW"
         ],
         "years": [
             "1981",
@@ -3303,10 +3323,10 @@
         "name": "Al Downing",
         "nickname": "",
         "teams": [
-            "LAD",
-            "NYY",
             "OAK",
-            "MIL"
+            "MIL",
+            "NYY",
+            "LAD"
         ],
         "years": [
             "1961",
@@ -3333,14 +3353,14 @@
         "name": "Greg Cadaret",
         "nickname": "The Caddy",
         "teams": [
-            "OAK",
             "ANA",
-            "NYY",
             "DET",
-            "CIN",
-            "TOR",
             "KCR",
-            "TEX"
+            "NYY",
+            "TEX",
+            "TOR",
+            "CIN",
+            "OAK"
         ],
         "years": [
             "1987",
@@ -3360,8 +3380,8 @@
         "name": "Ken Griffey Sr.",
         "nickname": "",
         "teams": [
-            "NYY",
             "CIN",
+            "NYY",
             "ATL",
             "SEA"
         ],
@@ -3392,11 +3412,11 @@
         "name": "Mariano Duncan",
         "nickname": "",
         "teams": [
-            "PHI",
-            "NYY",
             "LAD",
+            "PHI",
+            "TOR",
             "CIN",
-            "TOR"
+            "NYY"
         ],
         "years": [
             "1985",
@@ -3418,11 +3438,12 @@
         "name": "Paul O'Neill",
         "nickname": "The Warrior",
         "teams": [
-            "NYY",
-            "CIN"
+            "CIN",
+            "NYY"
         ],
         "years": [
             "1985",
+            "1986",
             "1987",
             "1988",
             "1989",
@@ -3445,9 +3466,9 @@
         "name": "George Stirnweiss",
         "nickname": "Snuffy",
         "teams": [
+            "CLE",
             "NYY",
-            "SLB",
-            "CLE"
+            "SLB"
         ],
         "years": [
             "1943",
@@ -3467,9 +3488,9 @@
         "name": "Eddie Lopat",
         "nickname": "The Junkman",
         "teams": [
+            "BAL",
             "NYY",
-            "CHW",
-            "BAL"
+            "CHW"
         ],
         "years": [
             "1944",
@@ -3491,10 +3512,10 @@
         "name": "Jim Abbott",
         "nickname": "",
         "teams": [
+            "MIL",
             "CAL",
-            "CHW",
             "NYY",
-            "MIL"
+            "CHW"
         ],
         "years": [
             "1989",
@@ -3515,11 +3536,11 @@
         "nickname": "",
         "teams": [
             "LAD",
-            "LAA",
             "PIT",
-            "NYY",
+            "TEX",
             "MIA",
-            "TEX"
+            "LAA",
+            "NYY"
         ],
         "years": [
             "2014",
@@ -3541,10 +3562,10 @@
         "name": "Aaron Hicks",
         "nickname": "A-A-Ron",
         "teams": [
+            "MIN",
             "NYY",
             "LAA",
-            "BAL",
-            "MIN"
+            "BAL"
         ],
         "years": [
             "2013",
@@ -3566,13 +3587,13 @@
         "name": "Austin Romine",
         "nickname": "",
         "teams": [
+            "CHC",
+            "DET",
+            "LAA",
             "CIN",
             "2TM",
-            "STL",
-            "LAA",
             "NYY",
-            "DET",
-            "CHC"
+            "STL"
         ],
         "years": [
             "2011",
@@ -3593,8 +3614,8 @@
         "name": "Clay Bellinger",
         "nickname": "",
         "teams": [
-            "ANA",
-            "NYY"
+            "NYY",
+            "ANA"
         ],
         "years": [
             "1999",
@@ -3608,9 +3629,9 @@
         "name": "George Scott",
         "nickname": "The Boomer",
         "teams": [
-            "NYY",
-            "MIL",
             "BOS",
+            "MIL",
+            "NYY",
             "KCR"
         ],
         "years": [
@@ -3636,12 +3657,12 @@
         "nickname": "",
         "teams": [
             "CAL",
-            "CHW",
             "PIT",
-            "NYY",
-            "SDP",
+            "CHW",
+            "TEX",
             "KCR",
-            "TEX"
+            "NYY",
+            "SDP"
         ],
         "years": [
             "1982",
@@ -3667,9 +3688,9 @@
         "name": "Dick Howser",
         "nickname": "",
         "teams": [
-            "NYY",
             "CLE",
-            "KCA"
+            "KCA",
+            "NYY"
         ],
         "years": [
             "1961",
@@ -3688,12 +3709,12 @@
         "nickname": "Caveman",
         "teams": [
             "BOS",
-            "KCR",
+            "TBR",
             "DET",
             "NYY",
+            "KCR",
             "CLE",
-            "OAK",
-            "TBR"
+            "OAK"
         ],
         "years": [
             "1995",
@@ -3721,9 +3742,9 @@
         "name": "Charles Herbert Ruffing",
         "nickname": "Red",
         "teams": [
-            "CHW",
             "BOS",
-            "NYY"
+            "NYY",
+            "CHW"
         ],
         "years": [
             "1924",
@@ -3755,10 +3776,10 @@
         "name": "Walt Williams",
         "nickname": "No-Neck",
         "teams": [
-            "CLE",
-            "CHW",
+            "HOU",
             "NYY",
-            "HOU"
+            "CHW",
+            "CLE"
         ],
         "years": [
             "1964",
@@ -3778,12 +3799,12 @@
         "name": "Ron Hassey",
         "nickname": "",
         "teams": [
-            "CLE",
-            "NYY",
-            "CHW",
-            "OAK",
+            "CHC",
             "MON",
-            "CHC"
+            "CHW",
+            "NYY",
+            "CLE",
+            "OAK"
         ],
         "years": [
             "1978",
@@ -3808,8 +3829,8 @@
         "nickname": "CC",
         "teams": [
             "MIL",
-            "NYY",
-            "CLE"
+            "CLE",
+            "NYY"
         ],
         "years": [
             "2001",
@@ -3838,14 +3859,14 @@
         "name": "John Candelaria",
         "nickname": "The Candy Man",
         "teams": [
-            "LAD",
-            "MIN",
             "CAL",
-            "MON",
-            "NYM",
-            "NYY",
+            "LAD",
             "PIT",
-            "TOR"
+            "MON",
+            "MIN",
+            "TOR",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "1975",
@@ -3874,11 +3895,11 @@
         "name": "Mike Heath",
         "nickname": "Heater",
         "teams": [
-            "OAK",
-            "STL",
-            "DET",
             "ATL",
-            "NYY"
+            "DET",
+            "NYY",
+            "OAK",
+            "STL"
         ],
         "years": [
             "1978",
@@ -3960,7 +3981,8 @@
             "1950",
             "1951",
             "1952",
-            "1953"
+            "1953",
+            "1954"
         ]
     },
     {
@@ -3987,14 +4009,14 @@
         "name": "George Medich",
         "nickname": "Doc",
         "teams": [
-            "SEA",
-            "NYY",
-            "NYM",
             "MIL",
-            "OAK",
             "PIT",
+            "NYY",
             "TEX",
-            "2TM"
+            "SEA",
+            "2TM",
+            "OAK",
+            "NYM"
         ],
         "years": [
             "1972",
@@ -4015,11 +4037,11 @@
         "name": "Mike Stanley",
         "nickname": "",
         "teams": [
-            "TOR",
             "BOS",
-            "NYY",
+            "OAK",
             "TEX",
-            "OAK"
+            "TOR",
+            "NYY"
         ],
         "years": [
             "1986",
@@ -4046,8 +4068,8 @@
         "teams": [
             "LAA",
             "NYY",
-            "TEX",
-            "SFG"
+            "SFG",
+            "TEX"
         ],
         "years": [
             "2017",
@@ -4065,12 +4087,12 @@
         "name": "Kevin Elster",
         "nickname": "",
         "teams": [
-            "NYY",
-            "PIT",
-            "PHI",
             "LAD",
-            "NYM",
-            "TEX"
+            "PHI",
+            "PIT",
+            "TEX",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "1986",
@@ -4093,12 +4115,12 @@
         "name": "Larry Milbourne",
         "nickname": "",
         "teams": [
-            "CLE",
-            "NYY",
-            "MIN",
+            "PHI",
             "HOU",
+            "MIN",
             "SEA",
-            "PHI"
+            "CLE",
+            "NYY"
         ],
         "years": [
             "1974",
@@ -4120,9 +4142,9 @@
         "nickname": "",
         "teams": [
             "NYY",
+            "FLA",
             "SEA",
-            "CHC",
-            "FLA"
+            "CHC"
         ],
         "years": [
             "1984",
@@ -4142,9 +4164,9 @@
         "name": "Russ Davis",
         "nickname": "",
         "teams": [
-            "SEA",
             "NYY",
-            "SFG"
+            "SFG",
+            "SEA"
         ],
         "years": [
             "1994",
@@ -4162,26 +4184,10 @@
         "name": "Jim Hunter",
         "nickname": "Catfish",
         "teams": [
-            "OAK",
-            "NYY",
-            "KCA"
+            "MIL"
         ],
         "years": [
-            "1965",
-            "1966",
-            "1967",
-            "1968",
-            "1969",
-            "1970",
-            "1971",
-            "1972",
-            "1973",
-            "1974",
-            "1975",
-            "1976",
-            "1977",
-            "1978",
-            "1979"
+            "1991"
         ]
     },
     {
@@ -4190,13 +4196,13 @@
         "nickname": "",
         "teams": [
             "LAD",
-            "PHI",
             "CAL",
-            "SFG",
+            "PHI",
             "HOU",
-            "OAK",
             "NYY",
-            "SEA"
+            "SFG",
+            "SEA",
+            "OAK"
         ],
         "years": [
             "1984",
@@ -4223,9 +4229,9 @@
         "name": "Andy Hawkins",
         "nickname": "",
         "teams": [
+            "OAK",
             "NYY",
-            "SDP",
-            "OAK"
+            "SDP"
         ],
         "years": [
             "1982",
@@ -4245,9 +4251,9 @@
         "name": "Kerry Wood",
         "nickname": "Kid K",
         "teams": [
-            "CHC",
+            "CLE",
             "NYY",
-            "CLE"
+            "CHC"
         ],
         "years": [
             "1998",
@@ -4272,11 +4278,11 @@
         "nickname": "Mr. May",
         "teams": [
             "CAL",
-            "TOR",
-            "SDP",
-            "NYY",
             "MIN",
-            "CLE"
+            "TOR",
+            "CLE",
+            "NYY",
+            "SDP"
         ],
         "years": [
             "1973",
@@ -4340,10 +4346,10 @@
         "teams": [
             "PHI",
             "TBR",
-            "NYY",
             "ATL",
             "MIA",
-            "COL"
+            "COL",
+            "NYY"
         ],
         "years": [
             "2008",
@@ -4363,9 +4369,9 @@
         "nickname": "",
         "teams": [
             "CLE",
-            "TEX",
+            "NYY",
             "NYM",
-            "NYY"
+            "TEX"
         ],
         "years": [
             "1998",
@@ -4382,11 +4388,11 @@
         "name": "Gus Triandos",
         "nickname": "The Big Bear",
         "teams": [
-            "BAL",
-            "NYY",
+            "PHI",
             "HOU",
             "DET",
-            "PHI"
+            "BAL",
+            "NYY"
         ],
         "years": [
             "1953",
@@ -4409,13 +4415,13 @@
         "name": "Sidney Ponson",
         "nickname": "The Count",
         "teams": [
-            "NYY",
-            "MIN",
-            "STL",
-            "BAL",
-            "KCR",
             "TEX",
-            "SFG"
+            "KCR",
+            "MIN",
+            "SFG",
+            "BAL",
+            "NYY",
+            "STL"
         ],
         "years": [
             "1998",
@@ -4437,8 +4443,8 @@
         "name": "Brian Roberts",
         "nickname": "B-Rob",
         "teams": [
-            "NYY",
-            "BAL"
+            "BAL",
+            "NYY"
         ],
         "years": [
             "2001",
@@ -4489,12 +4495,12 @@
         "name": "Ted Lilly",
         "nickname": "",
         "teams": [
+            "LAD",
             "CHC",
             "MON",
+            "NYY",
             "TOR",
-            "LAD",
-            "OAK",
-            "NYY"
+            "OAK"
         ],
         "years": [
             "1999",
@@ -4541,33 +4547,28 @@
         "name": "Fred Stanley",
         "nickname": "Chicken",
         "teams": [
-            "CHC",
-            "LAD",
-            "ATL",
-            "TOR",
-            "TBD",
+            "MIL",
+            "SEP",
+            "OAK",
+            "CLE",
+            "NYY",
             "SDP"
         ],
         "years": [
-            "1986",
-            "1987",
-            "1988",
-            "1989",
-            "1990",
-            "1991",
-            "1992",
-            "1993",
-            "1994",
-            "1995",
-            "1996",
-            "1997",
-            "1998",
-            "1999",
-            "2000",
-            "2001",
-            "2002",
-            "2003",
-            "2004"
+            "1969",
+            "1970",
+            "1971",
+            "1972",
+            "1973",
+            "1974",
+            "1975",
+            "1976",
+            "1977",
+            "1978",
+            "1979",
+            "1980",
+            "1981",
+            "1982"
         ]
     },
     {
@@ -4576,9 +4577,9 @@
         "nickname": "",
         "teams": [
             "CLE",
+            "NYY",
             "PIT",
-            "CHC",
-            "NYY"
+            "CHC"
         ],
         "years": [
             "1997",
@@ -4597,14 +4598,14 @@
         "name": "David Robertson",
         "nickname": "D-Rob",
         "teams": [
+            "PHI",
             "CHC",
-            "MIA",
-            "NYM",
             "TBR",
             "CHW",
-            "PHI",
+            "TEX",
+            "MIA",
             "NYY",
-            "TEX"
+            "NYM"
         ],
         "years": [
             "2008",
@@ -4654,14 +4655,14 @@
         "name": "Dioner Navarro",
         "nickname": "",
         "teams": [
-            "TBR",
             "TBD",
-            "CIN",
-            "TOR",
-            "CHW",
-            "NYY",
+            "LAD",
             "CHC",
-            "LAD"
+            "TBR",
+            "CHW",
+            "TOR",
+            "CIN",
+            "NYY"
         ],
         "years": [
             "2004",
@@ -4684,12 +4685,12 @@
         "name": "Ji-Man Choi",
         "nickname": "",
         "teams": [
-            "PIT",
-            "SDP",
-            "NYY",
             "MIL",
+            "PIT",
+            "TBR",
             "LAA",
-            "TBR"
+            "NYY",
+            "SDP"
         ],
         "years": [
             "2016",
@@ -4707,8 +4708,8 @@
         "name": "John Mayberry",
         "nickname": "Big John",
         "teams": [
-            "NYY",
             "HOU",
+            "NYY",
             "TOR",
             "KCR"
         ],
@@ -4735,8 +4736,8 @@
         "name": "Chris Chambliss",
         "nickname": "Champ",
         "teams": [
-            "NYY",
             "CLE",
+            "NYY",
             "ATL"
         ],
         "years": [
@@ -4765,12 +4766,12 @@
         "nickname": "BoMel",
         "teams": [
             "BOS",
+            "DET",
+            "CHW",
+            "KCR",
             "SFG",
             "BAL",
-            "KCR",
-            "CHW",
-            "NYY",
-            "DET"
+            "NYY"
         ],
         "years": [
             "1985",
@@ -4790,30 +4791,35 @@
         "name": "Santos Alomar",
         "nickname": "Sandy",
         "teams": [
-            "NYM",
-            "MLN",
-            "NYY",
-            "TEX",
+            "LAD",
             "CHW",
-            "ATL",
-            "CAL"
+            "TEX",
+            "COL",
+            "CLE",
+            "NYM",
+            "SDP"
         ],
         "years": [
-            "1964",
-            "1965",
-            "1966",
-            "1967",
-            "1968",
-            "1969",
-            "1970",
-            "1971",
-            "1972",
-            "1973",
-            "1974",
-            "1975",
-            "1976",
-            "1977",
-            "1978"
+            "1988",
+            "1989",
+            "1990",
+            "1991",
+            "1992",
+            "1993",
+            "1994",
+            "1995",
+            "1996",
+            "1997",
+            "1998",
+            "1999",
+            "2000",
+            "2001",
+            "2002",
+            "2003",
+            "2004",
+            "2005",
+            "2006",
+            "2007"
         ]
     },
     {
@@ -4821,11 +4827,11 @@
         "name": "Nick Johnson",
         "nickname": "",
         "teams": [
+            "FLA",
             "MON",
             "WSN",
-            "FLA",
-            "NYY",
-            "BAL"
+            "BAL",
+            "NYY"
         ],
         "years": [
             "2001",
@@ -4865,12 +4871,12 @@
         "name": "Tony Clark",
         "nickname": "Tony the Tiger",
         "teams": [
-            "SDP",
             "BOS",
-            "NYM",
-            "NYY",
+            "DET",
             "ARI",
-            "DET"
+            "NYY",
+            "NYM",
+            "SDP"
         ],
         "years": [
             "1995",
@@ -4895,10 +4901,10 @@
         "name": "Iv\u00e1n Nova",
         "nickname": "Supernova",
         "teams": [
-            "DET",
+            "NYY",
             "CHW",
-            "PIT",
-            "NYY"
+            "DET",
+            "PIT"
         ],
         "years": [
             "2010",
@@ -4920,8 +4926,8 @@
         "nickname": "",
         "teams": [
             "CLE",
-            "NYM",
             "NYY",
+            "NYM",
             "KCA"
         ],
         "years": [
@@ -4944,12 +4950,12 @@
         "name": "Tim Foli",
         "nickname": "Crazy Horse",
         "teams": [
-            "PIT",
             "CAL",
-            "SFG",
+            "PIT",
             "MON",
-            "NYM",
-            "NYY"
+            "SFG",
+            "NYY",
+            "NYM"
         ],
         "years": [
             "1970",
@@ -4994,12 +5000,12 @@
         "name": "Todd Greene",
         "nickname": "",
         "teams": [
-            "COL",
-            "SFG",
-            "ANA",
             "CAL",
-            "TOR",
+            "ANA",
             "TEX",
+            "TOR",
+            "SFG",
+            "COL",
             "NYY"
         ],
         "years": [
@@ -5042,8 +5048,8 @@
         "name": "Scott Brosius",
         "nickname": "",
         "teams": [
-            "NYY",
-            "OAK"
+            "OAK",
+            "NYY"
         ],
         "years": [
             "1991",
@@ -5064,10 +5070,10 @@
         "name": "Tony Lazzeri",
         "nickname": "Poosh 'Em Up Tony",
         "teams": [
-            "NYG",
-            "CHC",
             "NYY",
-            "BRO"
+            "BRO",
+            "NYG",
+            "CHC"
         ],
         "years": [
             "1926",
@@ -5091,9 +5097,9 @@
         "name": "James Edward Key",
         "nickname": "Jimmy",
         "teams": [
+            "BAL",
             "NYY",
-            "TOR",
-            "BAL"
+            "TOR"
         ],
         "years": [
             "1984",

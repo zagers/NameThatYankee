@@ -437,6 +437,62 @@ def generate_master_player_list(project_dir: Path):
     finally:
         driver.quit()
 
+def _clean_bio_text(content_element):
+    """
+    Sanitizes HTML content from biographies, removing technical noise,
+    scripts, styles, and normalizing whitespace.
+    """
+    if not content_element:
+        return ""
+        
+    # Elements to completely remove
+    noise_tags = ["script", "style", "noscript", "svg", "iframe", "object", "embed"]
+    for tag in content_element.find_all(noise_tags):
+        tag.decompose()
+        
+    # Remove elements that likely contain technical noise or base64 data
+    # We iterate over all tags and check if they should be removed.
+    for element in list(content_element.find_all(True)):
+        # If the element has no parent and isn't the root, it's already been decomposed
+        if element.parent is None and element is not content_element:
+            continue
+            
+        try:
+            text_content = element.get_text()
+            
+            # Remove if it contains base64 data or looks like a JSON blob
+            if "base64" in text_content or (text_content.strip().startswith('{') and text_content.strip().endswith('}')):
+                element.decompose()
+                continue
+                
+            # Remove common metadata or technical class names if they contain suspicious text
+            classes = element.get('class', [])
+            noise_classes = ["metadata", "technical", "hidden", "internal", "json-noise", "base64-noise", "wp-block-code"]
+            if classes and any(cls in noise_classes for cls in classes):
+                element.decompose()
+                continue
+        except (AttributeError, TypeError):
+            continue
+
+    # Extract text with a separator to avoid merging words
+    text = content_element.get_text(separator=' ', strip=True)
+    
+    # Remove common technical labels and their associated JSON/junk
+    # Matches "Metadata: { ... }" or "Technical: { ... }" etc.
+    text = re.sub(r'(?i)(Metadata|Technical|JSON|Source|Author):\s*\{.*?\}', '', text)
+    
+    # Remove long Base64-like or alphanumeric strings (often technical noise from SABR/WordPress)
+    # 40+ chars with no spaces
+    text = re.sub(r'[A-Za-z0-9+/]{40,}[=]*', '', text)
+    
+    # Also catch strings with some technical noise like dots or braces if they are very long
+    text = re.sub(r'[A-Za-z0-9+/.\-{}]{70,}', '', text)
+    
+    # Normalize whitespace: replace multiple spaces/newlines with a single space
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    return text
+
 def get_mlb_bio(player_name, shared_driver=None):
     """
     Scrapes the MLB.com biography/profile for a player as a fallback for SABR.
@@ -482,9 +538,7 @@ def get_mlb_bio(player_name, shared_driver=None):
             content = soup.select_one(".player-profile-bottom")
             
         if content:
-            # Clean up the text
-            for script in content(["script", "style"]): script.decompose()
-            text = content.get_text(separator=' ', strip=True)
+            text = _clean_bio_text(content)
             if len(text) > 200:
                 return text
 
@@ -525,8 +579,7 @@ def get_sabr_bio(player_name):
                     bio_soup = BeautifulSoup(response.text, 'html.parser')
                     content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
                     if content:
-                        for script in content(["script", "style"]): script.decompose()
-                        text = content.get_text(separator=' ', strip=True)
+                        text = _clean_bio_text(content)
                         if len(text) > 500: # Ensure it's a real bio, not a stub
                             print(f"  ✅ Found bio via direct link: {url}")
                             return text
@@ -571,8 +624,7 @@ def get_sabr_bio(player_name):
         
         content = bio_soup.select_one('.entry-content, .tb-field, .standard-content, article')
         if content:
-            for script in content(["script", "style"]): script.decompose()
-            text = content.get_text(separator=' ', strip=True)
+            text = _clean_bio_text(content)
             print(f"  ✅ Successfully scraped SABR bio ({len(text)} chars).")
             return text
         else:
@@ -582,6 +634,7 @@ def get_sabr_bio(player_name):
     except Exception as e:
         print(f"  ❌ Error scraping SABR bio: {e}")
         return ""
+
 
 def get_wikipedia_summary(player_name):
     """

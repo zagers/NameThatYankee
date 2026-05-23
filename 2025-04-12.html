@@ -1,316 +1,168 @@
-<!-- ABOUTME: Historical trivia puzzle page for a specific date. -->
-<!-- ABOUTME: Contains player stats clues and interactive reveal logic. -->
+<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->
+<!-- ABOUTME: Contains career highlights, stats, and biography information. -->
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="https://namethatyankeequiz.com/2025-04-12" rel="canonical"/>
-  <meta content="Discover the career highlights and statistics for Santos Alomar, the featured New York Yankee for the 2025-04-12 trivia puzzle." name="description"/>
-  <title>
-   Santos Alomar Answer - April 12, 2025 | Name That Yankee
-  </title>
-  <link href="style.css" rel="stylesheet"/>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-  <meta content="Name That Yankee - April 12, 2025" property="og:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" property="og:description"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Name That Yankee" property="og:site_name"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" property="og:image"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="Name That Yankee - April 12, 2025" name="twitter:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" name="twitter:description"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" name="twitter:image"/>
-  <script type="application/ld+json">
-   {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Name That Yankee Answer for April 12, 2025",
-  "description": "The player revealed for this New York Yankees trivia puzzle is Santos Alomar.",
-  "image": "https://namethatyankeequiz.com/images/social-card.webp",
-  "author": {
-    "@type": "Person",
-    "name": "Scott Zager"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Name That Yankee",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
-    }
-  },
-  "datePublished": "2025-04-12"
-}
-  </script>
-  <link href="manifest.json" rel="manifest"/>
-  <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <meta content="NameThatYankee" name="apple-mobile-web-app-title"/>
- </head>
- <body>
-  <header>
-   <div class="header-content">
-    <h1>
-     The answer for April 12, 2025 is...
-    </h1>
-   </div>
-   <div class="header-controls">
-    <a class="instructions-link" href="instructions">
-     New Features!
-    </a>
-    <div id="score-display">
-     Your Score:
-     <span id="total-score">
-      0
-     </span>
-     <svg aria-hidden="true" class="chevron-icon" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6 9 12 15 18 9">
-      </polyline>
-     </svg>
-     <div id="score-breakdown-container" style="display: none;">
-      <div class="breakdown-header">
-       Score Breakdown
-      </div>
-      <table>
-       <thead>
-        <tr>
-         <th>
-          Clue
-         </th>
-         <th>
-          Points
-         </th>
-         <th>
-          Count
-         </th>
-        </tr>
-       </thead>
-       <tbody id="breakdown-body">
-       </tbody>
-      </table>
-     </div>
-    </div>
-   </div>
-  </header>
-  <main>
-   <a class="back-link" href="index">
-    ← Back to All Questions
-   </a>
-   <div class="detail-layout">
-    <div class="left-column">
-     <div class="player-profile">
-      <div class="player-photo">
-       <img alt="Photo of Santos Alomar" src="images/answer-2025-04-12.webp"/>
-      </div>
-      <div class="player-info">
-       <h2>
-        Santos Alomar "Sandy"
-       </h2>
-       <div class="facts-header">
-        <h3>
-         Career Highlights &amp; Facts
-        </h3>
-        <p class="disclaimer">
-         (Facts are AI-generated and may require verification)
-        </p>
-       </div>
-       <ul>
-        <li>
-         Before reaching the majors, this player spent time on the restricted list as a teenager and later found comfort in the minor leagues by playing on the same infield as his brother, Demetrio.
-        </li>
-        <li>
-         This player set a major-league record by coming to the plate 739 times without being hit by a pitch, a streak that spanned his time in Southern California.
-        </li>
-        <li>
-         Known for his defensive versatility, this player led all major leaguers at second base with a .975 fielding percentage during the 1975 season.
-        </li>
-       </ul>
-       <div class="followup-section" id="followup-section">
-        <h3>
-         Would you like to find out more about Santos Alomar?
-        </h3>
-        <div class="followup-buttons">
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="After being on the roster of four different major league teams in one year, he described the experience as a 'nightmare' and felt he was being treated like a piece of garbage.">
-           How did this player feel about his nomadic 1967 season?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="He earned the moniker after playing in a remarkable 648 consecutive games from 1969 through September 1973, a streak that ended only when he suffered a broken leg.">
-           What was the origin of his 'Iron Pony' nickname?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="While he coached them throughout their careers, he claimed he never pressured them to play, even once giving a speech to his son Sandy Jr. to discourage him from prioritizing dirt bike riding over baseball.">
-           How did he influence his two famous sons?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="stats-table-container">
-      <h3>
-       Career Totals
-      </h3>
-      <div class="table-wrapper">
-       <table>
-        <thead>
-         <tr>
-          <th>
-           WAR
-          </th>
-          <th>
-           AB
-          </th>
-          <th>
-           H
-          </th>
-          <th>
-           HR
-          </th>
-          <th>
-           BA
-          </th>
-          <th>
-           R
-          </th>
-          <th>
-           RBI
-          </th>
-          <th>
-           SB
-          </th>
-          <th>
-           OBP
-          </th>
-          <th>
-           SLG
-          </th>
-          <th>
-           OPS
-          </th>
-          <th>
-           OPS+
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-         <tr>
-          <td>
-           10.5
-          </td>
-          <td>
-           4760
-          </td>
-          <td>
-           1168
-          </td>
-          <td>
-           13
-          </td>
-          <td>
-           .245
-          </td>
-          <td>
-           558
-          </td>
-          <td>
-           282
-          </td>
-          <td>
-           227
-          </td>
-          <td>
-           .290
-          </td>
-          <td>
-           .288
-          </td>
-          <td>
-           .578
-          </td>
-          <td>
-           69
-          </td>
-         </tr>
-        </tbody>
-       </table>
-      </div>
-      <p class="citation">
-       Statistics via Baseball-Reference.com
-      </p>
-     </div>
-    </div>
-    <div class="right-column">
-     <div class="original-card">
-      <h3>
-       The Original Clue
-      </h3>
-      <img alt="Original trivia card" src="images/clue-2025-04-12.webp"/>
-     </div>
-     <div class="chart-container">
-      <h3>
-       Career Arc by WAR
-      </h3>
-      <div class="chart-wrapper">
-       <canvas id="careerArcChart">
-       </canvas>
-      </div>
-     </div>
-     <script crossorigin="anonymous" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1">
-     </script>
-     <script>
-      const years = ["1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978"];
-            const warData = [0.3, 0.8, -0.6, -0.6, -0.9, -0.3, 2.3, 5.2, 1.8, 1.2, 0.6, 1.3, -0.1, -0.3, -0.3];
-            const teamsByYear = ["MLN", "MLN", "ATL", "2TM", "CHW", "2TM", "CAL", "CAL", "CAL", "CAL", "2TM", "NYY", "NYY", "TEX", "TEX"];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santos Alomar &quot;Sandy&quot; Answer - April 12, 2025 | Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="canonical" href="https://namethatyankeequiz.com/2025-04-12">
+    
+    <!-- Meta tags for better social sharing -->
+    <meta name="description" content="Trivia and career highlights for New York Yankees player Santos Alomar. Learn about their Served as a switch-hitting infielder who primarily played second ba...">
+    <meta property="og:title" content="Name That Yankee - April 12, 2025">
+    <meta property="og:description" content="Trivia and career highlights for New York Yankees player Santos Alomar. Learn about their Served as a switch-hitting infielder who primarily played second ba...">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Name That Yankee">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Name That Yankee - April 12, 2025">
+    <meta name="twitter:description" content="Trivia and career highlights for New York Yankees player Santos Alomar. Learn about their Served as a switch-hitting infielder who primarily played second ba...">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
-            const teamColors = {
-                'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
-                'ATL': { bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' },
-                'BAL': { bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' },
-                'BOS': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' },
-                'CHC': { bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' },
-                'CHW': { bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' },
-                'CIN': { bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' },
-                'CLE': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' },
-                'COL': { bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' },
-                'DET': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' },
-                'HOU': { bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' },
-                'KCR': { bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' },
-                'LAA': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'LAD': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'MIA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'MIL': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' },
-                'MIN': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' },
-                'NYM': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' },
-                'NYY': { bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' },
-                'OAK': { bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' },
-                'PHI': { bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' },
-                'PIT': { bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' },
-                'SDP': { bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' },
-                'SFG': { bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' },
-                'SEA': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' },
-                'STL': { bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' },
-                'TBR': { bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' },
-                'TEX': { bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' },
-                'TOR': { bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' },
-                'WSN': { bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' },
-                'MON': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' },
-                'CAL': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'FLA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'BRO': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'SLB': { bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' },
-                '2TM': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' },
-                'Total': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' },
-                'Default': { bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }
-            };
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Name That Yankee Answer for April 12, 2025",
+      "description": "Trivia and career highlights for New York Yankees player Santos Alomar. Learn about their Served as a switch-hitting infielder who primarily played second ba...",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
+      "author": {
+        "@type": "Person",
+        "name": "Scott Zager"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Name That Yankee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
+        }
+      },
+      "datePublished": "2025-04-12"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>The answer for April 12, 2025 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions" class="instructions-link">New Features!</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="./" class="back-link">← Back to All Questions</a>
+
+        <div class="detail-layout">
+            <div class="left-column">
+                <div class="player-profile">
+                    <div class="player-photo">
+                        <img src="images/answer-2025-04-12.webp" alt="Photo of Santos Alomar" decoding="async">
+                    </div>
+                    <div class="player-info">
+                        <h2>Santos Alomar &quot;Sandy&quot;</h2>
+                        <div class="facts-header">
+                            <h3>Career Highlights & Facts</h3>
+                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                        </div>
+                        <ul>
+                        <li>Served as a switch-hitting infielder who primarily played second base.</li>
+                        <li>Fathered two sons who both reached the major leagues as professional baseball players.</li>
+                        <li>Selected as an All-Star player during a career that spanned over a decade.</li>
+                        </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Santos Alomar?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He is the patriarch of a famous baseball family, as his sons Sandy Alomar Jr. and Roberto Alomar both enjoyed distinguished major league careers, with Roberto eventually being inducted into the National Baseball Hall of Fame.">What unique family legacy did this player establish in professional baseball?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In December 1989, he was part of a major trade that sent him, Carlos Baerga, and Chris James to the Cleveland Indians in exchange for slugger Joe Carter, a move that helped build the foundation for the Indians&#x27; successful teams of the 1990s.">Which major trade involving this player significantly altered the trajectory of a mid-western club?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He was a versatile switch-hitter who provided steady defensive play at second base, earning his lone All-Star selection in 1970 while playing for the California Angels.">How did his playing style distinguish him on the field?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+
+                        <div class="player-bio">
+                            <h3>Player Biography</h3>
+                            <p>Wikipedia Summary:<br>Santos Alomar Conde, known as Sandy Alomar Sr., was a Puerto Rican second baseman who played in Major League Baseball (MLB) for fourteen seasons, most notably as a member of the California Angels where he was an MLB All-Star player in 1970. Alomar was a switch-hitter and threw right-handed. He was the father of former MLB All-Star catcher Sandy Alomar Jr. and Hall of Fame second baseman Roberto Alomar.</p>
+                        </div>
+        
+                    </div>
+                </div>
+                
+        <div class="stats-table-container">
+            <h3>Career Totals</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>WAR</th><th>AB</th><th>H</th><th>HR</th><th>BA</th><th>R</th><th>RBI</th><th>SB</th><th>OBP</th><th>SLG</th><th>OPS</th><th>OPS+</th></tr></thead>
+                    <tbody><tr><td>13.7</td><td>4530</td><td>1236</td><td>112</td><td>.273</td><td>520</td><td>588</td><td>25</td><td>.309</td><td>.406</td><td>.716</td><td>86</td></tr></tbody>
+                </table>
+            </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
+        </div>
+        
+            </div>
+            <div class="right-column">
+                <div class="original-card">
+                    <h3>The Original Clue</h3>
+                    <img src="images/clue-2025-04-12.webp" alt="Original trivia card" decoding="async">
+                </div>
+                
+        <div class="chart-container">
+            <h3>Career Arc by WAR</h3>
+            <div class="chart-wrapper">
+                <canvas id="careerArcChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
+        <script>
+            const years = ["1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007"];
+            const warData = [0.0, -0.1, 2.4, -0.6, 1.6, 0.9, 2.1, 1.3, 1.0, 3.9, -0.2, 0.5, 0.6, 0.2, 0.5, 0.2, 0.0, -0.2, -0.2, -0.1];
+            const teamsByYear = ["SDP", "SDP", "CLE", "CLE", "CLE", "CLE", "CLE", "CLE", "CLE", "CLE", "CLE", "CLE", "CLE", "CHW", "2TM", "CHW", "CHW", "TEX", "2TM", "NYM"];
+            const teamColors = window.TEAM_COLORS;
 
             const waterfallData = [];
             let cumulativeTotal = 0;
@@ -386,32 +238,16 @@
                     }
                 }
             });
-     </script>
-    </div>
-   </div>
-   <div id="search-data" style="display:none;">
-    {"teams": ["NYM", "MLN", "NYY", "TEX", "CHW", "ATL", "CAL"], "years": ["1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978"]}
-   </div>
-   <div id="quiz-data" style="display:none;">
-    {
-    "answer": "Santos Alomar",
-    "hints": [
-        "Before reaching the majors, this player spent time on the restricted list as a teenager and later found comfort in the minor leagues by playing on the same infield as his brother, Demetrio.",
-        "This player set a major-league record by coming to the plate 739 times without being hit by a pitch, a streak that spanned his time in Southern California.",
-        "Known for his defensive versatility, this player led all major leaguers at second base with a .975 fielding percentage during the 1975 season."
-    ],
-    "facts": [
-        "Before reaching the majors, this player spent time on the restricted list as a teenager and later found comfort in the minor leagues by playing on the same infield as his brother, Demetrio.",
-        "This player set a major-league record by coming to the plate 739 times without being hit by a pitch, a streak that spanned his time in Southern California.",
-        "Known for his defensive versatility, this player led all major leaguers at second base with a .975 fielding percentage during the 1975 season."
-    ]
-}
-   </div>
-  </main>
-  <script src="js/detail.js" type="module">
-  </script>
-  <script>
-   document.addEventListener('DOMContentLoaded', function() {
+        </script>
+        
+            </div>
+        </div>
+        <div id="search-data" style="display:none;">{"teams": ["LAD", "CHW", "TEX", "COL", "CLE", "NYM", "SDP"], "years": ["1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Santos Alomar", "nickname": "Sandy", "hints": ["Served as a switch-hitting infielder who primarily played second base.", "Fathered two sons who both reached the major leagues as professional baseball players.", "Selected as an All-Star player during a career that spanned over a decade."]}</div>
+    </main>
+    <script type="module" src="js/detail.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('followup-section');
         if (!container) return;
         const items = container.querySelectorAll('.followup-item');
@@ -434,32 +270,15 @@
                 } else {
                     answerBox.style.display = 'none';
                 }
+
             });
         });
     });
-  </script>
-  <footer>
-   <p class="disclaimer-footer">
-    This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-   </p>
-   Last Updated: 20-Mar-2026
-   <p class="copyright">
-    <a href="https://namethatyankeequiz.com">
-     Name That Yankee Quiz
-    </a>
-    © 2026 by
-    <a href="https://github.com/zagers/NameThatYankee">
-     Scott Zager
-    </a>
-    is licensed under
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-     CC BY-NC-SA 4.0
-    </a>
-    <img alt="CC" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="BY" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="NC" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="SA" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-   </p>
-  </footer>
- </body>
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+    </footer>    
+</body>
 </html>

@@ -14,6 +14,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     name = player_data.get('name', 'N/A')
     nickname = player_data.get('nickname', '')
     facts = player_data.get('facts', [])
+    bio = player_data.get('bio', '')
     followup_qa = player_data.get('followup_qa', [])
     career_totals_data = player_data.get('career_totals', {})
     yearly_war_data = player_data.get('yearly_war', [])
@@ -21,6 +22,17 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     # Escape name and nickname for HTML safety
     display_name = html.escape(f'{name} "{nickname}"' if nickname else name)
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
+
+    biography_html = ""
+    if bio:
+        # Simple newline to paragraph conversion for basic formatting
+        bio_formatted = html.escape(bio.strip()).replace('\n\n', '</p><p>').replace('\n', '<br>')
+        biography_html = f"""
+                        <div class="player-bio">
+                            <h3>Player Biography</h3>
+                            <p>{bio_formatted}</p>
+                        </div>
+        """
 
     # Dynamic SEO description
     meta_description = f"Discover the career highlights and statistics for {name}, the featured New York Yankee for the {formatted_date} trivia puzzle."
@@ -189,7 +201,9 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         </script>
         """
 
-    template = f"""<!DOCTYPE html>
+    template = f"""<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->
+<!-- ABOUTME: Contains career highlights, stats, and biography information. -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -285,6 +299,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 {facts_html}
                         </ul>
 {followup_section_html}
+{biography_html}
                     </div>
                 </div>
                 {stats_table_html}

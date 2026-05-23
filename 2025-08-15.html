@@ -1,304 +1,168 @@
-<!-- ABOUTME: Historical trivia puzzle page for a specific date. -->
-<!-- ABOUTME: Contains player stats clues and interactive reveal logic. -->
+<!-- ABOUTME: Trivia detail page for a specific New York Yankees player. -->
+<!-- ABOUTME: Contains career highlights, stats, and biography information. -->
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <link href="https://namethatyankeequiz.com/2025-08-15" rel="canonical"/>
-  <meta content="Discover the career highlights and statistics for Lindy McDaniel, the featured New York Yankee for the 2025-08-15 trivia puzzle." name="description"/>
-  <title>
-   Lindy McDaniel Answer - August 15, 2025 | Name That Yankee
-  </title>
-  <link href="style.css" rel="stylesheet"/>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-  <meta content="Name That Yankee - August 15, 2025" property="og:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" property="og:description"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Name That Yankee" property="og:site_name"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" property="og:image"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="Name That Yankee - August 15, 2025" name="twitter:title"/>
-  <meta content="Check out this Name That Yankee puzzle! Can you name this player based on their career stats?" name="twitter:description"/>
-  <meta content="https://namethatyankeequiz.com/images/social-card.webp" name="twitter:image"/>
-  <script type="application/ld+json">
-   {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Name That Yankee Answer for August 15, 2025",
-  "description": "The player revealed for this New York Yankees trivia puzzle is Lindy McDaniel.",
-  "image": "https://namethatyankeequiz.com/images/social-card.webp",
-  "author": {
-    "@type": "Person",
-    "name": "Scott Zager"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Name That Yankee",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
-    }
-  },
-  "datePublished": "2025-08-15"
-}
-  </script>
-  <link href="manifest.json" rel="manifest"/>
-  <link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <meta content="NameThatYankee" name="apple-mobile-web-app-title"/>
- </head>
- <body>
-  <header>
-   <div class="header-content">
-    <h1>
-     The answer for August 15, 2025 is...
-    </h1>
-   </div>
-   <div class="header-controls">
-    <a class="instructions-link" href="instructions">
-     New Features!
-    </a>
-    <div id="score-display">
-     Your Score:
-     <span id="total-score">
-      0
-     </span>
-     <svg aria-hidden="true" class="chevron-icon" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <polyline points="6 9 12 15 18 9">
-      </polyline>
-     </svg>
-     <div id="score-breakdown-container" style="display: none;">
-      <div class="breakdown-header">
-       Score Breakdown
-      </div>
-      <table>
-       <thead>
-        <tr>
-         <th>
-          Clue
-         </th>
-         <th>
-          Points
-         </th>
-         <th>
-          Count
-         </th>
-        </tr>
-       </thead>
-       <tbody id="breakdown-body">
-       </tbody>
-      </table>
-     </div>
-    </div>
-   </div>
-  </header>
-  <main>
-   <a class="back-link" href="index">
-    ← Back to All Questions
-   </a>
-   <div class="detail-layout">
-    <div class="left-column">
-     <div class="player-profile">
-      <div class="player-photo">
-       <img alt="Photo of Lindy McDaniel" src="images/answer-2025-08-15.webp"/>
-      </div>
-      <div class="player-info">
-       <h2>
-        Lindy McDaniel "Lindy"
-       </h2>
-       <div class="facts-header">
-        <h3>
-         Career Highlights &amp; Facts
-        </h3>
-        <p class="disclaimer">
-         (Facts are AI-generated and may require verification)
-        </p>
-       </div>
-       <ul>
-        <li>
-         Became the first relief pitcher to ever receive a vote for the Cy Young Award.
-        </li>
-        <li>
-         Shared the mound with a younger brother during a professional career.
-        </li>
-        <li>
-         Earned a reputation as a preacher who possessed a legendary knockdown pitch.
-        </li>
-       </ul>
-       <div class="followup-section" id="followup-section">
-        <h3>
-         Would you like to find out more about Lindy McDaniel?
-        </h3>
-        <div class="followup-buttons">
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="On May 10, 1959, he pitched in both games of a doubleheader against the Cubs, losing the first game and winning the second, a rare feat that has occurred only a handful of times in major league history.">
-           What made the 1959 season unique for this pitcher regarding doubleheaders?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="He was known as a devout, quiet lay preacher who never used profanity, yet he was a fierce competitor on the mound; Joe Garagiola famously noted he was the only preacher he knew with a great knockdown pitch.">
-           How did his teammates describe his personality compared to his on-field demeanor?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-         <div class="followup-item">
-          <button class="followup-btn" data-answer="During the 1972 and 1973 seasons, the duo was compared to 'The Odd Couple,' pairing the austere, quiet lay preacher with the fun-loving, bon vivant Sparky Lyle.">
-           What was the nature of his relationship with fellow reliever Sparky Lyle while playing in New York?
-          </button>
-          <div class="followup-answer" style="display:none;">
-          </div>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-     <div class="stats-table-container">
-      <h3>
-       Career Totals
-      </h3>
-      <div class="table-wrapper">
-       <table>
-        <thead>
-         <tr>
-          <th>
-           WAR
-          </th>
-          <th>
-           W
-          </th>
-          <th>
-           L
-          </th>
-          <th>
-           ERA
-          </th>
-          <th>
-           G
-          </th>
-          <th>
-           GS
-          </th>
-          <th>
-           SV
-          </th>
-          <th>
-           IP
-          </th>
-          <th>
-           SO
-          </th>
-          <th>
-           WHIP
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-         <tr>
-          <td>
-           28.2
-          </td>
-          <td>
-           141
-          </td>
-          <td>
-           119
-          </td>
-          <td>
-           3.45
-          </td>
-          <td>
-           987
-          </td>
-          <td>
-           74
-          </td>
-          <td>
-           174
-          </td>
-          <td>
-           2139.1
-          </td>
-          <td>
-           1361
-          </td>
-          <td>
-           1.272
-          </td>
-         </tr>
-        </tbody>
-       </table>
-      </div>
-      <p class="citation">
-       Statistics via Baseball-Reference.com
-      </p>
-     </div>
-    </div>
-    <div class="right-column">
-     <div class="original-card">
-      <h3>
-       The Original Clue
-      </h3>
-      <img alt="Original trivia card" src="images/clue-2025-08-15.webp"/>
-     </div>
-     <div class="chart-container">
-      <h3>
-       Career Arc by WAR
-      </h3>
-      <div class="chart-wrapper">
-       <canvas id="careerArcChart">
-       </canvas>
-      </div>
-     </div>
-     <script crossorigin="anonymous" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1">
-     </script>
-     <script>
-      const years = ["1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975"];
-            const warData = [0.2, 0.6, 2.2, -0.9, 2.9, 5.9, -0.2, 0.7, 2.0, 1.1, 2.9, 1.6, 0.0, 2.0, 0.4, 4.2, -1.4, 0.9, 3.3, 1.1, -0.2];
-            const teamsByYear = ["STL", "STL", "STL", "STL", "STL", "STL", "STL", "STL", "CHC", "CHC", "CHC", "SFG", "SFG", "2TM", "NYY", "NYY", "NYY", "NYY", "NYY", "KCR", "KCR"];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lindy McDaniel &quot;Lindy&quot; Answer - August 15, 2025 | Name That Yankee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="canonical" href="https://namethatyankeequiz.com/2025-08-15">
+    
+    <!-- Meta tags for better social sharing -->
+    <meta name="description" content="Trivia and career highlights for New York Yankees player Lindy McDaniel. Learn about their Became the first relief pitcher to ever receive a vote for the Cy ...">
+    <meta property="og:title" content="Name That Yankee - August 15, 2025">
+    <meta property="og:description" content="Trivia and career highlights for New York Yankees player Lindy McDaniel. Learn about their Became the first relief pitcher to ever receive a vote for the Cy ...">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Name That Yankee">
+    <meta property="og:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Name That Yankee - August 15, 2025">
+    <meta name="twitter:description" content="Trivia and career highlights for New York Yankees player Lindy McDaniel. Learn about their Became the first relief pitcher to ever receive a vote for the Cy ...">
+    <meta name="twitter:image" content="https://namethatyankeequiz.com/images/social-card.webp">
+    
+    <meta name="apple-mobile-web-app-title" content="NameThatYankee">
 
-            const teamColors = {
-                'ARI': { bg: 'rgba(167, 25, 48, 0.7)', border: 'rgb(167, 25, 48)', name: 'D-backs' },
-                'ATL': { bg: 'rgba(20, 44, 86, 0.7)', border: 'rgb(20, 44, 86)', name: 'Braves' },
-                'BAL': { bg: 'rgba(223, 70, 1, 0.7)', border: 'rgb(223, 70, 1)', name: 'Orioles' },
-                'BOS': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Red Sox' },
-                'CHC': { bg: 'rgba(14, 51, 134, 0.7)', border: 'rgb(14, 51, 134)', name: 'Cubs' },
-                'CHW': { bg: 'rgba(39, 37, 31, 0.7)', border: 'rgb(39, 37, 31)', name: 'White Sox' },
-                'CIN': { bg: 'rgba(198, 12, 48, 0.7)', border: 'rgb(198, 12, 48)', name: 'Reds' },
-                'CLE': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Guardians' },
-                'COL': { bg: 'rgba(51, 0, 111, 0.7)', border: 'rgb(51, 0, 111)', name: 'Rockies' },
-                'DET': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Tigers' },
-                'HOU': { bg: 'rgba(0, 45, 98, 0.7)', border: 'rgb(0, 45, 98)', name: 'Astros' },
-                'KCR': { bg: 'rgba(0, 70, 135, 0.7)', border: 'rgb(0, 70, 135)', name: 'Royals' },
-                'LAA': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'LAD': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'MIA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'MIL': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Brewers' },
-                'MIN': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Twins' },
-                'NYM': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Mets' },
-                'NYY': { bg: 'rgba(12, 35, 64, 0.8)', border: 'rgb(12, 35, 64)', name: 'Yankees' },
-                'OAK': { bg: 'rgba(0, 56, 49, 0.7)', border: 'rgb(0, 56, 49)', name: 'Athletics' },
-                'PHI': { bg: 'rgba(232, 24, 40, 0.7)', border: 'rgb(232, 24, 40)', name: 'Phillies' },
-                'PIT': { bg: 'rgba(253, 184, 39, 0.7)', border: 'rgb(253, 184, 39)', name: 'Pirates' },
-                'SDP': { bg: 'rgba(79, 64, 51, 0.7)', border: 'rgb(79, 64, 51)', name: 'Padres' },
-                'SFG': { bg: 'rgba(253, 90, 30, 0.7)', border: 'rgb(253, 90, 30)', name: 'Giants' },
-                'SEA': { bg: 'rgba(12, 35, 64, 0.7)', border: 'rgb(12, 35, 64)', name: 'Mariners' },
-                'STL': { bg: 'rgba(196, 30, 58, 0.7)', border: 'rgb(196, 30, 58)', name: 'Cardinals' },
-                'TBR': { bg: 'rgba(143, 188, 230, 0.7)', border: 'rgb(143, 188, 230)', name: 'Rays' },
-                'TEX': { bg: 'rgba(0, 50, 120, 0.7)', border: 'rgb(0, 50, 120)', name: 'Rangers' },
-                'TOR': { bg: 'rgba(20, 54, 136, 0.7)', border: 'rgb(20, 54, 136)', name: 'Blue Jays' },
-                'WSN': { bg: 'rgba(171, 0, 3, 0.7)', border: 'rgb(171, 0, 3)', name: 'Nationals' },
-                'MON': { bg: 'rgba(0, 45, 114, 0.7)', border: 'rgb(0, 45, 114)', name: 'Expos' },
-                'CAL': { bg: 'rgba(186, 0, 33, 0.7)', border: 'rgb(186, 0, 33)', name: 'Angels' },
-                'FLA': { bg: 'rgba(0, 142, 204, 0.7)', border: 'rgb(0, 142, 204)', name: 'Marlins' },
-                'BRO': { bg: 'rgba(0, 90, 156, 0.7)', border: 'rgb(0, 90, 156)', name: 'Dodgers' },
-                'SLB': { bg: 'rgba(139, 69, 19, 0.7)', border: 'rgb(139, 69, 19)', name: 'Browns' },
-                '2TM': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Multiple' },
-                'Total': { bg: 'rgba(107, 114, 128, 0.7)', border: 'rgb(107, 114, 128)', name: 'Career' },
-                'Default': { bg: 'rgba(156, 163, 175, 0.7)', border: 'rgb(156, 163, 175)', name: 'Other' }
-            };
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Name That Yankee Answer for August 15, 2025",
+      "description": "Trivia and career highlights for New York Yankees player Lindy McDaniel. Learn about their Became the first relief pitcher to ever receive a vote for the Cy ...",
+      "image": "https://namethatyankeequiz.com/images/social-card.webp",
+      "author": {
+        "@type": "Person",
+        "name": "Scott Zager"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Name That Yankee",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://namethatyankeequiz.com/apple-touch-icon.png"
+        }
+      },
+      "datePublished": "2025-08-15"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>The answer for August 15, 2025 is...</h1>
+        </div>
+        <div class="header-controls">
+            <a href="instructions" class="instructions-link">New Features!</a>
+            <div id="score-display">
+                Your Score: <span id="total-score">0</span>
+                <svg aria-hidden="true" class="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <div id="score-breakdown-container" style="display: none;">
+                    <div class="breakdown-header">Score Breakdown</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Clue</th>
+                                <th>Points</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="./" class="back-link">← Back to All Questions</a>
+
+        <div class="detail-layout">
+            <div class="left-column">
+                <div class="player-profile">
+                    <div class="player-photo">
+                        <img src="images/answer-2025-08-15.webp" alt="Photo of Lindy McDaniel" decoding="async">
+                    </div>
+                    <div class="player-info">
+                        <h2>Lindy McDaniel &quot;Lindy&quot;</h2>
+                        <div class="facts-header">
+                            <h3>Career Highlights & Facts</h3>
+                            <p class="disclaimer">(Facts are AI-generated and may require verification)</p>
+                        </div>
+                        <ul>
+                        <li>Became the first relief pitcher to ever receive a vote for the Cy Young Award.</li>
+                        <li>Pitched in both games of a doubleheader on a single day, recording a loss in the first game and a win in the second.</li>
+                        <li>Shared the mound with a younger brother in the major leagues, drawing comparisons to a famous sibling duo from the past.</li>
+                        </ul>
+
+                <div class="followup-section" id="followup-section">
+                    <h3>Would you like to find out more about Lindy McDaniel?</h3>
+                    <div class="followup-buttons">
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="In 1960, he became the first relief pitcher in major league history to receive a vote for the Cy Young Award.">What unique distinction did this pitcher hold regarding the Cy Young Award?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="He played alongside his younger brother, Von McDaniel, for the St. Louis Cardinals in 1957, with the pair drawing comparisons to the legendary Dizzy and Paul Dean.">How did his family ties impact his professional career?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+
+                        <div class="followup-item">
+                            <button class="followup-btn" data-answer="On May 10, 1959, he pitched in both games of a doubleheader, suffering a loss in the opener before earning a victory in the nightcap.">What rare feat did he accomplish during a 1959 doubleheader against the Chicago Cubs?</button>
+                            <div class="followup-answer" style="display:none;"></div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+
+                        <div class="player-bio">
+                            <h3>Player Biography</h3>
+                            <p>Lindy McDaniel August 20, 2013 / in BioProject - Person 1960s All-Stars Siblings / by admin This article was written by David E. Skelton A lifelong pursuit toward a ministerial career was put on hold for 21 years while the devoutly religious Lindy McDaniel labored in his temporary gig as a major-league hurler. During the interim employment he alternately became both the “toast of the town … [and] the roast of the town with his ups and downs.” 1 Possessor of one of the finest curves and later forkballs the game has ever known, McDaniel rode his pitching mastery to a longevity that shattered numerous records. Not bad for temp work. Born on December 13, 1935, Lyndall Dale McDaniel earned the nickname Lindy at 4 years old in a nod to the famous aviator Charles Lindbergh. Hollis, Oklahoma, a one-stoplight town in the southwest part of the state, was Lindy’s home throughout the early stages of his life. Hollis, whose population has never exceeded 3,200, remains large enough to have made a sizable splash in sports, serving as home to two successful college coaches, a professional football player, and four professional baseball players (two of whom were Lindy’s younger siblings, Von and Kerry Don ). Among the childhood pleasures of rabbit hunting and taking in Western action movies, Lindy and his brothers developed a passion for baseball with gloves made “of sacks, crudely sewn in the shape of their hands.” 2 This handicap was overcome by a certain inherited athleticism: His father, Newell (a cousin of famed University of Texas football coach Darrell Royal), had been an accomplished athlete in tennis and track. Newell and his wife, Ada Mae (Burk) McDaniel, raised their four children in a deeply religious manner. Fearing the temptations that might befall her son, Ada Mae required a great deal of persuasion before concluding that baseball was a fit pursuit. She was forced to reach this conclusion early when the St. Louis Cardinals began scouting her son before he was 16. Lindy had established himself as a star hurler at Arnett High School, a reputation further enhanced by his exploits on the Altus American Legion team. Alongside teammates Eddie Fisher and Tony Risinger – both of whom would go on to play professionally – the team captured two consecutive state championships. Though the attraction between prospect and team was mutual – Lindy grew up idolizing the Cardinals’ Stan Musial and the earlier feats of Dizzy Dean – he accepted a four-year basketball scholarship offered by the University of Oklahoma. The Cardinals had kept tabs on the Hollis native, and when scout Fred Hawn signed him three months before his 20th birthday, it was reported that St. Louis had five years of data on McDaniel. By signing with the Cardinals McDaniel became ineligible for college athletics and, three days after his fourth appearance as a major leaguer, he enrolled at Abilene Christian College in Texas. The $50,000 price tag qualified McDaniel as a “bonus baby” who, under the rules then in effect, had to be placed on the Cardinals’ roster. Dubbed “the eleventh member of a ten-man staff,” 3 McDaniel was inserted into mop-up duty a day after he reported to the club. The positive impression made in this and a subsequent outing earned McDaniel his first starting assignment, on September 19, 1955, against the Chicago Cubs, when he yielded Hall of Famer Ernie Banks’ then-record fifth grand slam of the season. Despite a hefty 4.74 ERA in 19 end-of-the-season innings, his potential was glimpsed by the league’s senior umpire of 40 years, Babe Pinelli, who offered that “[McDaniel] showed me one of the best curves I’ve ever seen.” 4 Entering the 1956 campaign, the Cardinals had not won a pennant in ten years and, due to a near-league worst 3.97 ERA, they would not come close during McDaniel’s first full season. Nineteen pitchers took the mound for St. Louis but only two managed less than a 3.50 mark: 39-year-old Murry Dickson and 20-year-old McDaniel. Excluding a handful of difficult outings, McDaniel finished with a 2.37 ERA in 34 appearances that prompted manager Fred Hutchinson to remark, “I don’t know what we’d do without him.” 5 Though he got the occasional starting assignment (including a complete-game victory over the Cubs on September 25) most of his success was achieved from the bullpen – a harbinger of his future. For the second consecutive year McDaniel reported to 1957 spring training as the Cardinals’ youngest player. A reshuffling of the pitching staff saw relievers McDaniel and Larry Jackson inserted permanently into the rotation, and with the later addition of another $50,000 bonus baby – Lindy’s younger brother, Von – the Cardinals were thrust into immediate pennant contention. While Lindy set a course for a team-leading 15 victories and ten complete games, Von turned his first starting assignment into a two-hit shutout over the Brooklyn Dodgers that soon drew comparisons to another successful brother combination from the Gas House Gang era, Dizzy and Paul Dean (a comparison enhanced when Von was a two-base hit shy of a perfect game against the Pittsburgh Pirates on July 28). Lindy had posted his first shutout on May 16 with a four-hit gem against the Philadelphia Phillies. Though an August collapse doomed the Cardinals’ hopes for the National League crown, the McDaniel brothers appeared poised for long and fruitful careers in St. Louis. But that never came to fruition: Von made two brief appearances in 1958 and never donned a major-league uniform again. Meanwhile, Lindy suffered the first of a series of Jekyll-and-Hyde seasons that became part of his signature in the majors. The 1958 Cardinals never fully recovered from a 3-14 start to the campaign, and McDaniel’s season followed suit. After 11 starts his record stood at 3-5 with a 5.49 ERA, the lone bright spot being a shutout over Philadelphia. Moved to the bullpen, he fared little better. On August 14, with the bonus-baby rules since relaxed, St. Louis demoted McDaniel to Triple-A Omaha –the only time in his long career that he served in the minors. Roster expansions in September afforded McDaniel one final outing, but he closed the season with a 5-7, 5.80 record. As mysteriously as he slumped in 1958, McDaniel just as mysteriously rebounded for a fine two-year run. A complete-game victory over the Los Angeles Dodgers in his first outing of 1959 reflected his determination to win back his spot in the rotation, but six subsequent starts proved less successful. Relegated again to the bullpen, McDaniel blossomed into the relief specialist that – with the addition of a forkball to his repertoire – represented the successful remainder of his career (he started only 15 games over the next 15 years). From the time he was shifted into the bullpen until the end of the 1960 season, McDaniel posted a record of 24-9 with a 2.40 ERA and was established as one of the premier relievers in the game. In 1960 he was selected for the All-Star Team for the only time. After the season he finished fifth in the voting for the NL Most Valuable Player and third for the Cy Young Award. (He was the first reliever to ever receive a Cy Young Award vote.) He was the first recipient of The Sporting News’ National League Fireman Trophy, and shared with teammate Ernie Broglio the J.G. Taylor Spink Award as the St. Louis Baseball Man of the Year as determined by the local chapter of the Baseball Writers’ Association of America (where during the ceremony the preacher-to-be was asked to deliver the invocation). In this same two-year span McDaniel entered the record books in a unique manner: On May 10, 1959, he pitched in both games of a doubleheader against the Cubs, losing the first game and winning the second. The Cubs’ Elmer Singleton won the opener and lost the nightcap. This rare combination had occurred only twice before and four times since in the major leagues through 2012. The 1959-60 ascendency of Jekyll yielded to Hyde in 1961-62. A strong finish to the 1961 campaign helped mask a 6.05 ERA on July 20. The next year McDaniel suffered a late collapse that saw his ERA rise from 2.14 on July 7 to 4.12 at season’s end (with a 3-10 won-lost record). Rumors emerged about McDaniel’s availability and, in spite of his difficulties, teams began courting. The day after the 1961 World Series ended, the Cardinals traded McDaniel and fellow pitcher Larry Jackson to the Cubs, hoping to improve on the team’s paltry home run output with the acquisition of slugger George Altman. McDaniel and Jackson were deemed expendable with the emergence of young pitchers including such as Ray Washburn and Ray Sadecki. The Cubs were seeking to bolster a pitching corps whose runs yielded in 1962 were exceeded only by the hapless expansion New York Mets. Weeks later Lindy’s feeling on the parting was parodied by sportscaster Jack Buck in a fictitious telegram to manager Johnny Keane: “Dear John – Gee whiz … darn it … golly … and oh dear. – P.S.: Heck.” 6 – a gentle, respectful jab at the player whose closest brush with profanity was “doggone it!” If the Cubs were hoping for a comeback season from McDaniel that is exactly what they got. Their pitching staff went from one of the worst in the league to one of the best, and McDaniel was credited largely for the turnaround. “[McDaniel] brought a new atmosphere of confidence and know-how to our pitching staff,” 7 said 22-game winner Dick Ellsworth as the team logged its first winning campaign in 17 years. Thirteen victories and a 2.86 ERA helped McDaniel become the first to win two Fireman Trophies in the National League. Perhaps it was the novelty of pitching for a different club that brought out the best in McDaniel, for although he logged two more fine campaigns with the Cubs – including a record 155 appearances by him and Cubs submariner Ted Abernathy in 1965 – McDaniel found himself hurling on the West Coast in 1966. (His legacy: Until 1977, when Bruce Sutter set a new standard for relief in Chicago, McDaniel’s name was often invoked when a pitcher on either the White Sox or Cubs emerged as the team’s primary closer.) Despite the efforts of McDaniel and Abernathy, the Cubs had reverted to their familiar bent with a 90-loss campaign in 1965. After the season the club looked to fill numerous needs, one of which was at catcher. The Cubs had long coveted San Francisco catching prospect Randy Hundley. Notwithstanding new manager Leo Durocher’s comment in November that the Cubs could not “afford to part with him,” 8 McDaniel became part of the price paid to acquire Hundley. Perhaps no two players were happier than two Giants, future Hall of Famers Willie Mays and Willie McCovey. When Mays first encountered Jim Bunning in the 1957 All-Star Game, he reached for McDaniel as an apt comparison of how tough he was to hit against by stating, that Lindy “made us hit the ball on the ground.” 9 Six years later McCovey echoed his teammate, saying, “I’d prefer to face a number of [left-handers] rather than … Lindy McDaniel.” 10 Both took solace in the knowledge that this feared hurler was now in the same uniform. Still another player may have been even more ecstatic: Giants closer Frank Linzy. “McDaniel … will make our bullpen stronger than a year ago when [rookie] Frank Linzy had to carry the big load,” said manager Herman Franks. 11 As if on cue, McDaniel turned in one of his finest seasons in 1966. He and the Dodgers’ Phil Regan were the only National League relievers to reach double figures in victories. In a four-week stretch beginning August 6, McDaniel was nearly untouchable: a scoreless streak of 20? innings over ten appearances that contributed to a 1.95 ERA after the All-Star break. A sentimental honor for him was his five innings of one-hit relief on May 8 that earned McDaniel the final victory in a venue he knew very well – the first Busch Stadium. Though the Giants held a stake in first place for more than 60 percent of the campaign, they were eliminated on the last day of the season. It was the closest McDaniel ever came to participating in postseason play – the one regret he had in his career. Injuries marred much of McDaniel’s 1967 campaign. He was a pitcher who thrived on work, and his numbers suffered when a sore shoulder sidelined him for five weeks. A strong close (2.18 ERA in his final 20 appearances) did not forestall rampant trade rumors, and when in 1968 McDaniel had a 7.45 ERA on July 4, the Giants placed him on waivers. McDaniel later acknowledged thinking of retirement during this difficult stretch, but those thoughts were shelved when the New York Yankees claimed him and the two teams worked out a deal aimed at reviving the careers of two thirty-something hurlers McDaniel was exchanged for Yankees right-hander Bill Monbouquette. As witnessed in previous patterns, his season promptly turned around. McDaniel made his first appearance in pinstripes two days after the July 12 transaction and manager Ralph Houk ensured continuous use thereafter – a positive development for the rubber-armed veteran whose success was anchored on such use. Four wins and ten saves later, McDaniel received considerable credit for the Yankees’ first winning campaign in four years. “We were losing games in the eighth and ninth innings because no one in the bullpen could lock up these games,” Houk said. “If we had had [McDaniel] the first half, I am sure we [would’ve been] in the pennant race.” 12 A successful five-year run ensued in New York. In his second season he again got votes for MVP. With nine wins, 29 saves, and a 2.01 ERA in 1970, he nearly captured a third Fireman’s Award. In 1972 and 1973 (in a nod to The Odd Couple) he served as the Felix to fellow reliever Sparky Lyle’s Oscar,– “the austere, quiet lay preacher [paired with] the bon vivant, the fun-loving Rover boy of loud laughter and practical jokes.” 13 On September 23, 1973, McDaniel made his 907th career appearance, passing Cy Young for second place on the all-time list. But by the end of the 1973 campaign, the travel associated with a major-league career was taking its toll on the 37-year-old righty. The strain of separation for a married man of 16 years, compounded by separation from the churches he served, only added to this toll. As a young Cardinal McDaniel studied in the offseasons at Abilene Christian College in 1955-56. Then he transferred to Florida Christian College. His motive: He’d fallen in love. During spring training he had met Oral Audrey Kuhn, who was a student at Florida Christian, which was in Temple Terrace, Florida, not far from the Cardinals’ training site in St. Petersburg. They were married on January 24, 1957. For years thereafter, when the Florida Christian student body attended Grapefruit League games, McDaniel had his own personal cheering section. In 1964, when McDaniel was a Cub, the school’s new athletic field was named for McDaniel. They had three children, Dale, Kathi, and Jonathan, and as of 2013 had 13 grandchildren and four great-grandchildren. Eventually McDaniel was ordained a minister of the Church of Christ, and preached for congregations in his hometown of Hollis, churches in Missouri during his years with the Cardinals, and in Baytown, Texas. McDaniel began publishing a religious newsletter, “Pitching for the Master,” which in 2013 he was still writing from his calling in Lavon, Texas, 30 miles northeast of Dallas. To remedy the challenges of separation, when the Yankees would not acquiesce to a two-year contract, McDaniel requested a trade after the 1973 season in order to be closer to his religious and familial responsibilities. The Yankees engineered a swap with Kansas City on December 7 for pitcher Ken Wright and outfielder Lou Piniella. Unaccustomed to pitching regularly on artificial surfaces like that at the Royals’ ballpark, McDaniel had trouble inducing groundballs on the harder, faster surface, and in his two seasons with Kansas City he was lit up for a 4.98 ERA versus 2.87 on grass. These difficulties notwithstanding, the Pittsburgh Pirates, who also played on an artificial surface sought (unsuccessfully) to obtain McDaniel during the 1974 pennant race when their pitching was struck by a series of injuries – a clear indication of the esteem for McDaniel at almost 39 years old. In Arlington, Texas, on September 27, 1975, Texas Rangers’ right fielder Jeff Burroughs grounded out in the eighth inning on McDaniel’s last pitch in the major leagues. (He had previously announced he would retire.) When McDaniel retired he trailed only Hoyt Wilhelm in career appearances, relief victories, and relief appearances. Wilhelm was elected to the Hall of Fame, but McDaniel got only four votes for the Hall over a two-year period. In 1968 McDaniel tied Vic Raschi’s American League record of 32 consecutive batters retired. (Kansas City teammate Steve Busby broke the record in 1974.) McDaniel made only 22 errors in his career, and set the NL record (since broken) for most consecutive games by a pitcher without an error, 225. For his humanitarian efforts he was given the Ken Hubbs Memorial Award in 1970 by the Chicago baseball writers. In 1978 the St. Louis baseball writers named him one of the 15 best players during the then-25-year ownership of Anheuser-Busch. In mid-career McDaniel offered a modest assessment of his ability: “If I wasn’t a relief pitcher I probably wouldn’t be in the majors. I may not have realized it at the time, but when I went to the bullpen, it was a break for me.” 14 He was characterized as a person with a serene disposition and a ready smile. He was never ejected from a game or suspended for a rules infraction. But he was also a fierce competitor on the mound. Perhaps no one captured this competitiveness better than Joe Garagiola (echoing a comment from Gil Hodges in 1957): “Lindy’s the only preacher I know with a great knockdown pitch.” 15 That competitiveness resulted in a productive 21-year career: fine work for a part-timer. Author’s note The author wishes to thank Lindy McDaniel for his time and assistance in ensuring the accuracy of this narrative. Further thanks are extended to Mike Emeigh and Len Levin. Sources Baseball-reference.com Ancestry.com Notes 1 “Rebounding Lindy Lion of Yank Bullpen,” The Sporting News, May 30, 1970, 13. 2 “McDaniels of Cardinals Revive Dean Act,” The Sporting News, June 12, 1957, 3. 3 “Cards’ 50-Grand Gee-Whiz Strikes Gold Dust on Relief,” The Sporting News, June 6, 1956, 8. 4 “50-Grand McDaniel Starts Paying Off Cards,” The Sporting News, May 2, 1956, 2. 5 “Cards’ 50-Grand Gee-Whiz Strikes Gold Dust on Relief,” The Sporting News, June 6, 1956, 8. 6 “Spieler Buck’s Fake Messages Give Banquet Guests a Barrel of Laughs,” The Sporting News, December 1, 1962, 36. 7 “Ellsworth First Cub to Log 20 Wins Since ’45,” The Sporting News, September 14, 1963, 9. 8 “Lip Slams Brakes On Yarn That Cubs Will Trade Lindy,” The Sporting News, November 20, 1965, 6. 9 “Bunning Best Musial’s Seen; ‘He Had the Most,’ Says Mays,” The Sporting News, July 17, 1957, 8. 10 “McCovey Aiming to Double HR Tempo Against Lefties,” The Sporting News, December 14, 1963, 17. 11 “Chirpin’ Herman Claims Giants ‘Look Stronger’ Than Year Ago,” The Sporting News, January 29, 1966, 21. 12 “Revived McDaniel Perks Up Sagging Yankees’ Bullpen,” The Sporting News, August 17, 1968, 16. 13 “Fire Fighters’ Local Speeds Up Yank Express,” The Sporting News, July 14, 1973, 15. 14 “Lindy Finds Good Life – He Gets Rich on Relief,” The Sporting News, April 15, 1967, 13. 15 “Fireman Lindy Ready to Quell Cubs’ Troubles,” The Sporting News, March 20, 1965, 17. Full Name Lyndall Dale McDaniel Born December 13, 1935 at Hollis, OK (USA) Died November 14, 2020 at Carrollton, TX (USA) Stats Baseball Reference Retrosheet If you can help us improve this player’s biography, contact us . Tags 1960s All-Stars · Siblings · Share this entry Share on Facebook Share on X Share on LinkedIn Share on Reddit Share by Mail</p>
+                        </div>
+        
+                    </div>
+                </div>
+                
+        <div class="stats-table-container">
+            <h3>Career Totals</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr><th>WAR</th><th>W</th><th>L</th><th>ERA</th><th>G</th><th>GS</th><th>SV</th><th>IP</th><th>SO</th><th>WHIP</th></tr></thead>
+                    <tbody><tr><td>28.2</td><td>141</td><td>119</td><td>3.45</td><td>987</td><td>74</td><td>174</td><td>2139.1</td><td>1361</td><td>1.272</td></tr></tbody>
+                </table>
+            </div>
+            <p class="citation">Statistics via Baseball-Reference.com</p>
+        </div>
+        
+            </div>
+            <div class="right-column">
+                <div class="original-card">
+                    <h3>The Original Clue</h3>
+                    <img src="images/clue-2025-08-15.webp" alt="Original trivia card" decoding="async">
+                </div>
+                
+        <div class="chart-container">
+            <h3>Career Arc by WAR</h3>
+            <div class="chart-wrapper">
+                <canvas id="careerArcChart"></canvas>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+        <script src="js/team_colors.js"></script>
+        <script>
+            const years = ["1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975"];
+            const warData = [0.2, 0.6, 2.2, -0.9, 2.9, 5.9, -0.2, 0.7, 2.0, 1.1, 2.9, 1.6, 0.0, 1.9, 0.4, 4.2, -1.4, 0.9, 3.3, 1.1, -0.2];
+            const teamsByYear = ["STL", "STL", "STL", "STL", "STL", "STL", "STL", "STL", "CHC", "CHC", "CHC", "SFG", "SFG", "2TM", "NYY", "NYY", "NYY", "NYY", "NYY", "KCR", "KCR"];
+            const teamColors = window.TEAM_COLORS;
 
             const waterfallData = [];
             let cumulativeTotal = 0;
@@ -374,32 +238,16 @@
                     }
                 }
             });
-     </script>
-    </div>
-   </div>
-   <div id="search-data" style="display:none;">
-    {"teams": ["CHC", "SFG", "KCR", "NYY", "STL"], "years": ["1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975"]}
-   </div>
-   <div id="quiz-data" style="display:none;">
-    {
-    "answer": "Lindy McDaniel",
-    "hints": [
-        "Became the first relief pitcher to ever receive a vote for the Cy Young Award.",
-        "Shared the mound with a younger brother during a professional career.",
-        "Earned a reputation as a preacher who possessed a legendary knockdown pitch."
-    ],
-    "facts": [
-        "Became the first relief pitcher to ever receive a vote for the Cy Young Award.",
-        "Shared the mound with a younger brother during a professional career.",
-        "Earned a reputation as a preacher who possessed a legendary knockdown pitch."
-    ]
-}
-   </div>
-  </main>
-  <script src="js/detail.js" type="module">
-  </script>
-  <script>
-   document.addEventListener('DOMContentLoaded', function() {
+        </script>
+        
+            </div>
+        </div>
+        <div id="search-data" style="display:none;">{"teams": ["CHC", "KCR", "SFG", "NYY", "STL"], "years": ["1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975"]}</div>
+        <div id="quiz-data" style="display:none;">{"answer": "Lindy McDaniel", "nickname": "Lindy", "hints": ["Became the first relief pitcher to ever receive a vote for the Cy Young Award.", "Pitched in both games of a doubleheader on a single day, recording a loss in the first game and a win in the second.", "Shared the mound with a younger brother in the major leagues, drawing comparisons to a famous sibling duo from the past."]}</div>
+    </main>
+    <script type="module" src="js/detail.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('followup-section');
         if (!container) return;
         const items = container.querySelectorAll('.followup-item');
@@ -422,32 +270,15 @@
                 } else {
                     answerBox.style.display = 'none';
                 }
+
             });
         });
     });
-  </script>
-  <footer>
-   <p class="disclaimer-footer">
-    This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
-   </p>
-   Last Updated: 20-Mar-2026
-   <p class="copyright">
-    <a href="https://namethatyankeequiz.com">
-     Name That Yankee Quiz
-    </a>
-    © 2026 by
-    <a href="https://github.com/zagers/NameThatYankee">
-     Scott Zager
-    </a>
-    is licensed under
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-     CC BY-NC-SA 4.0
-    </a>
-    <img alt="CC" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="BY" src="https://mirrors.creativecommons.org/presskit/icons/by.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="NC" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-    <img alt="SA" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" style="max-width: 1em;max-height:1em;margin-left: .2em;"/>
-   </p>
-  </footer>
- </body>
+    </script>
+    <footer>
+		<p class="disclaimer-footer">
+	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.
+	    </p>
+    </footer>    
+</body>
 </html>

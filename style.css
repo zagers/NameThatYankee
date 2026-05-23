@@ -445,6 +445,25 @@ footer {
     font-size: 0.9rem;
 }
 
+.player-bio {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.player-bio h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.player-bio p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
 .original-card {
     min-width: 250px;
     margin-top: 0;

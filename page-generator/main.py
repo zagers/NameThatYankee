@@ -501,7 +501,8 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                             'facts': result.get("facts", []),
                             'followup_qa': result.get("qa", []),
                             'career_totals': scraped_data['career_totals'],
-                            'yearly_war': scraped_data['yearly_war']
+                            'yearly_war': scraped_data['yearly_war'],
+                            'bio': sabr_bio
                         }
                         
                         # 3. Save updated HTML
@@ -522,7 +523,8 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                         'facts': fallback_facts,
                         'followup_qa': [],
                         'career_totals': scraped_data['career_totals'],
-                        'yearly_war': scraped_data['yearly_war']
+                        'yearly_war': scraped_data['yearly_war'],
+                        'bio': sabr_bio
                     }
                     dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
                     formatted_date = dt_obj.strftime("%B %d, %Y")
