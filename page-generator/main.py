@@ -693,23 +693,7 @@ Notes:
 
     # Handle index rebuilding
     if rebuild_index_mode:
-        prompt_message = "Enter the path to your website project folder"
-        if last_path:
-            prompt_message += f" [Default: {last_path}]: "
-        else:
-            prompt_message += ": "
-        
-        # In automated context (last_path exists), don't prompt
-        if last_path:
-            project_dir_str = last_path
-        else:
-            project_dir_str = input(prompt_message).strip().strip("'\"")
-            
-        project_dir = Path(project_dir_str).resolve()
-        if not project_dir.is_dir():
-            print(f"❌ Error: Directory not found at '{project_dir}'")
-            exit()
-        
+        project_dir = get_project_directory(config)
         html_generator.rebuild_index_page(project_dir)
         exit()
 
