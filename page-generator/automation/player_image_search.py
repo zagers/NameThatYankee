@@ -64,20 +64,7 @@ class PlayerImageSearch:
         fallbacks = []
         max_candidates_to_check = 25
 
-        def search_and_evaluate(query: str) -> bool:
-            logger.info(f"🚀 Searching Bing/Google for: {query}")
-            
-            candidates = self._get_image_candidates_from_bing(query)
-            if not candidates:
-                logger.info("⚠️ No candidates from Bing. Attempting fallback to Google...")
-                candidates = self._get_image_candidates_from_google(query)
-
-            if not candidates:
-                logger.warning(f"No image candidates found in any search engine for: {query}")
-                return False
-
-            logger.info(f"Total candidates available from search for '{query}': {len(candidates)}")
-            
+        def evaluate_candidates_list(candidates: List[dict]) -> bool:
             num_to_check = min(len(candidates), max_candidates_to_check)
             logger.info(f"🔍 Will evaluate up to {num_to_check} candidates...")
 
@@ -160,6 +147,28 @@ class PlayerImageSearch:
                     best_matches.append(candidate)
                     if len(best_matches) >= 3:
                         return True
+            return False
+
+        def search_and_evaluate(query: str) -> bool:
+            logger.info(f"🚀 Searching Bing/Google for: {query}")
+            
+            # Try Bing first
+            candidates = self._get_image_candidates_from_bing(query)
+            if candidates:
+                logger.info(f"Total candidates available from Bing search for '{query}': {len(candidates)}")
+                success = evaluate_candidates_list(candidates)
+                if success or best_matches:
+                    return True
+
+            # If Bing returned nothing or all candidates failed, attempt fallback to Google
+            logger.info(f"⚠️ No high-priority matches from Bing. Attempting fallback to Google for: {query}...")
+            candidates = self._get_image_candidates_from_google(query)
+            if candidates:
+                logger.info(f"Total candidates available from Google search for '{query}': {len(candidates)}")
+                success = evaluate_candidates_list(candidates)
+                if success or best_matches:
+                    return True
+                    
             return False
 
         # 1. Primary search query
@@ -290,6 +299,10 @@ class PlayerImageSearch:
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--window-size=1920,1080")
+        
+        # Configure macOS Chrome user agent to prevent bot detection
+        user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        options.add_argument(f"user-agent={user_agent}")
         
         # Use system chromium/chromedriver if available
         system_chromedriver = "/usr/bin/chromedriver"
