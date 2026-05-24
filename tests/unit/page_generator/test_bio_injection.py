@@ -24,6 +24,8 @@ def test_generate_detail_page_includes_biography(tmp_path):
     html_path = tmp_path / "1920-01-01.html"
     with open(html_path, 'r') as f:
         soup = BeautifulSoup(f, 'html.parser')
-        bio_div = soup.find('div', class_='player-bio')
-        assert bio_div is not None
-        assert "Babe Ruth was a legendary" in bio_div.get_text()
+        bio_details = soup.find('details', class_='player-bio-accordion')
+        assert bio_details is not None
+        bio_content = bio_details.find('div', class_='player-bio-content')
+        assert bio_content is not None
+        assert "Babe Ruth was a legendary" in bio_content.get_text()

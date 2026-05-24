@@ -31,10 +31,12 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         bio_paragraphs_html = "\n".join([f"                            <p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in paragraphs])
         
         biography_html = f"""
-                        <div class="player-bio">
-                            <h3>Player Biography</h3>
+                        <details class="player-bio-accordion">
+                            <summary>Read Player Biography</summary>
+                            <div class="player-bio-content">
 {bio_paragraphs_html}
-                        </div>
+                            </div>
+                        </details>
         """
 
     # Dynamic SEO description

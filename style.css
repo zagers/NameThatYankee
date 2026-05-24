@@ -1164,3 +1164,54 @@ tbody tr:hover {
 .mic-icon {
     font-size: 1.5rem;
 }
+
+/* --- Player Biography Accordion --- */
+.player-bio-accordion {
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    overflow: hidden;
+}
+
+.player-bio-accordion summary {
+    padding: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    cursor: pointer;
+    list-style: none; /* Hide default arrow in some browsers */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--background-color);
+}
+
+.player-bio-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.player-bio-accordion summary::after {
+    content: "▼";
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+}
+
+.player-bio-accordion[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.player-bio-content {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.player-bio-content p {
+    margin-bottom: 1rem;
+}
+
+.player-bio-content p:last-child {
+    margin-bottom: 0;
+}
