@@ -476,18 +476,57 @@ def _clean_bio_text(content_element):
     # Also catch strings with some technical noise like dots or braces if they are very long
     text = re.sub(r'[A-Za-z0-9+/.\-{}]{70,}', '', text)
     
-    # Filter out SABR boilerplate phrases
+    # Filter out SABR/Wikipedia boilerplate phrases and metadata
     boilerplate_patterns = [
         r'This bio is not assigned\.\s*Want to write a SABR bio\?\s*Contact bioproject@sabr\.org\s*\.',
         r'If you can help us improve this player[’\']s biography,\s*contact us\s*\.',
         r'Share this entry\s*Share on Facebook\s*Share on X\s*Share on LinkedIn\s*Share on Reddit\s*Share by Mail',
         r'Stats\s*Baseball Reference\s*Retrosheet\s*Oral History',
         r'No items found',
-        r'Tags None'
+        r'Tags None',
+        r'BioProject - Person',
+        r'Wikipedia Summary:',
+        r'This article was written by.*',
+        r'Last revised:.*',
+        r'^Sources$',
+        r'^Notes$',
+        r'^[0-9]{4}s All-Stars$',
+        r'^January \d+, \d{4}$',
+        r'^February \d+, \d{4}$',
+        r'^March \d+, \d{4}$',
+        r'^April \d+, \d{4}$',
+        r'^May \d+, \d{4}$',
+        r'^June \d+, \d{4}$',
+        r'^July \d+, \d{4}$',
+        r'^August \d+, \d{4}$',
+        r'^September \d+, \d{4}$',
+        r'^October \d+, \d{4}$',
+        r'^November \d+, \d{4}$',
+        r'^December \d+, \d{4}$'
     ]
     
-    for pattern in boilerplate_patterns:
-        text = re.sub(pattern, '', text, flags=re.IGNORECASE)
+    # Process text line by line to remove standalone junk
+    lines = text.split('\n\n')
+    cleaned_lines = []
+    
+    # Junk that should be removed if it's a standalone paragraph
+    standalone_junk = {'/', 'in', 'by', 'admin', '·', ',', 'None', 'Tags'}
+    
+    for line in lines:
+        line = line.strip()
+        if not line or line in standalone_junk:
+            continue
+            
+        skip = False
+        for pattern in boilerplate_patterns:
+            if re.search(pattern, line, flags=re.IGNORECASE | re.MULTILINE):
+                skip = True
+                break
+        
+        if not skip:
+            cleaned_lines.append(line)
+    
+    text = '\n\n'.join(cleaned_lines)
     
     # Normalize horizontal whitespace (spaces and tabs)
     text = re.sub(r'[ \t]+', ' ', text)

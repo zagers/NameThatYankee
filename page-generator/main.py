@@ -87,7 +87,7 @@ def enrich_player_bio(player_name: str, existing_bio: Optional[str], force: bool
             
         wiki_summary = scraper.get_wikipedia_summary(player_name)
         if wiki_summary:
-            bio = (bio + "\n\nWikipedia Summary:\n" + wiki_summary).strip()
+            bio = (bio + "\n\n" + wiki_summary).strip()
             print(f"  ✅ Successfully enriched biography for {player_name}.")
         else:
             print(f"  ⚠️  Could not find Wikipedia summary for {player_name}.")

@@ -20,7 +20,7 @@ def test_enrich_player_bio_fetches_if_short():
         mock_wiki.return_value = "Long Wikipedia Summary Content..."
         existing_bio = "Short bio"
         result = main.enrich_player_bio("Derek Jeter", existing_bio)
-        assert "Wikipedia Summary:" in result
+        assert "Long Wikipedia Summary Content..." in result
         mock_wiki.assert_called_once_with("Derek Jeter")
 
 def test_enrich_player_bio_force_override():
@@ -28,5 +28,5 @@ def test_enrich_player_bio_force_override():
         mock_wiki.return_value = "Forced content"
         existing_bio = "A" * 1000
         result = main.enrich_player_bio("Derek Jeter", existing_bio, force=True)
-        assert "Wikipedia Summary:" in result
+        assert "Forced content" in result
         mock_wiki.assert_called_once_with("Derek Jeter")

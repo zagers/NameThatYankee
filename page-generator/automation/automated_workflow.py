@@ -175,7 +175,7 @@ class AutomatedWorkflow:
             if not sabr_bio or len(sabr_bio) < 500:
                 wiki_summary = scraper.get_wikipedia_summary(player_name)
                 if wiki_summary:
-                    sabr_bio = (sabr_bio or "") + "\n\nWikipedia Summary:\n" + wiki_summary
+                    sabr_bio = (sabr_bio or "") + "\n\n" + wiki_summary
             
             if scraped_data:
                 logger.info(f"Successfully scraped stats for {player_name}")

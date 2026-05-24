@@ -27,16 +27,13 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
     if bio:
         # Split by double newline to preserve paragraph structure
         paragraphs = [p.strip() for p in bio.split('\n\n') if p.strip()]
-        
+        paragraphs = bio.split("\n\n")
         bio_paragraphs_html = "\n".join([f"                            <p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in paragraphs])
-        
+
         biography_html = f"""
-                        <details class="player-bio-accordion">
-                            <summary>Read Player Biography</summary>
-                            <div class="player-bio-content">
-{bio_paragraphs_html}
-                            </div>
-                        </details>
+                        <div class="hidden-seo">
+        {bio_paragraphs_html}
+                        </div>
         """
 
     # Dynamic SEO description
