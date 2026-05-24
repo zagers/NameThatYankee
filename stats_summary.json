@@ -1,5 +1,22 @@
 [
     {
+        "date": "2026-05-24",
+        "name": "Ben Rortvedt",
+        "nickname": "",
+        "teams": [
+            "LAD",
+            "NYY",
+            "MIN",
+            "TBR"
+        ],
+        "years": [
+            "2021",
+            "2023",
+            "2024",
+            "2025"
+        ]
+    },
+    {
         "date": "2026-05-22",
         "name": "Tommy John",
         "nickname": "The Bionic Man",

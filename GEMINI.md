@@ -223,8 +223,10 @@ To use the puzzle generation tools:
 ### Robust Date Identification (PENDING)
 *   **Source of Truth:** Implement the "Body Data Attribute" strategy (`<body data-quiz-date="YYYY-MM-DD">`) as defined in `docs/superpowers/specs/2026-05-11-robust-date-identification.md`. This provides a foolproof way for JavaScript to identify the puzzle date, regardless of URL structure or environment.
 
-### SEO Discovery Engine (PENDING)
-*   **Structured Data & Static Pages:** Re-implement JSON-LD (VideoGame/Person) and indexable quiz pages. **NOTE:** The first attempt (2026-05-11) was rolled back due to production routing issues on GitHub Pages. Future implementation must resolve clean URL mapping or use explicit `.html` paths for indexability.
+### SEO & Content Strategy (REVISED 2026-05-24)
+*   **Lean Design:** Abandoned the plan to include full biographies for SEO. The site will remain a focused, fast trivia game. Unique content will be limited to "Career Highlights & Facts" and player statistics.
+*   **Structured Data:** We will continue to use JSON-LD in the `<head>` for basic search indexing but will not clutter the UI with hidden or accordion-based text.
+
 
 
 
