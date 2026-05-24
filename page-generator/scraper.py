@@ -450,32 +450,20 @@ def _clean_bio_text(content_element):
     for tag in content_element.find_all(noise_tags):
         tag.decompose()
         
-    # Remove elements that likely contain technical noise or base64 data
-    # We iterate over all tags and check if they should be removed.
+    # Safely remove elements with explicit noise classes
+    noise_classes = {"metadata", "technical", "hidden", "internal", "json-noise", "base64-noise", "wp-block-code"}
     for element in list(content_element.find_all(True)):
-        # If the element has no parent and isn't the root, it's already been decomposed
         if element.parent is None and element is not content_element:
             continue
-            
         try:
-            text_content = element.get_text()
-            
-            # Remove if it contains base64 data or looks like a JSON blob
-            if "base64" in text_content or (text_content.strip().startswith('{') and text_content.strip().endswith('}')):
-                element.decompose()
-                continue
-                
-            # Remove common metadata or technical class names if they contain suspicious text
             classes = element.get('class', [])
-            noise_classes = ["metadata", "technical", "hidden", "internal", "json-noise", "base64-noise", "wp-block-code"]
             if classes and any(cls in noise_classes for cls in classes):
                 element.decompose()
-                continue
-        except (AttributeError, TypeError):
+        except AttributeError:
             continue
 
-    # Extract text with a separator to avoid merging words
-    text = content_element.get_text(separator=' ', strip=True)
+    # Extract text, using double newlines for block separation to preserve paragraphs
+    text = content_element.get_text(separator='\n\n', strip=True)
     
     # Remove common technical labels and their associated JSON/junk
     # Matches "Metadata: { ... }" or "Technical: { ... }" etc.
@@ -488,8 +476,24 @@ def _clean_bio_text(content_element):
     # Also catch strings with some technical noise like dots or braces if they are very long
     text = re.sub(r'[A-Za-z0-9+/.\-{}]{70,}', '', text)
     
-    # Normalize whitespace: replace multiple spaces/newlines with a single space
-    text = re.sub(r'\s+', ' ', text).strip()
+    # Filter out SABR boilerplate phrases
+    boilerplate_patterns = [
+        r'This bio is not assigned\.\s*Want to write a SABR bio\?\s*Contact bioproject@sabr\.org\s*\.',
+        r'If you can help us improve this player[’\']s biography,\s*contact us\s*\.',
+        r'Share this entry\s*Share on Facebook\s*Share on X\s*Share on LinkedIn\s*Share on Reddit\s*Share by Mail',
+        r'Stats\s*Baseball Reference\s*Retrosheet\s*Oral History',
+        r'No items found',
+        r'Tags None'
+    ]
+    
+    for pattern in boilerplate_patterns:
+        text = re.sub(pattern, '', text, flags=re.IGNORECASE)
+    
+    # Normalize horizontal whitespace (spaces and tabs)
+    text = re.sub(r'[ \t]+', ' ', text)
+    
+    # Normalize vertical whitespace (max two newlines for paragraphs)
+    text = re.sub(r'\n{3,}', '\n\n', text).strip()
     
     return text
 

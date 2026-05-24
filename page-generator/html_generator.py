@@ -25,12 +25,15 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
 
     biography_html = ""
     if bio:
-        # Simple newline to paragraph conversion for basic formatting
-        bio_formatted = html.escape(bio.strip()).replace('\n\n', '</p><p>').replace('\n', '<br>')
+        # Split by double newline to preserve paragraph structure
+        paragraphs = [p.strip() for p in bio.split('\n\n') if p.strip()]
+        
+        bio_paragraphs_html = "\n".join([f"                            <p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in paragraphs])
+        
         biography_html = f"""
                         <div class="player-bio">
                             <h3>Player Biography</h3>
-                            <p>{bio_formatted}</p>
+{bio_paragraphs_html}
                         </div>
         """
 

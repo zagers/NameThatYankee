@@ -50,4 +50,5 @@ def test_bio_sanitization_removes_technical_noise():
     assert 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a1b2c3d4e5f6g7h8i9j0' not in text
     # Check whitespace normalization
     assert "  " not in text
-    assert "\n\n" not in text
+    assert "\n\n\n" not in text
+    assert "\n\n" in text  # Paragraph breaks should be preserved
