@@ -34,6 +34,12 @@ def verify_claims(claims, raw_data):
             # Add integer part for decimals (e.g. 2591 for 2591.2)
             if '.' in s_val:
                 valid_numbers.add(s_val.split('.')[0])
+                
+    positions_data = raw_data.get('positions', {})
+    for val in positions_data.values():
+        s_val = str(val).strip()
+        if s_val:
+            valid_numbers.add(s_val)
     
     # 2b. Add derived counts (seasons, teams)
     yearly_war = raw_data.get('yearly_war', [])

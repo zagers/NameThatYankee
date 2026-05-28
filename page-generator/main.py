@@ -502,11 +502,12 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                 if not generation_success:
                     print(f"  ⚠️ Failed to regenerate verified facts for {date_str} after {max_retries} attempts. Using dynamic stats fallback.")
                     fallback_facts = scraper.generate_stats_fallback(player_dossier)
+                    fallback_qa = ai_services.get_followup_qa_from_gemini(player_name, fallback_facts, api_key)
                     player_data = {
                         'name': player_name,
                         'nickname': player_entry.get('nickname', ''),
                         'facts': fallback_facts,
-                        'followup_qa': [],
+                        'followup_qa': fallback_qa,
                         'career_totals': scraped_data['career_totals'],
                         'yearly_war': scraped_data['yearly_war']
                     }
@@ -860,8 +861,12 @@ Notes:
                         
                         if not generation_success:
                             print("  ⚠️ All generation attempts failed verification. Using basic fallback.")
-                            player_info['facts'] = scraper.generate_stats_fallback(player_dossier)
-                            player_info['followup_qa'] = []
+                            fallback_facts = scraper.generate_stats_fallback(player_dossier)
+                            player_info['facts'] = fallback_facts
+                            if not facts_only_mode:
+                                player_info['followup_qa'] = ai_services.get_followup_qa_from_gemini(player_name, fallback_facts, api_key)
+                            else:
+                                player_info['followup_qa'] = []
 
                     verified_data = user_interaction.review_and_edit_data(player_info, project_dir, automated=is_automated)
                     html_generator.generate_detail_page(verified_data, date_str, formatted_date, project_dir)

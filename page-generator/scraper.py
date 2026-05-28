@@ -234,25 +234,28 @@ def parse_appearances(soup):
             c_soup = BeautifulSoup(comment, "html.parser")
             table = c_soup.find("table", id="appearances")
             break
-            
+
     if not table:
         table = soup.find("table", id="appearances")
-        
-    if table:
-        # Looking for rows in the body
-        for row in table.select("tbody tr"):
-            th = row.find("th")
-            if not th: continue
-            pos = th.get_text(strip=True)
-            # We want specific positions, not "Total"
-            if pos in ["Total", "Year", "Age", "Team", "Lg"]: continue
-            
-            g_td = row.find("td", {"data-stat": "G"})
-            if g_td:
-                pos_data[pos] = g_td.get_text(strip=True)
-                
-    return pos_data
 
+    if table:
+        tfoot = table.find("tfoot")
+        if tfoot:
+            for row in tfoot.find_all("tr"):
+                th = row.find("th")
+                text = th.get_text(strip=True) if th else ""
+                # Look for the career totals row (e.g. "10 Yrs" or "1 Yr" without parenthesis)
+                if text and ("Yr" in text) and "(" not in text:
+                    for td in row.find_all("td"):
+                        stat = td.get("data-stat", "")
+                        if stat.startswith("games_at_") and stat not in ["games_at_ph", "games_at_pr"]:
+                            pos = stat.replace("games_at_", "").upper()
+                            val = td.get_text(strip=True)
+                            if val and val != "0":
+                                pos_data[pos] = val
+                    break
+
+    return pos_data
 def parse_awards(soup):
     """Extracts awards and honors from the bling items or awards section."""
     awards = []

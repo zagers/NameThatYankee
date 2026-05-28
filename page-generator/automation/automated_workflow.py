@@ -228,8 +228,9 @@ class AutomatedWorkflow:
             
             if not generation_success:
                 logger.error("All generation attempts failed verification. Using dynamic stats fallback.")
-                player_info['facts'] = scraper.generate_stats_fallback(player_dossier)
-                player_info['followup_qa'] = []
+                fallback_facts = scraper.generate_stats_fallback(player_dossier)
+                player_info['facts'] = fallback_facts
+                player_info['followup_qa'] = ai_services.get_followup_qa_from_gemini(player_name, fallback_facts, self.api_key)
 
         except Exception as e:
             logger.error(f"Error generating AI content: {e}")
