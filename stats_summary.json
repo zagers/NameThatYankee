@@ -5,12 +5,12 @@
         "nickname": "",
         "teams": [
             "OAK",
-            "CIN",
-            "TEX",
             "LAD",
-            "CHC",
             "NYY",
-            "ATL"
+            "ATL",
+            "TEX",
+            "CIN",
+            "CHC"
         ],
         "years": [
             "1980",

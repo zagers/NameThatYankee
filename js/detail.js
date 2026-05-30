@@ -47,6 +47,40 @@ function handleRedirect() {
 // Execute redirect check immediately to prevent flashing the answer page
 handleRedirect();
 
+/**
+ * Initializes the interactive follow-up questions section.
+ */
+function initFollowupQuestions() {
+    const container = document.getElementById('followup-section');
+    if (!container) return;
+    
+    const items = container.querySelectorAll('.followup-item');
+    if (!items.length) return;
+
+    items.forEach((item) => {
+        const btn = item.querySelector('.followup-btn');
+        const answerBox = item.querySelector('.followup-answer');
+        if (!btn || !answerBox) return;
+
+        btn.addEventListener('click', () => {
+            const answer = btn.getAttribute('data-answer') || '';
+            if (!answer) return;
+
+            // Toggle visibility
+            const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
+            if (isHidden) {
+                answerBox.textContent = answer;
+                answerBox.style.display = 'block';
+                btn.classList.add('active');
+            } else {
+                answerBox.style.display = 'none';
+                btn.classList.remove('active');
+            }
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initScoreDisplay();
+    initFollowupQuestions();
 });
