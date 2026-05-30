@@ -119,11 +119,7 @@ def is_invalid_hint(fact: str, player_name: str) -> bool:
         r'\b\d+\s+teams\b',
         r'\b\d+\s+organizations\b',
         r'\bstint\b',
-        r'\bstints\b',
-        r'\bfranchise\b',
-        r'\bfranchises\b',
-        r'\borganization\b',
-        r'\borganizations\b'
+        r'\bstints\b'
     ]
     for pattern in stint_patterns:
         if re.search(pattern, fact_lower):
@@ -148,42 +144,42 @@ You are a passionate New York Yankees historian and fan. Your goal is to generat
 **THE SOURCE OF TRUTH (PLAYER DOSSIER)**:
 {dossier_json}
 
-**STRICT ACCURACY RULES FOR STATS**:
+**GLOBAL RULES (APPLIES TO BOTH HINTS AND Q&A)**:
 1. Every statistic, year, and team name MUST match the dossier exactly. Do NOT round numbers.
 2. **NO META-COMMENTARY**: Never mention "SABR," "biography," or "database."
-3. **DO NOT HALLUCINATE OR INVENT STORIES**: All follow-up Q&A stories MUST be factually correct and fully grounded in real historical baseball records or the dossier. Never claim a player had multiple stints with an organization if they did not.
+3. **NO REDUNDANT STATS**: DO NOT repeat basic career totals that are already visible in the UI's stats table. Specifically, DO NOT mention:
+   * Career WAR, Wins (W), Losses (L), ERA, Games Played (G), Games Started (GS), Saves (SV), Innings Pitched (IP), Strikeouts (SO), or WHIP.
+   * Career Batting Average (BA), Home Runs (HR), or RBI.
+4. **PRIORITIZE NARRATIVE OVER STATS**: Interesting anecdotes, awards, trades, and family ties are ALWAYS better than numbers.
 
-**QUIZ CHALLENGE RULES (FOR HINTS)**:
-The "Facts" (Hints) are for a quiz where the user sees a visual clue card (which typically shows name, team logo, stats like BA/HR/RBI/ERA/W-L, and a list of teams played for). 
-1. **NO SPOILERS**: In the 3 primary "Facts" (Hints), you MUST NOT mention:
+**TASK 1: QUIZ HINTS (The "facts" list)**:
+The "Facts" (Hints) are for a quiz where the user has not yet identified the player.
+1. **STRICT SPOILER BAN**: You MUST NOT mention:
    - The player's name or nicknames.
    - Any team names or city/geographical names (e.g., do NOT say "Yankees", "Detroit", "Bronx", "New York", "Boston", etc.).
    - Any specific years or decades (e.g., do NOT say "1995" or "the 90s").
-   - **NO CARD BACK STATS**: Do NOT include career batting average (BA), total career home runs (HR), total career RBI, or specific win/loss records. 
-   - **NO TEAM, FRANCHISE, OR STINT LISTINGS/COUNTS**: Do NOT count, mention, or list how many teams, organizations, franchises, or stints the player had. Do NOT use the words "stint", "organization", "franchise", "different teams", etc.
-   - **NEGATIVE EXAMPLES (DO NOT SAY THESE)**:
-     * "Served as a journeyman catcher for 11 different major league organizations."
-     * "Played for 9 different franchises over a 12-year career."
-     * "Had two separate stints with the Bronx organization."
-     * "Wore the pinstripes during a division-winning season."
-2. **CATEGORIZED HINTS**: Pick the 3 BEST hints from these categories:
-   - Awards & Honors, Positions & Specialties, Family Relationships, or Notable Achievements (e.g., striking out a specific famous player, unique rule situation, signature look/style like a thick handlebar mustache).
-3. Format: Short, punchy sentences. Use digits for numbers. Do NOT use pronouns ("he", "his").
+2. **STYLE**: Use vague but descriptive terms like "the club," "the organization," "his draft team," etc.
+3. **HIGH-IMPACT STORIES**: If the player was involved in a major trade for a famous Hall of Famer or legendary player, you SHOULD mention it using descriptive terms (e.g., "Was a key piece in a blockbuster trade for a legendary base-stealing Hall of Famer").
+4. **NEGATIVE EXAMPLES (DO NOT SAY THESE)**:
+   * "Recorded 155 saves." (Redundant - in table).
+   * "Played for 9 different franchises." (Boring filler).
+   * "Traded to the Oakland Athletics." (Spoiler - mentions team name).
 
-**FOLLOW-UP RULES (FOR Q&A) - THE "GENERATIVE MEMORY" MANDATE**:
-1. The Q&A section appears AFTER the quiz. This is where you tell the BEST stories about the player.
-2. **CRITICAL INSTRUCTION**: If the provided dossier bio is thin, boring, or missing, **YOU MUST USE YOUR INTERNAL BASEBALL KNOWLEDGE** to find 3 highly interesting, specific anecdotes.
-3. **THE HALL OF SHAME (DO NOT DO THESE)**:
-   - NEVER mention the "SABR BioProject," "biography status," or "unassigned records."
-   - NEVER use "Full Names" or "Birthplace/Birthdate" as a fact or Q&A unless it is truly extraordinary.
-   - NEVER say "He was born in [City]" or "His full name is [Name]." This is low-quality filler.
-   - NEVER invent false or unverified rumors (e.g. do NOT say Sal Fasano had two separate stints with the Yankees; he had exactly one stint).
-   - NEVER ask generic questions about whether the player played for the Yankees, wore the pinstripes, or played in New York/Bronx (e.g., "Did he ever play for the New York Yankees?" or "Did he wear the pinstripes?"). Since ALL players in this quiz are former Yankees, these questions are redundant, uninteresting, and lack trivia value.
-4. Examples of "Good" Q&A anecdotes (What we want):
-   - "He was the #1 overall prospect in baseball according to Baseball America."
-   - "He was a centerpiece in a blockbuster trade for a future Hall of Famer."
-   - "He caught his brother pitching, forming a rare 'brother battery'."
-5. You MUST provide exactly 3 question/answer pairs. Focus on weird baseball coincidences, unique family ties, or famous single-game moments.
+**TASK 2: FOLLOW-UP STORIES (The "qa" list)**:
+The Q&A section appears AFTER the quiz is revealed. This is where you tell the BEST stories.
+1. **MAXIMUM DETAIL MANDATE**: Unlike the hints, the Q&A **MUST** include specific details:
+   - Use the **Player's Name**.
+   - Use **Specific Team Names** (e.g., "The Kansas City Royals," "The New York Yankees," etc.).
+   - Use **Specific Years** (e.g., "In the 1988 postseason," "During the 1984 trade").
+2. **NO REDUNDANCY**: The Q&A MUST NOT repeat or rephrase any facts mentioned in your 3 primary Hints.
+3. **RESEARCH MANDATE**: If the provided dossier bio is thin, boring, or missing, **YOU MUST USE YOUR INTERNAL BASEBALL KNOWLEDGE** to find 3 highly interesting, specific anecdotes.
+4. **THE HALL OF SHAME (DO NOT DO THESE)**:
+   - NEVER use "Full Names" or "Birthplace/Birthdate" as filler unless it is truly extraordinary.
+   - NEVER ask generic questions about whether the player played for the Yankees or wore pinstripes. Redundant.
+5. Examples of "Good" Q&A anecdotes:
+   - "Jay Howell was a centerpiece in the 1984 trade that brought Rickey Henderson to the Yankees."
+   - "He was ejected from a 1988 NLCS game against the Mets after umpire Joe West found pine tar on his glove."
+6. Format: Exactly 3 question/answer pairs. Focus on weird baseball coincidences, unique family ties, or famous single-game moments.
 
 **TASK 3: ATOMIC CLAIMS (The "claims" list)**
 Extract ALL atomic factual statements (specific years, statistics, team names, awards) mentioned in your HINTS and STORY BITES.

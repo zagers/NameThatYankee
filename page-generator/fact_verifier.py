@@ -11,6 +11,7 @@ def verify_claims(claims, raw_data):
     """
     # 1. Gather all valid years and full dates
     valid_years = set()
+    valid_numbers = set()
     bio_text = raw_data.get('bio') or ''
     trans_list = raw_data.get('transactions') or []
     raw_text_for_matching = bio_text + " " + " ".join(trans_list)
@@ -19,13 +20,17 @@ def verify_claims(claims, raw_data):
     for entry in raw_data.get('yearly_war', []):
         if 'year' in entry:
             valid_years.add(str(entry['year']))
+        if 'war' in entry:
+            s_war = str(entry['war'])
+            valid_numbers.add(s_war)
+            if '.' in s_war:
+                valid_numbers.add(s_war.split('.')[0])
             
     # From transactions and bio (extract any 4-digit years)
     all_years = re.findall(r'\b((?:18|19|20)\d{2})\b', raw_text_for_matching)
     valid_years.update(all_years)
 
     # 2. Gather all valid numbers (stats)
-    valid_numbers = set()
     career_totals = raw_data.get('career_totals', {})
     for val in career_totals.values():
         s_val = str(val).strip()
