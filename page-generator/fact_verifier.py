@@ -24,7 +24,10 @@ def verify_claims(claims, raw_data):
             s_war = str(entry['war'])
             valid_numbers.add(s_war)
             if '.' in s_war:
-                valid_numbers.add(s_war.split('.')[0])
+                int_part = s_war.split('.')[0]
+                if int_part == "-0":
+                    int_part = "0"
+                valid_numbers.add(int_part)
             
     # From transactions and bio (extract any 4-digit years)
     all_years = re.findall(r'\b((?:18|19|20)\d{2})\b', raw_text_for_matching)
@@ -38,7 +41,10 @@ def verify_claims(claims, raw_data):
             valid_numbers.add(s_val)
             # Add integer part for decimals (e.g. 2591 for 2591.2)
             if '.' in s_val:
-                valid_numbers.add(s_val.split('.')[0])
+                int_part = s_val.split('.')[0]
+                if int_part == "-0":
+                    int_part = "0"
+                valid_numbers.add(int_part)
                 
     positions_data = raw_data.get('positions', {})
     for val in positions_data.values():
@@ -72,7 +78,10 @@ def verify_claims(claims, raw_data):
             continue
         valid_numbers.add(num.lstrip('.'))
         if '.' in num:
-            valid_numbers.add(num.split('.')[0])
+            int_part = num.split('.')[0]
+            if int_part == "-0":
+                int_part = "0"
+            valid_numbers.add(int_part)
 
     # 3. Check claims
     for claim in claims:
