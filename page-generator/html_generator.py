@@ -291,35 +291,6 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         {quiz_data_html}
     </main>
     <script type="module" src="js/detail.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {{
-        const container = document.getElementById('followup-section');
-        if (!container) return;
-        const items = container.querySelectorAll('.followup-item');
-        if (!items.length) return;
-
-        items.forEach(function(item) {{
-            const btn = item.querySelector('.followup-btn');
-            const answerBox = item.querySelector('.followup-answer');
-            if (!btn || !answerBox) return;
-
-            btn.addEventListener('click', function() {{
-                const answer = btn.getAttribute('data-answer') || '';
-                if (!answer) return;
-
-                // Toggle visibility
-                const isHidden = answerBox.style.display === 'none' || !answerBox.style.display;
-                if (isHidden) {{
-                    answerBox.textContent = answer;
-                    answerBox.style.display = 'block';
-                }} else {{
-                    answerBox.style.display = 'none';
-                }}
-
-            }});
-        }});
-    }});
-    </script>
     <footer>
 		<p class="disclaimer-footer">
 	        This site is an unofficial fan project and is not affiliated with the New York Yankees, Major League Baseball, or the YES Network. All trademarks and copyrights belong to their respective owners.

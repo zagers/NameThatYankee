@@ -11,29 +11,38 @@ def verify_claims(claims, raw_data):
     """
     # 1. Gather all valid years and full dates
     valid_years = set()
+    valid_numbers = set()
     bio_text = raw_data.get('bio') or ''
     trans_list = raw_data.get('transactions') or []
     raw_text_for_matching = bio_text + " " + " ".join(trans_list)
     
+    def add_to_valid_numbers(val):
+        """Helper to add numbers and their integer parts (handling -0 cases)."""
+        s_val = str(val).strip()
+        if not s_val:
+            return
+        valid_numbers.add(s_val)
+        if '.' in s_val:
+            int_part = s_val.split('.')[0]
+            if int_part == "-0":
+                int_part = "0"
+            valid_numbers.add(int_part)
+
     # From yearly stats
     for entry in raw_data.get('yearly_war', []):
         if 'year' in entry:
             valid_years.add(str(entry['year']))
+        if 'war' in entry:
+            add_to_valid_numbers(entry['war'])
             
     # From transactions and bio (extract any 4-digit years)
     all_years = re.findall(r'\b((?:18|19|20)\d{2})\b', raw_text_for_matching)
     valid_years.update(all_years)
 
     # 2. Gather all valid numbers (stats)
-    valid_numbers = set()
     career_totals = raw_data.get('career_totals', {})
     for val in career_totals.values():
-        s_val = str(val).strip()
-        if s_val:
-            valid_numbers.add(s_val)
-            # Add integer part for decimals (e.g. 2591 for 2591.2)
-            if '.' in s_val:
-                valid_numbers.add(s_val.split('.')[0])
+        add_to_valid_numbers(val)
                 
     positions_data = raw_data.get('positions', {})
     for val in positions_data.values():
@@ -65,9 +74,7 @@ def verify_claims(claims, raw_data):
         # Ignore years (already handled)
         if len(num) == 4 and num.startswith(('18', '19', '20')):
             continue
-        valid_numbers.add(num.lstrip('.'))
-        if '.' in num:
-            valid_numbers.add(num.split('.')[0])
+        add_to_valid_numbers(num)
 
     # 3. Check claims
     for claim in claims:

@@ -37,7 +37,7 @@ class StateManager:
 
 BATCH_PROMPT_TEMPLATE = """
 You are a "Skeptical Storyteller" tasked with generating high-accuracy, engaging trivia for a New York Yankees trivia game.
-Your goal is to generate trivia "hints" and follow-up "story bites" about the player: {name}.
+Your goal is to generate trivia "hints" and "follow-up stories" about the player: {name}.
 
 **PLAYER DOSSIER**:
 {dossier_json}
@@ -55,13 +55,13 @@ Generate exactly 3 trivia hints. These should be progressively easier.
 - Hint 3: A career-defining achievement or reputation-based fact (e.g. "Led the league in X", "World Series heroics", or "Known for his devastating curveball").
 - **IMPORTANT**: Avoid just saying "He played for the Yankees from X to Y". The user already knows that!
 
-**TASK 2: STORY BITES (The "qa" list)**
+**TASK 2: FOLLOW-UP STORIES (The "qa" list)**
 Generate exactly 3 Q&A pairs that provide more depth for users who want to "find out more."
 - These should reveal interesting narrative arcs.
 - The answers should be 1-3 sentences and feel like a story.
 
 **TASK 3: ATOMIC CLAIMS (The "claims" list)**
-Extract ALL atomic factual statements (specific years, statistics, team names, awards) mentioned in your HINTS and STORY BITES.
+Extract ALL atomic factual statements (specific years, statistics, team names, awards) mentioned in your HINTS and FOLLOW-UP STORIES.
 - Each claim should be a single, verifiable sentence.
 - Example: "He won the Cy Young Award in 1978."
 - Example: "He played for the Yankees from 1974 to 1976."
