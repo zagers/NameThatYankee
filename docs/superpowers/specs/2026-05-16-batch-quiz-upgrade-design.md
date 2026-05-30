@@ -4,7 +4,7 @@
 # Spec: Batch Quiz Upgrade System
 
 ## 1. Purpose
-The current trivia archive consists of ~189 historical quizzes with varying degrees of accuracy and a simplistic "Career Highlights" format. This system will upgrade all existing quizzes to the new "Skeptical Storyteller" format (high-quality hints + Story Bites Q&A) while leveraging the **Gemini 3.1 Flash Lite Batch API** to minimize token costs (50% discount).
+The current trivia archive consists of ~189 historical quizzes with varying degrees of accuracy and a simplistic "Career Highlights" format. This system will upgrade all existing quizzes to the new "Skeptical Storyteller" format (high-quality hints + Follow-up Stories Q&A) while leveraging the **Gemini 3.1 Flash Lite Batch API** to minimize token costs (50% discount).
 
 ## 2. Success Criteria
 - [ ] Generate accurate, grounded hints and Q&A for all 189 historical players.

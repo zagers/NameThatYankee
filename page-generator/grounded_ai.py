@@ -139,7 +139,7 @@ def generate_grounded_trivia(player_dossier, api_key: str):
     dossier_json = json.dumps(player_dossier, indent=2)
     
     prompt = f"""
-You are a passionate New York Yankees historian and fan. Your goal is to generate engaging, high-impact trivia hints and follow-up "story bites" for the player: {player_name}.
+You are a passionate New York Yankees historian and fan. Your goal is to generate engaging, high-impact trivia hints and follow-up stories for the player: {player_name}.
 
 **THE SOURCE OF TRUTH (PLAYER DOSSIER)**:
 {dossier_json}
@@ -182,7 +182,7 @@ The Q&A section appears AFTER the quiz is revealed. This is where you tell the B
 6. Format: Exactly 3 question/answer pairs. Focus on weird baseball coincidences, unique family ties, or famous single-game moments.
 
 **TASK 3: ATOMIC CLAIMS (The "claims" list)**
-Extract ALL atomic factual statements (specific years, statistics, team names, awards) mentioned in your HINTS and STORY BITES.
+Extract ALL atomic factual statements (specific years, statistics, team names, awards) mentioned in your HINTS and FOLLOW-UP STORIES.
 - Each claim should be a single, verifiable sentence.
 
 **OUTPUT FORMAT**:
