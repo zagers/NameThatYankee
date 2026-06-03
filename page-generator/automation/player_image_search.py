@@ -61,27 +61,59 @@ class PlayerImageSearch:
         3. Any image of the player
         """
         search_term = f"{player_name} yankees card"
+        
+        # Try Bing as primary search engine
         logger.info(f"🚀 Searching Bing Images for: {search_term}")
+        bing_candidates = self._get_image_candidates_from_bing(search_term)
+        best_matches, fallbacks = self._evaluate_candidates(bing_candidates, player_name, api_key)
         
-        # Switch to Bing as primary search engine
-        candidates = self._get_image_candidates_from_bing(search_term)
+        # Determine if we need to fall back to Google (if no high priority matches found)
+        has_high_priority = any(m['priority'] in [1, 2] for m in best_matches)
+        if not has_high_priority:
+            logger.info("⚠️ No High Priority matches from Bing. Attempting fallback to Google...")
+            google_candidates = self._get_image_candidates_from_google(search_term)
+            
+            # Filter out any candidates already seen in Bing to save API calls
+            bing_urls = {c['direct_url'] for c in bing_candidates}
+            new_google_candidates = [c for c in google_candidates if c['direct_url'] not in bing_urls]
+            
+            if new_google_candidates:
+                g_best, g_fallback = self._evaluate_candidates(new_google_candidates, player_name, api_key)
+                best_matches.extend(g_best)
+                fallbacks.extend(g_fallback)
         
-        if not candidates:
-            logger.info("⚠️ No candidates from Bing. Attempting fallback to Google...")
-            candidates = self._get_image_candidates_from_google(search_term)
+        # Combine results: Best matches first, then fill with fallbacks until we have 3
+        # Sort best matches by priority
+        best_matches.sort(key=lambda x: x.get('priority', 3))
+        
+        final_results = best_matches + fallbacks
+        final_results = final_results[:3]
+        
+        # Cleanup any candidates that didn't make the final cut
+        # This is a bit tricky since some might be the same object, but unlink handles missing
+        for cand in (best_matches + fallbacks):
+            if cand not in final_results and 'temp_file' in cand:
+                cand['temp_file'].unlink(missing_ok=True)
 
-        if not candidates:
-            logger.warning("No image candidates found in any search engine.")
-            return []
+        if final_results:
+            logger.info(f"  🏁 Finished search. Providing {len(final_results)} candidates for review.")
+            return final_results
+            
+        logger.warning(f"  ❌ No suitable images found for {player_name} after searching both engines.")
+        return []
 
-        logger.info(f"Total candidates available from search: {len(candidates)}")
+    def _evaluate_candidates(self, candidates: List[dict], player_name: str, api_key: str) -> Tuple[List[dict], List[dict]]:
+        """Evaluates a list of candidates using Gemini and returns (best_matches, fallbacks)."""
         best_matches = []
         fallbacks = []
         max_candidates_to_check = 25
         
+        if not candidates:
+            return [], []
+
         # Determine actual number to check
         num_to_check = min(len(candidates), max_candidates_to_check)
-        logger.info(f"🔍 Will evaluate up to {num_to_check} candidates...")
+        logger.info(f"🔍 Evaluating up to {num_to_check} candidates...")
 
         for i, candidate in enumerate(candidates[:max_candidates_to_check]):
             current_idx = i + 1
@@ -135,7 +167,7 @@ class PlayerImageSearch:
                         # Stop ONLY if we have 3 Priority 1 images specifically
                         p1_count = len([m for m in best_matches if m['priority'] == 1])
                         if p1_count >= 3:
-                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping search early.")
+                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping early.")
                             break
                     
                     elif priority == 3:
@@ -161,23 +193,9 @@ class PlayerImageSearch:
                 candidate['priority'] = 99
                 best_matches.append(candidate)
                 if len(best_matches) >= 3:
-                    return best_matches
-
-        # Combine results: Best matches first, then fill with fallbacks until we have 3
-        final_results = best_matches + fallbacks
-        final_results = final_results[:3]
+                    break
         
-        # Cleanup any fallbacks that didn't make the final cut
-        for f in fallbacks:
-            if f not in final_results and 'temp_file' in f:
-                f['temp_file'].unlink(missing_ok=True)
-
-        if final_results:
-            logger.info(f"  🏁 Finished search. Providing {len(final_results)} candidates for review.")
-            return final_results
-            
-        logger.warning(f"  ❌ No suitable images found for {player_name} after checking {max_candidates_to_check} results.")
-        return []
+        return best_matches, fallbacks
 
     def _get_image_candidates_from_google(self, search_term: str) -> List[dict]:
         """Uses Selenium to extract image candidate URLs using a robust hybrid strategy."""
@@ -282,6 +300,10 @@ class PlayerImageSearch:
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--window-size=1920,1080")
         
+        # Add realistic User-Agent to avoid bot detection
+        user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+        options.add_argument(f"user-agent={user_agent}")
+        
         # Use system chromium/chromedriver if available
         system_chromedriver = "/usr/bin/chromedriver"
         system_chromium = "/usr/bin/chromium"
@@ -296,7 +318,8 @@ class PlayerImageSearch:
         candidates = []
         try:
             encoded_query = urllib.parse.quote_plus(search_term)
-            search_url = f"https://www.bing.com/images/search?q={encoded_query}"
+            # Use adlt=off (SafeSearch off) and ubiroff=1 (bypass some filtering)
+            search_url = f"https://www.bing.com/images/search?q={encoded_query}&adlt=off&ubiroff=1"
             logger.info(f"🔍 Searching Bing Images: {search_url}")
             driver.get(search_url)
             time.sleep(5)
