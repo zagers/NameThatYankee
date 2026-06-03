@@ -14,7 +14,7 @@ import requests
 import json
 from pathlib import Path
 from PIL import Image
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 import time
 import logging
 
