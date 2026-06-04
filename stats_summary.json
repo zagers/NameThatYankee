@@ -1,5 +1,29 @@
 [
     {
+        "date": "2026-06-03",
+        "name": "Allie Reynolds",
+        "nickname": "Super Chief",
+        "teams": [
+            "CLE",
+            "NYY"
+        ],
+        "years": [
+            "1942",
+            "1943",
+            "1944",
+            "1945",
+            "1946",
+            "1947",
+            "1948",
+            "1949",
+            "1950",
+            "1951",
+            "1952",
+            "1953",
+            "1954"
+        ]
+    },
+    {
         "date": "2026-06-02",
         "name": "Lou Gehrig",
         "nickname": "The Iron Horse",
