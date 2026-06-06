@@ -50,8 +50,8 @@ def contains_spoiler(result, name):
                 return True
     return False
 
-def contains_hall_of_shame(result):
-    """Checks for low-quality filler and meta-commentary."""
+def contains_hall_of_boredom(result):
+    """Checks for low-quality filler and meta-commentary (The Hall of Boredom)."""
     facts = result.get("facts", [])
     qa = result.get("qa", [])
     all_text = " ".join(facts) + " " + " ".join([q.get('question', '') + " " + q.get('answer', '') for q in qa])
@@ -167,6 +167,8 @@ You are a passionate New York Yankees historian and fan. Your goal is to generat
    * Career WAR, Wins (W), Losses (L), ERA, Games Played (G), Games Started (GS), Saves (SV), Innings Pitched (IP), Strikeouts (SO), or WHIP.
    * Career Batting Average (BA), Home Runs (HR), or RBI.
 4. **PRIORITIZE NARRATIVE OVER STATS**: Interesting anecdotes, awards, trades, and family ties are ALWAYS better than numbers.
+5. **DISTINCTIVENESS DIRECTIVE**: Every hint must separate the player from the pack. Avoid boring filler at all costs.
+6. Strictly avoid the 'HALL OF BOREDOM' (generic career paths, amateur free agent status, routine utility roles).
 
 **TASK 1: QUIZ HINTS (The "facts" list)**:
 The "Facts" (Hints) are for a quiz where the user has not yet identified the player.
@@ -175,11 +177,19 @@ The "Facts" (Hints) are for a quiz where the user has not yet identified the pla
    - Any team names or city/geographical names (e.g., do NOT say "Yankees", "Detroit", "Bronx", "New York", "Boston", etc.).
    - Any specific years or decades (e.g., do NOT say "1995" or "the 90s").
 2. **STYLE**: Use vague but descriptive terms like "the club," "the organization," "his draft team," etc.
-3. **HIGH-IMPACT STORIES**: If the player was involved in a major trade for a famous Hall of Famer or legendary player, you SHOULD mention it using descriptive terms (e.g., "Was a key piece in a blockbuster trade for a legendary base-stealing Hall of Famer").
-4. **NEGATIVE EXAMPLES (DO NOT SAY THESE)**:
+3. **NARRATIVE HOOKS & RELATIONAL CONTEXT**: Favor specific anecdotes (weird injuries, signature quirks like 'losing his helmet,' or famous postseason moments described without names). Describe connections to legendary figures using titles (e.g., 'The Captain,' 'A Hall of Fame base-stealer') instead of names.
+4. **HIGH-IMPACT STORIES**: If the player was involved in a major trade for a famous Hall of Famer or legendary player, you SHOULD mention it using descriptive terms (e.g., "Was a key piece in a blockbuster trade for a legendary base-stealing Hall of Famer").
+5. **EXAMPLES**:
+   * **Bad**: "Was a utility player for the club that signed him."
+   * **Good**: "Served as the primary backup to the legendary Captain during the final years of the icon's career."
+   * **Bad**: "Was traded mid-season multiple times."
+   * **Good**: "Was a key piece in a mid-season blockbuster trade for a Hall of Fame base-stealer."
+6. **NEGATIVE EXAMPLES (DO NOT SAY THESE)**:
    * "Recorded 155 saves." (Redundant - in table).
    * "Played for 9 different franchises." (Boring filler).
    * "Traded to the Oakland Athletics." (Spoiler - mentions team name).
+   * "Utility player" or "Versatile infielder." (Boring filler).
+   * "Professional journey." (Boring filler).
 
 **TASK 2: FOLLOW-UP STORIES (The "qa" list)**:
 The Q&A section appears AFTER the quiz is revealed. This is where you tell the BEST stories.
@@ -189,9 +199,10 @@ The Q&A section appears AFTER the quiz is revealed. This is where you tell the B
    - Use **Specific Years** (e.g., "In the 1988 postseason," "During the 1984 trade").
 2. **NO REDUNDANCY**: The Q&A MUST NOT repeat or rephrase any facts mentioned in your 3 primary Hints.
 3. **RESEARCH MANDATE**: If the provided dossier bio is thin, boring, or missing, **YOU MUST USE YOUR INTERNAL BASEBALL KNOWLEDGE** to find 3 highly interesting, specific anecdotes.
-4. **THE HALL OF SHAME (DO NOT DO THESE)**:
+4. **THE HALL OF BOREDOM (DO NOT DO THESE)**:
    - NEVER use "Full Names" or "Birthplace/Birthdate" as filler unless it is truly extraordinary.
    - NEVER ask generic questions about whether the player played for the Yankees or wore pinstripes. Redundant.
+   - NEVER use generic clichés like "played for multiple organizations," "utility player," or "professional journey."
 5. Examples of "Good" Q&A anecdotes:
    - "Jay Howell was a centerpiece in the 1984 trade that brought Rickey Henderson to the Yankees."
    - "He was ejected from a 1988 NLCS game against the Mets after umpire Joe West found pine tar on his glove."
@@ -233,9 +244,9 @@ Return ONLY a JSON object:
                 print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Name found in hints.")
                 continue
                 
-            has_junk, word = contains_hall_of_shame(result)
+            has_junk, word = contains_hall_of_boredom(result)
             if has_junk:
-                print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Hall of Shame filler detected ('{word}').")
+                print(f"  ⚠️ Quality Guard REJECTED attempt {attempt+1}: Hall of Boredom filler detected ('{word}').")
                 continue
                 
             has_generic_q, q_text = contains_generic_questions(result)
