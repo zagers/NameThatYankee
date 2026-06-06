@@ -10,6 +10,17 @@ from google.genai import types  # type: ignore
 # --- CONFIGURATION ---
 MODEL = 'gemini-3.1-flash-lite'
 
+FORBIDDEN_GENERIC_PHRASES = [
+    "signed as an amateur free agent",
+    "utility player",
+    "played for multiple organizations",
+    "filling gaps at multiple infield positions",
+    "frequently on the move",
+    "versatile infielder",
+    "versatile pitcher",
+    "professional journey"
+]
+
 # Rate limiting state
 _LAST_GEMINI_CALL_TS = time.time()
 
@@ -50,7 +61,7 @@ def contains_hall_of_shame(result):
         "sabr", "bioproject", "biography remains", "unassigned",
         "born on", "birthplace", "full name is", "middle name",
         "official record", "database"
-    ]
+    ] + FORBIDDEN_GENERIC_PHRASES
     
     for word in forbidden:
         if word in all_text:
@@ -123,6 +134,11 @@ def is_invalid_hint(fact: str, player_name: str) -> bool:
     ]
     for pattern in stint_patterns:
         if re.search(pattern, fact_lower):
+            return True
+            
+    # 5. Check for generic phrases
+    for phrase in FORBIDDEN_GENERIC_PHRASES:
+        if phrase in fact_lower:
             return True
             
     return False
