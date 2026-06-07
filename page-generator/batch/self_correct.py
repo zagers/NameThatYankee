@@ -88,7 +88,7 @@ class SelfCorrector:
             print(f"  🤖 Generating verified trivia (Attempt {attempt + 1}/5)...")
             
             try:
-                # Use the system's grounded_ai generator which has the Hall of Shame rules
+                # Use the system's grounded_ai generator which has the Hall of Boredom rules
                 result = generate_grounded_trivia(dossier, self.api_key)
                 
                 facts = result.get("facts", [])
