@@ -39,11 +39,11 @@ The "Facts" (Hints) are for a quiz where the user sees a visual clue card (which
 **FOLLOW-UP RULES (FOR Q&A) - THE "GENERATIVE MEMORY" MANDATE**:
 1. The Q&A section appears AFTER the quiz. This is where you tell the BEST stories about the player.
 2. **CRITICAL INSTRUCTION**: If the provided dossier bio is thin, boring, or missing, **YOU MUST USE YOUR INTERNAL BASEBALL KNOWLEDGE** to find 3 highly interesting, specific anecdotes.
-3. **THE HALL OF SHAME (DO NOT DO THESE)**:
-   - NEVER mention the "SABR BioProject," "biography status," or "unassigned records."
-   - NEVER use "Full Names" or "Birthplace/Birthdate" as a fact or Q&A unless it is truly extraordinary.
-   - NEVER say "He was born in [City]" or "His full name is [Name]." This is low-quality filler.
-4. Examples of "Good" Q&A anecdotes (What we want):
+4. **THE HALL OF BOREDOM (DO NOT DO THESE)**:
+   - NEVER use "Full Names" or "Birthplace/Birthdate" as filler unless it is truly extraordinary.
+   - NEVER ask generic questions about whether the player played for the Yankees or wore pinstripes. Redundant.
+   - NEVER use generic clichés like "played for multiple organizations," "utility player," or "professional journey."
+5. Examples of "Good" Q&A anecdotes:
    - "He was the #1 overall prospect in baseball according to Baseball America."
    - "He was a centerpiece in a blockbuster trade for a future Hall of Famer."
    - "He caught his brother pitching, forming a rare 'brother battery'."

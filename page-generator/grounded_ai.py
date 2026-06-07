@@ -12,12 +12,14 @@ MODEL = 'gemini-3.1-flash-lite'
 
 FORBIDDEN_GENERIC_PHRASES = [
     "signed as an amateur free agent",
+    "signed as a free agent",
     "utility player",
     "played for multiple organizations",
     "filling gaps at multiple infield positions",
     "frequently on the move",
     "versatile infielder",
     "versatile pitcher",
+    "versatile player",
     "professional journey"
 ]
 

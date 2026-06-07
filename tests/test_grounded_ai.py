@@ -82,12 +82,17 @@ def test_is_invalid_hint():
     assert is_invalid_hint("Played for 9 different franchises", "Tippy Martinez") is True
     assert is_invalid_hint("Played for 9 teams during his career", "Tippy Martinez") is True
     assert is_invalid_hint("Spent two separate stints with the team", "Tippy Martinez") is True
-    assert is_invalid_hint("A member of the organization", "Tippy Martinez") is True
     assert is_invalid_hint("Had multiple stints with the franchise", "Tippy Martinez") is True
     
-    # 5. Valid facts
+    # 5. Generic phrases (Hall of Boredom)
+    assert is_invalid_hint("Was a versatile utility player", "Tippy Martinez") is True
+    assert is_invalid_hint("Had an interesting professional journey", "Tippy Martinez") is True
+    assert is_invalid_hint("Signed as an amateur free agent in his youth", "Tippy Martinez") is True
+    
+    # 6. Valid facts
     assert is_invalid_hint("Known for a signature thick handlebar mustache", "Tippy Martinez") is False
     assert is_invalid_hint("Won the World Series as a backup catcher", "Tippy Martinez") is False
+    assert is_invalid_hint("A member of the organization", "Tippy Martinez") is False  # Now valid unless part of a forbidden phrase
 
 
 def test_contains_generic_questions():

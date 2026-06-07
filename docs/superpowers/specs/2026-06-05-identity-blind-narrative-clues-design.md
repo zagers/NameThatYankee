@@ -44,7 +44,7 @@ The prompt will be updated to include specific examples of "Good" vs "Bad" clues
 - **Good**: "Was a key piece in a mid-season blockbuster trade for a Hall of Fame base-stealer."
 
 ### Section 3: Verification Logic
-The `contains_hall_of_shame` function will be expanded to include the new generic phrases.
+The `contains_hall_of_boredom` function will be expanded to include the new generic phrases.
 
 ## Testing Strategy
 1. **Unit Test**: Test the new `is_generic_hint` function with known bad strings.
