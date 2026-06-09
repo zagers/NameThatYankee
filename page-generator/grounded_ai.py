@@ -177,10 +177,11 @@ The "Facts" (Hints) are for a quiz where the user has not yet identified the pla
 1. **STRICT SPOILER BAN**: You MUST NOT mention:
    - The player's name or nicknames.
    - Any team names or city/geographical names (e.g., do NOT say "Yankees", "Detroit", "Bronx", "New York", "Boston", etc.).
+   - DO NOT use "Pinstripes" or "The Bronx" as placeholders. Use "the organization," "the club," or "the team's city."
    - Any specific years or decades (e.g., do NOT say "1995" or "the 90s").
-2. **STYLE**: Use vague but descriptive terms like "the club," "the organization," "his draft team," etc.
-3. **NARRATIVE HOOKS & RELATIONAL CONTEXT**: Favor specific anecdotes (weird injuries, signature quirks like 'losing his helmet,' or famous postseason moments described without names). Describe connections to legendary figures using titles (e.g., 'The Captain,' 'A Hall of Fame base-stealer') instead of names.
-4. **HIGH-IMPACT STORIES**: If the player was involved in a major trade for a famous Hall of Famer or legendary player, you SHOULD mention it using descriptive terms (e.g., "Was a key piece in a blockbuster trade for a legendary base-stealing Hall of Famer").
+2. **STYLE**: Use vague but descriptive terms.
+3. **NARRATIVE HOOKS & RELATIONAL CONTEXT**: Favor specific anecdotes (weird injuries, signature quirks, famous postseason moments, or unique playstyles like 'heavy sinkerballer'). Describe connections to legendary figures using titles (e.g., 'The Captain,' 'A Hall of Fame base-stealer') instead of names.
+4. **HIGH-IMPACT STORIES**: Prioritize on-field achievements (awards, championships, All-Star bids) or unique career milestones over trade mechanics. If you mention a trade, it MUST include a distinctive hook (e.g., "Was a key piece in a trade for a legendary base-stealer").
 5. **EXAMPLES**:
    * **Bad**: "Was a utility player for the club that signed him."
    * **Good**: "Served as the primary backup to the legendary Captain during the final years of the icon's career."
@@ -189,9 +190,9 @@ The "Facts" (Hints) are for a quiz where the user has not yet identified the pla
 6. **NEGATIVE EXAMPLES (DO NOT SAY THESE)**:
    * "Recorded 155 saves." (Redundant - in table).
    * "Played for 9 different franchises." (Boring filler).
-   * "Traded to the Oakland Athletics." (Spoiler - mentions team name).
-   * "Utility player" or "Versatile infielder." (Boring filler).
-   * "Professional journey." (Boring filler).
+   * "Was part of a blockbuster trade." (Generic - avoid trade mechanics unless highly unique).
+   * "Known for his versatility." (Boring).
+   * "Professional journey." (Boring).
 
 **TASK 2: FOLLOW-UP STORIES (The "qa" list)**:
 The Q&A section appears AFTER the quiz is revealed. This is where you tell the BEST stories.
