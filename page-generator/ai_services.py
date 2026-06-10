@@ -367,18 +367,21 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     5. **Non-Rectangular / Perspective:** REJECT (Priority 0) any baseball card that is die-cut, non-rectangular, OR is a photo of a card sitting on a surface/table. The card MUST be the full frame of the image (no visible backgrounds, shadows, or angled perspective). Standard rectangular cards only.
     6. **Holders & Grading:** REJECT (Priority 0) any image that shows a card inside a plastic holder, protector, top-loader, or grading slab (e.g., PSA, Beckett/BGS, SGC).
     7. **Card Backs:** REJECT (Priority 0) any image that shows the BACK of a baseball card (text-heavy, stats-only, or no player photo). Priority 1 MUST be the FRONT of the card showing the player's face.
-    9. **Rotation/Upside Down:** REJECT (Priority 0) any image that is rotated sideways or upside down. The player and card MUST be correctly oriented vertically.
+    9. **Rotation/Sideways/Upside Down:** REJECT (Priority 0) any image that is rotated sideways or upside down. The player and card MUST be correctly oriented vertically. **CRITICAL:** Even if the image file itself is in portrait orientation (width < height), if the content (the player or the card) is turned on its side, you MUST REJECT it and set `is_upside_down: true`. Look at the text on the card and the player's posture; if they are not upright, it is a rejection.
+
     10. **Unofficial Uniforms:** REJECT (Priority 0) if the player is in a generic pinstripe jersey without official Yankees branding or if it's a promotional/fantasy jersey. Relax rejection for players from before 1990 if the uniform is a standard road/home pinstripe or gray uniform from that era, even if branding is subtle.
 
     Rate the image based on the following priority levels:
 
     **Priority 1: Front of Single Portrait Rectangular Baseball Card in Official Yankee Uniform**
     - The image is a CLEAN DIGITAL SCAN or FULL-FRAME crop of the FRONT of a portrait-oriented, standard rectangular baseball card featuring ONE player.
+    - The player and card MUST be upright and correctly oriented (not sideways).
     - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform in the photo.
     - Contains NO autographs, NO event/promotional text, NO backgrounds/surfaces, NO plastic holders/slabs, and is NOT a card back or a collage.
 
     **Priority 2: Clean Single Portrait Photo in Official Yankee Uniform**
     - The image is a clean portrait-oriented action photo or portrait featuring ONE player.
+    - The player MUST be upright and correctly oriented (not sideways).
     - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform.
     - Contains NO autographs, NO transient/event-based text, intrusive graphics, or multiple players.
 

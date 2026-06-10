@@ -70,9 +70,11 @@ def test_prompt_contains_rotation_criteria(mock_genai_client):
     prompt = kwargs.get('contents')[0]
     
     # Verify Rotation rejection rule
-    assert "Rotation/Upside Down" in prompt
+    assert "Rotation/Sideways/Upside Down" in prompt
     assert "REJECT (Priority 0) any image that is rotated sideways or upside down" in prompt
     assert "is_upside_down" in prompt
+    assert "Even if the image file itself is in portrait orientation" in prompt
+    assert "if the content (the player or the card) is turned on its side" in prompt
 
 def test_analyze_player_image_rejects_upside_down(mock_genai_client):
     # Setup mock response where AI says it is upside down
