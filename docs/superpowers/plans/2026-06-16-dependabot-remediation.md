@@ -35,11 +35,11 @@ Modify `package.json` to include the following inside the `"overrides"` block:
     "@tootallnate/once": "3.0.1",
     "postcss": "8.5.10",
     "uuid": "14.0.0",
-    "tar": "^7.5.16",
-    "form-data": "^4.0.6",
-    "js-yaml": "^4.2.0",
-    "protobufjs": "^7.6.4",
-    "ws": "^7.5.11"
+    "tar": "7.5.16",
+    "form-data": "4.0.6",
+    "js-yaml": "4.2.0",
+    "protobufjs": "7.6.4",
+    "ws": "7.5.11"
   }
 ```
 
