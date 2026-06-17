@@ -1,3 +1,5 @@
+# ABOUTME: Integration tests for the page generator main entry point and workflow.
+# ABOUTME: Tests automated mode, ID-only mode, and facts-only mode workflows.
 import pytest  # type: ignore
 from pathlib import Path
 from unittest.mock import MagicMock, patch, mock_open
@@ -167,6 +169,7 @@ class TestMainIntegrationWorkflows:
         """Test facts-only mode workflow"""
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('ai_services.get_player_info_from_image', return_value=sample_player_data), \
+             patch('ai_services.get_facts_from_gemini', return_value=['Fact 1', 'Fact 2']), \
              patch('scraper.search_and_scrape_player', return_value=sample_scraped_data), \
              patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
              patch('grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
