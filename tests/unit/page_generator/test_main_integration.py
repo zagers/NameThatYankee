@@ -83,7 +83,7 @@ class TestMainIntegrationWorkflows:
         """Test automated mode workflow end-to-end"""
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('ai_services.get_player_info_from_image', return_value=sample_player_data), \
-             patch('ai_services.get_facts_and_followup_from_gemini', return_value={'facts': ['Fact 1', 'Fact 2'], 'qa': [{'question': 'Q1?', 'answer': 'A1.'}]}), \
+             patch('ai_services.get_facts_and_followup_from_gemini', return_value={'facts': sample_player_data['facts'], 'qa': sample_player_data['followup_qa']}), \
              patch('scraper.search_and_scrape_player', return_value=sample_scraped_data), \
              patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
              patch('grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
@@ -169,7 +169,7 @@ class TestMainIntegrationWorkflows:
         """Test facts-only mode workflow"""
         with patch('config_manager.load_config', return_value=sample_config), \
              patch('ai_services.get_player_info_from_image', return_value=sample_player_data), \
-             patch('ai_services.get_facts_from_gemini', return_value=['Fact 1', 'Fact 2']), \
+             patch('ai_services.get_facts_from_gemini', return_value=sample_player_data['facts']), \
              patch('scraper.search_and_scrape_player', return_value=sample_scraped_data), \
              patch('scraper.get_sabr_bio', return_value="Sample SABR bio"), \
              patch('grounded_ai.generate_grounded_trivia', return_value=sample_player_data), \
