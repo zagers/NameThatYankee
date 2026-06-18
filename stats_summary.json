@@ -1,5 +1,23 @@
 [
     {
+        "date": "2026-06-17",
+        "name": "Joe Cowley",
+        "nickname": "",
+        "teams": [
+            "PHI",
+            "NYY",
+            "ATL",
+            "CHW"
+        ],
+        "years": [
+            "1982",
+            "1984",
+            "1985",
+            "1986",
+            "1987"
+        ]
+    },
+    {
         "date": "2026-06-16",
         "name": "Melido Perez",
         "nickname": "",
