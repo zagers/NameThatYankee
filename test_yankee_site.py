@@ -1,3 +1,5 @@
+# ABOUTME: E2E and visual regression tests for the Name That Yankee website.
+# ABOUTME: Uses Playwright to verify page layouts, navigation, search, and quiz mechanics.
 import pytest  # pyre-ignore[21]
 from playwright.sync_api import Page, expect  # pyre-ignore[21]
 import os
@@ -28,7 +30,7 @@ class TestSiteStructure:
         page.goto(BASE_URL)
         
         # Check page title
-        expect(page).to_have_title(re.compile("Name That Yankee Archives"))
+        expect(page).to_have_title(re.compile("Name That Yankee \\| Daily Trivia Game & Archive"))
         
         # Check header elements
         header = page.locator("header")
