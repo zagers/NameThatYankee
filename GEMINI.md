@@ -165,8 +165,8 @@ When asked to do something, just do it - including obvious follow-up actions nee
 ## Building and Running
 
 ### Website
-The website is static and can be served by any web server or opened directly in a browser.
-*   **Local Development:** You can use a simple server like `npx serve .` or Python's `python3 -m http.server`.
+The website is static and can be served by any web server.
+*   **Local Development:** Run `python3 serve.py` to start the custom local development server. Avoid generic servers (like `npx serve .` or `python3 -m http.server`) because they do not support GitHub Pages' clean routing behavior (e.g. extensionless URLs like `/quiz` or `/analytics` will return 404s).
 
 ### Automation (Page Generator)
 To use the puzzle generation tools:
@@ -189,6 +189,7 @@ To use the puzzle generation tools:
 *   **Run all tests:** `./run_tests.sh`
 *   **Frontend only:** `npm test`
 *   **Automation only:** `pytest`
+*   **E2E only:** `pytest test_yankee_site.py test_seo_dynamic.py`
 
 ## Development Conventions
 
@@ -199,6 +200,7 @@ To use the puzzle generation tools:
 *   **Security & Dependency Updates:** All security and dependency updates (including Dependabot fixes) MUST be performed on dedicated branches to allow for Pull Request review. Do not commit these changes directly to `master`. If a Dependabot branch already exists for the update, use that branch. Always verify changes with the full test suite (`./run_tests.sh`) before pushing to the branch.
 *   **PR Workflow:** ALL changes made by Gemini CLI (including documentation and code) MUST be performed on dedicated branches. The agent MUST NOT merge its own changes into `master`; the user will perform all Pull Request reviews and merges.
 *   **State Management:** The frontend uses `localStorage` to track scores and solved puzzles (see `index.html` and `quiz.html` scripts).
+*   **Game Integrity & Redirect Funnel:** Player detail pages contain redirection logic (in `js/detail.js`) that redirects users to `quiz.html` if they haven't completed that day's puzzle. This is an intentional game mechanic to protect the quiz experience and prevent users from going directly to the answers. Never modify or bypass this redirection funnel without explicit coordination.
 
 ## TODO
 
