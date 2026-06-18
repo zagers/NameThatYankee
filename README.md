@@ -65,8 +65,8 @@ To set up a new environment (e.g., a new laptop) for full development and testin
 *   **Playwright Dependencies:** If UI tests fail to launch the browser, run `npx playwright install-deps` to ensure all system-level libraries are present.
 
 ### Website
-The website is static and can be served by any web server or opened directly in a browser.
-*   **Local Development:** You can use a simple server like `npx serve .` or Python's `python3 -m http.server`.
+The website is static and can be served by any web server.
+*   **Local Development:** Run `python3 serve.py` to start the custom local development server. Avoid generic servers (like `npx serve .` or `python3 -m http.server`) because they do not support GitHub Pages' clean routing behavior (e.g. extensionless URLs like `/quiz` or `/analytics` will return 404s).
 
 ### Automation (Page Generator)
 To use the puzzle generation tools:
@@ -95,7 +95,7 @@ Always ensure your environment is fully set up before running tests. The primary
 
 ### Test Layers
 1.  **Frontend & Security Tests (Vitest):** Logic for scoring, UI, and Firestore security rules. Run with `npm test`.
-2.  **E2E & Accessibility Tests (Playwright):** Site structure, search/filter, and WCAG compliance. Run with `pytest test_yankee_site.py`.
+2.  **E2E & Accessibility Tests (Playwright):** Site structure, search/filter, dynamic SEO canonical tags, and WCAG compliance. Run with `pytest test_yankee_site.py test_seo_dynamic.py`.
 3.  **Automation Unit Tests (Pytest):** Logic for scraping, image processing, and HTML generation. Run with `pytest tests/unit/`.
 4.  **Integration Tests:** End-to-end workflow of page generation tools. Run with `pytest test_automation.py`.
 
@@ -106,6 +106,7 @@ See [TEST_README.md](TEST_README.md) for more details.
 *   **HTML Generation:** New puzzles are generated as individual HTML files named `YYYY-MM-DD.html`. These are automatically linked in `index.html` by the page generator.
 *   **Images:** Puzzle clues should be in WEBP format and named `clue-YYYY-MM-DD.webp`. Player images follow a similar naming convention or are referenced in `all_players.js`.
 *   **State Management:** The frontend uses `localStorage` to track scores and solved puzzles (see `index.html` and `quiz.html` scripts).
+*   **Game Integrity & Redirect Funnel:** Player detail pages contain redirection logic (in `js/detail.js`) that redirects users to `quiz.html` if they haven't completed that day's puzzle. This is an intentional game mechanic to protect the quiz experience and prevent users from going directly to the answers. Never modify or bypass this redirection funnel without explicit coordination.
 
 ## License
 

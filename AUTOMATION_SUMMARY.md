@@ -1,5 +1,8 @@
 # Puzzle Workflow Automation - Implementation Complete
 
+> [!NOTE]
+> **Historical Archive:** The automation pipeline described in this document was originally developed on branch `feature/puzzle-automation` and has been fully merged into `master`. This file is preserved as a historical record of the implementation and metrics.
+
 ## 🎉 Successfully Implemented
 
 The comprehensive puzzle workflow automation has been successfully implemented and tested. Here's what was accomplished:

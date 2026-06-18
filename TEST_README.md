@@ -30,13 +30,13 @@ The primary entry point for running **all** tests locally is the master shell sc
 
 ### 2. E2E & Accessibility Tests (Python/Playwright)
 - **Framework**: Pytest with Playwright.
-- **Location**: Root directory (`test_yankee_site.py`).
+- **Location**: Root directory (`test_yankee_site.py`, `test_seo_dynamic.py`).
 - **Categories**:
-    - **Site Structure**: Layout and responsive design validation.
-    - **Search & Filter**: Real-time gallery filtering and date searching.
-    - **Visual Regressions**: Screenshot-based layout validation.
+    - **Site Structure & Interaction**: Layout, responsive design, and real-time gallery search/filtering (`test_yankee_site.py`).
+    - **SEO & Canonical Routing**: Dynamic canonical URLs and robots meta tag validation for dated puzzles (`test_seo_dynamic.py`).
     - **Accessibility**: Automated Axe-core audits for WCAG compliance.
-- **Run Manually**: `pytest test_yankee_site.py`
+    - **Visual Regressions**: Screenshot-based layout validation.
+- **Run Manually**: `pytest test_yankee_site.py test_seo_dynamic.py`
 
 ### 3. Automation Pipeline Unit Tests (Python/Pytest)
 - **Framework**: Pytest.
