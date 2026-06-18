@@ -65,7 +65,7 @@ To set up a new environment (e.g., a new laptop) for full development and testin
 *   **Playwright Dependencies:** If UI tests fail to launch the browser, run `npx playwright install-deps` to ensure all system-level libraries are present.
 
 ### Website
-The website is static and can be served by any web server.
+*   **Local Development:** Run `python3 serve.py` to start the custom local development server. Avoid generic servers (like `npx serve .` or `python3 -m http.server`) because they do not support GitHub Pages' clean routing behavior (e.g., extensionless URLs like `/quiz` or `/analytics` will return 404s).
 *   **Local Development:** Run `python3 serve.py` to start the custom local development server. Avoid generic servers (like `npx serve .` or `python3 -m http.server`) because they do not support GitHub Pages' clean routing behavior (e.g. extensionless URLs like `/quiz` or `/analytics` will return 404s).
 
 ### Automation (Page Generator)
