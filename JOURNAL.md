@@ -143,3 +143,11 @@
     2.  **Evergreen Pass:** Audit and remove temporal language ("new", "fixed", "improved") from comments and symbols.
     3.  **Refactor Pass:** Split `quiz.js` into smaller, single-responsibility modules (Engine, UI, Share).
     4.  **Analytics Optimization:** Pre-generate a `stats_summary.json` to avoid the browser scraping 160+ HTML files on every load.
+
+### 2026-06-18: Documentation Review and Onboarding Optimization
+*   **Documentation Review:** Performed a comprehensive review of all core documentation files (`README.md`, `README_AUTOMATION.md`, `TEST_README.md`, `AUTOMATION_SUMMARY.md`) to assess accuracy, completeness, and structure.
+*   **Local Server Guidance:** Corrected outdated dev server instructions in `README.md` to instruct developers to run `python3 serve.py` to support clean extensionless URLs.
+*   **Test Command Completeness:** Updated `README.md` and `TEST_README.md` to include `test_seo_dynamic.py` alongside `test_yankee_site.py` in the manual Playwright E2E execution instructions.
+*   **Game Integrity Warning:** Added the "Game Integrity & Redirect Funnel" convention to `README.md` to ensure developers protect the quiz redirection logic in `js/detail.js`.
+*   **Archive Tagging:** Tagged `AUTOMATION_SUMMARY.md` as an implementation archive since the puzzle automation feature branch was merged.
+*   **Verification:** Verified our documentation improvements against the full 331-test regression suite, achieving a clean 100% pass rate.
