@@ -39,12 +39,12 @@ export function calculateScore(index) {
 
 export class QuizEngine {
     #answer;
-    #nickname;
+    #nicknames;
 
-    constructor(answer, clues, nickname = "") {
+    constructor(answer, clues, nicknames = []) {
         if (!answer) throw new Error("QuizEngine requires a valid answer");
         this.#answer = answer;
-        this.#nickname = nickname;
+        this.#nicknames = Array.isArray(nicknames) ? nicknames : (nicknames ? [nicknames] : []);
         this.clues = clues;
         this.currentClueIndex = 0;
         this.isComplete = false;
@@ -70,9 +70,9 @@ export class QuizEngine {
 
         const normalizedGuess = this.normalize(guess);
         const normalizedAnswer = this.normalize(this.#answer);
-        const normalizedNickname = this.normalize(this.#nickname);
+        const isNicknameMatch = this.#nicknames.some(n => this.normalize(n) === normalizedGuess);
 
-        if (normalizedGuess === normalizedAnswer || (normalizedNickname && normalizedGuess === normalizedNickname)) {
+        if (normalizedGuess === normalizedAnswer || isNicknameMatch) {
             this.isComplete = true;
             return {
                 status: 'CORRECT',

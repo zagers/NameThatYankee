@@ -354,7 +354,7 @@ export async function initQuiz() {
                         clues: data.hints 
                     } 
                 });
-                engine = new QuizEngine(data.answer, data.hints, data.nickname || '');
+                engine = new QuizEngine(data.answer, data.hints, data.nicknames || data.nickname || []);
                 setupEventListeners();
             } else {
                 throw new Error('Quiz data not found on detail page.');
