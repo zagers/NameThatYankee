@@ -478,3 +478,45 @@ def rebuild_index_page(project_dir: Path):
     with open(stats_file, 'w', encoding='utf-8') as f:
         json.dump(stats_summary, f, indent=4)
     print(f"✅ {stats_file.name} updated with {len(stats_summary)} entries.")
+
+
+def add_nickname_to_page(project_dir: Path, date_str: str, nickname: str) -> bool:
+    """Adds a nickname to an existing puzzle page's quiz-data JSON.
+
+    Returns True if the nickname was added, False if the page doesn't exist
+    or the nickname is already present.
+    """
+    page_path = project_dir / f"{date_str}.html"
+    if not page_path.exists():
+        print(f"❌ Page not found: {page_path}")
+        return False
+
+    html_content = page_path.read_text(encoding='utf-8')
+    soup = BeautifulSoup(html_content, 'html.parser')
+    quiz_data_div = soup.find(id='quiz-data')
+    if not quiz_data_div or not quiz_data_div.string:
+        print(f"❌ No quiz-data found in {page_path.name}")
+        return False
+
+    quiz_data = json.loads(quiz_data_div.string)
+
+    # Normalize old format to new format
+    nicknames = quiz_data.get('nicknames', [])
+    if not nicknames:
+        old = quiz_data.get('nickname', '')
+        nicknames = [old] if old else []
+    quiz_data.pop('nickname', None)
+
+    # Check for duplicates (case-insensitive)
+    if any(n.lower() == nickname.lower() for n in nicknames):
+        print(f"⚠️  \"{nickname}\" is already a nickname for this puzzle.")
+        return False
+
+    nicknames.append(nickname)
+    quiz_data['nicknames'] = nicknames
+
+    # Replace only the quiz-data div content
+    quiz_data_div.string = json.dumps(quiz_data, indent=4)
+    page_path.write_text(str(soup), encoding='utf-8')
+    print(f"✅ Added \"{nickname}\" to {page_path.name} (now {len(nicknames)} nickname(s))")
+    return True
