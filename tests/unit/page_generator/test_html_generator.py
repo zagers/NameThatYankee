@@ -1,4 +1,5 @@
 import pytest  # type: ignore
+import json
 from bs4 import BeautifulSoup  # type: ignore
 import html_generator  # type: ignore
 
@@ -59,3 +60,67 @@ def test_build_detail_page_html(sample_player_data):
     assert quiz_data["nicknames"] == ["The Captain"]
     assert "Hit a home run for his 3000th hit" in quiz_data["hints"]
 
+
+class TestAddNicknameToPage:
+    """Tests for adding nicknames to existing puzzle pages."""
+
+    def _create_page_with_quiz_data(self, tmp_path, date_str, quiz_data):
+        """Helper to create a minimal HTML page with quiz-data."""
+        page = tmp_path / f"{date_str}.html"
+        page.write_text(
+            f'<html><body>'
+            f'<div id="quiz-data" style="display:none;">'
+            f'{json.dumps(quiz_data)}'
+            f'</div></body></html>'
+        )
+        return page
+
+    def test_adds_nickname_to_page_with_nicknames_array(self, tmp_path):
+        quiz_data = {"answer": "Derek Jeter", "nicknames": ["Captain"], "hints": ["Clue 1"]}
+        self._create_page_with_quiz_data(tmp_path, "2025-01-01", quiz_data)
+
+        result = html_generator.add_nickname_to_page(tmp_path, "2025-01-01", "Mr. November")
+
+        assert result is True
+        page = tmp_path / "2025-01-01.html"
+        soup = BeautifulSoup(page.read_text(), "html.parser")
+        updated = json.loads(soup.find(id="quiz-data").string)
+        assert updated["nicknames"] == ["Captain", "Mr. November"]
+
+    def test_adds_nickname_to_page_with_old_format(self, tmp_path):
+        quiz_data = {"answer": "Derek Jeter", "nickname": "Captain", "hints": ["Clue 1"]}
+        self._create_page_with_quiz_data(tmp_path, "2025-01-01", quiz_data)
+
+        result = html_generator.add_nickname_to_page(tmp_path, "2025-01-01", "Mr. November")
+
+        assert result is True
+        page = tmp_path / "2025-01-01.html"
+        soup = BeautifulSoup(page.read_text(), "html.parser")
+        updated = json.loads(soup.find(id="quiz-data").string)
+        assert updated["nicknames"] == ["Captain", "Mr. November"]
+        assert "nickname" not in updated
+
+    def test_rejects_duplicate_nickname(self, tmp_path):
+        quiz_data = {"answer": "Derek Jeter", "nicknames": ["Captain"], "hints": ["Clue 1"]}
+        self._create_page_with_quiz_data(tmp_path, "2025-01-01", quiz_data)
+
+        result = html_generator.add_nickname_to_page(tmp_path, "2025-01-01", "Captain")
+
+        assert result is False
+
+    def test_returns_false_for_missing_page(self, tmp_path):
+        result = html_generator.add_nickname_to_page(tmp_path, "2099-01-01", "Captain")
+
+        assert result is False
+
+    def test_adds_nickname_to_page_with_no_existing_nicknames(self, tmp_path):
+        quiz_data = {"answer": "Derek Jeter", "nickname": "", "hints": ["Clue 1"]}
+        self._create_page_with_quiz_data(tmp_path, "2025-01-01", quiz_data)
+
+        result = html_generator.add_nickname_to_page(tmp_path, "2025-01-01", "Captain")
+
+        assert result is True
+        page = tmp_path / "2025-01-01.html"
+        soup = BeautifulSoup(page.read_text(), "html.parser")
+        updated = json.loads(soup.find(id="quiz-data").string)
+        assert updated["nicknames"] == ["Captain"]

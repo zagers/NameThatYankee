@@ -636,6 +636,10 @@ Options:
   --rebuild-index      Rebuild and re-sort index.html and update 
                        stats_summary.json from all available clue images.
 
+  --add-nickname       [date] [nickname]
+                       Add an alternate accepted answer (nickname/easter egg)
+                       to an existing puzzle page. Prompts if not provided.
+
   -h, --help            Show this help message and exit.
 
 Interactive prompts (normal generation mode):
@@ -681,6 +685,7 @@ Notes:
     config_mode = "--config" in sys.argv
     regenerate_mode = "--regenerate-facts" in sys.argv
     rebuild_index_mode = "--rebuild-index" in sys.argv
+    add_nickname_mode = "--add-nickname" in sys.argv
 
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
@@ -696,6 +701,19 @@ Notes:
     if rebuild_index_mode:
         project_dir = get_project_directory(config)
         html_generator.rebuild_index_page(project_dir)
+        exit()
+
+    # Handle adding a nickname to an existing puzzle
+    if add_nickname_mode:
+        project_dir = get_project_directory(config)
+        flag_idx = sys.argv.index("--add-nickname")
+        remaining = sys.argv[flag_idx + 1:]
+        date_str = remaining[0] if len(remaining) >= 1 else input("Enter puzzle date (YYYY-MM-DD): ").strip()
+        nickname = remaining[1] if len(remaining) >= 2 else input("Enter nickname to add: ").strip()
+        if not nickname:
+            print("❌ Nickname cannot be empty.")
+            exit(1)
+        html_generator.add_nickname_to_page(project_dir, date_str, nickname)
         exit()
 
     # Handle standalone image search
