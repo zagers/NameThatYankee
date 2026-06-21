@@ -12,14 +12,18 @@ from typing import Dict, List
 def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str) -> str:
     """Builds and returns the HTML string for the detail page."""
     name = player_data.get('name', 'N/A')
-    nickname = player_data.get('nickname', '')
+    nicknames = player_data.get('nicknames', [])
+    if not nicknames:
+        single = player_data.get('nickname', '')
+        nicknames = [single] if single else []
     facts = player_data.get('facts', [])
     followup_qa = player_data.get('followup_qa', [])
     career_totals_data = player_data.get('career_totals', {})
     yearly_war_data = player_data.get('yearly_war', [])
     
-    # Escape name and nickname for HTML safety
-    display_name = html.escape(f'{name} "{nickname}"' if nickname else name)
+    # Display uses only the primary nickname for the h2 heading
+    primary_nickname = nicknames[0] if nicknames else ''
+    display_name = html.escape(f'{name} "{primary_nickname}"' if primary_nickname else name)
     facts_html = "\n".join([f"                        <li>{fact}</li>" for fact in facts])
 
     followup_section_html = ""
@@ -83,7 +87,7 @@ def build_detail_page_html(player_data: dict, date_str: str, formatted_date: str
         search_data = {'teams': list(all_teams), 'years': sorted(list(all_years))}
         search_data_html = f'<div id="search-data" style="display:none;">{json.dumps(search_data)}</div>'
 
-        quiz_data = {"answer": name, "nickname": nickname, "hints": facts}
+        quiz_data = {"answer": name, "nicknames": nicknames, "hints": facts}
         quiz_data_html = f'<div id="quiz-data" style="display:none;">{json.dumps(quiz_data)}</div>'
 
         chart_html = f"""

@@ -56,6 +56,6 @@ def test_build_detail_page_html(sample_player_data):
     import json
     quiz_data = json.loads(quiz_data_div.string)
     assert quiz_data["answer"] == "Derek Jeter"
-    assert quiz_data["nickname"] == "The Captain"
+    assert quiz_data["nicknames"] == ["The Captain"]
     assert "Hit a home run for his 3000th hit" in quiz_data["hints"]
 

@@ -33,17 +33,17 @@ vi.mock('../../js/quizEngine.js', () => {
             return [];
         }),
         QuizEngine: class {
-            constructor(answer, clues, nickname = "") {
+            constructor(answer, clues, nicknames = []) {
                 this.answer = answer;
                 this.clues = clues;
-                this.nickname = nickname;
+                this.nicknames = Array.isArray(nicknames) ? nicknames : (nicknames ? [nicknames] : []);
                 this.currentClueIndex = 0;
             }
             submitGuess(guess, normalizedPlayerSet) {
                 const g = guess.toLowerCase().trim();
                 const a = this.answer.toLowerCase().trim();
-                const n = this.nickname ? this.nickname.toLowerCase().trim() : '';
-                if (g === a || (n && g === n)) {
+                const isNicknameMatch = this.nicknames.some(n => n.toLowerCase().trim() === g);
+                if (g === a || isNicknameMatch) {
                     return { status: 'CORRECT', score: calculateScore(this.currentClueIndex), clueIndex: this.currentClueIndex, gameOver: true };
                 }
                 // For testing purposes, treat specific names as valid even if normalizedPlayerSet is empty in JSDOM

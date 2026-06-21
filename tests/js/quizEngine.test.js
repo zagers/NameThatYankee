@@ -38,6 +38,36 @@ describe('QuizEngine', () => {
             expect(engine.isComplete).toBe(true);
         });
 
+        it('should accept any nickname from an array as correct', () => {
+            const engineWithNicknames = new QuizEngine(answer, clues, ["Captain", "Mr. November"]);
+            const result = engineWithNicknames.submitGuess("Mr. November", normalizedPlayerSet);
+            expect(result.status).toBe('CORRECT');
+            expect(result.score).toBe(10);
+        });
+
+        it('should accept the first nickname from an array as correct', () => {
+            const engineWithNicknames = new QuizEngine(answer, clues, ["Captain", "Mr. November"]);
+            const result = engineWithNicknames.submitGuess("Captain", normalizedPlayerSet);
+            expect(result.status).toBe('CORRECT');
+        });
+
+        it('should accept a single nickname string for backward compatibility', () => {
+            const engineWithNickname = new QuizEngine(answer, clues, "Captain");
+            const result = engineWithNickname.submitGuess("Captain", normalizedPlayerSet);
+            expect(result.status).toBe('CORRECT');
+        });
+
+        it('should work with empty nicknames array', () => {
+            const engineNoNicknames = new QuizEngine(answer, clues, []);
+            const result = engineNoNicknames.submitGuess("Not Derek", normalizedPlayerSet);
+            expect(result.status).not.toBe('CORRECT');
+        });
+
+        it('should work with no nicknames argument', () => {
+            const result = engine.submitGuess("Captain", normalizedPlayerSet);
+            expect(result.status).not.toBe('CORRECT');
+        });
+
         it('should return INCORRECT_VALID_PLAYER for a wrong but valid player', () => {
             const result = engine.submitGuess("Alex Rodriguez", normalizedPlayerSet);
             expect(result.status).toBe('INCORRECT_VALID_PLAYER');
