@@ -713,7 +713,9 @@ Notes:
         if not nickname:
             print("❌ Nickname cannot be empty.")
             exit(1)
-        html_generator.add_nickname_to_page(project_dir, date_str, nickname)
+        success = html_generator.add_nickname_to_page(project_dir, date_str, nickname)
+        if not success:
+            exit(1)
         exit()
 
     # Handle standalone image search

@@ -516,7 +516,7 @@ def add_nickname_to_page(project_dir: Path, date_str: str, nickname: str) -> boo
     quiz_data['nicknames'] = nicknames
 
     # Replace only the quiz-data div content
-    quiz_data_div.string = json.dumps(quiz_data)
+    quiz_data_div.string = json.dumps(quiz_data, indent=4)
     page_path.write_text(str(soup), encoding='utf-8')
     print(f"✅ Added \"{nickname}\" to {page_path.name} (now {len(nicknames)} nickname(s))")
     return True
