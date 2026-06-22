@@ -1,5 +1,25 @@
 [
     {
+        "date": "2026-06-21",
+        "name": "Don Gullett",
+        "nickname": "",
+        "teams": [
+            "CIN",
+            "NYY"
+        ],
+        "years": [
+            "1970",
+            "1971",
+            "1972",
+            "1973",
+            "1974",
+            "1975",
+            "1976",
+            "1977",
+            "1978"
+        ]
+    },
+    {
         "date": "2026-06-20",
         "name": "Hal Chase",
         "nickname": "Prince Hal",
