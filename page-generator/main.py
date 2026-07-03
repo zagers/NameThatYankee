@@ -868,8 +868,12 @@ Notes:
                             
                             print(f"  🔍 Verifying claims...")
                             if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                                facts = result.get("facts", [])
+                                if not facts:
+                                    print(f"  ⚠️ Verification passed but no facts generated. Retrying...")
+                                    continue
                                 print("  ✅ All claims verified successfully.")
-                                player_info['facts'] = result.get("facts", [])
+                                player_info['facts'] = facts
                                 if not facts_only_mode:
                                     player_info['followup_qa'] = result.get("qa", [])
                                 else:

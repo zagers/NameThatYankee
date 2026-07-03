@@ -44,11 +44,11 @@ def get_gemini_client(api_key: str):
 def contains_spoiler(result, name):
     """Checks if the player name or nicknames appear in the hints."""
     facts = result.get("facts", [])
-    # Case insensitive search for the name parts
-    name_parts = [p.lower() for p in name.split() if len(p) > 2]
+    name_parts = [re.escape(p.lower()) for p in name.split() if len(p) > 2]
     for fact in facts:
+        fact_lower = fact.lower()
         for part in name_parts:
-            if part in fact.lower():
+            if re.search(r'\b' + part + r'\b', fact_lower):
                 return True
     return False
 
@@ -98,9 +98,9 @@ def is_invalid_hint(fact: str, player_name: str) -> bool:
     fact_lower = fact.lower()
     
     # 1. Check for player name or parts of the player name (excluding short initials)
-    name_parts = [p.lower() for p in player_name.split() if len(p) > 2]
+    name_parts = [re.escape(p.lower()) for p in player_name.split() if len(p) > 2]
     for part in name_parts:
-        if part in fact_lower:
+        if re.search(r'\b' + part + r'\b', fact_lower):
             return True
             
     # 2. Check for years (any 4-digit number starting with 19 or 20)

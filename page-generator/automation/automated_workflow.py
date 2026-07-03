@@ -218,8 +218,12 @@ class AutomatedWorkflow:
                 
                 logger.info("Verifying claims...")
                 if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                    facts = result.get("facts", [])
+                    if not facts:
+                        logger.warning("Verification passed but no facts generated. Retrying...")
+                        continue
                     logger.info("✅ All claims verified successfully.")
-                    player_info['facts'] = result.get("facts", [])
+                    player_info['facts'] = facts
                     player_info['followup_qa'] = result.get("qa", [])
                     generation_success = True
                     break
