@@ -29,7 +29,7 @@ def test_the_boss_autocomplete_on_tribute_date(page: Page):
 
 def test_steinbrenner_not_in_autocomplete_on_other_date(page: Page):
     """Verify that George Steinbrenner does NOT appear in autocomplete for other dates."""
-    page.goto(f"{QUIZ_URL}?date=2026-07-03")
+    page.goto(f"{QUIZ_URL}?date=2026-04-19")
     guess_input = page.locator("#guess-input")
     expect(guess_input).to_be_visible()
     guess_input.fill("George")
@@ -38,6 +38,20 @@ def test_steinbrenner_not_in_autocomplete_on_other_date(page: Page):
     if suggestions.is_visible():
         suggestion_items = suggestions.locator(".suggestion-item").all_inner_texts()
         assert "George Steinbrenner" not in suggestion_items
+
+def test_submit_nickname_guess_correct(page: Page):
+    """Verify that entering 'The Boss' in the guess input submits correctly and transitions to completed state."""
+    page.goto(BASE_URL)
+    page.evaluate("window.localStorage.clear();")
+    page.goto(f"{QUIZ_URL}?date=2026-07-04")
+    
+    guess_input = page.locator("#guess-input")
+    expect(guess_input).to_be_visible()
+    guess_input.fill("The Boss")
+    guess_input.press("Enter")
+    
+    success_area = page.locator("#success-area")
+    expect(success_area).to_be_visible()
 
 def test_steinbrenner_detail_page_loads_and_has_tribute_layout(page: Page):
     """Verify that George Steinbrenner detail page loads and has tribute layout features."""
