@@ -1,4 +1,6 @@
 #!/bin/bash
+# ABOUTME: Runs the full regression test suite for Name That Yankee.
+# ABOUTME: Includes Python unit tests, integration tests, E2E tests, and Vitest/Firebase tests.
 
 # Stop execution immediately if any command fails
 set -e
@@ -9,6 +11,17 @@ echo "================================================="
 
 # Sync fixtures with latest production files
 echo "🔄 Synchronizing test fixtures..."
+rm -f tests/fixtures/www/2026-07-03.html
+
+# Rebuild stats summary index
+if [ -f .venv/bin/python ]; then
+  .venv/bin/python page-generator/main.py --rebuild-index
+elif [ -f venv_new/bin/python ]; then
+  venv_new/bin/python page-generator/main.py --rebuild-index
+else
+  python3 page-generator/main.py --rebuild-index
+fi
+
 mkdir -p tests/fixtures/www/
 
 # Ensure required assets are linked or copied
@@ -26,6 +39,8 @@ cp analytics.html tests/fixtures/www/analytics.html || true
 cp style.css tests/fixtures/www/style.css || true
 cp stats_summary.json tests/fixtures/www/stats_summary.json || true
 cp 2026-04-19.html tests/fixtures/www/2026-04-19.html || true
+cp 2026-07-04.html tests/fixtures/www/2026-07-04.html || true
+cp 2026-05-04.html tests/fixtures/www/2026-05-04.html || true
 
 # Use local venv pytest if available, otherwise fall back to global
 if [ -f .venv/bin/pytest ]; then
@@ -52,7 +67,7 @@ $PYTEST test_automation.py -v
 echo ""
 echo "▶️ [3/4] Running Python E2E & Accessibility Tests..."
 echo "-------------------------------------------------"
-$PYTEST test_yankee_site.py test_seo_dynamic.py -v
+$PYTEST test_yankee_site.py test_seo_dynamic.py tests/test_steinbrenner_tribute.py tests/test_sterling_tribute.py -v
 
 # Run JavaScript Tests (using npm test to include Firebase Emulator)
 echo ""

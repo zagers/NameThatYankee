@@ -23,7 +23,7 @@
     "skip_manual_review": true,
     "cleanup_temp_files": true,
     "batch_processing_enabled": true,
-    "excluded_dates": ["2026-05-04"]
+    "excluded_dates": ["2026-05-04", "2026-07-04"]
   },
   "logging": {
     "level": "INFO",

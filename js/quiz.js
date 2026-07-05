@@ -209,6 +209,8 @@ export async function initQuiz() {
     // John Sterling Tribute Injection
     if (date === '2026-05-04') {
         allPlayers = ['John Sterling', ...allPlayers.filter(p => p !== 'John Sterling')];
+    } else if (date === '2026-07-04') {
+        allPlayers = ['George Steinbrenner', 'The Boss', ...allPlayers.filter(p => !['George Steinbrenner', 'The Boss'].includes(p))];
     }
 
     const normalizedPlayerSet = new Set(allPlayers.map(p => normalizeText(p)));

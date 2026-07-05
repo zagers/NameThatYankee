@@ -2,6 +2,12 @@
 
 ## Journal
 
+### 2026-07-05: Tribute Fixes & Nickname Search Support - "Tribute Integrity"
+*   **Test Runner & Fixtures copy**: Modified [run_tests.sh](file:///Users/zagers/Documents/code/NameThatYankee/run_tests.sh) to copy `2026-07-04.html` and `2026-05-04.html` to test fixtures, and added the Steinbrenner and Sterling E2E tests to the command list.
+*   **Clean Checkout E2E Test & Assertion Fixes**: Updated [test_steinbrenner_not_in_autocomplete_on_other_date](file:///Users/zagers/Documents/code/NameThatYankee/tests/test_steinbrenner_tribute.py) to load `date=2026-04-19` (which is tracked) instead of the untracked date `2026-07-03`, preventing errors on clean checkouts. Added `test_submit_nickname_guess_correct` to assert that submitting the nickname "The Boss" transitions the quiz UI to the correct/completed state.
+*   **Nickname Search Support**: Changed `<h2>George Steinbrenner</h2>` to `<h2>George Steinbrenner "The Boss"</h2>` in [2026-07-04.html](file:///Users/zagers/Documents/code/NameThatYankee/2026-07-04.html) and `<h2>John Sterling</h2>` to `<h2>John Sterling "The Voice of the Yankees"</h2>` in [2026-05-04.html](file:///Users/zagers/Documents/code/NameThatYankee/2026-05-04.html) to allow the page-generator index builder to correctly extract their nicknames into [stats_summary.json](file:///Users/zagers/Documents/code/NameThatYankee/stats_summary.json).
+*   **John Sterling Facts Bug**: Documented an out-of-bounds facts bug where the trivia bio bullets inside [2026-05-04.html](file:///Users/zagers/Documents/code/NameThatYankee/2026-05-04.html) incorrectly reference 19th-century player milestones (e.g. cut by the St. Louis Browns in 1888, lone MLB appearance in civilian clothes in 1890, Overseer of the Poor in 1904) instead of broadcaster John Sterling. This will be resolved separately.
+
 ### 2026-05-23: Robust Search Engine Fallbacks & Bot-Bypass - "Resilience & Fallbacks"
 *   **Bing Bot-Detection Bypass**: Configured a realistic macOS Chrome user-agent for Bing Images Selenium ChromeOptions. This successfully prevents bot-detection that causes Bing to serve a degraded landing page with trending recommendations instead of actual player cards.
 *   **Structural Google Fallback**: Restructured the candidate evaluation loop inside `find_first_yankee_image`'s nested `search_and_evaluate` function. If Bing returns no candidates or if all candidates fail evaluation (e.g. size check, player identity mismatch), the script immediately falls back to Google Images to search and evaluate.
