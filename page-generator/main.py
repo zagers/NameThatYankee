@@ -51,7 +51,11 @@ def get_project_directory(config: dict) -> Path:
         project_dir_str = last_path
         print(f"Using default path: {project_dir_str}")
     else:
-        project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
+        try:
+            project_dir_str = input("Enter the path to your website project folder: ").strip().strip("'\"")
+        except EOFError:
+            project_dir_str = "."
+            print("No input available, using current directory")
     
     project_dir = Path(project_dir_str).resolve()
     if not project_dir.is_dir():
