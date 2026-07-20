@@ -17,10 +17,12 @@ import argparse
 import json
 import logging
 import re
+import time
 from pathlib import Path
 from urllib.parse import urlparse
 from xml.etree import ElementTree
 
+from googleapiclient.errors import HttpError
 from indexing.google_indexing import GoogleIndexingClient
 
 logger = logging.getLogger(__name__)
@@ -148,6 +150,12 @@ def main():
             client.submit_url(url)
             submitted.append(url)
             logger.info(f"Successfully submitted: {url}")
+            time.sleep(0.1)  # Small delay between requests
+        except HttpError as e:
+            if e.resp.status == 429:
+                logger.warning("Rate limit (429) hit. Stopping to preserve quota.")
+                break
+            logger.error(f"Failed to submit {url}: {e}")
         except Exception as e:
             logger.error(f"Failed to submit {url}: {e}")
 
