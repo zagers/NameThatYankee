@@ -143,6 +143,19 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Download Pages artifact for indexing
+        if: success()
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ./_site
+
+      - name: Write Google Indexing credentials
+        if: success()
+        continue-on-error: true
+        run: echo '${{ secrets.GOOGLE_INDEXING_CREDENTIALS }}' > /tmp/google-indexing-creds.json
+
       - name: Submit new URLs to Google Indexing API
         if: success()
         continue-on-error: true
