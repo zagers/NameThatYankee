@@ -160,6 +160,21 @@ jobs:
           name: github-pages
           path: ./_site
 
+      - name: Extract Pages artifact
+        if: success()
+        continue-on-error: true
+        run: |
+          ls -la ./_site/
+          cd ./_site
+          if [ -f artifact.tar.gz ]; then
+            tar -xzf artifact.tar.gz
+            rm artifact.tar.gz
+          elif [ -f *.tar.gz ]; then
+            tar -xzf *.tar.gz
+            rm *.tar.gz
+          fi
+          ls -la
+
       - name: Write Google Indexing credentials
         if: success()
         continue-on-error: true
