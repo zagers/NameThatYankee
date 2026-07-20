@@ -17,9 +17,12 @@ class TestParseSitemap:
         urls = parse_sitemap(sitemap_path)
 
         assert len(urls) == 3
-        assert "https://namethatyankeequiz.com/" in urls  # lgtm[py/incomplete-url-substring-sanitization]
-        assert "https://namethatyankeequiz.com/2026-07-19" in urls
-        assert "https://namethatyankeequiz.com/2026-07-20" in urls
+        expected_urls = {
+            "https://namethatyankeequiz.com/",
+            "https://namethatyankeequiz.com/2026-07-19",
+            "https://namethatyankeequiz.com/2026-07-20",
+        }
+        assert expected_urls.issubset(set(urls))
 
     def test_handles_missing_sitemap(self):
         """Test that missing sitemap raises FileNotFoundError."""
@@ -40,7 +43,7 @@ class TestFilterNewUrls:
         new_urls = filter_new_urls(all_urls, indexed)
 
         assert len(new_urls) == 1
-        assert "https://namethatyankeequiz.com/2026-07-20" in new_urls
+        assert new_urls[0] == "https://namethatyankeequiz.com/2026-07-20"
 
     def test_excludes_index_html(self):
         """Test that index.html pages are excluded."""
@@ -52,7 +55,7 @@ class TestFilterNewUrls:
         new_urls = filter_new_urls(all_urls, set())
 
         assert len(new_urls) == 1
-        assert "https://namethatyankeequiz.com/2026-07-20" in new_urls
+        assert new_urls[0] == "https://namethatyankeequiz.com/2026-07-20"
 
     def test_excludes_non_page_urls(self):
         """Test that non-page URLs (images, css, etc.) are excluded."""
@@ -65,4 +68,4 @@ class TestFilterNewUrls:
         new_urls = filter_new_urls(all_urls, set())
 
         assert len(new_urls) == 1
-        assert "https://namethatyankeequiz.com/2026-07-20" in new_urls
+        assert new_urls[0] == "https://namethatyankeequiz.com/2026-07-20"
