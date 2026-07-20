@@ -17,7 +17,7 @@ class TestParseSitemap:
         urls = parse_sitemap(sitemap_path)
 
         assert len(urls) == 3
-        assert "https://namethatyankeequiz.com/" in urls
+        assert "https://namethatyankeequiz.com/" in urls  # lgtm[py/incomplete-url-substring-sanitization]
         assert "https://namethatyankeequiz.com/2026-07-19" in urls
         assert "https://namethatyankeequiz.com/2026-07-20" in urls
 
