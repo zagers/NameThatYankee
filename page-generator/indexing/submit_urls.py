@@ -16,6 +16,7 @@ This script:
 import argparse
 import json
 import logging
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 from xml.etree import ElementTree
@@ -25,7 +26,7 @@ from indexing.google_indexing import GoogleIndexingClient
 logger = logging.getLogger(__name__)
 
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
-EXCLUDE_PATTERNS = ["/images/", "/docs/", ".css", ".js", ".webp", ".png", ".jpg"]
+ANSWER_PAGE_PATTERN = re.compile(r"/\d{4}-\d{2}-\d{2}(/|$)")
 
 
 def parse_sitemap(sitemap_path: Path) -> list[str]:
@@ -56,7 +57,10 @@ def parse_sitemap(sitemap_path: Path) -> list[str]:
 
 
 def filter_new_urls(urls: list[str], indexed_urls: set[str]) -> list[str]:
-    """Filter URLs to only include new, indexable pages.
+    """Filter URLs to only include new, indexable answer pages.
+
+    Only includes URLs matching the YYYY-MM-DD answer page pattern.
+    Filters out already-indexed URLs, root URL, and non-page URLs.
 
     Args:
         urls: List of all URLs from sitemap.
@@ -71,13 +75,9 @@ def filter_new_urls(urls: list[str], indexed_urls: set[str]) -> list[str]:
         if url in indexed_urls:
             continue
 
-        # Skip root URL
+        # Only include answer pages (YYYY-MM-DD pattern)
         parsed_url = urlparse(url)
-        if parsed_url.path.rstrip("/") == "":
-            continue
-
-        # Skip non-page URLs
-        if any(pattern in url for pattern in EXCLUDE_PATTERNS):
+        if not ANSWER_PAGE_PATTERN.search(parsed_url.path):
             continue
 
         new_urls.append(url)

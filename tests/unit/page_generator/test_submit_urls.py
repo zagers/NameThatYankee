@@ -34,21 +34,23 @@ class TestFilterNewUrls:
     def test_filters_already_indexed_urls(self):
         """Test that previously indexed URLs are excluded."""
         all_urls = [
-            "https://namethatyankeequiz.com/",
             "https://namethatyankeequiz.com/2026-07-19",
             "https://namethatyankeequiz.com/2026-07-20",
         ]
-        indexed = {"https://namethatyankeequiz.com/", "https://namethatyankeequiz.com/2026-07-19"}
+        indexed = {"https://namethatyankeequiz.com/2026-07-19"}
 
         new_urls = filter_new_urls(all_urls, indexed)
 
         assert len(new_urls) == 1
         assert new_urls[0] == "https://namethatyankeequiz.com/2026-07-20"
 
-    def test_excludes_index_html(self):
-        """Test that index.html pages are excluded."""
+    def test_excludes_non_answer_pages(self):
+        """Test that non-answer pages are excluded."""
         all_urls = [
             "https://namethatyankeequiz.com/",
+            "https://namethatyankeequiz.com/analytics",
+            "https://namethatyankeequiz.com/instructions",
+            "https://namethatyankeequiz.com/FACT_AUDIT_REPORT",
             "https://namethatyankeequiz.com/2026-07-20",
         ]
 
@@ -57,15 +59,14 @@ class TestFilterNewUrls:
         assert len(new_urls) == 1
         assert new_urls[0] == "https://namethatyankeequiz.com/2026-07-20"
 
-    def test_excludes_non_page_urls(self):
-        """Test that non-page URLs (images, css, etc.) are excluded."""
+    def test_includes_only_answer_pages(self):
+        """Test that only YYYY-MM-DD answer pages are included."""
         all_urls = [
+            "https://namethatyankeequiz.com/2026-07-19",
             "https://namethatyankeequiz.com/2026-07-20",
-            "https://namethatyankeequiz.com/images/clue-2026-07-20.webp",
-            "https://namethatyankeequiz.com/style.css",
+            "https://namethatyankeequiz.com/2025-12-31",
         ]
 
         new_urls = filter_new_urls(all_urls, set())
 
-        assert len(new_urls) == 1
-        assert new_urls[0] == "https://namethatyankeequiz.com/2026-07-20"
+        assert len(new_urls) == 3
