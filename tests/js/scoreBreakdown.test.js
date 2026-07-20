@@ -189,6 +189,10 @@ describe('Score Breakdown Feature', () => {
 
     describe('Index UI - Displaying Breakdown', () => {
         beforeEach(() => {
+            global.fetch = vi.fn().mockResolvedValue({
+                ok: true,
+                json: () => Promise.resolve([]),
+            });
             document.body.innerHTML = `
                 <div class="header-controls">
                     <div id="score-display">
@@ -252,6 +256,10 @@ describe('Score Breakdown Feature', () => {
 
     describe('Score Pill Visual Affordance', () => {
         beforeEach(() => {
+            global.fetch = vi.fn().mockResolvedValue({
+                ok: true,
+                json: () => Promise.resolve([]),
+            });
             document.body.innerHTML = `
                 <div class="header-controls">
                     <div id="score-display">
@@ -271,6 +279,8 @@ describe('Score Breakdown Feature', () => {
             `;
             global.localStorage.clear();
             window.firebaseConfig = {};
+            delete window.location;
+            window.location = new URL('http://localhost/index.html');
         });
 
         it('should have a title attribute for accessibility', async () => {
