@@ -164,15 +164,9 @@ jobs:
         if: success()
         continue-on-error: true
         run: |
-          ls -la ./_site/
           cd ./_site
-          if [ -f artifact.tar.gz ]; then
-            tar -xzf artifact.tar.gz
-            rm artifact.tar.gz
-          elif [ -f *.tar.gz ]; then
-            tar -xzf *.tar.gz
-            rm *.tar.gz
-          fi
+          tar -xf artifact.tar
+          rm artifact.tar
           ls -la
 
       - name: Write Google Indexing credentials
