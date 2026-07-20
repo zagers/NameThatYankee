@@ -17,6 +17,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
+from urllib.parse import urlparse
 from xml.etree import ElementTree
 
 from indexing.google_indexing import GoogleIndexingClient
@@ -71,7 +72,8 @@ def filter_new_urls(urls: list[str], indexed_urls: set[str]) -> list[str]:
             continue
 
         # Skip root URL
-        if url.rstrip("/") == "https://namethatyankeequiz.com":
+        parsed_url = urlparse(url)
+        if parsed_url.path.rstrip("/") == "":
             continue
 
         # Skip non-page URLs
@@ -110,11 +112,13 @@ def main():
 
     # Load state
     state_path = Path(args.state_file)
+    indexed_urls = set()
     if state_path.exists():
-        state = json.loads(state_path.read_text())
-        indexed_urls = set(state.get("indexed_urls", []))
-    else:
-        indexed_urls = set()
+        try:
+            state = json.loads(state_path.read_text())
+            indexed_urls = set(state.get("indexed_urls", []))
+        except json.JSONDecodeError:
+            logger.warning(f"Failed to decode state file: {state_path}. Starting with empty state.")
 
     # Parse sitemap
     sitemap_path = Path(args.sitemap)
