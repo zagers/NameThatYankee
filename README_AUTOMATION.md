@@ -158,6 +158,45 @@ The automation is fully backward compatible:
 - No breaking changes to existing API
 - Automation as opt-in feature
 
+## Google Indexing API Integration
+
+New pages are automatically submitted to Google for indexing after deployment.
+
+### Setup Requirements
+
+1. **Google Cloud Service Account:**
+   - Create at https://console.cloud.google.com/iam-admin/serviceaccounts
+   - Enable "Indexing API" in the service account's API list
+   - Download the JSON key file
+
+2. **Google Search Console:**
+   - Add the service account email as an **Owner** in Search Console
+   - Go to Settings > Users and permissions > Add user
+
+3. **GitHub Secrets:**
+   - Add `GOOGLE_INDEXING_CREDENTIALS` with the contents of the JSON key file
+
+### How It Works
+
+1. After a successful deploy, the workflow parses the sitemap
+2. New URLs (not previously submitted) are sent to Google Indexing API
+3. Submission state is stored as a GitHub artifact for deduplication
+
+### Manual Submission
+
+To manually submit URLs:
+
+```bash
+python page-generator/main.py --submit-indexing \
+    --credentials /path/to/creds.json \
+    --sitemap ./_site/sitemap.xml
+```
+
+### Quotas
+
+- Google Indexing API limit: 200 requests per day per project
+- State file prevents duplicate submissions
+
 ## Troubleshooting
 
 ### Common Issues
