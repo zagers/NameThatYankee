@@ -1,4 +1,10 @@
 # deploy.yml
+#
+# Required secrets:
+#   GOOGLE_INDEXING_CREDENTIALS: GCP service account JSON key file
+#     - Service account must have Indexing API enabled
+#     - Service account email must be owner in Google Search Console
+#     - Get from: https://console.cloud.google.com/iam-admin/serviceaccounts
 
 name: Build and Deploy Site
 
@@ -132,4 +138,22 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
+
+      - name: Submit new URLs to Google Indexing API
+        if: success()
+        continue-on-error: true
+        run: |
+          pip install google-api-python-client google-auth
+          python -m page_generator.indexing.submit_urls \
+            --credentials /tmp/google-indexing-creds.json \
+            --sitemap ./_site/sitemap.xml \
+            --state-file .indexing_state.json
+
+      - name: Write indexing state
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexing-state
+          path: .indexing_state.json
+          retention-days: 90
