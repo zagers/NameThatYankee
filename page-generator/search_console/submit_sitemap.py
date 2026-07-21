@@ -19,7 +19,7 @@ SCOPES = ["https://www.googleapis.com/auth/webmasters"]
 
 def submit_sitemap(
     credentials_file: str,
-    site_url: str = "https://namethatyankeequiz.com/",
+    site_url: str = "sc-domain:namethatyankeequiz.com",
     sitemap_url: str = "https://namethatyankeequiz.com/sitemap.xml",
 ) -> bool:
     """Submit a sitemap URL to Google Search Console.
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--site-url",
-        default=os.getenv("SITE_URL", "https://namethatyankeequiz.com/"),
+        default=os.getenv("SITE_URL", "sc-domain:namethatyankeequiz.com"),
         help="Property URL in Search Console",
     )
     parser.add_argument(

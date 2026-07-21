@@ -173,6 +173,7 @@ Search Console, prompting Google to re-read it and discover new pages.
 2. **Google Search Console:**
    - Add the service account email as an **Owner** in Search Console
    - Go to Settings > Users and permissions > Add user
+   - The script uses the domain property format (`sc-domain:namethatyankeequiz.com`) by default
 
 3. **GitHub Secrets:**
    - Add `GOOGLE_INDEXING_CREDENTIALS` with the contents of the JSON key file
