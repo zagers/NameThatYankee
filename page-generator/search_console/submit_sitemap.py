@@ -53,6 +53,12 @@ def submit_sitemap(
 
 if __name__ == "__main__":
     import argparse
+    import os
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    )
 
     parser = argparse.ArgumentParser(
         description="Submit sitemap to Google Search Console"
@@ -64,12 +70,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--site-url",
-        default="https://namethatyankeequiz.com/",
+        default=os.getenv("SITE_URL", "https://namethatyankeequiz.com/"),
         help="Property URL in Search Console",
     )
     parser.add_argument(
         "--sitemap-url",
-        default="https://namethatyankeequiz.com/sitemap.xml",
+        default=os.getenv("SITEMAP_URL", "https://namethatyankeequiz.com/sitemap.xml"),
         help="Full URL of the sitemap to submit",
     )
     args = parser.parse_args()
