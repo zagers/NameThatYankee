@@ -640,8 +640,6 @@ Options:
   --rebuild-index      Rebuild and re-sort index.html and update 
                        stats_summary.json from all available clue images.
 
-  --submit-indexing    Submit new URLs to Google Indexing API.
-
   --add-nickname       [date] [nickname]
                        Add an alternate accepted answer (nickname/easter egg)
                        to an existing puzzle page. Prompts if not provided.
@@ -692,14 +690,6 @@ Notes:
     regenerate_mode = "--regenerate-facts" in sys.argv
     rebuild_index_mode = "--rebuild-index" in sys.argv
     add_nickname_mode = "--add-nickname" in sys.argv
-    submit_indexing_mode = "--submit-indexing" in sys.argv
-
-    # Handle submit indexing
-    if submit_indexing_mode:
-        from indexing.submit_urls import main as submit_main
-        submit_main()
-        sys.exit(0)
-
     # Handle automation configuration
     if config_mode and AUTOMATION_AVAILABLE:
         handle_config_mode()
