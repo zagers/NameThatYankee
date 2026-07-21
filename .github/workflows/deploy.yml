@@ -133,6 +133,11 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
       - name: Submit sitemap to Search Console
         if: success()
         continue-on-error: true

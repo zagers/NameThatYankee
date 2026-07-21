@@ -1,4 +1,5 @@
 # ABOUTME: Unit tests for Search Console sitemap submission script.
+# ABOUTME: Verifies API calls are invoked and error handling behaves as expected.
 
 from unittest.mock import MagicMock, patch
 
