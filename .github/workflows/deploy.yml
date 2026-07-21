@@ -15,8 +15,6 @@ on:
   pull_request:
     branches:
       - master
-  schedule:
-    - cron: '10 7 * * *' # Every night at 12:10AM PT
   workflow_dispatch:
 
 permissions:
