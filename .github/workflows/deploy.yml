@@ -133,4 +133,22 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Submit sitemap to Search Console
+        if: success()
+        continue-on-error: true
+        env:
+          CREDS: ${{ secrets.GOOGLE_INDEXING_CREDENTIALS }}
+        run: |
+          printf "%s" "$CREDS" > /tmp/search-console-creds.json
+          # Install only the packages needed for sitemap submit (subset of requirements.txt)
+          pip install google-api-python-client google-auth
+          PYTHONPATH=./page-generator python -m search_console.submit_sitemap \
+            --credentials /tmp/search-console-creds.json
+          rm -f /tmp/search-console-creds.json
+
 
