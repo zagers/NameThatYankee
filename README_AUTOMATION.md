@@ -158,6 +158,31 @@ The automation is fully backward compatible:
 - No breaking changes to existing API
 - Automation as opt-in feature
 
+## Google Search Console Sitemap Integration
+
+After each deploy, the workflow automatically resubmits the sitemap to Google
+Search Console, prompting Google to re-read it and discover new pages.
+
+### Setup Requirements
+
+1. **Google Cloud Service Account:**
+   - Use an existing service account or create one at https://console.cloud.google.com/iam-admin/serviceaccounts
+   - Enable "Search Console API" in the service account's API list
+   - Download the JSON key file
+
+2. **Google Search Console:**
+   - Add the service account email as an **Owner** in Search Console
+   - Go to Settings > Users and permissions > Add user
+
+3. **GitHub Secrets:**
+   - Add `GOOGLE_INDEXING_CREDENTIALS` with the contents of the JSON key file
+
+### How It Works
+
+1. After a successful deploy, the workflow runs `search_console/submit_sitemap.py`
+2. The script calls `sitemaps.submit` via the Search Console API
+3. Google re-reads the sitemap and indexes any new pages
+
 ## Troubleshooting
 
 ### Common Issues
