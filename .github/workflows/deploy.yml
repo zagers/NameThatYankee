@@ -133,4 +133,15 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
+      - name: Submit sitemap to Search Console
+        if: success()
+        continue-on-error: true
+        env:
+          CREDS: ${{ secrets.GOOGLE_INDEXING_CREDENTIALS }}
+        run: |
+          printf "%s" "$CREDS" > /tmp/search-console-creds.json
+          pip install google-api-python-client google-auth
+          PYTHONPATH=./page-generator python -m search_console.submit_sitemap \
+            --credentials /tmp/search-console-creds.json
+
 
