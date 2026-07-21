@@ -143,5 +143,6 @@ jobs:
           pip install google-api-python-client google-auth
           PYTHONPATH=./page-generator python -m search_console.submit_sitemap \
             --credentials /tmp/search-console-creds.json
+          rm -f /tmp/search-console-creds.json
 
 
