@@ -1,12 +1,6 @@
 # ABOUTME: Unit tests for Search Console sitemap submission script.
 
-import json
-from pathlib import Path
 from unittest.mock import MagicMock, patch
-
-import pytest
-
-FIXTURE_DIR = Path(__file__).parent.parent.parent / "fixtures"
 
 
 class TestSubmitSitemap:
