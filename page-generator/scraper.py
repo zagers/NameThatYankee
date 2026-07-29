@@ -627,7 +627,7 @@ def generate_stats_fallback(player_dossier):
     Generates rich, 100% accurate, dynamic stats-based hints when LLM generation fails.
     Avoids hardcoding, complies strictly with the spoiler guidelines:
     - No player name/nicknames.
-    - No team names or city names (except referring generally to 'New York' or 'pinstripes').
+    - No team names or city names for non-Yankees teams (referring to 'New York', 'the Bronx', or 'pinstripes' for the Yankees is fine).
     - No specific years.
     - No card back stats (career BA, total HR, total RBI, specific W/L records).
     - No team lists (e.g., do not say 'played for 9 teams').
