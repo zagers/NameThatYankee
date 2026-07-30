@@ -47,6 +47,7 @@ Your goal is to generate trivia "hints" and "follow-up stories" about the player
 2. **AVOID GIF REPETITION**: The user can already see the player's team list and years (e.g. "NYY 1974-1976") in a GIF. DO NOT simply repeat his tenure or team sequence in the hints.
 3. **STORY-DRIVEN**: Use the SABR biography to find interesting anecdotes, weird circumstances, or defining moments.
 4. **STRICT GROUNDING**: ONLY use info in the dossier. If you include a year or stat, it must be verbatim from the dossier.
+5. You MAY refer to "the Yankees", "New York", "the Bronx", or "pinstripes" directly since this is a Yankees-only quiz. NEVER use awkward substitutes like "the club's city", "the team's city", or "the organization's city".
 
 **TASK 1: HINTS (The "facts" list)**
 Generate exactly 3 trivia hints. These should be progressively easier. 
