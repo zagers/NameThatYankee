@@ -168,37 +168,6 @@ def parse_transactions(soup):
                 
     return transactions
 
-def parse_awards(soup):
-    """Parses the awards/honors from the bling or extra_stats div."""
-    awards = []
-    
-    # Possible IDs for awards
-    possible_ids = ['bling', 'extra_stats']
-    
-    awards_div = None
-    for aid in possible_ids:
-        awards_div = soup.find(['ul', 'div'], id=aid)
-        if awards_div: break
-        
-    if not awards_div:
-        # Check in comments
-        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
-        for comment in comments:
-            for aid in possible_ids:
-                if f'id="{aid}"' in comment:
-                    awards_soup = BeautifulSoup(comment, 'html.parser')
-                    awards_div = awards_soup.find(['ul', 'div'], id=aid)
-                    if awards_div: break
-            if awards_div: break
-            
-    if awards_div:
-        for li in awards_div.find_all('li'):
-            text = li.get_text(strip=True)
-            if text:
-                awards.append(text)
-                
-    return awards
-
 def get_driver():
     """Initializes and returns a headless Chrome driver."""
     options = webdriver.ChromeOptions()
