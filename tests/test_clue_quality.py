@@ -39,7 +39,8 @@ def test_is_invalid_hint_spoilers():
     assert is_invalid_hint("He won a ring in 2018.", player) is True
     
     # Team names
-    assert is_invalid_hint("He played for the Yankees.", player) is True
+    # Yankees-specific references are allowed (Yankees-only quiz)
+    assert is_invalid_hint("He played for the Yankees.", player) is False
     assert is_invalid_hint("He was traded to the Red Sox.", player) is True
     assert is_invalid_hint("He spent time in San Francisco.", player) is True
     assert is_invalid_hint("He played for the Giants.", player) is True
