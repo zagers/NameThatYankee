@@ -109,7 +109,7 @@ def is_invalid_hint(fact: str, player_name: str) -> bool:
         
     # 3. Check for geographical or team name references, or pinstripes
     forbidden_words = [
-        "yankee", "bronx", "new york", "pinstripe", "brooklyn", "queens", "manhattan",
+        "brooklyn", "queens", "manhattan",
         "red sox", "boston", "dodger", "mets", "kansas city", "royals", "oakland",
         "athletics", "colorado", "rockies", "tampa bay", "devil rays", "brewers",
         "milwaukee", "angels", "anaheim", "baltimore", "orioles", "phillies",

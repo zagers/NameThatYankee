@@ -67,7 +67,7 @@ $PYTEST test_automation.py -v
 echo ""
 echo "▶️ [3/4] Running Python E2E & Accessibility Tests..."
 echo "-------------------------------------------------"
-$PYTEST test_yankee_site.py test_seo_dynamic.py tests/test_steinbrenner_tribute.py tests/test_sterling_tribute.py -v
+$PYTEST test_yankee_site.py test_seo_dynamic.py tests/test_steinbrenner_tribute.py tests/test_sterling_tribute.py tests/test_seo_task_1.py tests/test_parse_awards.py tests/test_grounded_ai.py tests/test_automated_workflow.py -v
 
 # Run JavaScript Tests (using npm test to include Firebase Emulator)
 echo ""

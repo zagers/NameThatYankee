@@ -9,9 +9,10 @@ def test_quiz_has_static_noindex():
         html = f.read()
     
     soup = BeautifulSoup(html, 'html.parser')
-    robots_meta = soup.find('meta', attrs={'name': 'robots', 'content': 'noindex'})
-    
-    assert robots_meta is not None, "quiz.html should have a static <meta name='robots' content='noindex'>"
+    robots_meta = soup.find('meta', attrs={'name': 'robots'})
+
+    assert robots_meta is not None, "quiz.html should have a static <meta name='robots'> tag"
+    assert 'noindex' in robots_meta['content'], "robots meta should include noindex"
     assert robots_meta.parent.name == 'head', "robots meta tag should be in the head section"
 
 def test_quiz_has_simplified_canonical_script():

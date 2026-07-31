@@ -484,11 +484,15 @@ def handle_regeneration_mode(config, project_dir, mode_input):
                     
                     print(f"  🔍 Verifying claims...")
                     if fact_verifier.verify_claims(result.get("claims", []), player_dossier):
+                        facts = result.get("facts", [])
+                        if not facts:
+                            print(f"  ⚠️ Verification passed but no facts generated. Retrying...")
+                            continue
                         print("  ✅ All claims verified successfully.")
                         player_data = {
                             'name': player_name,
                             'nickname': player_entry.get('nickname', ''),
-                            'facts': result.get("facts", []),
+                            'facts': facts,
                             'followup_qa': result.get("qa", []),
                             'career_totals': scraped_data['career_totals'],
                             'yearly_war': scraped_data['yearly_war']
@@ -891,7 +895,7 @@ Notes:
                             fallback_facts = scraper.generate_stats_fallback(player_dossier)
                             player_info['facts'] = fallback_facts
                             if not facts_only_mode:
-                                player_info['followup_qa'] = ai_services.get_followup_qa_from_gemini(player_name, fallback_facts, api_key)
+                                player_info['followup_qa'] = ai_services.get_followup_qa_from_gemini(player_info['name'], fallback_facts, api_key)
                             else:
                                 player_info['followup_qa'] = []
 

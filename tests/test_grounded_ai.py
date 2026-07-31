@@ -73,10 +73,12 @@ def test_is_invalid_hint():
     assert is_invalid_hint("Had 30 saves in 1983", "Tippy Martinez") is True
     
     # 3. Geographical or team names
-    assert is_invalid_hint("Played for the Yankees in his career", "Tippy Martinez") is True
-    assert is_invalid_hint("Spent a season in the Bronx", "Tippy Martinez") is True
+    # Yankees-specific references are allowed (Yankees-only quiz)
+    assert is_invalid_hint("Played for the Yankees in his career", "Tippy Martinez") is False
+    assert is_invalid_hint("Spent a season in the Bronx", "Tippy Martinez") is False
+    assert is_invalid_hint("Wore the famous pinstripes", "Tippy Martinez") is False
+    # Non-Yankees team/city references are still forbidden
     assert is_invalid_hint("Born in Brooklyn", "Tippy Martinez") is True
-    assert is_invalid_hint("Wore the famous pinstripes", "Tippy Martinez") is True
     
     # 4. Team count or stint counts
     assert is_invalid_hint("Played for 9 different franchises", "Tippy Martinez") is True
