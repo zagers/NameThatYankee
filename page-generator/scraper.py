@@ -256,21 +256,43 @@ def parse_appearances(soup):
                     break
 
     return pos_data
+
 def parse_awards(soup):
-    """Extracts awards and honors from the bling items or awards section."""
+    """Parses the awards/honors from the bling, extra_stats, or awards section."""
     awards = []
-    # Bling items at the top
-    bling = soup.select(".bling-item")
-    for item in bling:
-        awards.append(item.get_text(strip=True))
-        
-    # Also check specific awards list
-    awards_div = soup.select_one("#awards")
+
+    # Possible IDs for awards
+    possible_ids = ['bling', 'extra_stats', 'awards']
+
+    awards_div = None
+    for aid in possible_ids:
+        awards_div = soup.find(['ul', 'div'], id=aid)
+        if awards_div: break
+
+    if not awards_div:
+        # Check in comments
+        comments = soup.find_all(string=lambda text: isinstance(text, Comment))
+        for comment in comments:
+            for aid in possible_ids:
+                if f'id="{aid}"' in comment:
+                    awards_soup = BeautifulSoup(comment, 'html.parser')
+                    awards_div = awards_soup.find(['ul', 'div'], id=aid)
+                    if awards_div: break
+            if awards_div: break
+
     if awards_div:
         for li in awards_div.find_all('li'):
-            awards.append(li.get_text(strip=True))
-            
-    return list(set(awards))
+            text = li.get_text(strip=True)
+            if text:
+                awards.append(text)
+
+    # Also capture .bling-item class entries at the top of the page
+    for item in soup.select('.bling-item'):
+        text = item.get_text(strip=True)
+        if text:
+            awards.append(text)
+
+    return list(dict.fromkeys(awards))
 
 def search_and_scrape_player(player_name, automated=False, driver=None):
     """
