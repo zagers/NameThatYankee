@@ -10,6 +10,9 @@ beautifulsoup4==4.14.3
 certifi==2026.2.25
 cffi==2.0.0
 charset-normalizer==3.4.4
+# click==8.1.8 pinned due to pyre-check requiring click<8.2.0 (even at pyre-check 0.10.0).
+# PYSEC-2026-2132 (command injection in click.edit()) is fixed in 8.3.3, which conflicts with that constraint.
+# Not reachable: nothing imports click and click.edit() is never exercised. Revisit when pyre-check lifts the pin.
 click==8.1.8
 coverage==7.13.4
 cryptography==50.0.0
