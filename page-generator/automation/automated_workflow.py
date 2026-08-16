@@ -168,7 +168,7 @@ class AutomatedWorkflow:
                 logger.warning("Skipping stats scraping for 'Unknown' player")
                 return None
                 
-            scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
+            scraped_data = scraper.search_and_scrape_player(player_name, automated=True, expected_career_span=player_info.get('career_span'))
             sabr_bio = scraper.get_sabr_bio(player_name)
             
             # Enrichment fallback for thin/missing biography
