@@ -296,6 +296,163 @@ def test_search_and_scrape_player_roman_numeral_cleanup(mock_driver_manager, moc
     # Check that the initial search URL contains the cleaned name without Roman numerals
     assert "Roy+Smalley" in str(mock_driver.get.call_args) if hasattr(mock_driver.get, 'call_args') else True
 
+def _make_search_result_html(name, href, career_text, franchises_text=""):
+    """Helper to build a search-item div mimicking Baseball-Reference results."""
+    extra = f" {franchises_text}" if franchises_text else ""
+    return f'''
+    <div class="search-item">
+        <div class="search-item-name">{name}</div>
+        <a href="/players/b/{href}">{name}</a>
+        <span>{career_text}{extra}</span>
+    </div>
+    '''
+
+def _make_search_page(*items):
+    """Build a full search results page with a Major Leagues header."""
+    return f'''
+    <html><body>
+        <h3>Major League Players ({len(items)})</h3>
+        {"".join(items)}
+    </body></html>
+    '''
+
+def test_parse_search_results_single_match():
+    """Single search result is parsed correctly."""
+    html = _make_search_page(
+        _make_search_result_html("Derek Jeter", "jeterde01.shtml", "(1995-2014)", "Franchises: NYY")
+    )
+    soup = BeautifulSoup(html, "html.parser")
+    results = scraper._parse_search_results(soup, "Derek Jeter")
+    assert len(results) == 1
+    assert results[0]["name"] == "Derek Jeter"
+    assert results[0]["career_span"] == (1995, 2014)
+    assert results[0]["franchises"] == ["NYY"]
+    assert results[0]["name_in_text"] is True
+
+def test_parse_search_results_bobby_brown_disambiguation():
+    """The Bobby Brown case: two players with same name, both NYY."""
+    html = _make_search_page(
+        _make_search_result_html("Bobby Brown", "brownbo03.shtml",
+                                  "(1946-1954)", "Franchises: NYY"),
+        _make_search_result_html("Bobby Brown", "brownbo04.shtml",
+                                  "(1979-1985)", "Franchises: SDP,NYY,TOR"),
+    )
+    soup = BeautifulSoup(html, "html.parser")
+    results = scraper._parse_search_results(soup, "Bobby Brown")
+    assert len(results) == 2
+    # Both match by name
+    assert all(r["name_in_text"] for r in results)
+    # Both have NYY
+    assert "NYY" in results[0]["franchises"]
+    assert "NYY" in results[1]["franchises"]
+    # Career spans are extracted
+    assert results[0]["career_span"] == (1946, 1954)
+    assert results[1]["career_span"] == (1979, 1985)
+
+def test_parse_search_results_no_franchises():
+    """Handles results where franchise info is missing."""
+    html = _make_search_page(
+        '<div class="search-item">'
+        '<div class="search-item-name">Some Player</div>'
+        '<a href="/players/s/somepl01.shtml">Some Player</a>'
+        '<span>(2000-2005)</span>'
+        '</div>'
+    )
+    soup = BeautifulSoup(html, "html.parser")
+    results = scraper._parse_search_results(soup, "Some Player")
+    assert len(results) == 1
+    assert results[0]["franchises"] == []
+    assert results[0]["career_span"] == (2000, 2005)
+
+def test_parse_search_results_name_mismatch():
+    """Name that doesn't appear in the search result text."""
+    html = _make_search_page(
+        _make_search_result_html("Bob Brown", "brownbo01.shtml",
+                                  "(1960-1965)", "Franchises: BOS")
+    )
+    soup = BeautifulSoup(html, "html.parser")
+    results = scraper._parse_search_results(soup, "Bobby Brown")
+    assert len(results) == 1
+    assert results[0]["name_in_text"] is False
+
+@patch('scraper.webdriver.Chrome')
+@patch('scraper.ChromeDriverManager')
+def test_search_and_scrape_player_career_span_disambiguation(mock_driver_manager, mock_chrome):
+    """When expected_career_span is given, the correct player is selected."""
+    mock_driver = MagicMock()
+    mock_chrome.return_value = mock_driver
+    mock_driver_manager.return_value.install.return_value = "/path/to/chromedriver"
+
+    search_html = _make_search_page(
+        _make_search_result_html("Bobby Brown", "brownbo03.shtml",
+                                  "(1946-1954)", "Franchises: NYY"),
+        _make_search_result_html("Bobby Brown", "brownbo04.shtml",
+                                  "(1979-1985)", "Franchises: SDP,NYY,TOR"),
+    )
+    player_html = (Path(__file__).parent.parent.parent / "fixtures" / "bref_sample.html").read_text()
+
+    navigated_urls = []
+    def mock_get(url):
+        navigated_urls.append(url)
+        if "brownbo04" in url:
+            mock_driver.current_url = "https://www.baseball-reference.com/players/b/brownbo04.shtml"
+            mock_driver.page_source = player_html
+        elif "brownbo03" in url:
+            mock_driver.current_url = "https://www.baseball-reference.com/players/b/brownbo03.shtml"
+            mock_driver.page_source = player_html
+        else:
+            mock_driver.current_url = url
+            mock_driver.page_source = search_html
+
+    mock_driver.get = mock_get
+
+    with patch('time.sleep'):
+        result = scraper.search_and_scrape_player(
+            "Bobby Brown", automated=True,
+            expected_career_span=(1979, 1985)
+        )
+
+    assert result is not None
+    # Verify brownbo04 (1979-1985) was selected
+    assert any("brownbo04" in url for url in navigated_urls)
+
+@patch('scraper.webdriver.Chrome')
+@patch('scraper.ChromeDriverManager')
+def test_search_and_scrape_player_nyy_fallback(mock_driver_manager, mock_chrome):
+    """Without career span, NYY franchise is used for disambiguation."""
+    mock_driver = MagicMock()
+    mock_chrome.return_value = mock_driver
+    mock_driver_manager.return_value.install.return_value = "/path/to/chromedriver"
+
+    # One NYY player, one non-NYY player
+    search_html = _make_search_page(
+        _make_search_result_html("Bobby Brown", "brownbo03.shtml",
+                                  "(1946-1954)", "Franchises: NYY"),
+        _make_search_result_html("Bobby Brown", "brownbo04.shtml",
+                                  "(1979-1985)", "Franchises: SDP,TOR"),
+    )
+    player_html = (Path(__file__).parent.parent.parent / "fixtures" / "bref_sample.html").read_text()
+
+    navigated_urls = []
+    def mock_get(url):
+        navigated_urls.append(url)
+        if "brownbo03" in url:
+            mock_driver.current_url = "https://www.baseball-reference.com/players/b/brownbo03.shtml"
+            mock_driver.page_source = player_html
+        else:
+            mock_driver.current_url = url
+            mock_driver.page_source = search_html
+
+    mock_driver.get = mock_get
+
+    with patch('time.sleep'):
+        result = scraper.search_and_scrape_player(
+            "Bobby Brown", automated=True
+        )
+
+    assert result is not None
+    assert any("brownbo03" in url for url in navigated_urls)
+
 @patch('scraper.webdriver.Chrome')
 @patch('scraper.ChromeDriverManager')
 def test_generate_master_player_list(mock_driver_manager, mock_chrome):

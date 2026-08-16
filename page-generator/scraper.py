@@ -263,9 +263,66 @@ def parse_awards(soup):
 
     return list(dict.fromkeys(awards))
 
-def search_and_scrape_player(player_name, automated=False, driver=None):
+def _parse_search_results(soup, cleaned_name):
+    """
+    Parses Baseball-Reference search results, extracting career spans and
+    franchises for each major-league player match. Used for disambiguation
+    when multiple players share the same name.
+    """
+    major_leagues_header = soup.find('h3', string=lambda text: text and "major leagues" in text.lower())
+    items = []
+    if major_leagues_header:
+        for sibling in major_leagues_header.find_next_siblings():
+            if sibling.name == 'div' and 'search-item' in sibling.get('class', []):
+                items.append(sibling)
+            if sibling.name == 'h3':
+                break
+    else:
+        items = soup.find_all('div', class_='search-item')
+
+    players = []
+    for item in items:
+        full_text = item.get_text(' ', strip=True)
+        link = item.find('a')
+        if not link:
+            continue
+
+        # Extract career span, e.g. "(1946-1954)"
+        career_span = None
+        span_match = re.search(r'\((\d{4})\s*[-–]\s*(\d{4})\)', full_text)
+        if span_match:
+            career_span = (int(span_match.group(1)), int(span_match.group(2)))
+
+        # Extract franchises, e.g. "Franchises: SDP,NYY,TOR"
+        franchises = []
+        franch_match = re.search(r'Franchises?:\s*([A-Z]{3}(?:\s*,\s*[A-Z]{3})*)', full_text)
+        if franch_match:
+            franchises = [t.strip() for t in franch_match.group(1).split(',')]
+
+        name_el = item.find('div', class_='search-item-name')
+        name_text = name_el.get_text(strip=True) if name_el else ''
+
+        players.append({
+            'name': name_text,
+            'url': link['href'],
+            'career_span': career_span,
+            'franchises': franchises,
+            'name_in_text': cleaned_name.lower() in full_text.lower(),
+        })
+
+    return players
+
+
+def search_and_scrape_player(player_name, automated=False, driver=None, expected_career_span=None):
     """
     Opens a browser (if not provided), finds a player's page, and scrapes both career totals and yearly WAR.
+
+    Args:
+        player_name: Player's full name.
+        automated: If True, auto-select from multiple search results.
+        driver: Optional shared Selenium driver.
+        expected_career_span: Optional (start_year, end_year) tuple from the clue
+            card image, used to disambiguate players with the same name.
     """
     print(f"⚾ Scraping all stats for {player_name} from Baseball-Reference...")
 
@@ -299,15 +356,7 @@ def search_and_scrape_player(player_name, automated=False, driver=None):
         else:
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, 'html.parser')
-            major_leagues_header = soup.find('h3', string=lambda text: text and "major leagues" in text.lower())
-            major_league_players = []
-            if major_leagues_header:
-                for sibling in major_leagues_header.find_next_siblings():
-                    if sibling.name == 'div' and 'search-item' in sibling.get('class', []):
-                        major_league_players.append(sibling)
-                    if sibling.name == 'h3': break
-            else:
-                major_league_players = soup.find_all('div', class_='search-item')
+            major_league_players = soup.find_all('div', class_='search-item')
 
             if not major_league_players:
                 print("  No matching player links found.")
@@ -317,15 +366,51 @@ def search_and_scrape_player(player_name, automated=False, driver=None):
                 selected_index = 0
                 if len(major_league_players) > 1 and automated:
                     print(f"  ⚠️ Multiple players found. Searching for best match for '{cleaned_name}'...")
-                    # Try to find a better match than just the first result
-                    for i, item in enumerate(major_league_players):
-                        name_text = item.get_text().lower()
-                        if cleaned_name.lower() in name_text:
-                            selected_index = i
-                            print(f"  ✅ Found better match at index {i+1}: {item.find('div', class_='search-item-name').get_text(strip=True)}")
-                            break
-                    if selected_index == 0:
-                        print("  ⚠️ No perfect name match found. Defaulting to the first result.")
+                    parsed = _parse_search_results(soup, cleaned_name)
+                    name_matches = [p for p in parsed if p['name_in_text']]
+
+                    if len(name_matches) > 1:
+                        # Disambiguation strategy:
+                        # 1. If we have an expected career span from the clue card,
+                        #    pick the player whose span best overlaps.
+                        # 2. Otherwise, prefer a result whose franchises include NYY.
+                        best = None
+                        if expected_career_span:
+                            exp_start, exp_end = expected_career_span
+                            def _span_overlap(player):
+                                span = player.get('career_span')
+                                if not span:
+                                    return 0
+                                return max(0, min(span[1], exp_end) - max(span[0], exp_start) + 1)
+                            overlaps = [(p, _span_overlap(p)) for p in name_matches]
+                            overlaps = [(p, o) for p, o in overlaps if o > 0]
+                            if overlaps:
+                                best = max(overlaps, key=lambda x: x[1])[0]
+                                print(f"  ✅ Matched by career span {expected_career_span}: {best['name']} ({best['career_span'][0]}-{best['career_span'][1]})")
+                        if not best:
+                            nyy_matches = [p for p in name_matches if 'NYY' in p['franchises']]
+                            if len(nyy_matches) == 1:
+                                best = nyy_matches[0]
+                            elif len(nyy_matches) > 1:
+                                best = nyy_matches[0]
+                                print(f"  ⚠️ Multiple NYY players found. Defaulting to first: {best['name']}")
+                            else:
+                                best = name_matches[0]
+                    elif name_matches:
+                        best = name_matches[0]
+                    else:
+                        best = parsed[0] if parsed else None
+
+                    if best:
+                        # Find the index of the best match in the original list
+                        for i, item in enumerate(major_league_players):
+                            link = item.find('a')
+                            if link and link['href'] == best['url']:
+                                selected_index = i
+                                break
+                        print(f"  ✅ Selected: {best['name']} (franchises: {', '.join(best['franchises']) or 'unknown'})")
+                    else:
+                        print("  ⚠️ No match found. Defaulting to the first result.")
                 else:
                     print("  Found a single Major League player match.")
                 

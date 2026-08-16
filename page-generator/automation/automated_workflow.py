@@ -90,7 +90,7 @@ class AutomatedWorkflow:
             
             # Step 3: Scrape player statistics
             logger.info("Step 3: Scraping player statistics...")
-            scraped_data = self._scrape_player_stats(player_info['name'])
+            scraped_data = self._scrape_player_stats(player_info['name'], player_info.get('career_span'))
             if scraped_data:
                 player_info['career_totals'] = scraped_data['career_totals']
                 player_info['yearly_war'] = scraped_data['yearly_war']
@@ -160,7 +160,7 @@ class AutomatedWorkflow:
             logger.error(f"Error identifying player: {e}")
             return None
     
-    def _scrape_player_stats(self, player_name: str) -> Optional[Dict[str, Any]]:
+    def _scrape_player_stats(self, player_name: str, expected_career_span: str = None) -> Optional[Dict[str, Any]]:
         """Scrape player statistics and biography."""
         try:
             # Skip scraping if player is "Unknown"
@@ -168,8 +168,21 @@ class AutomatedWorkflow:
                 logger.warning("Skipping stats scraping for 'Unknown' player")
                 return None
                 
-            scraped_data = scraper.search_and_scrape_player(player_name, automated=True)
+            scraped_data = scraper.search_and_scrape_player(player_name, automated=True, expected_career_span=expected_career_span)
             sabr_bio = scraper.get_sabr_bio(player_name)
+            
+            # Validate SABR bio against expected career span to avoid wrong-player bios
+            if sabr_bio and expected_career_span and len(expected_career_span) == 2:
+                import re
+                bio_years = set(int(y) for y in re.findall(r'\b((?:18|19|20)\d{2})\b', sabr_bio))
+                exp_start, exp_end = expected_career_span
+                # The bio must contain the actual career start or end year
+                # A single stray year (like 1984 from an unrelated event) is not enough
+                has_start = exp_start in bio_years
+                has_end = exp_end in bio_years
+                if not has_start and not has_end:
+                    logger.warning(f"SABR bio missing career span endpoints ({exp_start}, {exp_end}). Skipping to avoid wrong-player data.")
+                    sabr_bio = None
             
             # Enrichment fallback for thin/missing biography
             if not sabr_bio or len(sabr_bio) < 500:
@@ -201,6 +214,7 @@ class AutomatedWorkflow:
             scraped = player_info.get('scraped_data', {})
             player_dossier = {
                 "name": player_info['name'],
+                "career_span": player_info.get('career_span'),
                 "career_totals": scraped.get('career_totals', {}),
                 "yearly_war": scraped.get('yearly_war', []),
                 "transactions": scraped.get('transactions', []),

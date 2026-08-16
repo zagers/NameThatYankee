@@ -838,7 +838,8 @@ Notes:
             try:
                 player_info = ai_services.get_player_info_from_image(clue_path, api_key)
                 if player_info:
-                    scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated, driver=shared_driver)
+                    expected_span = player_info.get('career_span')
+                    scraped_data = scraper.search_and_scrape_player(player_info['name'], automated=is_automated, driver=shared_driver, expected_career_span=expected_span)
                     sabr_bio = scraper.get_sabr_bio(player_info['name'])
                     
                     # Enrichment fallback for thin/missing biography

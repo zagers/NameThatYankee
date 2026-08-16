@@ -22,6 +22,7 @@ def test_fallback_facts_are_kept_when_grounded_ai_returns_empty():
 
     player_dossier = {
         "name": "Dámaso Marte",
+        "career_span": None,
         "career_totals": {},
         "yearly_war": [],
         "transactions": [],
@@ -57,6 +58,7 @@ def test_fallback_facts_are_kept_when_verification_fails():
 
     player_dossier = {
         "name": "Dámaso Marte",
+        "career_span": None,
         "career_totals": {},
         "yearly_war": [],
         "transactions": [],

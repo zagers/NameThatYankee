@@ -111,8 +111,13 @@ def get_player_info_from_image(image_path, api_key: str):
         "final_audit_summary": "Explanation of why the match was accepted or rejected"
       }},
       "name": "Full Player Name or 'Unknown'",
-      "nickname": "Player's common nickname, or empty string"
+      "nickname": "Player's common nickname, or empty string",
+      "career_span": [start_year, end_year]
     }}
+
+    **career_span**: The first and last year shown on the card for this player's career
+    (e.g., [1979, 1985]). If the card shows a single year, use that for both values.
+    If no year range is visible, use null.
     """
     for attempt in range(MAX_RETRIES):
         _respect_free_tier_rate_limit()
