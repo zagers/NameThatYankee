@@ -159,6 +159,8 @@ def generate_grounded_trivia(player_dossier, api_key: str):
     prompt = f"""
 You are a passionate New York Yankees historian and fan. Your goal is to generate engaging, high-impact trivia hints and follow-up stories for the player: {player_name}.
 
+**CRITICAL WARNING**: Multiple MLB players may share the same name. You MUST ONLY use information from the dossier below. The dossier contains the CORRECT player's data identified by career span. Do NOT use any internal knowledge about other players with the same name.
+
 **THE SOURCE OF TRUTH (PLAYER DOSSIER)**:
 {dossier_json}
 
@@ -201,7 +203,7 @@ The Q&A section appears AFTER the quiz is revealed. This is where you tell the B
    - Use **Specific Team Names** (e.g., "The Kansas City Royals," "The New York Yankees," etc.).
    - Use **Specific Years** (e.g., "In the 1988 postseason," "During the 1984 trade").
 2. **NO REDUNDANCY**: The Q&A MUST NOT repeat or rephrase any facts mentioned in your 3 primary Hints.
-3. **RESEARCH MANDATE**: If the provided dossier bio is thin, boring, or missing, **YOU MUST USE YOUR INTERNAL BASEBALL KNOWLEDGE** to find 3 highly interesting, specific anecdotes.
+3. **STRICT DOSSIER ONLY**: You MUST ONLY use information from the provided dossier. Do NOT use any internal knowledge or training data. If the dossier bio is thin, boring, or missing, generate facts based ONLY on the career totals, yearly WAR, transactions, awards, and positions data in the dossier. Never hallucinate facts not supported by the dossier.
 4. **THE HALL OF BOREDOM (DO NOT DO THESE)**:
    - NEVER use "Full Names" or "Birthplace/Birthdate" as filler unless it is truly extraordinary.
    - NEVER ask generic questions about whether the player played for the Yankees or wore pinstripes. Redundant.
