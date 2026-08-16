@@ -83,7 +83,7 @@ class TestAutomatedWorkflow:
             
             assert result is True
             mock_identify.assert_called_once()
-            mock_scrape.assert_called_once_with('Test Player')
+            mock_scrape.assert_called_once_with('Test Player', None)
             mock_ai.assert_called_once()
             mock_image.assert_called_once_with('Test Player', '2025-03-06')
             # Git operations should be called by default
