@@ -1,5 +1,24 @@
 [
     {
+        "date": "2026-08-21",
+        "name": "Tony Kubek",
+        "nickname": "Tony",
+        "teams": [
+            "NYY"
+        ],
+        "years": [
+            "1957",
+            "1958",
+            "1959",
+            "1960",
+            "1961",
+            "1962",
+            "1963",
+            "1964",
+            "1965"
+        ]
+    },
+    {
         "date": "2026-08-20",
         "name": "Curt Blefary",
         "nickname": "Clank",
