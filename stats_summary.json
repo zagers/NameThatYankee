@@ -1,5 +1,47 @@
 [
     {
+        "date": "2026-08-30",
+        "name": "Earle Combs",
+        "nickname": "The Kentucky Colonel",
+        "teams": [
+            "NYY"
+        ],
+        "years": [
+            "1924",
+            "1925",
+            "1926",
+            "1927",
+            "1928",
+            "1929",
+            "1930",
+            "1931",
+            "1932",
+            "1933",
+            "1934",
+            "1935"
+        ]
+    },
+    {
+        "date": "2026-08-27",
+        "name": "Andy Stankiewicz",
+        "nickname": "",
+        "teams": [
+            "NYY",
+            "MON",
+            "HOU",
+            "ARI"
+        ],
+        "years": [
+            "1992",
+            "1993",
+            "1994",
+            "1995",
+            "1996",
+            "1997",
+            "1998"
+        ]
+    },
+    {
         "date": "2026-08-26",
         "name": "Jerry Mumphrey",
         "nickname": "",
