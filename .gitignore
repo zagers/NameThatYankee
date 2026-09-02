@@ -11,11 +11,17 @@ Screenshot*
 *.jpeg
 
 # Node/JavaScript
-node_modules/
+node_modules
+node_modules.nosync/
 coverage/
 
 # Python
 .venv/
+.venv_pytest/
+test_env
+test_env.nosync/
+venv_new
+venv_new.nosync/
 .pytest_cache/
 *.pyc
 *.pyo
