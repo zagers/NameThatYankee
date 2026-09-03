@@ -8,6 +8,8 @@ export default defineConfig({
         environment: 'jsdom',
         globals: true,
         setupFiles: ['./tests/js/setup.js'],
+        include: ['tests/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+        exclude: ['**/node_modules/**', '**/node_modules.nosync/**', '**/.git/**'],
         coverage: {
             provider: 'v8',
             reporter: ['text', 'html'],
