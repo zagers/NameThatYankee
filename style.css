@@ -32,6 +32,7 @@ header {
 header .header-content {
     text-align: left;
     margin-right: 1.5rem;
+    max-width: 800px;
 }
 
 header h1 {
@@ -69,6 +70,7 @@ header p {
     font-weight: 600;
     text-decoration: none;
     transition: text-decoration 0.2s ease;
+    white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 6px;
     background-color: rgba(255, 255, 255, 0.1);
