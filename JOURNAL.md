@@ -2,6 +2,13 @@
 
 ## Journal
 
+### 2026-09-06: SEO Metadata & AI Discoverability - "AI Entity Grounding"
+*   **Structured Data & Schemas**: Added `WebApplication` schema to [instructions.html](file:///Users/zagers/Documents/code/NameThatYankee/instructions.html) and combined `WebSite` and `FAQPage` schema array to [index.html](file:///Users/zagers/Documents/code/NameThatYankee/index.html) to provide structured grounding for search engines and generative AI search crawlers.
+*   **Metadata & Social Optimization**: Added missing meta descriptions, Open Graph tags, Twitter Card tags, and `og:url` tags to [instructions.html](file:///Users/zagers/Documents/code/NameThatYankee/instructions.html) and [index.html](file:///Users/zagers/Documents/code/NameThatYankee/index.html).
+*   **Visible Entity Description**: Added a styled `.site-description` paragraph on the homepage above the gallery grid to provide crawler-accessible text defining the game entity.
+*   **Navigation & Header Consistency**: Updated navigation link text from "New Features!" to "How to Play" across [index.html](file:///Users/zagers/Documents/code/NameThatYankee/index.html), [quiz.html](file:///Users/zagers/Documents/code/NameThatYankee/quiz.html), [analytics.html](file:///Users/zagers/Documents/code/NameThatYankee/analytics.html), and the Python template in [html_generator.py](file:///Users/zagers/Documents/code/NameThatYankee/page-generator/html_generator.py). Added mandatory `ABOUTME` headers to [instructions.html](file:///Users/zagers/Documents/code/NameThatYankee/instructions.html).
+*   **Verification**: Verified against the full 400+ test regression suite (`./run_tests.sh`) with 100% passing across Python unit, Playwright E2E, accessibility, and Vitest frontend test suites.
+
 ### 2026-07-05: Tribute Fixes & Nickname Search Support - "Tribute Integrity"
 *   **Test Runner & Fixtures copy**: Modified [run_tests.sh](file:///Users/zagers/Documents/code/NameThatYankee/run_tests.sh) to copy `2026-07-04.html` and `2026-05-04.html` to test fixtures, and added the Steinbrenner and Sterling E2E tests to the command list.
 *   **Clean Checkout E2E Test & Assertion Fixes**: Updated [test_steinbrenner_not_in_autocomplete_on_other_date](file:///Users/zagers/Documents/code/NameThatYankee/tests/test_steinbrenner_tribute.py) to load `date=2026-04-19` (which is tracked) instead of the untracked date `2026-07-03`, preventing errors on clean checkouts. Added `test_submit_nickname_guess_correct` to assert that submitting the nickname "The Boss" transitions the quiz UI to the correct/completed state.
