@@ -1,5 +1,26 @@
 [
     {
+        "date": "2026-09-12",
+        "name": "Ron Swoboda",
+        "nickname": "Rocky",
+        "teams": [
+            "NYY",
+            "MON",
+            "NYM"
+        ],
+        "years": [
+            "1965",
+            "1966",
+            "1967",
+            "1968",
+            "1969",
+            "1970",
+            "1971",
+            "1972",
+            "1973"
+        ]
+    },
+    {
         "date": "2026-09-11",
         "name": "Steve Karsay",
         "nickname": "",
