@@ -164,3 +164,7 @@
 *   **Game Integrity Warning:** Added the "Game Integrity & Redirect Funnel" convention to `README.md` to ensure developers protect the quiz redirection logic in `js/detail.js`.
 *   **Archive Tagging:** Tagged `AUTOMATION_SUMMARY.md` as an implementation archive since the puzzle automation feature branch was merged.
 *   **Verification:** Verified our documentation improvements against the full 331-test regression suite, achieving a clean 100% pass rate.
+
+## 2026-09-15 — Admin puzzle browser
+- Added hidden, passphrase-gated admin page (admin.html) for searching/auditing all puzzles by name/nickname, plus stats and player-pool analysis.
+- Added generated admin_data.json (full catalog + pool) built on every index rebuild; excluded from robots.txt and sitemap.
