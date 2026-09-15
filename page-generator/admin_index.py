@@ -17,7 +17,10 @@ def extract_quiz_data(soup) -> Dict[str, Any]:
     nicknames = raw.get("nicknames", [])
     if not nicknames:
         legacy = raw.get("nickname", "")
-        nicknames = [legacy] if legacy else []
+        if isinstance(legacy, list):
+            nicknames = list(legacy)
+        elif legacy:
+            nicknames = [legacy]
     return {"answer": raw.get("answer", ""), "nicknames": list(nicknames), "hints": list(raw.get("hints", []))}
 
 

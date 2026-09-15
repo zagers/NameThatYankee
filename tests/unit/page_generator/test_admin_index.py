@@ -23,6 +23,12 @@ def test_extract_quiz_data_legacy_nickname_string():
     assert data == {"answer": "Lou Piniella", "nicknames": ["Sweet Lou"], "hints": ["h"]}
 
 
+def test_extract_quiz_data_legacy_nickname_array():
+    html = '<div id="quiz-data" style="display:none;">{"answer": "George Steinbrenner", "nickname": ["The Boss", "Steinbrenner"], "hints": ["h"]}</div>'
+    data = admin_index.extract_quiz_data(_soup(html))
+    assert data == {"answer": "George Steinbrenner", "nicknames": ["The Boss", "Steinbrenner"], "hints": ["h"]}
+
+
 def test_extract_quiz_data_missing_div():
     assert admin_index.extract_quiz_data(_soup("<html></html>")) == {"answer": "", "nicknames": [], "hints": []}
 
@@ -218,3 +224,31 @@ def test_build_admin_data_missing_stats_flag(tmp_path):
     p = data["puzzles"][0]
     assert "missing_stats" in p["flags"]
     assert "missing_answer_image" in p["flags"]
+
+
+def test_rebuild_index_mode_also_builds_admin_data(tmp_path):
+    import subprocess
+    import os
+    import sys
+
+    project = _build_fixture_project(tmp_path, pages=("2026-09-14",), names=("Billy Martin",))
+    (project / "index.html").write_text(
+        '<html><body><footer class="copyright"></footer><div id="score-display"><svg class="chevron-icon"></svg></div><div class="gallery"></div></body></html>',
+        encoding="utf-8",
+    )
+    env = dict(os.environ)
+    env["HOME"] = str(project / "fakehome")
+    env["PYTHONPATH"] = str(Path(__file__).resolve().parents[3] / "page-generator")
+    main_py = str(Path(__file__).resolve().parents[3] / "page-generator" / "main.py")
+    result = subprocess.run(
+        [sys.executable, main_py, "--rebuild-index"],
+        capture_output=True,
+        text=True,
+        env=env,
+        cwd=str(project),
+        stdin=subprocess.DEVNULL,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (project / "admin_data.json").exists()
+    data = json.loads((project / "admin_data.json").read_text(encoding="utf-8"))
+    assert len(data["puzzles"]) >= 1

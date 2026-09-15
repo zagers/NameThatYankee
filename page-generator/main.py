@@ -21,6 +21,7 @@ import html_generator
 import user_interaction
 import fact_verifier
 import grounded_ai
+import admin_index
 
 # Import automation modules
 try:
@@ -530,6 +531,7 @@ def handle_regeneration_mode(config, project_dir, mode_input):
 
     # Rebuild index at the end
     html_generator.rebuild_index_page(project_dir)
+    admin_index.run_build(project_dir)
     print("\n✅ Regeneration session complete.")
 
 def handle_batch_automation(workflow: AutomatedWorkflow):
@@ -708,6 +710,7 @@ Notes:
     if rebuild_index_mode:
         project_dir = get_project_directory(config)
         html_generator.rebuild_index_page(project_dir)
+        admin_index.run_build(project_dir)
         exit()
 
     # Handle adding a nickname to an existing puzzle
@@ -912,5 +915,6 @@ Notes:
         shared_driver.quit()
     
     html_generator.rebuild_index_page(project_dir)
+    admin_index.run_build(project_dir)
             
     print("\n🎉 All tasks completed successfully! 🎉")
