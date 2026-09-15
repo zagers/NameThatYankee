@@ -41,3 +41,14 @@ def extract_career_totals(soup) -> Dict[str, str]:
     headers = [th.get_text(strip=True) for th in thead.find_all("th")]
     values = [td.get_text(strip=True) for td in tbody.find_all("td")]
     return dict(zip(headers, values))
+
+
+def extract_followup_qa(soup) -> List[Dict[str, str]]:
+    """Extract follow-up Q&A pairs from .followup-btn elements."""
+    qa: List[Dict[str, str]] = []
+    for btn in soup.select(".followup-btn"):
+        answer = btn.get("data-answer", "")
+        question = btn.get_text(strip=True)
+        if question and answer:
+            qa.append({"question": question, "answer": answer})
+    return qa

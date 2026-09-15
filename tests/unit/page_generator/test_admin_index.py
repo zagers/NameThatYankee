@@ -49,3 +49,23 @@ def test_extract_career_totals():
 
 def test_extract_career_totals_missing():
     assert admin_index.extract_career_totals(_soup("<html></html>")) == {}
+
+
+def test_extract_followup_qa():
+    html = (
+        '<div class="followup-item">'
+        '<button class="followup-btn" data-answer="Pine tar removed the homer.">1983 pine tar?</button>'
+        '<div class="followup-answer" style="display:none;"></div></div>'
+        '<div class="followup-item">'
+        '<button class="followup-btn" data-answer="Fractured orbital bone.">1960 altercation?</button>'
+        '<div class="followup-answer" style="display:none;"></div></div>'
+    )
+    qa = admin_index.extract_followup_qa(_soup(html))
+    assert qa == [
+        {"question": "1983 pine tar?", "answer": "Pine tar removed the homer."},
+        {"question": "1960 altercation?", "answer": "Fractured orbital bone."},
+    ]
+
+
+def test_extract_followup_qa_none():
+    assert admin_index.extract_followup_qa(_soup("<html></html>")) == []
