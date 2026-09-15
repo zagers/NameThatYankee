@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <title>Name That Yankee — Admin</title>
+    <style>
+        :root { color-scheme: light dark; }
+        body { font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 1.5rem; line-height: 1.5; }
+        h1 { font-size: 1.4rem; }
+        #gate { max-width: 22rem; margin: 3rem auto; text-align: center; }
+        #gate input { padding: .5rem; width: 100%; box-sizing: border-box; margin: .5rem 0; }
+        #gate button { padding: .5rem 1rem; cursor: pointer; }
+        #gate-error { color: #b00; min-height: 1.2em; }
+        #app { max-width: 1100px; margin: 0 auto; }
+        #toolbar { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin: .75rem 0; }
+        #search-bar { flex: 1; min-width: 15rem; padding: .5rem; }
+        #stats, #pool { border: 1px solid #8884; border-radius: 6px; padding: .5rem 1rem; margin: .75rem 0; }
+        #results { display: grid; gap: .5rem; }
+        .card { border: 1px solid #8884; border-radius: 6px; padding: .5rem 1rem; }
+        .card-head { display: flex; justify-content: space-between; align-items: baseline; }
+        .date { color: #888; font-size: .85rem; }
+        .stat { display: inline-block; background: #8882; border-radius: 4px; padding: 0 .4rem; margin-right: .3rem; }
+        .flag { display: inline-block; background: #b905; border-radius: 4px; padding: 0 .4rem; margin-right: .3rem; font-size: .8rem; }
+        .empty { color: #888; }
+        details { margin-top: .3rem; }
+        button.export { cursor: pointer; }
+        @media (prefers-color-scheme: dark) { body { background: #111; color: #ddd; } .date { color: #aaa; } }
+    </style>
+</head>
+<body>
+    <div id="gate" hidden>
+        <h1>Name That Yankee — Admin</h1>
+        <p>Enter the admin passphrase to continue.</p>
+        <form>
+            <input id="passphrase" type="password" placeholder="Passphrase" autocomplete="current-password"/>
+            <p id="gate-error"></p>
+            <button type="submit">Unlock</button>
+        </form>
+    </div>
+
+    <div id="app" hidden>
+        <h1>Name That Yankee — Admin</h1>
+
+        <div id="toolbar">
+            <input id="search-bar" type="search" placeholder="Search name, nickname, or stat (e.g. 'Billy', 'The Boss', '62.0')"/>
+        </div>
+
+        <section id="stats"></section>
+        <section id="pool"></section>
+
+        <div id="results"></div>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>
