@@ -1,5 +1,32 @@
 [
     {
+        "date": "2026-09-14",
+        "name": "Billy Martin",
+        "nickname": "Billy",
+        "teams": [
+            "MLN",
+            "KCA",
+            "MIN",
+            "DET",
+            "CLE",
+            "CIN",
+            "NYY"
+        ],
+        "years": [
+            "1950",
+            "1951",
+            "1952",
+            "1953",
+            "1955",
+            "1956",
+            "1957",
+            "1958",
+            "1959",
+            "1960",
+            "1961"
+        ]
+    },
+    {
         "date": "2026-09-13",
         "name": "Luis Severino",
         "nickname": "Sevy",
