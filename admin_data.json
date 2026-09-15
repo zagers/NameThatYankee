@@ -12721,140 +12721,65 @@
     },
     {
       "date": "2025-08-02",
-      "name": "Randy Choate",
+      "name": "Erick Almonte",
       "nicknames": [],
       "hints": [
-        "Specialized as a left-handed relief pitcher throughout a 15-season career.",
-        "Recorded 672 appearances without ever making a single start in the major leagues.",
-        "Drafted by a storied franchise in the 5th round of the 1997 amateur draft."
+        "Served as an infield depth piece in the Bronx while the legendary Captain anchored the shortstop position.",
+        "Spent his early professional development within the pinstripes organization before eventually taking his talents to the Japanese Pacific League.",
+        "Demonstrated defensive flexibility by logging appearances at first base, the outfield, and the middle infield during his time in the pinstripes."
       ],
       "followup_qa": [
         {
-          "question": "What made Randy Choate a unique weapon for managers during his career?",
-          "answer": "Choate was a quintessential 'LOOGY' (Lefty One-Out Guy). His sidearm delivery and extreme effectiveness against left-handed hitters allowed him to carve out a long career as a specialist, appearing in 672 games despite never starting a single one."
+          "question": "What was a notable international move Erick Almonte made after his time with the New York Yankees?",
+          "answer": "On January 3, 2005, Erick Almonte was purchased by the Hokkaido Nippon-Ham Fighters from the Cleveland Indians, taking his career to the Japan Pacific league."
         },
         {
-          "question": "How did Choate's time with the Yankees end in 2003?",
-          "answer": "He was part of a significant trade on December 16, 2003, when the Yankees sent him, Nick Johnson, and Juan Rivera to the Montreal Expos in exchange for starting pitcher Javier V\u00e1zquez."
+          "question": "How did Erick Almonte's defensive profile look during his time in the major leagues?",
+          "answer": "Erick Almonte was primarily a shortstop with 35 appearances at the position, but he also saw time at first base, right field, and as a designated hitter."
         },
         {
-          "question": "Did Choate ever play for multiple teams in a single season?",
-          "answer": "Yes, in 2012, he split his time between the Miami Marlins and the Los Angeles Dodgers, eventually being traded to Los Angeles alongside Hanley Ram\u00edrez in a deal that brought Nathan Eovaldi brought Nathan Eovaldi to Miami."
+          "question": "When did Erick Almonte's tenure with the New York Yankees officially conclude?",
+          "answer": "Erick Almonte was released by the New York Yankees on March 26, 2004, ending his initial stint with the club that signed him as an amateur free agent in 1996."
         }
       ],
       "career_totals": {
-        "WAR": "4.5",
-        "W": "16",
-        "L": "14",
-        "ERA": "3.90",
-        "G": "672",
-        "GS": "0",
-        "SV": "7",
-        "IP": "408.0",
-        "SO": "348",
-        "WHIP": "1.287"
+        "WAR": "-1.0",
+        "AB": "133",
+        "H": "31",
+        "HR": "2",
+        "BA": ".233",
+        "R": "18",
+        "RBI": "14",
+        "SB": "3",
+        "OBP": ".282",
+        "SLG": ".331",
+        "OPS": ".613",
+        "OPS+": "64"
       },
       "teams": [
-        "LAD",
-        "FLA",
-        "ARI",
-        "STL",
         "NYY",
-        "MIA",
-        "TBR"
+        "MIL"
       ],
       "years": [
-        "2000",
         "2001",
-        "2002",
         "2003",
-        "2004",
-        "2005",
-        "2006",
-        "2007",
-        "2009",
-        "2010",
-        "2011",
-        "2012",
-        "2013",
-        "2014",
-        "2015"
+        "2011"
       ],
       "war_arc": [
         {
-          "year": "2000",
-          "war": 0.1,
-          "team": "NYY"
-        },
-        {
           "year": "2001",
-          "war": 0.8,
-          "team": "NYY"
-        },
-        {
-          "year": "2002",
-          "war": -0.2,
+          "war": 0.1,
           "team": "NYY"
         },
         {
           "year": "2003",
-          "war": 0.0,
+          "war": -0.4,
           "team": "NYY"
         },
         {
-          "year": "2004",
-          "war": 0.5,
-          "team": "ARI"
-        },
-        {
-          "year": "2005",
-          "war": -0.4,
-          "team": "ARI"
-        },
-        {
-          "year": "2006",
-          "war": 0.1,
-          "team": "ARI"
-        },
-        {
-          "year": "2007",
-          "war": 0.0,
-          "team": "ARI"
-        },
-        {
-          "year": "2009",
-          "war": 0.7,
-          "team": "TBR"
-        },
-        {
-          "year": "2010",
-          "war": -0.1,
-          "team": "TBR"
-        },
-        {
           "year": "2011",
-          "war": 1.0,
-          "team": "FLA"
-        },
-        {
-          "year": "2012",
-          "war": 0.6,
-          "team": "2TM"
-        },
-        {
-          "year": "2013",
-          "war": 1.2,
-          "team": "STL"
-        },
-        {
-          "year": "2014",
-          "war": -0.1,
-          "team": "STL"
-        },
-        {
-          "year": "2015",
-          "war": 0.2,
-          "team": "STL"
+          "war": -0.7,
+          "team": "MIL"
         }
       ],
       "images": {
@@ -31663,116 +31588,119 @@
     },
     {
       "date": "2026-08-02",
-      "name": "Jack Aker",
+      "name": "Steve Trout",
       "nicknames": [],
       "hints": [
-        "Arrived in the Bronx as part of a mid-season exchange for a pitcher who had previously been a member of the Yankees' rotation.",
-        "Served as a reliable arm in the pinstripes, notably contributing a career-high level of production during his second season in New York.",
-        "Was involved in a transaction that brought a legendary outfielder to the Yankees in exchange for a player to be named later."
+        "This pitcher arrived in the Bronx as part of a mid-season transaction that sent a future teammate and two other players to the Windy City.",
+        "Before donning the pinstripes, he was a first-round draft selection who spent his early years as a primary starter for a club in the American League.",
+        "His time in New York was brief, serving as a bridge between his tenure in the National League and his final stop in the Pacific Northwest."
       ],
       "followup_qa": [
         {
-          "question": "How did Jack Aker first become a member of the New York Yankees?",
-          "answer": "Jack Aker was acquired by the New York Yankees from the Seattle Pilots on May 20, 1969, in a trade that sent pitcher Fred Talbot to the Pacific Northwest."
+          "question": "Who were the players involved in the July 13, 1987 trade that brought Steve Trout to the New York Yankees?",
+          "answer": "Steve Trout was acquired by the New York Yankees from the Chicago Cubs in exchange for Rich Scheid, Bob Tewksbury, and Dean Wilkins."
         },
         {
-          "question": "What was the nature of the transaction that saw Jack Aker leave the Yankees for the Chicago Cubs?",
-          "answer": "On May 17, 1972, the New York Yankees sent Jack Aker to the Chicago Cubs to complete a deal initiated on January 20, 1972, which had brought outfielder Johnny Callison to the Bronx."
+          "question": "What was the nature of Steve Trout's departure from the New York Yankees?",
+          "answer": "On December 22, 1987, Steve Trout was traded by the New York Yankees along with Henry Cotto to the Seattle Mariners in exchange for Lee Guetterman, Clay Parker, and Wade Taylor."
         },
         {
-          "question": "Did Jack Aker have any experience with other New York teams after his time in the Bronx?",
-          "answer": "Yes, after stints with the Chicago Cubs and Atlanta Braves, Jack Aker was purchased by the New York Mets on June 14, 1974, where he finished his major league career."
+          "question": "How did Steve Trout's career conclude after his time with the Seattle Mariners?",
+          "answer": "After playing for the Seattle Mariners during the 1988 and 1989 seasons, Steve Trout was released by the organization on June 12, 1989."
         }
       ],
       "career_totals": {
-        "WAR": "8.0",
-        "W": "47",
-        "L": "45",
-        "ERA": "3.28",
-        "G": "495",
-        "GS": "0",
-        "SV": "124",
-        "IP": "746.0",
-        "SO": "404",
-        "WHIP": "1.277"
+        "WAR": "13.3",
+        "W": "88",
+        "L": "92",
+        "ERA": "4.18",
+        "G": "301",
+        "GS": "236",
+        "SV": "4",
+        "IP": "1501.1",
+        "SO": "656",
+        "WHIP": "1.494"
       },
       "teams": [
-        "NYM",
-        "ATL",
+        "NYY",
         "CHC",
-        "SEP",
-        "KCA",
-        "OAK",
-        "NYY"
+        "SEA",
+        "CHW"
       ],
       "years": [
-        "1964",
-        "1965",
-        "1966",
-        "1967",
-        "1968",
-        "1969",
-        "1970",
-        "1971",
-        "1972",
-        "1973",
-        "1974"
+        "1978",
+        "1979",
+        "1980",
+        "1981",
+        "1982",
+        "1983",
+        "1984",
+        "1985",
+        "1986",
+        "1987",
+        "1988",
+        "1989"
       ],
       "war_arc": [
         {
-          "year": "1964",
-          "war": -0.9,
-          "team": "KCA"
+          "year": "1978",
+          "war": 0.2,
+          "team": "CHW"
         },
         {
-          "year": "1965",
-          "war": 1.1,
-          "team": "KCA"
+          "year": "1979",
+          "war": 1.8,
+          "team": "CHW"
         },
         {
-          "year": "1966",
-          "war": 4.6,
-          "team": "KCA"
+          "year": "1980",
+          "war": 2.2,
+          "team": "CHW"
         },
         {
-          "year": "1967",
-          "war": -0.3,
-          "team": "KCA"
+          "year": "1981",
+          "war": 1.4,
+          "team": "CHW"
         },
         {
-          "year": "1968",
-          "war": -1.4,
-          "team": "OAK"
+          "year": "1982",
+          "war": 0.1,
+          "team": "CHW"
         },
         {
-          "year": "1969",
-          "war": 1.5,
-          "team": "2TM"
-        },
-        {
-          "year": "1970",
-          "war": 2.4,
-          "team": "NYY"
-        },
-        {
-          "year": "1971",
-          "war": 0.9,
-          "team": "NYY"
-        },
-        {
-          "year": "1972",
-          "war": 0.3,
-          "team": "2TM"
-        },
-        {
-          "year": "1973",
-          "war": 0.3,
+          "year": "1983",
+          "war": 0.1,
           "team": "CHC"
         },
         {
-          "year": "1974",
-          "war": 0.1,
+          "year": "1984",
+          "war": 3.6,
+          "team": "CHC"
+        },
+        {
+          "year": "1985",
+          "war": 3.0,
+          "team": "CHC"
+        },
+        {
+          "year": "1986",
+          "war": 1.4,
+          "team": "CHC"
+        },
+        {
+          "year": "1987",
+          "war": 2.2,
           "team": "2TM"
+        },
+        {
+          "year": "1988",
+          "war": -1.5,
+          "team": "SEA"
+        },
+        {
+          "year": "1989",
+          "war": -1.3,
+          "team": "SEA"
         }
       ],
       "images": {
@@ -35849,7 +35777,7 @@
       },
       {
         "date": "2025-08-02",
-        "name": "Randy Choate"
+        "name": "Erick Almonte"
       },
       {
         "date": "2025-08-03",
@@ -36437,7 +36365,7 @@
       },
       {
         "date": "2026-08-02",
-        "name": "Jack Aker"
+        "name": "Steve Trout"
       },
       {
         "date": "2026-08-03",
@@ -36650,6 +36578,7 @@
       "elrod hendricks",
       "elston howard",
       "enrique wilson",
+      "erick almonte",
       "fernando cruz",
       "fran healy",
       "frankie crosetti",
@@ -36811,6 +36740,7 @@
       "steve hamilton",
       "steve karsay",
       "steve sax",
+      "steve trout",
       "ted lilly",
       "tim foli",
       "tim mayza",
@@ -36945,6 +36875,7 @@
       "elrod hendricks",
       "elston howard",
       "enrique wilson",
+      "erick almonte",
       "fernando cruz",
       "fran healy",
       "frankie crosetti",
@@ -37132,6 +37063,7 @@
       "steve hamilton",
       "steve karsay",
       "steve sax",
+      "steve trout",
       "stick",
       "super chief",
       "sweet lou",
@@ -37176,7 +37108,7 @@
       "willie randolph",
       "zach britton"
     ],
-    "available_count": 23295,
+    "available_count": 23293,
     "available": [
       "A. Jones",
       "A. Miller",
@@ -44787,7 +44719,6 @@
       "Eric Young Jr.",
       "Eric Young Sr.",
       "Erich Uelmen",
-      "Erick Almonte",
       "Erick Aybar",
       "Erick Castillo",
       "Erick Fedde",
@@ -58170,7 +58101,6 @@
       "Steve Toole",
       "Steve Torrealba",
       "Steve Trachsel",
-      "Steve Trout",
       "Steve Wapnick",
       "Steve Waterbury",
       "Steve Watkins",
@@ -60475,20 +60405,6 @@
       "Zollie Wright"
     ],
     "duplicates": [
-      [
-        "Jack Aker",
-        [
-          "2026-07-31",
-          "2026-08-02"
-        ]
-      ],
-      [
-        "Randy Choate",
-        [
-          "2025-07-29",
-          "2025-08-02"
-        ]
-      ],
       [
         "Tony Kubek",
         [
