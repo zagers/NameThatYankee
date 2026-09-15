@@ -26,3 +26,18 @@ def extract_search_data(soup) -> Dict[str, Any]:
         return {"teams": [], "years": []}
     raw = json.loads(div.string)
     return {"teams": raw.get("teams", []), "years": raw.get("years", [])}
+
+
+def extract_career_totals(soup) -> Dict[str, str]:
+    """Extract the career totals stat table as {header: value}."""
+    container = soup.select_one(".stats-table-container")
+    table = container.find("table") if container else None
+    if not table:
+        return {}
+    thead = table.find("thead")
+    tbody = table.find("tbody")
+    if not thead or not tbody:
+        return {}
+    headers = [th.get_text(strip=True) for th in thead.find_all("th")]
+    values = [td.get_text(strip=True) for td in tbody.find_all("td")]
+    return dict(zip(headers, values))

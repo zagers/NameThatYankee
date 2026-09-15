@@ -34,3 +34,18 @@ def test_extract_search_data():
 
 def test_extract_search_data_missing_div():
     assert admin_index.extract_search_data(_soup("<html></html>")) == {"teams": [], "years": []}
+
+
+def test_extract_career_totals():
+    html = (
+        '<div class="stats-table-container"><div class="table-wrapper"><table>'
+        "<thead><tr><th>WAR</th><th>AB</th><th>HR</th></tr></thead>"
+        "<tbody><tr><td>2.9</td><td>3419</td><td>64</td></tr></tbody>"
+        "</table></div></div>"
+    )
+    data = admin_index.extract_career_totals(_soup(html))
+    assert data == {"WAR": "2.9", "AB": "3419", "HR": "64"}
+
+
+def test_extract_career_totals_missing():
+    assert admin_index.extract_career_totals(_soup("<html></html>")) == {}
