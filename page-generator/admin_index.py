@@ -5,18 +5,20 @@ import html
 from pathlib import Path
 from typing import Any, Dict, List
 
+from bs4 import BeautifulSoup  # type: ignore
+
 
 def extract_quiz_data(soup) -> Dict[str, Any]:
-    """Extract answer + nicknames from the #quiz-data div (handles old/new formats)."""
+    """Extract answer + nicknames + hints from the #quiz-data div (handles old/new formats)."""
     div = soup.find(id="quiz-data")
     if not div or not div.string:
-        return {"answer": "", "nicknames": []}
+        return {"answer": "", "nicknames": [], "hints": []}
     raw = json.loads(div.string)
     nicknames = raw.get("nicknames", [])
     if not nicknames:
         legacy = raw.get("nickname", "")
         nicknames = [legacy] if legacy else []
-    return {"answer": raw.get("answer", ""), "nicknames": list(nicknames)}
+    return {"answer": raw.get("answer", ""), "nicknames": list(nicknames), "hints": list(raw.get("hints", []))}
 
 
 def extract_search_data(soup) -> Dict[str, Any]:
@@ -120,4 +122,50 @@ def build_pool(players: List[str], puzzles: List[Dict[str, Any]]) -> Dict[str, A
         "available_count": len(available),
         "available": available,
         "duplicates": duplicates,
+    }
+
+
+def _parse_name_from_h2(soup) -> str:
+    """Extract plain player name from the h2, which is 'Name \"Nickname\"' or 'Name'."""
+    h2 = soup.find("h2")
+    if not h2:
+        return ""
+    full = html.unescape(h2.get_text(strip=True))
+    if '"' in full:
+        return full.split('"')[0].strip()
+    return full
+
+
+def parse_detail_page(path: Path, has_clue_img: bool, has_answer_img: bool) -> Dict[str, Any]:
+    """Parse a single puzzle detail page into a full admin_data record."""
+    soup = BeautifulSoup(path.read_text(encoding="utf-8"), "html.parser") if path.exists() else None
+    quiz = extract_quiz_data(soup) if soup else {"answer": "", "nicknames": []}
+    search = extract_search_data(soup) if soup else {"teams": [], "years": []}
+    name = quiz["answer"] or (_parse_name_from_h2(soup) if soup else "")
+
+    flags = []
+    if not quiz["nicknames"]:
+        flags.append("no_nickname")
+    if not has_clue_img:
+        flags.append("missing_clue_image")
+    if not has_answer_img:
+        flags.append("missing_answer_image")
+    career_totals = extract_career_totals(soup) if soup else {}
+    if not career_totals:
+        flags.append("missing_stats")
+    if name == "Unknown":
+        flags.append("unknown_name")
+
+    return {
+        "date": path.stem,
+        "name": name,
+        "nicknames": quiz["nicknames"],
+        "hints": quiz.get("hints", []),
+        "followup_qa": extract_followup_qa(soup) if soup else [],
+        "career_totals": career_totals,
+        "teams": search["teams"],
+        "years": search["years"],
+        "war_arc": extract_war_arc(soup) if soup else [],
+        "images": {"clue": has_clue_img, "answer": has_answer_img},
+        "flags": flags,
     }

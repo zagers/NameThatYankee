@@ -1,6 +1,7 @@
 # ABOUTME: Unit tests for the admin_data.json generator.
 # ABOUTME: Verifies extraction from puzzle detail pages and pool analysis.
 import json
+from pathlib import Path
 
 from bs4 import BeautifulSoup  # type: ignore
 import admin_index  # type: ignore
@@ -13,17 +14,17 @@ def _soup(detail_html: str) -> BeautifulSoup:
 def test_extract_quiz_data_names_array():
     html = '<div id="quiz-data" style="display:none;">{"answer": "Billy Martin", "nicknames": ["Billy", "Boys Club Basher"], "hints": ["h"]}</div>'
     data = admin_index.extract_quiz_data(_soup(html))
-    assert data == {"answer": "Billy Martin", "nicknames": ["Billy", "Boys Club Basher"]}
+    assert data == {"answer": "Billy Martin", "nicknames": ["Billy", "Boys Club Basher"], "hints": ["h"]}
 
 
 def test_extract_quiz_data_legacy_nickname_string():
     html = '<div id="quiz-data" style="display:none;">{"answer": "Lou Piniella", "nickname": "Sweet Lou", "hints": ["h"]}</div>'
     data = admin_index.extract_quiz_data(_soup(html))
-    assert data == {"answer": "Lou Piniella", "nicknames": ["Sweet Lou"]}
+    assert data == {"answer": "Lou Piniella", "nicknames": ["Sweet Lou"], "hints": ["h"]}
 
 
 def test_extract_quiz_data_missing_div():
-    assert admin_index.extract_quiz_data(_soup("<html></html>")) == {"answer": "", "nicknames": []}
+    assert admin_index.extract_quiz_data(_soup("<html></html>")) == {"answer": "", "nicknames": [], "hints": []}
 
 
 def test_extract_search_data():
@@ -129,3 +130,45 @@ def test_build_pool_detects_used_duplicates_and_available(tmp_path):
     assert pool["duplicates"] == [["Billy Martin", ["2026-09-14", "2025-01-01"]]]
     assert pool["available_count"] == 2
     assert sorted(pool["available"]) == ["Dusty Baker", "Mike Jackson"]
+
+
+def _make_detail_page(path: Path, quiz_html: str = "", name_in_h2: str = "Billy Martin \"Billy\"") -> Path:
+    path.write_text(
+        "<html><body>"
+        f"<h2>{name_in_h2}</h2>"
+        '<div class="stats-table-container"><div class="table-wrapper"><table>'
+        "<thead><tr><th>WAR</th></tr></thead>"
+        "<tbody><tr><td>2.9</td></tr></tbody>"
+        "</table></div></div>"
+        '<script>const years = ["1950"];\nconst warData = [0.0];\nconst teamsByYear = ["NYY"];</script>'
+        f"{quiz_html}"
+        "</body></html>",
+        encoding="utf-8",
+    )
+    return path
+
+
+def test_parse_detail_page_full(tmp_path):
+    quiz = '<div id="quiz-data" style="display:none;">{"answer": "Billy Martin", "nicknames": ["Billy"], "hints": ["fiery infielder"]}</div>'
+    q = '<div class="followup-item"><button class="followup-btn" data-answer="abc">Question?</button></div>'
+    page = _make_detail_page(tmp_path / "2026-09-14.html", quiz + q)
+    rec = admin_index.parse_detail_page(page, True, True)
+    assert rec["date"] == "2026-09-14"
+    assert rec["name"] == "Billy Martin"
+    assert rec["nicknames"] == ["Billy"]
+    assert rec["hints"] == ["fiery infielder"]
+    assert rec["career_totals"] == {"WAR": "2.9"}
+    assert rec["war_arc"] == [{"year": "1950", "war": 0.0, "team": "NYY"}]
+    assert rec["followup_qa"] == [{"question": "Question?", "answer": "abc"}]
+    assert rec["images"] == {"clue": True, "answer": True}
+    assert rec["flags"] == []
+
+
+def test_parse_detail_page_flags(tmp_path):
+    page = _make_detail_page(tmp_path / "2025-01-01.html", name_in_h2="Unknown")
+    rec = admin_index.parse_detail_page(page, False, False)
+    assert "missing_clue_image" in rec["flags"]
+    assert "missing_answer_image" in rec["flags"]
+    assert "unknown_name" in rec["flags"]
+    assert "no_nickname" in rec["flags"]
+    assert "missing_stats" not in rec["flags"]
