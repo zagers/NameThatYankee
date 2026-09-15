@@ -69,3 +69,27 @@ def test_extract_followup_qa():
 
 def test_extract_followup_qa_none():
     assert admin_index.extract_followup_qa(_soup("<html></html>")) == []
+
+
+def test_extract_war_arc():
+    html = (
+        "<script>\n"
+        'const years = ["1950", "1951"];\n'
+        "const warData = [0.0, 0.2];\n"
+        'const teamsByYear = ["NYY", "NYY"];\n'
+        "</script>"
+    )
+    arc = admin_index.extract_war_arc(_soup(html))
+    assert arc == [
+        {"year": "1950", "war": 0.0, "team": "NYY"},
+        {"year": "1951", "war": 0.2, "team": "NYY"},
+    ]
+
+
+def test_extract_war_arc_missing():
+    assert admin_index.extract_war_arc(_soup("<html></html>")) == []
+
+
+def test_extract_war_arc_partial():
+    html = "<script>" + 'const years = ["2001"];\n' + "</script>"
+    assert admin_index.extract_war_arc(_soup(html)) == []

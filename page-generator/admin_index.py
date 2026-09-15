@@ -52,3 +52,23 @@ def extract_followup_qa(soup) -> List[Dict[str, str]]:
         if question and answer:
             qa.append({"question": question, "answer": answer})
     return qa
+
+
+def _find_js_array(text: str, name: str):
+    """Return the parsed list for a JS `const <name> = [...]` in text, or None."""
+    m = re.search(r"const\s+" + re.escape(name) + r"\s*=\s*(\[.*?\]);", text, re.DOTALL)
+    return json.loads(m.group(1)) if m else None
+
+
+def extract_war_arc(soup) -> List[Dict[str, Any]]:
+    """Extract per-year {year, war, team} from the chart script consts."""
+    text = "\n".join(s.get_text() for s in soup.find_all("script"))
+    years = _find_js_array(text, "years")
+    war = _find_js_array(text, "warData")
+    teams = _find_js_array(text, "teamsByYear")
+    if years is None or war is None or teams is None or not (len(years) == len(war) == len(teams)):
+        return []
+    return [
+        {"year": str(y), "war": float(w), "team": str(t)}
+        for y, w, t in zip(years, war, teams)
+    ]
