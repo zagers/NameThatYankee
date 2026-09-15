@@ -2,6 +2,7 @@
 import json
 import re
 import html
+import unicodedata
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -92,8 +93,6 @@ def load_all_players(js_path: Path) -> List[str]:
 
 def normalize_name(name: str) -> str:
     """Lowercase, strip diacritics, and trim for comparisons."""
-    import unicodedata
-
     normalized = unicodedata.normalize("NFD", name or "")
     stripped = "".join(ch for ch in normalized if unicodedata.category(ch) != "Mn")
     return stripped.lower().strip()
@@ -142,7 +141,7 @@ def _parse_name_from_h2(soup) -> str:
 def parse_detail_page(path: Path, has_clue_img: bool, has_answer_img: bool) -> Dict[str, Any]:
     """Parse a single puzzle detail page into a full admin_data record."""
     soup = BeautifulSoup(path.read_text(encoding="utf-8"), "html.parser") if path.exists() else None
-    quiz = extract_quiz_data(soup) if soup else {"answer": "", "nicknames": []}
+    quiz = extract_quiz_data(soup) if soup else {"answer": "", "nicknames": [], "hints": []}
     search = extract_search_data(soup) if soup else {"teams": [], "years": []}
     name = quiz["answer"] or (_parse_name_from_h2(soup) if soup else "")
 

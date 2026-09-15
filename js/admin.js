@@ -5,6 +5,8 @@ import { searchPuzzles } from './adminSearch.js';
 const ADMIN_PASS_HASH = '1026c2d269101ddb639aee31ad310f42ec0fae00189ed328741b0091256c32ec';
 const UNLOCK_KEY = 'nta_admin_unlocked';
 
+let adminPuzzles = [];
+
 async function sha256(text) {
     const data = new TextEncoder().encode(text);
     const digest = await crypto.subtle.digest('SHA-256', data);
@@ -21,7 +23,12 @@ function requireUnlocked() {
     document.getElementById('gate').hidden = false;
 }
 
-async function init() {
+function showUnlocked() {
+    document.getElementById('gate').hidden = true;
+    document.getElementById('app').hidden = false;
+}
+
+async function loadAdminData() {
     let adminData;
     try {
         adminData = await (await fetch('admin_data.json?v=' + Date.now())).json();
@@ -29,29 +36,33 @@ async function init() {
         document.getElementById('gate-error').textContent = 'Failed to load admin_data.json. Is the generator run?';
         return;
     }
-    const puzzles = adminData.puzzles;
+    adminPuzzles = adminData.puzzles;
+    renderStats(adminData);
+    renderPool(adminData.pool);
+    renderAll(adminPuzzles);
+}
 
+async function init() {
     document.getElementById('gate').querySelector('form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const input = document.getElementById('passphrase').value;
         if ((await sha256(input)) === ADMIN_PASS_HASH) {
             sessionStorage.setItem(UNLOCK_KEY, '1');
-            document.getElementById('gate').hidden = true;
-            document.getElementById('app').hidden = false;
+            showUnlocked();
+            await loadAdminData();
         } else {
             document.getElementById('gate-error').textContent = 'Incorrect passphrase.';
         }
     });
 
     requireUnlocked();
-    if (!isUnlocked()) return;
-
-    renderStats(adminData);
-    renderPool(adminData.pool);
-    renderAll(puzzles);
+    if (isUnlocked()) {
+        showUnlocked();
+        await loadAdminData();
+    }
 
     document.getElementById('search-bar').addEventListener('input', (e) => {
-        renderSearchResults(puzzles, e.target.value);
+        renderSearchResults(adminPuzzles, e.target.value);
     });
 }
 
@@ -59,12 +70,14 @@ function renderAll(puzzles) { renderSearchResults(puzzles, ''); }
 
 export function renderSearchResults(puzzles, query) {
     const grid = document.getElementById('results');
-    const results = searchPuzzles(puzzles, query);
+    const results = query
+        ? searchPuzzles(puzzles, query)
+        : [...puzzles].sort((a, b) => b.date.localeCompare(a.date)).map(p => ({ puzzle: p, score: null }));
     if (results.length === 0) { grid.innerHTML = '<p class="empty">No puzzle found for this search.</p>'; return; }
     grid.innerHTML = results.map(({ puzzle, score }) => `
         <div class="card" data-date="${puzzle.date}">
             <div class="card-head"><strong>${escapeHtml(puzzle.name)}</strong> <span class="date">${puzzle.date}</span></div>
-            <div class="meta">${escapeHtml(puzzle.teams.join(', ')) || '—'} · ${puzzle.years.length} seasons · score ${score}</div>
+            <div class="meta">${escapeHtml(puzzle.teams.join(', ')) || '—'} · ${puzzle.years.length} seasons${score === null ? '' : ` · score ${score}`}</div>
             <details><summary>Details</summary>${puzzleDetailsHtml(puzzle)}</details>
         </div>`).join('');
 }
@@ -112,12 +125,6 @@ export function renderPool(pool) {
         <p>Available: <b>${pool.available_count}</b></p>
         <details><summary>Available players (first 100)</summary><ul>${pool.available.slice(0, 100).map(a => `<li>${escapeHtml(a)}</li>`).join('')}</ul></details>
         <details><summary>Duplicates</summary><ul>${list || '<li>None</li>'}</ul></details>`;
-}
-
-function setUnlocked() {
-    sessionStorage.setItem(UNLOCK_KEY, '1');
-    document.getElementById('gate').hidden = true;
-    document.getElementById('app').hidden = false;
 }
 
 if (!window.__TESTING__) {

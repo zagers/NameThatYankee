@@ -40,25 +40,44 @@ describe('levenshtein', () => {
 });
 
 describe('searchPuzzles', () => {
-    it('finds exact name match with score 0', () => {
+    it('returns empty for empty query', () => {
+        expect(searchPuzzles(PUZZLES, '')).toEqual([]);
+    });
+
+    it('finds exact name match', () => {
         const results = searchPuzzles(PUZZLES, 'Billy Martin');
-        expect(results.length).toBeGreaterThanOrEqual(1);
         expect(results[0].puzzle.name).toBe('Billy Martin');
-        expect(results[0].score).toBe(0);
+        expect(results[0].score).toBe(20);
     });
 
-    it('finds by nickname', () => {
-        const results = searchPuzzles(PUZZLES, 'AJ');
-        expect(results.some(r => r.puzzle.name === 'Aaron Judge')).toBe(true);
+    it('finds by substring of last name', () => {
+        const results = searchPuzzles(PUZZLES, 'martin');
+        expect(results.map(r => r.puzzle.name)).toEqual(['Billy Martin']);
     });
 
-    it('finds fuzzy matches within threshold', () => {
-        const results = searchPuzzles(PUZZLES, 'Bily Martn');
+    it('finds by nickname alias', () => {
+        const results = searchPuzzles(PUZZLES, 'billy');
+        expect(results.some(r => r.puzzle.name === 'Billy Martin')).toBe(true);
+        expect(results.some(r => r.puzzle.name === 'Aaron Judge')).toBe(false);
+    });
+
+    it('finds by fuzzy typo', () => {
+        const results = searchPuzzles(PUZZLES, 'mrtin');
         expect(results.some(r => r.puzzle.name === 'Billy Martin')).toBe(true);
     });
 
+    it('reports nothing for unknown multi-token nickname', () => {
+        const results = searchPuzzles(PUZZLES, 'home run baker');
+        expect(results).toEqual([]);
+    });
+
     it('returns empty array for nonsense', () => {
-        const results = searchPuzzles(PUZZLES, 'zzzzzzzzz');
+        expect(searchPuzzles(PUZZLES, 'zzzzzzzzz')).toEqual([]);
+    });
+
+    it('respects required fields parameter (name only)', () => {
+        const node = { date: '2026-09-11', name: 'Aaron Judge', nicknames: ['Sevy'], career_totals: {}, teams: [], years: [] };
+        const results = searchPuzzles([...PUZZLES, node], 'sevy', ['name']);
         expect(results).toEqual([]);
     });
 });

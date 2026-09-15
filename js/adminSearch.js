@@ -1,97 +1,74 @@
-// ABOUTME: Provides fuzzy search over admin_data.json puzzle records.
-// ABOUTME: Exports normalizeAdminText, levenshtein, and searchPuzzles for the admin search page.
+// ABOUTME: Pure, DOM-free search and matching helpers for the admin page.
+// ABOUTME: Powers name/nickname/fuzzy searches across the puzzle catalog.
 
-/**
- * Normalize text for comparison: lowercase, strip diacritics, trim.
- * @param {string|null|undefined} text
- * @returns {string}
- */
 export function normalizeAdminText(text) {
-    if (text == null) return '';
-    return text
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .trim();
+    if (!text) return '';
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 }
 
-/**
- * Standard Levenshtein distance between two strings.
- * @param {string} a
- * @param {string} b
- * @returns {number}
- */
 export function levenshtein(a, b) {
-    const lenA = a.length;
-    const lenB = b.length;
-    const dp = Array.from({ length: lenA + 1 }, () => new Array(lenB + 1).fill(0));
-    for (let i = 0; i <= lenA; i++) dp[i][0] = i;
-    for (let j = 0; j <= lenB; j++) dp[0][j] = j;
-    for (let i = 1; i <= lenA; i++) {
-        for (let j = 1; j <= lenB; j++) {
+    const m = a.length;
+    const n = b.length;
+    if (m === 0) return n;
+    if (n === 0) return m;
+    let prev = Array.from({ length: n + 1 }, (_, i) => i);
+    for (let i = 1; i <= m; i++) {
+        let cur = [i];
+        for (let j = 1; j <= n; j++) {
             const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-            dp[i][j] = Math.min(
-                dp[i - 1][j] + 1,       // deletion
-                dp[i][j - 1] + 1,       // insertion
-                dp[i - 1][j - 1] + cost // substitution
-            );
+            cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
         }
+        prev = cur;
     }
-    return dp[lenA][lenB];
+    return prev[n];
+}
+
+function bestWordScore(token, fieldWords) {
+    let best = 0;
+    for (const word of fieldWords) {
+        if (!word) continue;
+        if (word === token) best = Math.max(best, 10);
+        else if (word.startsWith(token)) best = Math.max(best, 6);
+        else if (word.includes(token)) best = Math.max(best, 4);
+        else if (token.length >= 4 && levenshtein(token, word) <= 1) best = Math.max(best, 2);
+    }
+    return best;
 }
 
 /**
- * Search puzzles by name/nickname/career_totals using Levenshtein fuzzy matching.
- * Returns results sorted by score (0 = exact match), filtered to those within threshold.
+ * Search puzzles by name/nickname using tokenized AND semantics.
+ * Each token must match at least one field word. Tokens are scored:
+ *   exact word hit = 10, prefix = 6, substring = 4, fuzzy (≤1 edit, len≥4) = 2.
+ * Returns results sorted by score descending, best first.
  *
- * @param {Array<{name: string, nicknames: string[], career_totals: Record<string, string>}>} puzzles
+ * @param {Array<object>} puzzles
  * @param {string} query
- * @param {number} [threshold=3] - max edit distance to consider a match
+ * @param {string[]} [fields=["name","nicknames"]]
  * @returns {Array<{puzzle: object, score: number}>}
  */
-export function searchPuzzles(puzzles, query, threshold = 3) {
-    if (!query) return [];
-    const q = normalizeAdminText(query);
-    if (!q) return [];
+export function searchPuzzles(puzzles, query, fields = ['name', 'nicknames']) {
+    const tokens = normalizeAdminText(query).split(/\s+/).filter(Boolean);
+    if (tokens.length === 0) return [];
 
     const results = [];
-
     for (const puzzle of puzzles) {
-        let best = Infinity;
-
-        // Check name
-        const name = normalizeAdminText(puzzle.name || '');
-        if (name === q) { best = 0; }
-        else {
-            const d = levenshtein(q, name);
-            if (d < best) best = d;
-        }
-
-        // Check nicknames
-        if (puzzle.nicknames) {
-            for (const nick of puzzle.nicknames) {
-                const n = normalizeAdminText(nick);
-                if (n === q) { best = 0; break; }
-                const d = levenshtein(q, n);
-                if (d < best) best = d;
+        const fieldWords = [];
+        for (const field of fields) {
+            const value = Array.isArray(puzzle[field]) ? puzzle[field].join(' ') : String(puzzle[field] || '');
+            for (const word of normalizeAdminText(value).split(/\s+/)) {
+                if (word) fieldWords.push(word);
             }
         }
-
-        // Check career_totals values (e.g. "62.0")
-        if (puzzle.career_totals) {
-            for (const val of Object.values(puzzle.career_totals)) {
-                const v = normalizeAdminText(String(val));
-                if (v === q) { best = 0; break; }
-                const d = levenshtein(q, v);
-                if (d < best) best = d;
-            }
+        let tokenScore = 0;
+        let matched = true;
+        for (const token of tokens) {
+            const score = bestWordScore(token, fieldWords);
+            if (score === 0) { matched = false; break; }
+            tokenScore += score;
         }
-
-        if (best <= threshold) {
-            results.push({ puzzle, score: best });
-        }
+        if (matched) results.push({ puzzle, score: tokenScore });
     }
 
-    results.sort((a, b) => a.score - b.score);
+    results.sort((a, b) => b.score - a.score);
     return results;
 }
