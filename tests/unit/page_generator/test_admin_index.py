@@ -172,3 +172,49 @@ def test_parse_detail_page_flags(tmp_path):
     assert "unknown_name" in rec["flags"]
     assert "no_nickname" in rec["flags"]
     assert "missing_stats" not in rec["flags"]
+
+
+def _build_fixture_project(tmp_path, pages=("2026-09-14", "2026-08-07"), names=("Billy Martin", "Dusty Baker"), all_players=("Billy Martin", "Dusty Baker", "Luis Severino")):
+    project = tmp_path / "project"
+    images = project / "images"
+    images.mkdir(parents=True)
+    for date, name in zip(pages, names):
+        (images / f"clue-{date}.webp").write_bytes(b"clue")
+        (images / f"answer-{date}.webp").write_bytes(b"ans")
+        detail = (
+            "<html><body>"
+            f'<h2>{name} "Nick"</h2>'
+            '<div id="search-data" style="display:none;">{"teams": ["NYY"], "years": ["2001"]}</div>'
+            f'<div id="quiz-data" style="display:none;">{{"answer": "{name}", "nicknames": ["Nick"], "hints": ["fact"]}}</div>'
+            "</body></html>"
+        )
+        (project / f"{date}.html").write_text(detail, encoding="utf-8")
+    (project / "all_players.js").write_text(
+        "const ALL_PLAYERS = [" + ", ".join(json.dumps(p) for p in all_players) + "];\n",
+        encoding="utf-8",
+    )
+    return project
+
+
+def test_build_admin_data_writes_file(tmp_path):
+    project = _build_fixture_project(tmp_path)
+    data = admin_index.build_admin_data(project)
+    assert data["generated"]
+    assert [p["date"] for p in data["puzzles"]] == ["2026-08-07", "2026-09-14"]
+    assert [p["name"] for p in data["puzzles"]] == ["Dusty Baker", "Billy Martin"]
+    assert data["pool"]["available_count"] == 1
+    assert data["pool"]["available"] == ["Luis Severino"]
+    saved = json.loads((project / "admin_data.json").read_text(encoding="utf-8"))
+    assert saved == data
+
+
+def test_build_admin_data_missing_stats_flag(tmp_path):
+    project = tmp_path / "project"
+    (project / "images").mkdir(parents=True)
+    (project / "images" / "clue-2025-01-01.webp").write_bytes(b"c")
+    (project / "2025-01-01.html").write_text("<html><body><h2>X</h2></body></html>", encoding="utf-8")
+    (project / "all_players.js").write_text("const ALL_PLAYERS = [];\n", encoding="utf-8")
+    data = admin_index.build_admin_data(project)
+    p = data["puzzles"][0]
+    assert "missing_stats" in p["flags"]
+    assert "missing_answer_image" in p["flags"]

@@ -169,3 +169,38 @@ def parse_detail_page(path: Path, has_clue_img: bool, has_answer_img: bool) -> D
         "images": {"clue": has_clue_img, "answer": has_answer_img},
         "flags": flags,
     }
+
+
+_CLUE_RE = re.compile(r"clue-(\d{4}-\d{2}-\d{2})\.webp")
+
+
+def build_admin_data(project_dir: Path) -> Dict[str, Any]:
+    """Scan clue images, parse detail pages, compute pool, write admin_data.json."""
+    images_dir = project_dir / "images"
+    clue_files = sorted(images_dir.glob("clue-*.webp")) if images_dir.exists() else []
+    puzzles = []
+    for clue_path in clue_files:
+        m = _CLUE_RE.search(clue_path.name)
+        if not m:
+            continue
+        date_str = m.group(1)
+        detail_path = project_dir / f"{date_str}.html"
+        if not detail_path.exists():
+            continue
+        has_answer_img = (images_dir / f"answer-{date_str}.webp").exists()
+        puzzles.append(parse_detail_page(detail_path, True, has_answer_img))
+
+    puzzles.sort(key=lambda p: p["date"])
+    players = load_all_players(project_dir / "all_players.js")
+    pool = build_pool(players, puzzles)
+    data = {"generated": str(Path(__file__).name), "puzzles": puzzles, "pool": pool}
+    (project_dir / "admin_data.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
+    return data
+
+
+def run_build(project_dir: Path) -> Path:
+    """Build admin_data.json for a project dir and report the result."""
+    data = build_admin_data(project_dir)
+    out = project_dir / "admin_data.json"
+    print(f"  📊 admin_data.json written with {len(data['puzzles'])} puzzles.")
+    return out
