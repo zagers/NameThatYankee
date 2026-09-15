@@ -70,7 +70,7 @@ jobs:
           path-to-root: ./_site
           base-url-path: https://namethatyankeequiz.com/
           drop-html-extension: true
-          exclude-paths: index.html docs/
+          exclude-paths: index.html docs/ admin.html admin_data.json
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
