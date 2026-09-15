@@ -38,4 +38,12 @@ describe('puzzleDetailsHtml', () => {
         expect(puzzleDetailsHtml(bare)).not.toContain('Nicknames');
         expect(puzzleDetailsHtml(bare)).toContain('—');
     });
+
+    it('escapes war arc values', () => {
+        const hostile = { ...puzzle, war_arc: [{ year: '<img>', war: '<b>0.5</b>', team: 'NYY' }] };
+        const html = puzzleDetailsHtml(hostile);
+        expect(html).toContain('&lt;img&gt; &lt;b&gt;0.5&lt;/b&gt;');
+        expect(html).not.toContain('<img>');
+        expect(html).not.toContain('<b>0.5</b>');
+    });
 });

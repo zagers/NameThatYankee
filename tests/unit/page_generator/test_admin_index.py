@@ -102,6 +102,21 @@ def test_extract_war_arc_partial():
     assert admin_index.extract_war_arc(_soup(html)) == []
 
 
+def test_find_js_array_single_quotes_returns_none():
+    text = "const years = ['1950', '1951'];\n"
+    assert admin_index._find_js_array(text, "years") is None
+
+
+def test_find_js_array_trailing_comma_returns_none():
+    text = 'const years = ["1950", "1951",];\n'
+    assert admin_index._find_js_array(text, "years") is None
+
+
+def test_find_js_array_json_parses():
+    text = 'const years = ["1950", "1951"];\n'
+    assert admin_index._find_js_array(text, "years") == ["1950", "1951"]
+
+
 def test_load_all_players(tmp_path):
     js = tmp_path / "all_players.js"
     js.write_text('const ALL_PLAYERS = ["David Aardsma", "Jos\\u00e9 Abreu", "Jim Abbott"];\n', encoding="utf-8")

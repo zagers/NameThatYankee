@@ -63,7 +63,12 @@ def extract_followup_qa(soup) -> List[Dict[str, str]]:
 def _find_js_array(text: str, name: str):
     """Return the parsed list for a JS `const <name> = [...]` in text, or None."""
     m = re.search(r"const\s+" + re.escape(name) + r"\s*=\s*(\[.*?\]);", text, re.DOTALL)
-    return json.loads(m.group(1)) if m else None
+    if not m:
+        return None
+    try:
+        return json.loads(m.group(1))
+    except json.JSONDecodeError:
+        return None
 
 
 def extract_war_arc(soup) -> List[Dict[str, Any]]:

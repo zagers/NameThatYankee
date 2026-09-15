@@ -87,7 +87,7 @@ export function puzzleDetailsHtml(puzzle) {
     const hints = (puzzle.hints || []).map(h => `<li>Hint: ${escapeHtml(h)}</li>`).join('');
     const qa = (puzzle.followup_qa || []).map(p => `<li><b>Q:</b> ${escapeHtml(p.question)}<br><b>A:</b> ${escapeHtml(p.answer)}</li>`).join('');
     const stats = Object.entries(puzzle.career_totals || {}).map(([k, v]) => `<span class="stat"><b>${k}</b> ${escapeHtml(v)}</span>`).join(' ');
-    const warArc = (puzzle.war_arc || []).map(y => `${escapeHtml(y.year)} ${y.war}`).join(' · ');
+    const warArc = (puzzle.war_arc || []).map(y => `${escapeHtml(y.year)} ${escapeHtml(y.war)}`).join(' · ');
     const flags = (puzzle.flags || []).map(f => `<span class="flag">${f}</span>`).join(' ');
     return `<ul>
         ${nicknames}
