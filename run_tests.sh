@@ -38,6 +38,8 @@ cp instructions.html tests/fixtures/www/instructions.html || true
 cp analytics.html tests/fixtures/www/analytics.html || true
 cp style.css tests/fixtures/www/style.css || true
 cp stats_summary.json tests/fixtures/www/stats_summary.json || true
+cp admin.html tests/fixtures/www/admin.html || true
+cp admin_data.json tests/fixtures/www/admin_data.json || true
 cp 2026-04-19.html tests/fixtures/www/2026-04-19.html || true
 cp 2026-07-04.html tests/fixtures/www/2026-07-04.html || true
 cp 2026-05-04.html tests/fixtures/www/2026-05-04.html || true

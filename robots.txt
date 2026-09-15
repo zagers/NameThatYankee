@@ -2,6 +2,10 @@
 User-agent: *
 Allow: /
 
+# Admin spoiler pages must stay out of search results
+Disallow: /admin
+Disallow: /admin_data.json
+
 # Note: We do not Disallow /*?date= here because we want Google to crawl those pages 
 # and see the 'noindex' meta tag in quiz.html, which ensures they are removed from the index.
 
