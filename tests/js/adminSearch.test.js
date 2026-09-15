@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeAdminText, levenshtein, searchPuzzles } from '../../js/adminSearch.js';
+import { normalizeAdminText, levenshtein, searchPuzzles, buildSearchIndex, isSearchIndex } from '../../js/adminSearch.js';
 
 const PUZZLES = [
     { date: '2026-09-14', name: 'Billy Martin', nicknames: ['Billy'], career_totals: { WAR: '62.0' }, teams: ['NYY'], years: ['1950'] },
@@ -79,5 +79,39 @@ describe('searchPuzzles', () => {
         const node = { date: '2026-09-11', name: 'Aaron Judge', nicknames: ['Sevy'], career_totals: {}, teams: [], years: [] };
         const results = searchPuzzles([...PUZZLES, node], 'sevy', ['name']);
         expect(results).toEqual([]);
+    });
+});
+
+describe('buildSearchIndex', () => {
+    it('precomputes normalized field words per puzzle', () => {
+        const index = buildSearchIndex(PUZZLES);
+        expect(index).toHaveLength(2);
+        const billy = index.find(e => e.puzzle.name === 'Billy Martin');
+        expect(billy.words).toContain('billy');
+        expect(billy.words).toContain('martin');
+        const judge = index.find(e => e.puzzle.name === 'Aaron Judge');
+        expect(judge.words).toContain('aj');
+    });
+
+    it('is recognized as a prebuilt index', () => {
+        const index = buildSearchIndex(PUZZLES);
+        expect(isSearchIndex(index)).toBe(true);
+        expect(isSearchIndex(PUZZLES)).toBe(false);
+        expect(isSearchIndex([])).toBe(false);
+    });
+});
+
+describe('searchPuzzles with prebuilt index', () => {
+    it('returns identical results whether given raw puzzles or a cached index', () => {
+        const rawResults = searchPuzzles(PUZZLES, 'martin');
+        const indexResults = searchPuzzles(buildSearchIndex(PUZZLES), 'martin');
+        expect(indexResults.map(r => r.puzzle.name)).toEqual(rawResults.map(r => r.puzzle.name));
+        expect(indexResults.map(r => r.score)).toEqual(rawResults.map(r => r.score));
+    });
+
+    it('finds exact match via cached index', () => {
+        const results = searchPuzzles(buildSearchIndex(PUZZLES), 'Billy Martin');
+        expect(results[0].puzzle.name).toBe('Billy Martin');
+        expect(results[0].score).toBe(20);
     });
 });

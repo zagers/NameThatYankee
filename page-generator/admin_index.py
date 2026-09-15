@@ -9,12 +9,23 @@ from typing import Any, Dict, List
 from bs4 import BeautifulSoup  # type: ignore
 
 
+def _safe_json_object(text: str) -> Dict[str, Any]:
+    """Parse a JSON object/array from a text node, returning {} if malformed."""
+    try:
+        data = json.loads(text)
+        return data if isinstance(data, dict) else {}
+    except (json.JSONDecodeError, TypeError):
+        return {}
+
+
 def extract_quiz_data(soup) -> Dict[str, Any]:
     """Extract answer + nicknames + hints from the #quiz-data div (handles old/new formats)."""
     div = soup.find(id="quiz-data")
-    if not div or not div.string:
+    if not div:
         return {"answer": "", "nicknames": [], "hints": []}
-    raw = json.loads(div.string)
+    raw = _safe_json_object(div.get_text(strip=True))
+    if not raw:
+        return {"answer": "", "nicknames": [], "hints": []}
     nicknames = raw.get("nicknames", [])
     if not nicknames:
         legacy = raw.get("nickname", "")
@@ -28,9 +39,11 @@ def extract_quiz_data(soup) -> Dict[str, Any]:
 def extract_search_data(soup) -> Dict[str, Any]:
     """Extract teams + years from the #search-data div."""
     div = soup.find(id="search-data")
-    if not div or not div.string:
+    if not div:
         return {"teams": [], "years": []}
-    raw = json.loads(div.string)
+    raw = _safe_json_object(div.get_text(strip=True))
+    if not raw:
+        return {"teams": [], "years": []}
     return {"teams": raw.get("teams", []), "years": raw.get("years", [])}
 
 
@@ -61,14 +74,41 @@ def extract_followup_qa(soup) -> List[Dict[str, str]]:
 
 
 def _find_js_array(text: str, name: str):
-    """Return the parsed list for a JS `const <name> = [...]` in text, or None."""
-    m = re.search(r"const\s+" + re.escape(name) + r"\s*=\s*(\[.*?\]);", text, re.DOTALL)
+    """Return the parsed list for a JS `const <name> = [...]` in text, or None.
+
+    Uses balanced-bracket scanning so it stays correct for nested arrays and
+    for `]`/`;` characters that appear inside string literals.
+    """
+    m = re.search(r"const\s+" + re.escape(name) + r"\s*=\s*\[", text, re.DOTALL)
     if not m:
         return None
-    try:
-        return json.loads(m.group(1))
-    except json.JSONDecodeError:
-        return None
+    start = m.end() - 1
+    depth = 0
+    in_string = False
+    quote = ""
+    i = start
+    while i < len(text):
+        ch = text[i]
+        if in_string:
+            if ch == "\\":
+                i += 1
+            elif ch == quote:
+                in_string = False
+        else:
+            if ch in ('"', "'", "`"):
+                in_string = True
+                quote = ch
+            elif ch == "[":
+                depth += 1
+            elif ch == "]":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(text[start : i + 1])
+                    except (json.JSONDecodeError, TypeError):
+                        return None
+        i += 1
+    return None
 
 
 def extract_war_arc(soup) -> List[Dict[str, Any]]:

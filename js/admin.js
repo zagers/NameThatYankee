@@ -1,11 +1,12 @@
 // ABOUTME: Admin UI - search, inspect, and analyze puzzles from admin_data.json.
 // ABOUTME: Gated by a client-side passphrase; spoiler content, not for end users.
-import { searchPuzzles } from './adminSearch.js';
+import { searchPuzzles, buildSearchIndex, isSearchIndex } from './adminSearch.js';
 
 const ADMIN_PASS_HASH = '1026c2d269101ddb639aee31ad310f42ec0fae00189ed328741b0091256c32ec';
 const UNLOCK_KEY = 'nta_admin_unlocked';
 
 let adminPuzzles = [];
+let adminIndex = [];
 
 async function sha256(text) {
     const data = new TextEncoder().encode(text);
@@ -37,6 +38,7 @@ async function loadAdminData() {
         return;
     }
     adminPuzzles = adminData.puzzles;
+    adminIndex = buildSearchIndex(adminPuzzles);
     renderStats(adminData);
     renderPool(adminData.pool);
     renderAll(adminPuzzles);
@@ -62,7 +64,7 @@ async function init() {
     }
 
     document.getElementById('search-bar').addEventListener('input', (e) => {
-        renderSearchResults(adminPuzzles, e.target.value);
+        renderSearchResults(adminIndex, e.target.value);
     });
 }
 
@@ -70,9 +72,10 @@ function renderAll(puzzles) { renderSearchResults(puzzles, ''); }
 
 export function renderSearchResults(puzzles, query) {
     const grid = document.getElementById('results');
+    const list = isSearchIndex(puzzles) ? puzzles.map(e => e.puzzle) : puzzles;
     const results = query
         ? searchPuzzles(puzzles, query)
-        : [...puzzles].sort((a, b) => b.date.localeCompare(a.date)).map(p => ({ puzzle: p, score: null }));
+        : [...list].sort((a, b) => b.date.localeCompare(a.date)).map(p => ({ puzzle: p, score: null }));
     if (results.length === 0) { grid.innerHTML = '<p class="empty">No puzzle found for this search.</p>'; return; }
     grid.innerHTML = results.map(({ puzzle, score }) => `
         <div class="card" data-date="${puzzle.date}">

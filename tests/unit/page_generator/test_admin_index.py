@@ -33,6 +33,16 @@ def test_extract_quiz_data_missing_div():
     assert admin_index.extract_quiz_data(_soup("<html></html>")) == {"answer": "", "nicknames": [], "hints": []}
 
 
+def test_extract_quiz_data_malformed_returns_defaults():
+    html = '<div id="quiz-data" style="display:none;">{ this is not valid json</div>'
+    assert admin_index.extract_quiz_data(_soup(html)) == {"answer": "", "nicknames": [], "hints": []}
+
+
+def test_extract_quiz_data_empty_div_returns_defaults():
+    html = '<div id="quiz-data" style="display:none;"></div>'
+    assert admin_index.extract_quiz_data(_soup(html)) == {"answer": "", "nicknames": [], "hints": []}
+
+
 def test_extract_search_data():
     html = '<div id="search-data" style="display:none;">{"teams": ["NYY", "DET"], "years": ["1950", "1951"]}</div>'
     data = admin_index.extract_search_data(_soup(html))
@@ -41,6 +51,11 @@ def test_extract_search_data():
 
 def test_extract_search_data_missing_div():
     assert admin_index.extract_search_data(_soup("<html></html>")) == {"teams": [], "years": []}
+
+
+def test_extract_search_data_malformed_returns_defaults():
+    html = '<div id="search-data" style="display:none;">:::not json:::</div>'
+    assert admin_index.extract_search_data(_soup(html)) == {"teams": [], "years": []}
 
 
 def test_extract_career_totals():
@@ -115,6 +130,28 @@ def test_find_js_array_trailing_comma_returns_none():
 def test_find_js_array_json_parses():
     text = 'const years = ["1950", "1951"];\n'
     assert admin_index._find_js_array(text, "years") == ["1950", "1951"]
+
+
+def test_find_js_array_nested_arrays():
+    text = "const grid = [[1, 2], [3, 4]];\n"
+    assert admin_index._find_js_array(text, "grid") == [[1, 2], [3, 4]]
+
+
+def test_find_js_array_picks_own_statement():
+    text = 'const years = ["1950", "1951"];\nconst warData = [0.0, 0.2];\nconst teamsByYear = ["NYY", "NYY"];\n'
+    assert admin_index._find_js_array(text, "years") == ["1950", "1951"]
+    assert admin_index._find_js_array(text, "warData") == [0.0, 0.2]
+    assert admin_index._find_js_array(text, "teamsByYear") == ["NYY", "NYY"]
+
+
+def test_find_js_array_special_chars_within_strings():
+    text = 'const x = ["a;b]", "c]d"];\n'
+    assert admin_index._find_js_array(text, "x") == ["a;b]", "c]d"]
+
+
+def test_find_js_array_semicolon_bracket_in_string():
+    text = 'const x = ["a];b", 1];\n'
+    assert admin_index._find_js_array(text, "x") == ["a];b", 1]
 
 
 def test_load_all_players(tmp_path):
