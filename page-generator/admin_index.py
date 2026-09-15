@@ -72,3 +72,52 @@ def extract_war_arc(soup) -> List[Dict[str, Any]]:
         {"year": str(y), "war": float(w), "team": str(t)}
         for y, w, t in zip(years, war, teams)
     ]
+
+
+def load_all_players(js_path: Path) -> List[str]:
+    """Parse ALL_PLAYERS from all_players.js."""
+    if not js_path.exists():
+        return []
+    text = js_path.read_text(encoding="utf-8")
+    m = re.search(r"const\s+ALL_PLAYERS\s*=\s*(\[.*?\]);", text, re.DOTALL)
+    if not m:
+        return []
+    return json.loads(m.group(1))
+
+
+def normalize_name(name: str) -> str:
+    """Lowercase, strip diacritics, and trim for comparisons."""
+    import unicodedata
+
+    normalized = unicodedata.normalize("NFD", name or "")
+    stripped = "".join(ch for ch in normalized if unicodedata.category(ch) != "Mn")
+    return stripped.lower().strip()
+
+
+def build_pool(players: List[str], puzzles: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Compute used players, aliases, duplicates, and the available pool."""
+    used = [{"date": p["date"], "name": p["name"]} for p in puzzles if p.get("name")]
+    used_names = sorted({normalize_name(u["name"]) for u in used})
+
+    aliases = set()
+    for p in puzzles:
+        aliases.add(normalize_name(p.get("name", "")))
+        for nick in p.get("nicknames", []):
+            aliases.add(normalize_name(nick))
+    used_aliases = sorted(a for a in aliases if a)
+
+    by_name: Dict[str, List[str]] = {}
+    for u in used:
+        by_name.setdefault(u["name"], []).append(u["date"])
+    duplicates = [[name, dates] for name, dates in sorted(by_name.items()) if len(dates) > 1]
+
+    available = [p for p in players if normalize_name(p) not in used_names]
+    available.sort(key=normalize_name)
+    return {
+        "used": used,
+        "used_names": used_names,
+        "used_aliases": used_aliases,
+        "available_count": len(available),
+        "available": available,
+        "duplicates": duplicates,
+    }

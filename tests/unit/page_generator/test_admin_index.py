@@ -93,3 +93,39 @@ def test_extract_war_arc_missing():
 def test_extract_war_arc_partial():
     html = "<script>" + 'const years = ["2001"];\n' + "</script>"
     assert admin_index.extract_war_arc(_soup(html)) == []
+
+
+def test_load_all_players(tmp_path):
+    js = tmp_path / "all_players.js"
+    js.write_text('const ALL_PLAYERS = ["David Aardsma", "Jos\\u00e9 Abreu", "Jim Abbott"];\n', encoding="utf-8")
+    assert admin_index.load_all_players(js) == ["David Aardsma", "Jos\u00e9 Abreu", "Jim Abbott"]
+
+
+def test_normalize_name():
+    assert admin_index.normalize_name("Jos\u00e9 Abreu") == "jose abreu"
+    assert admin_index.normalize_name("  BILLY MARTIN ") == "billy martin"
+
+
+def test_build_pool_detects_used_duplicates_and_available(tmp_path):
+    js = tmp_path / "all_players.js"
+    js.write_text(
+        'const ALL_PLAYERS = ["Billy Martin", "Mike Jackson", "Luis Severino", "Dusty Baker"];\n',
+        encoding="utf-8",
+    )
+    players = admin_index.load_all_players(js)
+    puzzles = [
+        {"date": "2026-09-14", "name": "Billy Martin", "nicknames": ["Billy"], "hints": [], "followup_qa": [], "career_totals": {}, "teams": [], "years": [], "war_arc": [], "images": {"clue": True, "answer": True}, "flags": []},
+        {"date": "2025-01-01", "name": "Billy Martin", "nicknames": [], "hints": [], "followup_qa": [], "career_totals": {}, "teams": [], "years": [], "war_arc": [], "images": {"clue": True, "answer": True}, "flags": []},
+        {"date": "2026-01-01", "name": "Luis Severino", "nicknames": ["Sevy"], "hints": [], "followup_qa": [], "career_totals": {}, "teams": [], "years": [], "war_arc": [], "images": {"clue": True, "answer": True}, "flags": []},
+    ]
+    pool = admin_index.build_pool(players, puzzles)
+    assert pool["used"] == [
+        {"date": "2026-09-14", "name": "Billy Martin"},
+        {"date": "2025-01-01", "name": "Billy Martin"},
+        {"date": "2026-01-01", "name": "Luis Severino"},
+    ]
+    assert sorted(pool["used_names"]) == ["billy martin", "luis severino"]
+    assert sorted(pool["used_aliases"]) == ["billy", "billy martin", "luis severino", "sevy"]
+    assert pool["duplicates"] == [["Billy Martin", ["2026-09-14", "2025-01-01"]]]
+    assert pool["available_count"] == 2
+    assert sorted(pool["available"]) == ["Dusty Baker", "Mike Jackson"]
