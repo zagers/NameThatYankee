@@ -1,5 +1,26 @@
 [
     {
+        "date": "2026-09-20",
+        "name": "Tommy Henrich",
+        "nickname": "Old Reliable",
+        "teams": [
+            "NYY"
+        ],
+        "years": [
+            "1937",
+            "1938",
+            "1939",
+            "1940",
+            "1941",
+            "1942",
+            "1946",
+            "1947",
+            "1948",
+            "1949",
+            "1950"
+        ]
+    },
+    {
         "date": "2026-09-19",
         "name": "Mel Stottlemyre",
         "nickname": "Mel",
