@@ -50,7 +50,7 @@ class PlayerImageSearch:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
     
-    def find_first_yankee_image(self, player_name: str, api_key: str = None) -> List[dict]:
+    def find_first_yankee_image(self, player_name: str, api_key: str = None, career_span: Optional[List[int]] = None) -> List[dict]:
         """
         Find up to 3 best images of the player based on prioritized criteria.
         
@@ -59,13 +59,17 @@ class PlayerImageSearch:
         1. Baseball card + Yankee uniform
         2. Any image + Yankee uniform
         3. Any image of the player
+
+        Args:
+            career_span: Optional [start_year, end_year] for the player's MLB career,
+                forwarded to the AI evaluator for era/provenance enforcement.
         """
         search_term = f"{player_name} yankees card"
         
         # Try Bing as primary search engine
         logger.info(f"🚀 Searching Bing Images for: {search_term}")
         bing_candidates = self._get_image_candidates_from_bing(search_term)
-        best_matches, fallbacks = self._evaluate_candidates(bing_candidates, player_name, api_key)
+        best_matches, fallbacks = self._evaluate_candidates(bing_candidates, player_name, api_key, career_span)
         
         # Determine if we need to fall back to Google (if no high priority matches found)
         has_high_priority = any(m['priority'] in [1, 2] for m in best_matches)
@@ -78,16 +82,18 @@ class PlayerImageSearch:
             new_google_candidates = [c for c in google_candidates if c['direct_url'] not in bing_urls]
             
             if new_google_candidates:
-                g_best, g_fallback = self._evaluate_candidates(new_google_candidates, player_name, api_key)
+                g_best, g_fallback = self._evaluate_candidates(new_google_candidates, player_name, api_key, career_span)
                 best_matches.extend(g_best)
                 fallbacks.extend(g_fallback)
         
-        # Combine results: Best matches first, then fill with fallbacks until we have 3
-        # Sort best matches by priority
-        best_matches.sort(key=lambda x: x.get('priority', 3))
+        # Rank candidates: priority ascending (1 best), playing-era cards first,
+        # then higher resolution first. Fallbacks (Priority 3) fill remaining slots.
+        def _rank_key(c):
+            era_rank = 0 if c.get('is_playing_era_card', True) else 1
+            return (c.get('priority', 3), era_rank, -c.get('pixel_count', 0))
         
-        final_results = best_matches + fallbacks
-        final_results = final_results[:3]
+        combined = best_matches + fallbacks
+        final_results = sorted(combined, key=_rank_key)[:3]
         
         # Cleanup any candidates that didn't make the final cut
         # This is a bit tricky since some might be the same object, but unlink handles missing
@@ -102,7 +108,7 @@ class PlayerImageSearch:
         logger.warning(f"  ❌ No suitable images found for {player_name} after searching both engines.")
         return []
 
-    def _evaluate_candidates(self, candidates: List[dict], player_name: str, api_key: str) -> Tuple[List[dict], List[dict]]:
+    def _evaluate_candidates(self, candidates: List[dict], player_name: str, api_key: str, career_span: Optional[List[int]] = None) -> Tuple[List[dict], List[dict]]:
         """Evaluates a list of candidates using Gemini and returns (best_matches, fallbacks)."""
         best_matches = []
         fallbacks = []
@@ -142,9 +148,10 @@ class PlayerImageSearch:
             if api_key:
                 try:
                     import ai_services
-                    analysis = ai_services.analyze_player_image(temp_file, player_name, api_key)
+                    analysis = ai_services.analyze_player_image(temp_file, player_name, api_key, career_span=career_span)
                     priority = analysis.get('priority', 3)
                     crop_box = analysis.get('crop_box')
+                    playing_era_card = analysis.get('is_playing_era_card', True)
                     
                     if priority in [1, 2]:
                         # Perform smart crop if requested by AI
@@ -162,19 +169,17 @@ class PlayerImageSearch:
                         logger.info(f"  ✨ Found High Priority Match (Level {priority})!")
                         candidate['temp_file'] = temp_file
                         candidate['priority'] = priority
+                        candidate['is_playing_era_card'] = playing_era_card
+                        candidate['pixel_count'] = (img_info.get('width', 0) * img_info.get('height', 0)) if img_info else 0
                         best_matches.append(candidate)
-                        
-                        # Stop ONLY if we have 3 Priority 1 images specifically
-                        p1_count = len([m for m in best_matches if m['priority'] == 1])
-                        if p1_count >= 3:
-                            logger.info(f"  🏁 Found {p1_count} Priority 1 matches. Stopping early.")
-                            break
                     
                     elif priority == 3:
                         if len(fallbacks) < 3:
                             logger.info(f"  📍 Found Priority 3 (Fallback). Staging as option {len(fallbacks)+1}...")
                             candidate['temp_file'] = temp_file
                             candidate['priority'] = 3
+                            candidate['is_playing_era_card'] = playing_era_card
+                            candidate['pixel_count'] = (img_info.get('width', 0) * img_info.get('height', 0)) if img_info else 0
                             fallbacks.append(candidate)
                         else:
                             logger.info("  ⏭️ Already have 3 fallbacks. Skipping.")
@@ -449,7 +454,7 @@ class PlayerImageSearch:
             return None
         except Exception:
             return None
-    def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None) -> List[Path]:
+    def download_and_process_player_image(self, player_name: str, date_str: str, api_key: str = None, career_span: Optional[List[int]] = None) -> List[Path]:
         """Complete workflow orchestrator for finding and saving multiple player image candidates."""
         staging_dir = self.images_dir.parent / "temp_player_images"
         staging_dir.mkdir(exist_ok=True)
@@ -471,18 +476,52 @@ class PlayerImageSearch:
             except Exception as e:
                 logger.debug(f"Could not archive {current_file.name}: {e}")
 
-        results = self.find_first_yankee_image(player_name, api_key)
+        results = self.find_first_yankee_image(player_name, api_key, career_span=career_span)
         
         if not results:
             return []
             
         final_paths = []
+
+        # Content-based near-duplicate rejection: keep the first occurrence of any
+        # perceptually identical image so duplicate cards from different URLs (or the
+        # same modern reissue found twice) don't all get staged.
+        # Each candidate is hashed only once and compared against the kept hashes,
+        # avoiding O(N^2) image opens/recomputations.
+        candidate_hashes = []
+        deduped_results = []
+        for result in results:
+            temp_file = result.get('temp_file')
+            if not temp_file or not temp_file.exists():
+                continue
+            try:
+                current_hash = self.image_processor.compute_dhash(temp_file)
+            except Exception as e:
+                # A corrupt/unreadable file must not abort the whole staging step;
+                # treat it as non-duplicate and let convert_to_webp decide.
+                logger.warning(f"  ⚠️ Could not hash {temp_file.name} for dedupe: {e}")
+                deduped_results.append(result)
+                continue
+
+            duplicate = False
+            for kept_hash in candidate_hashes:
+                if bin(current_hash ^ kept_hash).count('1') <= 10:  # threshold
+                    logger.info(f"  ⏭️ Skipping near-duplicate of already-staged image: {temp_file.name}")
+                    duplicate = True
+                    break
+            if duplicate:
+                temp_file.unlink(missing_ok=True)
+                continue
+
+            candidate_hashes.append(current_hash)
+            deduped_results.append(result)
+        results = deduped_results
         
         for i, result in enumerate(results):
             temp_file = result.get('temp_file')
             if not temp_file or not temp_file.exists():
                 continue
-                
+            
             # Name: answer-YYYY-MM-DD-N.webp
             target_name = f"answer-{date_str}-{i+1}.webp"
             target_path = staging_dir / target_name

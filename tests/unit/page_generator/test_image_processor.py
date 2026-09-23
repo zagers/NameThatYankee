@@ -370,3 +370,68 @@ class TestImageProcessor:
         with Image.open(img_path) as cropped:
             assert cropped.width == 50
             assert cropped.height == 50
+
+    def test_compute_dhash_identical_images_same_hash(self, image_processor, tmp_path):
+        """Test that two identical images produce the same dHash."""
+        a = tmp_path / "a.png"
+        b = tmp_path / "b.png"
+        img = Image.new('RGB', (400, 600), color='blue')
+        draw = ImageDraw.Draw(img)
+        draw.rectangle([50, 50, 350, 550], fill='red')
+        img.save(a)
+        img.save(b)
+
+        assert image_processor.compute_dhash(a) == image_processor.compute_dhash(b)
+
+    def test_compute_dhash_different_images_differ(self, image_processor, tmp_path):
+        """Test that two different images produce different dHashes."""
+        a = tmp_path / "a.png"
+        b = tmp_path / "b.png"
+        img_a = Image.new('RGB', (400, 600), color='blue')
+        draw_a = ImageDraw.Draw(img_a)
+        draw_a.rectangle([50, 50, 350, 500], fill='red')
+        img_a.save(a)
+        img_b = Image.new('RGB', (400, 600), color='black')
+        draw_b = ImageDraw.Draw(img_b)
+        draw_b.rectangle([100, 400, 200, 500], fill='white')
+        img_b.save(b)
+
+        assert image_processor.compute_dhash(a) != image_processor.compute_dhash(b)
+
+    def test_is_near_duplicate_same_image(self, image_processor, tmp_path):
+        """Test that an image is a near-duplicate of itself."""
+        a = tmp_path / "a.png"
+        img = Image.new('RGB', (400, 600), color='blue')
+        draw = ImageDraw.Draw(img)
+        draw.rectangle([50, 50, 350, 550], fill='red')
+        img.save(a)
+
+        assert image_processor.is_near_duplicate(a, a) is True
+
+    def test_is_near_duplicate_distinct_images(self, image_processor, tmp_path):
+        """Test that clearly distinct images are not near-duplicates."""
+        a = tmp_path / "a.png"
+        b = tmp_path / "b.png"
+        img_a = Image.new('RGB', (400, 600), color='blue')
+        draw_a = ImageDraw.Draw(img_a)
+        draw_a.rectangle([50, 50, 350, 500], fill='red')
+        img_a.save(a)
+        img_b = Image.new('RGB', (400, 600), color='black')
+        draw_b = ImageDraw.Draw(img_b)
+        draw_b.rectangle([100, 400, 200, 500], fill='white')
+        img_b.save(b)
+
+        assert image_processor.is_near_duplicate(a, b) is False
+
+    def test_is_near_duplicate_slightly_different_copies(self, image_processor, tmp_path):
+        """Test that recompressed/slightly resized copies are near-duplicates."""
+        a = tmp_path / "a.jpg"
+        b = tmp_path / "b.jpg"
+        img = Image.new('RGB', (400, 600), color='blue')
+        draw = ImageDraw.Draw(img)
+        draw.rectangle([50, 50, 350, 550], fill='red')
+        draw.ellipse([100, 200, 300, 400], fill='green')
+        img.save(a, 'JPEG', quality=90)
+        img.save(b, 'JPEG', quality=50)
+
+        assert image_processor.is_near_duplicate(a, b) is True

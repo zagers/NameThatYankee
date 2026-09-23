@@ -27,6 +27,37 @@ class ImageProcessor:
         self.quality = quality
         self.max_width = max_width
         self.max_height = max_height
+
+    def compute_dhash(self, image_path: Path) -> int:
+        """
+        Compute a perceptual hash (dHash) of an image for near-duplicate detection.
+        
+        Uses the difference-hash algorithm: downscale to 9x8 grayscale, then for each
+        of the 8 rows compare adjacent pixels; a left-brighter-than-right pixel sets
+        a bit. Returns a 64-bit integer hash.
+        """
+        with Image.open(image_path) as img:
+            gray = ImageOps.grayscale(img).resize((9, 8), Image.LANCZOS)
+            pixels = list(gray.tobytes())
+        hash_value = 0
+        for row in range(8):
+            for col in range(8):
+                left = pixels[row * 9 + col]
+                right = pixels[row * 9 + col + 1]
+                if left > right:
+                    hash_value |= (1 << (row * 8 + col))
+        return hash_value
+
+    def is_near_duplicate(self, image_path_a: Path, image_path_b: Path, threshold: int = 10) -> bool:
+        """
+        Return True if two images are near-duplicates of each other based on their
+        dHash Hamming distance (number of differing bits). A low distance means the
+        images are perceptually very similar (e.g. copies/recompressions of the same
+        card), even if they were downloaded from different URLs.
+        """
+        hash_a = self.compute_dhash(image_path_a)
+        hash_b = self.compute_dhash(image_path_b)
+        return bin(hash_a ^ hash_b).count('1') <= threshold
     
     def _ensure_rgb(self, img: Image.Image) -> Image.Image:
         """
