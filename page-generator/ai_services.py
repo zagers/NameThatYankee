@@ -352,7 +352,8 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
             playing era, or that do not show the player as a player are demoted
             to Priority 3 (fallback) rather than rejected.
 
-    Returns a dict with verification results and priority level.
+    Returns a dict with verification results, priority level, and provenance metadata
+    (is_playing_era_card, appears_as_player, is_modern_reissue).
     """
     print(f"🤖 Analyzing image for {player_name} with prioritized criteria...")
     

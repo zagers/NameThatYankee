@@ -486,29 +486,34 @@ class PlayerImageSearch:
         # Content-based near-duplicate rejection: keep the first occurrence of any
         # perceptually identical image so duplicate cards from different URLs (or the
         # same modern reissue found twice) don't all get staged.
-        seen_hashes = []
+        # Each candidate is hashed only once and compared against the kept hashes,
+        # avoiding O(N^2) image opens/recomputations.
+        candidate_hashes = []
         deduped_results = []
         for result in results:
             temp_file = result.get('temp_file')
             if not temp_file or not temp_file.exists():
                 continue
+            try:
+                current_hash = self.image_processor.compute_dhash(temp_file)
+            except Exception as e:
+                # A corrupt/unreadable file must not abort the whole staging step;
+                # treat it as non-duplicate and let convert_to_webp decide.
+                logger.warning(f"  ⚠️ Could not hash {temp_file.name} for dedupe: {e}")
+                deduped_results.append(result)
+                continue
+
             duplicate = False
-            for kept in seen_hashes:
-                try:
-                    is_dup = self.image_processor.is_near_duplicate(temp_file, kept)
-                except Exception as e:
-                    # A corrupt/unreadable file must not abort the whole staging step;
-                    # treat it as non-duplicate and let convert_to_webp decide.
-                    logger.warning(f"  ⚠️ Could not hash {temp_file.name} for dedupe: {e}")
-                    is_dup = False
-                if is_dup:
+            for kept_hash in candidate_hashes:
+                if bin(current_hash ^ kept_hash).count('1') <= 10:  # threshold
                     logger.info(f"  ⏭️ Skipping near-duplicate of already-staged image: {temp_file.name}")
                     duplicate = True
                     break
             if duplicate:
                 temp_file.unlink(missing_ok=True)
                 continue
-            seen_hashes.append(temp_file)
+
+            candidate_hashes.append(current_hash)
             deduped_results.append(result)
         results = deduped_results
         
