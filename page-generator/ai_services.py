@@ -5,6 +5,7 @@ from google.genai import types, errors  # type: ignore
 from PIL import Image  # type: ignore
 import json
 import time
+from typing import List, Optional
 
 
 # --- CONFIGURATION ---
@@ -338,13 +339,19 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
     return []
 
 
-def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
+def analyze_player_image(image_path, player_name: str, api_key: str, career_span: Optional[List[int]] = None) -> dict:
     """
     Uses Gemini to analyze a player image based on prioritized criteria:
     1. Baseball card + Yankee uniform
     2. Any image + Yankee uniform
     3. Any image of the player
     
+    Args:
+        career_span: Optional [start_year, end_year] list for the player's MLB career.
+            When provided, images that are modern reissues, printed outside the
+            playing era, or that do not show the player as a player are demoted
+            to Priority 3 (fallback) rather than rejected.
+
     Returns a dict with verification results and priority level.
     """
     print(f"🤖 Analyzing image for {player_name} with prioritized criteria...")
@@ -358,12 +365,18 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
         return {"success": False, "priority": 0, "reasoning": str(e)}
     
     generation_config = types.GenerateContentConfig(temperature=0.1)
+    era_context = ""
+    if career_span and len(career_span) == 2:
+        era_context = f"""
+    The player's MLB career was from {career_span[0]} to {career_span[1]}.
+    Use this to judge whether a card was printed during the player's playing era.
+    """
     prompt = f"""
     Analyze the provided baseball player image and determine if the player is in a New York Yankees uniform, if the image is a baseball card, and if it is in portrait orientation.
     
     You do NOT need to verify the player's identity; assume the image is of the correct player.
-    Focus ONLY on the uniform, the format (card vs photo), the text content, and the orientation.
-
+    Focus ONLY on the uniform, the format (card vs photo), the text content, the era/provenance, and the orientation.
+    {era_context}
     **CRITICAL REJECTION CRITERIA:**
     1. **Orientation:** If the image is in landscape orientation (width > height), you MUST determine if a clear, portrait-oriented baseball card or player is present that can be cropped out. If a crop is possible, provide the `crop_box` and continue. If the image is landscape and NO portrait-oriented player/card can be cropped, REJECT (Priority 0).
     2. **Transient/Event Text:** REJECT (Priority 0) any image that contains "point-in-time" overlays (e.g., "HE'S BACK", "SIGNED") or promotional event text (e.g., "FANATICS FEST", "NATIONAL CONVENTION", "SPECIAL EDITION").
@@ -383,16 +396,19 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
     - The player and card MUST be upright and correctly oriented (not sideways).
     - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform in the photo.
     - Contains NO autographs, NO event/promotional text, NO backgrounds/surfaces, NO plastic holders/slabs, and is NOT a card back or a collage.
+    - The card should be a genuine card printed during the player's playing era, showing the player as a player (not as a manager or in a coat-and-tie portrait). Modern reprint/commemorative cards of historical players are NOT Priority 1 or 2.
 
     **Priority 2: Clean Single Portrait Photo in Official Yankee Uniform**
     - The image is a clean portrait-oriented action photo or portrait featuring ONE player.
     - The player MUST be upright and correctly oriented (not sideways).
     - The player MUST be clearly visible and wearing an OFFICIAL New York Yankees uniform.
     - Contains NO autographs, NO transient/event-based text, intrusive graphics, or multiple players.
+    - The photo should show the player during his playing career as a player (not as a manager or in a modern commemorative setting).
 
     **Priority 3: Any Other Image (Non-Yankee, Ambiguous, or Graphic)**
     - The player is NOT in an official Yankees uniform.
     - OR the image is otherwise clean but doesn't meet Priority 1 or 2.
+    - OR the image is a modern reprint/commemorative card, or shows the player outside his playing era/role.
     - NOTE: Images meeting ANY Rejection Criteria above MUST be Priority 0, NOT Priority 3.
 
     Your response must be a valid JSON object with the following structure, and nothing else:
@@ -409,14 +425,25 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
       "is_portrait": true/false,
       "is_single_player": true/false,
       "has_transient_text": true/false,
+      "is_playing_era_card": true/false,
+      "printed_copyright_year": null or integer,
+      "appears_as_player": true/false,
+      "is_modern_reissue": true/false,
       "priority_level": 0 | 1 | 2 | 3,
       "crop_box": [ymin, xmin, ymax, xmax],
       "confidence": "high/medium/low",
       "reasoning": "Brief explanation of your decision"
     }}
 
+    **FIELD DEFINITIONS:**
+    - `is_playing_era_card`: true if the card was printed during the player's playing career (use `printed_copyright_year` and the career span given above). For cards shorter than ~15 years old of retired players, this will typically be false.
+    - `printed_copyright_year`: the copyright year printed on the card, or null if none is visible.
+    - `appears_as_player`: true if the person on the card/photo is shown as a ballplayer (in uniform, in his playing days). false for manager-era photos, coat-and-tie portraits, or modern celebrity appearances.
+    - `is_modern_reissue`: true if the card is a modern reprint, Retro/Throwback parallel, commemorative issue, or "Greatest Moments" type card of a historical player, even if it mimics a vintage design.
+
     **CROP BOX INSTRUCTIONS:**
-    - If the image shows a single baseball card or player but it is NOT a clean digital scan (e.g., it has a visible background, table, or borders), provide the normalized coordinates [ymin, xmin, ymax, xmax] of the CARD or PLAYER area only. 
+    - Provide a `crop_box` ONLY when the image contains a single valid, rectangular baseball card or player that already qualifies as Priority 1 or 2 content, but the frame includes extra borders, margins, or a simple background that can be cleanly trimmed while keeping the card rectangular.
+    - NEVER provide a crop_box to "save" a REJECTED image. In particular, do NOT provide a crop_box for: photos of a card sitting on a table/surface (with background, shadows, or angled perspective), die-cut or non-rectangular cards, cards in holders/slabs, card backs, or sideways/upside-down cards. Those are rejected, not cropped.
     - Coordinates should be integers from 0 to 1000.
     - If the image is already a clean full-frame scan, return [0, 0, 1000, 1000] or null.
     """
@@ -444,14 +471,19 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             is_front_of_card = data.get('is_front_of_card', True)
             is_official_uniform = data.get('is_official_uniform', True)
             has_transient_text = data.get('has_transient_text', False)
+            is_baseball_card = data.get('is_baseball_card', True)
+            is_playing_era_card = data.get('is_playing_era_card')
+            printed_copyright_year = data.get('printed_copyright_year')
+            appears_as_player = data.get('appears_as_player')
+            is_modern_reissue = data.get('is_modern_reissue')
             
             # Smart Crop Logic: If we have a crop box and it's otherwise a good image, 
             # we can potentially promote it even if it's not a clean scan or is landscape.
-            can_be_fixed_by_crop = crop_box and is_single_player and not is_in_holder and not is_autographed and not has_transient_text
+            can_be_fixed_by_crop = crop_box and is_single_player and is_rectangular and not is_in_holder and not is_autographed and not has_transient_text
             
             # Final Override Logic: If the AI sets Priority 0, we respect it.
             # If the AI sets Priority 1/2/3, we do a sanity check on critical "unfixable" rejections.
-            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down
+            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down or not is_rectangular
             
             if unfixable_rejection:
                 priority = 0
@@ -461,9 +493,25 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
                 if has_transient_text: reasons.append("transient/event text")
                 if not is_single_player: reasons.append("multiple players/collage")
                 if is_upside_down: reasons.append("upside down/sideways")
+                if not is_rectangular: reasons.append("non-rectangular/angled")
                 reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
             elif priority in [1, 2, 3]:
-                # If it's landscape or not a clean scan, it MUST have a crop box to be Priority 1/2
+                # Provenance/Era Enforcement: demote images that are modern reissues,
+                # not printed during the playing era, or that don't show the player as
+                # a player. Demote to Priority 3 (fallback), never reject outright.
+                if priority in [1, 2] and career_span and len(career_span) == 2:
+                    era_reasons = []
+                    if is_modern_reissue:
+                        era_reasons.append("modern reissue")
+                    # The "printed in playing era" check only applies to actual cards;
+                    # a photo has no printed copyright year and must not be penalized.
+                    if is_baseball_card and is_playing_era_card is False:
+                        era_reasons.append("not printed in playing era")
+                    if appears_as_player is False:
+                        era_reasons.append("player not shown as a player")
+                    if era_reasons:
+                        priority = 3
+                        reasoning = f"(DEMOTED to fallback due to {', '.join(era_reasons)}): {reasoning}"
                 if (not is_portrait or not is_clean_scan) and not can_be_fixed_by_crop:
                     if priority in [1, 2]:
                         priority = 3 # Demote if it's a good uniform match but messy frame
@@ -471,23 +519,35 @@ def analyze_player_image(image_path, player_name: str, api_key: str) -> dict:
             # Handle Rejections First
             if priority == 0:
                 print(f"  ❌ Image REJECTED: {reasoning}")
-                return {"success": True, "priority": 0, "reasoning": reasoning}
+                return {"success": True, "priority": 0, "reasoning": reasoning,
+                        "is_playing_era_card": is_playing_era_card,
+                        "appears_as_player": appears_as_player,
+                        "is_modern_reissue": is_modern_reissue}
 
             # Handle High/Medium Confidence Priority 1/2
             if priority in [1, 2] and confidence in ['high', 'medium']:
                 # If it needs a crop, we'll signal that in the response
                 if can_be_fixed_by_crop:
                     print(f"  ✂️ Image can be saved by cropping: {reasoning}")
-                    return {"success": True, "priority": priority, "reasoning": reasoning, "crop_box": crop_box}
+                    return {"success": True, "priority": priority, "reasoning": reasoning, "crop_box": crop_box,
+                            "is_playing_era_card": is_playing_era_card,
+                            "appears_as_player": appears_as_player,
+                            "is_modern_reissue": is_modern_reissue}
                 
                 print(f"  ✅ Image Rated: Priority {priority} ({confidence} confidence)")
                 print(f"     Reasoning: {reasoning}")
-                return {"success": True, "priority": priority, "reasoning": reasoning}
+                return {"success": True, "priority": priority, "reasoning": reasoning,
+                        "is_playing_era_card": is_playing_era_card,
+                        "appears_as_player": appears_as_player,
+                        "is_modern_reissue": is_modern_reissue}
             else:
                 # If confidence is low or it's Priority 3, we treat it as Priority 3 fallback
                 msg = "Priority 3" if priority == 3 else f"Low confidence Priority {priority}"
                 print(f"  ⚠️ {msg}: Falling back to Priority 3")
-                return {"success": True, "priority": 3, "reasoning": f"{msg}: {reasoning}"}
+                return {"success": True, "priority": 3, "reasoning": f"{msg}: {reasoning}",
+                        "is_playing_era_card": is_playing_era_card,
+                        "appears_as_player": appears_as_player,
+                        "is_modern_reissue": is_modern_reissue}
 
         except Exception as e:
             print(f"  ⚠️ Error during image analysis: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")

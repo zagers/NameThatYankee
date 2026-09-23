@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 from datetime import datetime
 import logging
-from typing import Optional, Dict, Any
+from typing import List, Optional, Dict, Any
 
 # Import existing modules
 import config_manager
@@ -103,7 +103,7 @@ class AutomatedWorkflow:
             
             # Step 5: Find and process player image
             logger.info("Step 5: Finding and processing player image...")
-            answer_path = self._find_player_image(player_info['name'], date_str)
+            answer_path = self._find_player_image(player_info['name'], date_str, player_info.get('career_span'))
             if not answer_path:
                 logger.warning("Failed to find player image, continuing without it")
             
@@ -256,7 +256,7 @@ class AutomatedWorkflow:
             player_info['facts'] = []
             player_info['followup_qa'] = []
     
-    def _find_player_image(self, player_name: str, date_str: str) -> Optional[Path]:
+    def _find_player_image(self, player_name: str, date_str: str, career_span: Optional[List[int]] = None) -> Optional[Path]:
         """Find and process player image candidates."""
         try:
             # Skip image search for "Unknown" player
@@ -266,7 +266,7 @@ class AutomatedWorkflow:
                 
             # Find and process multiple candidates
             logger.info(f"Searching for Yankee image candidates for {player_name}")
-            candidate_paths = self.player_image_search.download_and_process_player_image(player_name, date_str, self.api_key)
+            candidate_paths = self.player_image_search.download_and_process_player_image(player_name, date_str, self.api_key, career_span=career_span)
             
             if not candidate_paths:
                 logger.warning(f"No valid images found for {player_name}")
