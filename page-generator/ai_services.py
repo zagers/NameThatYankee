@@ -374,9 +374,17 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
     """
     prompt = f"""
     Analyze the provided baseball player image and determine if the player is in a New York Yankees uniform, if the image is a baseball card, and if it is in portrait orientation.
-    
-    You do NOT need to verify the player's identity; assume the image is of the correct player.
-    Focus ONLY on the uniform, the format (card vs photo), the text content, the era/provenance, and the orientation.
+
+    The target player whose card or photo you are analyzing is: {player_name}.
+    You MUST verify the identity of the person pictured. Search engines can return cards of
+    the WRONG player for an obscure name, so compare the printed name text on the card (if
+    legible) and the facial features of the person shown against {player_name}.
+    - Set `matches_target_player: true` only if you are confident the person pictured IS {player_name}.
+    - Set `matches_target_player: false` if the person clearly is a DIFFERENT player (e.g. a
+      card of Robinson Cano or Aaron Judge when the target is Kevin Cash).
+    - If identity cannot be determined (no visible name, face unclear, ambiguous), set
+      `matches_target_player: true` — do not reject on uncertainty.
+    Focus on the uniform, the format (card vs photo), the text content, the era/provenance, the identity, and the orientation.
     {era_context}
     **CRITICAL REJECTION CRITERIA:**
     1. **Orientation:** If the image is in landscape orientation (width > height), you MUST determine if a clear, portrait-oriented baseball card or player is present that can be cropped out. If a crop is possible, provide the `crop_box` and continue. If the image is landscape and NO portrait-oriented player/card can be cropped, REJECT (Priority 0).
@@ -430,6 +438,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
       "printed_copyright_year": null or integer,
       "appears_as_player": true/false,
       "is_modern_reissue": true/false,
+      "matches_target_player": true/false,
       "priority_level": 0 | 1 | 2 | 3,
       "crop_box": [ymin, xmin, ymax, xmax],
       "confidence": "high/medium/low",
@@ -441,6 +450,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
     - `printed_copyright_year`: the copyright year printed on the card, or null if none is visible.
     - `appears_as_player`: true if the person on the card/photo is shown as a ballplayer (in uniform, in his playing days). false for manager-era photos, coat-and-tie portraits, or modern celebrity appearances.
     - `is_modern_reissue`: true if the card is a modern reprint, Retro/Throwback parallel, commemorative issue, or "Greatest Moments" type card of a historical player, even if it mimics a vintage design.
+    - `matches_target_player`: true if the person pictured is confirmed to be the target player ({player_name}) by the printed card name and/or facial features. false ONLY if confidently a different player. true when uncertain.
 
     **CROP BOX INSTRUCTIONS:**
     - Provide a `crop_box` ONLY when the image contains a single valid, rectangular baseball card or player that already qualifies as Priority 1 or 2 content, but the frame includes extra borders, margins, or a simple background that can be cleanly trimmed while keeping the card rectangular.
@@ -477,6 +487,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
             printed_copyright_year = data.get('printed_copyright_year')
             appears_as_player = data.get('appears_as_player')
             is_modern_reissue = data.get('is_modern_reissue')
+            matches_target_player = data.get('matches_target_player')
             
             # Smart Crop Logic: If we have a crop box and it's otherwise a good image, 
             # we can potentially promote it even if it's not a clean scan or is landscape.
@@ -484,7 +495,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
             
             # Final Override Logic: If the AI sets Priority 0, we respect it.
             # If the AI sets Priority 1/2/3, we do a sanity check on critical "unfixable" rejections.
-            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down or not is_rectangular
+            unfixable_rejection = is_in_holder or is_autographed or has_transient_text or not is_single_player or is_upside_down or not is_rectangular or matches_target_player is False
             
             if unfixable_rejection:
                 priority = 0
@@ -495,6 +506,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
                 if not is_single_player: reasons.append("multiple players/collage")
                 if is_upside_down: reasons.append("upside down/sideways")
                 if not is_rectangular: reasons.append("non-rectangular/angled")
+                if matches_target_player is False: reasons.append("not the target player")
                 reasoning = f"(REJECTED due to {', '.join(reasons)}): {reasoning}"
             elif priority in [1, 2, 3]:
                 # Provenance/Era Enforcement: demote images that are modern reissues,
@@ -523,7 +535,8 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
                 return {"success": True, "priority": 0, "reasoning": reasoning,
                         "is_playing_era_card": is_playing_era_card,
                         "appears_as_player": appears_as_player,
-                        "is_modern_reissue": is_modern_reissue}
+                        "is_modern_reissue": is_modern_reissue,
+                        "matches_target_player": matches_target_player}
 
             # Handle High/Medium Confidence Priority 1/2
             if priority in [1, 2] and confidence in ['high', 'medium']:
@@ -533,14 +546,16 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
                     return {"success": True, "priority": priority, "reasoning": reasoning, "crop_box": crop_box,
                             "is_playing_era_card": is_playing_era_card,
                             "appears_as_player": appears_as_player,
-                            "is_modern_reissue": is_modern_reissue}
+                            "is_modern_reissue": is_modern_reissue,
+                            "matches_target_player": matches_target_player}
                 
                 print(f"  ✅ Image Rated: Priority {priority} ({confidence} confidence)")
                 print(f"     Reasoning: {reasoning}")
                 return {"success": True, "priority": priority, "reasoning": reasoning,
                         "is_playing_era_card": is_playing_era_card,
                         "appears_as_player": appears_as_player,
-                        "is_modern_reissue": is_modern_reissue}
+                        "is_modern_reissue": is_modern_reissue,
+                        "matches_target_player": matches_target_player}
             else:
                 # If confidence is low or it's Priority 3, we treat it as Priority 3 fallback
                 msg = "Priority 3" if priority == 3 else f"Low confidence Priority {priority}"
@@ -548,7 +563,8 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
                 return {"success": True, "priority": 3, "reasoning": f"{msg}: {reasoning}",
                         "is_playing_era_card": is_playing_era_card,
                         "appears_as_player": appears_as_player,
-                        "is_modern_reissue": is_modern_reissue}
+                        "is_modern_reissue": is_modern_reissue,
+                        "matches_target_player": matches_target_player}
 
         except Exception as e:
             print(f"  ⚠️ Error during image analysis: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")

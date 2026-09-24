@@ -184,6 +184,7 @@ def _era_response(**overrides):
         "printed_copyright_year": 1952,
         "appears_as_player": True,
         "is_modern_reissue": False,
+        "matches_target_player": True,
     }
     payload.update(overrides)
     return payload
@@ -272,6 +273,55 @@ def test_analyze_player_image_photo_not_demoted_for_no_copyright_year(mock_genai
     result = ai_services.analyze_player_image("fake.jpg", "Berra", "key", career_span=[1946, 1963])
 
     assert result["priority"] == 2
+
+def test_analyze_player_image_wrong_player_rejected(mock_genai_client, mocker):
+    """Test that a confidently-mismatched player (e.g. Cano card for Kevin Cash) is rejected."""
+    mocker.patch("ai_services.Image.open")
+    payload = _era_response(matches_target_player=False)
+    mock_response = MagicMock()
+    mock_response.text = json.dumps(payload)
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake.jpg", "Kevin Cash", "key")
+
+    assert result["priority"] == 0
+    assert "not the target player" in result["reasoning"]
+
+def test_analyze_player_image_identity_match_keeps_priority(mock_genai_client, mocker):
+    """Test that a card of the correct player is accepted."""
+    mocker.patch("ai_services.Image.open")
+    payload = _era_response(matches_target_player=True)
+    mock_response = MagicMock()
+    mock_response.text = json.dumps(payload)
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake.jpg", "Kevin Cash", "key", career_span=[2002, 2010])
+
+    assert result["priority"] == 1
+
+def test_analyze_player_image_missing_identity_field_no_rejection(mock_genai_client, mocker):
+    """Test that a missing/None identity field is lenient (no false rejection)."""
+    mocker.patch("ai_services.Image.open")
+    payload = _era_response(matches_target_player=None)
+    mock_response = MagicMock()
+    mock_response.text = json.dumps(payload)
+    mock_genai_client.return_value = mock_response
+
+    result = ai_services.analyze_player_image("fake.jpg", "Kevin Cash", "key")
+
+    assert result["priority"] == 1
+
+def test_analyze_player_image_prompt_contains_player_name(mock_genai_client, mocker):
+    """Test that the target player's name is included in the identity prompt."""
+    mocker.patch("ai_services.Image.open")
+    mock_response = MagicMock()
+    mock_response.text = json.dumps(_era_response())
+    mock_genai_client.return_value = mock_response
+
+    ai_services.analyze_player_image("fake.jpg", "Kevin Cash", "key")
+
+    prompt_arg = mock_genai_client.call_args.kwargs["contents"][0]
+    assert "Kevin Cash" in prompt_arg
 
 def test_analyze_player_image_non_rectangular_rejected(mock_genai_client, mocker):
     mocker.patch("ai_services.Image.open")
