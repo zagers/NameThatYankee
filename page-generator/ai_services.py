@@ -3,7 +3,9 @@
 from google import genai  # type: ignore
 from google.genai import types, errors  # type: ignore
 from PIL import Image  # type: ignore
+import errno
 import json
+import socket
 import time
 from typing import List, Optional
 
@@ -25,6 +27,60 @@ _LAST_GEMINI_CALL_TS = time.time()  # Initialize to current time, not 0.0
 class GeminiDailyQuotaExceeded(Exception):
     """Raised when the Gemini Free Tier daily quota has been exhausted."""
     pass
+
+
+# The EAI_* resolver codes are declared in <netdb.h> and exposed by the `socket`
+# module, NOT by `errno`, so they must be read from `socket` (and defensively,
+# since a platform may omit them).
+_DNS_ERRNOS = frozenset(
+    code for code in (
+        getattr(socket, 'EAI_AGAIN', None),
+        getattr(socket, 'EAI_NONAME', None),
+        getattr(socket, 'EAI_FAIL', None),
+    ) if code is not None
+)
+
+# Errnos that describe a transient transport failure worth retrying.
+_TRANSIENT_ERRNOS = frozenset({
+    errno.ECONNRESET,
+    errno.ECONNREFUSED,
+    errno.ETIMEDOUT,
+    errno.EHOSTUNREACH,
+    errno.ENETUNREACH,
+    errno.EPIPE,
+}) | _DNS_ERRNOS
+
+# HTTP statuses that are transient. 4xx statuses other than 429 (bad request,
+# auth, permission) are permanent: retrying them cannot succeed.
+_RETRYABLE_API_CODES = frozenset({429, 500, 502, 503, 504})
+
+# Message hints act as a fallback only. The HTTP stack (httpx/grpc) raises
+# exception types that are not OSError subclasses, so their type alone cannot
+# identify a transport failure.
+_TRANSIENT_MESSAGE_HINTS = (
+    'server disconnected',
+    'connection',
+    'timeout',
+    'network',
+    'name resolution',
+    'getaddrinfo',
+    'name or service not known',
+)
+
+
+def _is_retryable_error(exc: BaseException) -> bool:
+    """Return True if `exc` is a transient failure that deserves another attempt.
+
+    Transient failures are typically caused by the environment rather than the
+    request itself, so the same call usually succeeds if attempted again.
+    """
+    if isinstance(exc, errors.APIError):
+        return getattr(exc, 'code', None) in _RETRYABLE_API_CODES
+
+    if isinstance(exc, OSError) and exc.errno in _TRANSIENT_ERRNOS:
+        return True
+
+    return any(hint in str(exc).lower() for hint in _TRANSIENT_MESSAGE_HINTS)
 
 
 def _respect_free_tier_rate_limit():
@@ -162,14 +218,8 @@ def get_player_info_from_image(image_path, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            # Handle connection-related errors
-            error_msg = str(e).lower()
-            is_connection_error = any(keyword in error_msg for keyword in [
-                'server disconnected', 'connection', 'timeout', 'network'
-            ])
-            
-            if is_connection_error and attempt < MAX_RETRIES - 1:
-                print(f"  plug Connection error: {e}. Retrying...")
+            if _is_retryable_error(e) and attempt < MAX_RETRIES - 1:
+                print(f"  🔌 Transient error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
                 time.sleep(SLEEP_TIME)
                 continue
             else:
@@ -229,7 +279,11 @@ def get_facts_from_gemini(player_name: str, api_key: str):
             time.sleep(SLEEP_TIME) # Wait before the next attempt
 
         except Exception as e:
-            # For other errors (API key, network, etc.), fail immediately
+            if _is_retryable_error(e) and attempt < MAX_RETRIES - 1:
+                print(f"  🔌 Transient error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
+                time.sleep(SLEEP_TIME)
+                continue
+
             print(f"  ❌ Error getting facts from Gemini API: {e}")
             return []
 
@@ -671,13 +725,6 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
             time.sleep(SLEEP_TIME)
 
         except Exception as e:
-            # Handle connection-related errors that should be retried
-            error_msg = str(e).lower()
-            is_connection_error = any(keyword in error_msg for keyword in [
-                'server disconnected', 'connection', 'timeout', 'network', 
-                'read timeout', 'connection reset'
-            ])
-            
             if isinstance(e, errors.APIError) and getattr(e, 'code', None) == 429:
                 message = str(e)
                 # Detect daily quota exhaustion (GenerateRequestsPerDay...)
@@ -688,7 +735,7 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
                     print(f"  ⚠️ Gemini API rate limit exceeded (429): {message}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
                     time.sleep(SLEEP_TIME)
                     continue
-            elif is_connection_error and attempt < MAX_RETRIES - 1:
+            elif _is_retryable_error(e) and attempt < MAX_RETRIES - 1:
                 print(f"  🔌 Connection error from Gemini API: {e}. Retrying... (Attempt {attempt + 1}/{MAX_RETRIES})")
                 time.sleep(SLEEP_TIME)
                 continue
