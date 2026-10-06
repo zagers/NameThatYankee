@@ -168,3 +168,10 @@
 ## 2026-09-15 — Admin puzzle browser
 - Added hidden, passphrase-gated admin page (admin.html) for searching/auditing all puzzles by name/nickname, plus stats and player-pool analysis.
 - Added generated admin_data.json (full catalog + pool) built on every index rebuild; excluded from robots.txt and sitemap.
+
+## 2026-10-06 — Gemini deprecated generation parameters
+- Google AI Studio email: `thinking_budget`, `temperature`, `top_p`, `top_k` will return 400 INVALID_ARGUMENT on upcoming models. `thinking_budget` → `thinking_level` (minimal/low/medium/high). generateContent stays supported; Interactions API is the recommended long-term target.
+- Audit result: this repo only used `temperature` (9 sites, 4 files: page-generator/ai_services.py, fact_auditor.py, grounded_ai.py, batch/test_harness.py). No thinking_budget/top_p/top_k anywhere. Model everywhere: `gemini-3.1-flash-lite`.
+- Scott chose the minimal fix (remove temperature) over a full Interactions API migration. Full migration would need google-genai ≥ 2.0.0 (pinned at 1.69.0), response parsing rewrites, and updates to the many tests mocking `generate_content`.
+- Guard test: tests/test_deprecated_sampling_params.py — static scan of page-generator/*.py plus behavioral checks that the config sent to Gemini has no sampling params.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.

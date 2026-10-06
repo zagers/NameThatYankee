@@ -114,7 +114,6 @@ def get_player_info_from_image(image_path, api_key: str):
     from datetime import datetime
     current_date = datetime.now().strftime("%B %d, %Y")
     generation_config = types.GenerateContentConfig(
-        temperature=0.1,
         tools=[types.Tool(
             google_search=types.GoogleSearch()
         )],
@@ -237,7 +236,7 @@ def get_facts_from_gemini(player_name: str, api_key: str):
     print(f"🤖 Asking Gemini for interesting facts about {player_name}...")
 
     client = genai.Client(api_key=api_key)
-    generation_config = types.GenerateContentConfig(temperature=0.1)
+    generation_config = types.GenerateContentConfig()
     prompt = f"""
     Provide three interesting and unique career facts about the baseball player {player_name}.
 
@@ -303,7 +302,7 @@ def get_followup_qa_from_gemini(player_name: str, facts, api_key: str):
     print(f"🤖 Asking Gemini for follow-up Q&A about {player_name}...")
 
     client = genai.Client(api_key=api_key)
-    generation_config = types.GenerateContentConfig(temperature=0.2)
+    generation_config = types.GenerateContentConfig()
 
     facts_list = facts or []
     try:
@@ -419,7 +418,7 @@ def analyze_player_image(image_path, player_name: str, api_key: str, career_span
         print(f"  ❌ Error opening image for analysis: {e}")
         return {"success": False, "priority": 0, "reasoning": str(e)}
     
-    generation_config = types.GenerateContentConfig(temperature=0.1)
+    generation_config = types.GenerateContentConfig()
     era_context = ""
     if career_span and len(career_span) == 2:
         era_context = f"""
@@ -647,7 +646,7 @@ def get_facts_and_followup_from_gemini(player_name: str, api_key: str):
     print(f" Asking Gemini for facts and follow-up Q&A about {player_name} in a single call...")
 
     client = genai.Client(api_key=api_key)
-    generation_config = types.GenerateContentConfig(temperature=0.15)
+    generation_config = types.GenerateContentConfig()
 
     prompt = f"""
     You are a precise baseball historian.
