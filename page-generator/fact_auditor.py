@@ -103,7 +103,6 @@ class FactAuditor:
                 model=MODEL,
                 contents=prompt,
                 config=types.GenerateContentConfig(
-                    temperature=0.1,
                     response_mime_type="application/json"
                 )
             )
@@ -158,7 +157,6 @@ class FactAuditor:
                     model=MODEL,
                     contents=prompt,
                     config=types.GenerateContentConfig(
-                        temperature=0.1,
                         response_mime_type="application/json",
                         tools=[types.Tool(google_search=types.GoogleSearch())]
                     )
