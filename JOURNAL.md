@@ -169,7 +169,7 @@
 - Added hidden, passphrase-gated admin page (admin.html) for searching/auditing all puzzles by name/nickname, plus stats and player-pool analysis.
 - Added generated admin_data.json (full catalog + pool) built on every index rebuild; excluded from robots.txt and sitemap.
 
-### 2026-10-06 — Dependabot alerts (#147-#151) — resolved on chore/dependabot-alerts
+## 2026-10-06 — Dependabot alerts (#147-#151) — resolved on chore/dependabot-alerts
 - Fixed 5 open alerts: brace-expansion 5.0.9→5.0.10, ip-address 10.5.1→10.7.1 (package.json overrides), urllib3 2.7.0→2.8.0 (requirements.txt).
 - @grpc/grpc-js alerts: vulnerability range is >=1.14.0,<1.14.5. Only the google-gax copy (1.14.4) was affected; resolve `npm install` hoists it to 1.14.5. @firebase/firestore pins ~1.9.0 (intentionally, not vulnerable) — leave it alone.
 - LESSON: Do NOT put `"@grpc/grpc-js": "1.14.5"` in package.json overrides. Overriding @firebase/firestore's grpc-js to 1.14.5 broke the emulator auth handshake — `@firebase/firestore` GrpcConnection Write stream returned PERMISSION_DENIED and firestore.rules tests failed 5/5. Removed the override = 0/10 fail. Root cause confirmed by minimal experiment.
