@@ -236,8 +236,7 @@ Return ONLY a JSON object:
             model=MODEL,
             contents=prompt,
             config=types.GenerateContentConfig(
-                response_mime_type="application/json",
-                temperature=0.2
+                response_mime_type="application/json"
             )
         )
         

@@ -176,3 +176,9 @@
 - Pre-existing flake (independent of these bumps): tests/js/firestore.rules.test.js beforeAll hook timed out (10s default) ~10% of runs (baseline 1/10, changed 0/10, same symptom) — the emulator's rules PUT (/.emulator/v1/...securityRules) can exceed 10s under load, though normally ~400ms. Bumped the hook timeout to 30s. Root cause confirmed baseline-on-baseline so it is NOT a dep regression.
 - Dependabot's own update workflows fail for these packages because they conflict with package.json overrides; bump overrides manually on dedicated branches (PR review), run ./run_tests.sh to exit 0 before pushing.
 - `./run_tests.sh` regenerates admin_data.json; never include that drift in unrelated commits.
+## 2026-10-06 — Gemini deprecated generation parameters
+- Google AI Studio email: `thinking_budget`, `temperature`, `top_p`, `top_k` will return 400 INVALID_ARGUMENT on upcoming models. `thinking_budget` → `thinking_level` (minimal/low/medium/high). generateContent stays supported; Interactions API is the recommended long-term target.
+- Audit result: this repo only used `temperature` (9 sites, 4 files: page-generator/ai_services.py, fact_auditor.py, grounded_ai.py, batch/test_harness.py). No thinking_budget/top_p/top_k anywhere. Model everywhere: `gemini-3.1-flash-lite`.
+- Scott chose the minimal fix (remove temperature) over a full Interactions API migration. Full migration would need google-genai ≥ 2.0.0 (pinned at 1.69.0), response parsing rewrites, and updates to the many tests mocking `generate_content`.
+- Guard test: tests/test_deprecated_sampling_params.py — static scan of page-generator/*.py plus behavioral checks that the config sent to Gemini has no sampling params.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
