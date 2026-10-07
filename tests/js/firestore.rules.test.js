@@ -9,6 +9,7 @@ import { describe, it, beforeAll, beforeEach } from "vitest";
 let testEnv;
 
 describe("Firestore Security Rules", () => {
+  // Rules upload to the emulator can exceed the 10s hook default under load.
   beforeAll(async () => {
     // Load your local rules file
     const rules = readFileSync("firestore.rules", "utf8");
@@ -16,7 +17,7 @@ describe("Firestore Security Rules", () => {
       projectId: "name-that-yankee-test",
       firestore: { rules },
     });
-  });
+  }, 30000);
 
   beforeEach(async () => {
     await testEnv.clearFirestore();
