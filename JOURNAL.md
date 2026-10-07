@@ -182,3 +182,10 @@
 - Scott chose the minimal fix (remove temperature) over a full Interactions API migration. Full migration would need google-genai ≥ 2.0.0 (pinned at 1.69.0), response parsing rewrites, and updates to the many tests mocking `generate_content`.
 - Guard test: tests/test_deprecated_sampling_params.py — static scan of page-generator/*.py plus behavioral checks that the config sent to Gemini has no sampling params.
 - Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
+
+### 2026-10-07 — Dependabot alerts round 2 (#152-#164) — fix/dependabot-round2
+- 13 new alerts (all dev-scope) after the Oct-6 advisory dump. Consolidated Dependabot PRs #167/#168 (firebase-tools 15.24.0→15.32.1, compression, proxy-addr, stream-json, source-map-js) into one branch by fast-forwarding their commit onto master; merging this PR should auto-close both.
+- Our own overrides needed the bumps: brace-expansion 5.0.10→5.0.12, hono 4.13.5→4.13.7. Added overrides: @modelcontextprotocol/sdk 1.31.0, basic-ftp 6.2.1.
+- @grpc/grpc-js advisory #154/#155 is <1.13.6 (DIFFERENT from the earlier >=1.14.0,<1.14.5 advisory) — it catches @firebase/firestore's pinned 1.9.16. Fix: SCOPED override `"@firebase/firestore": {"@grpc/grpc-js": "1.13.6"}` so google-gax keeps 1.14.5. Verified 10/10 firestore rules runs pass — 1.13.6 works where 1.14.5 broke emulator auth (PERMISSION_DENIED). Lesson: the breakage is version-specific to 1.14.x, not "any newer grpc-js".
+- Alert #158 (braces <=3.0.3, HIGH) has NO upstream fix — 3.0.3 is the latest release and chokidar@3 pins it. Nothing actionable; leave open until braces publishes a fix.
+- Verification: ./run_tests.sh exit 0 twice; firestore.rules focused loop 10/10 with the grpc override.
