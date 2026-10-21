@@ -166,3 +166,30 @@ def test_is_retryable_error_true_for_transient_failures(exc):
 def test_is_retryable_error_false_for_permanent_failures(exc):
     assert ai_services._is_retryable_error(exc) is False
 
+
+# The getaddrinfo resolver codes live in their own numeric namespace. On Linux
+# they are negative and never collide with errno, but on macOS/BSD they are
+# small positive integers that alias real errno values (EAI_AGAIN == 2 ==
+# ENOENT, EAI_FAIL == 4 == EINTR, EAI_NONAME == 8 == ENOEXEC). A plain OSError
+# carrying one of those numbers is a permanent failure, not a DNS hiccup.
+@pytest.mark.parametrize("eai_name", ["EAI_AGAIN", "EAI_NONAME", "EAI_FAIL"])
+def test_is_retryable_error_false_for_errno_colliding_with_resolver_code(eai_name):
+    eai_code = getattr(socket, eai_name, None)
+    if eai_code is None:
+        pytest.skip(f"{eai_name} is not exposed on this platform")
+
+    exc = OSError(eai_code, "Errno value collides with a resolver code")
+
+    assert ai_services._is_retryable_error(exc) is False
+
+
+def test_transient_errno_set_does_not_overlap_resolver_codes():
+    resolver_codes = frozenset(
+        code
+        for name in ("EAI_AGAIN", "EAI_NONAME", "EAI_FAIL")
+        for code in (getattr(socket, name, None),)
+        if code is not None
+    )
+
+    assert not (resolver_codes & ai_services._TRANSIENT_ERRNOS)
+
