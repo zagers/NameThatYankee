@@ -32,6 +32,13 @@ class GeminiDailyQuotaExceeded(Exception):
 # The EAI_* resolver codes are declared in <netdb.h> and exposed by the `socket`
 # module, NOT by `errno`, so they must be read from `socket` (and defensively,
 # since a platform may omit them).
+#
+# These codes occupy a namespace of their own and must never be merged into the
+# errno set below. On Linux they are negative and cannot collide, but on
+# macOS/BSD they are small positive integers that alias real errno values
+# (EAI_AGAIN == 2 == ENOENT, EAI_FAIL == 4 == EINTR, EAI_NONAME == 8 ==
+# ENOEXEC). Merging them makes unrelated permanent errors -- a missing file, an
+# interrupted syscall -- look like transient DNS failures.
 _DNS_ERRNOS = frozenset(
     code for code in (
         getattr(socket, 'EAI_AGAIN', None),
@@ -48,7 +55,7 @@ _TRANSIENT_ERRNOS = frozenset({
     errno.EHOSTUNREACH,
     errno.ENETUNREACH,
     errno.EPIPE,
-}) | _DNS_ERRNOS
+})
 
 # HTTP statuses that are transient. 4xx statuses other than 429 (bad request,
 # auth, permission) are permanent: retrying them cannot succeed.
@@ -77,7 +84,12 @@ def _is_retryable_error(exc: BaseException) -> bool:
     if isinstance(exc, errors.APIError):
         return getattr(exc, 'code', None) in _RETRYABLE_API_CODES
 
-    if isinstance(exc, OSError) and exc.errno in _TRANSIENT_ERRNOS:
+    # `socket.gaierror` subclasses OSError, but its `errno` holds a getaddrinfo
+    # resolver code rather than a real errno, so it is matched on its own.
+    if isinstance(exc, socket.gaierror):
+        if exc.errno in _DNS_ERRNOS:
+            return True
+    elif isinstance(exc, OSError) and exc.errno in _TRANSIENT_ERRNOS:
         return True
 
     return any(hint in str(exc).lower() for hint in _TRANSIENT_MESSAGE_HINTS)

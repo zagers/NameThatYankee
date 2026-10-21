@@ -197,3 +197,12 @@
 - Verification: `npm ci` clean; `npm audit` no longer lists hono; Vitest + Firestore emulator suite green (17 files, 123 tests).
 - Pre-existing and unrelated: tests/unit/page_generator/test_ai_services.py::test_is_retryable_error_false_for_permanent_failures[missing_file] fails on macOS only. `socket.EAI_AGAIN` is 2 on macOS, which collides with `errno.ENOENT` (2), so `_is_retryable_error()` misclassifies FileNotFoundError as transient. Linux CI has `socket.EAI_AGAIN == -2` and is unaffected. Confirmed failing on pristine master with this change stashed; left alone here.
 - Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
+
+### 2026-10-21 — Retryable-error errno/resolver-code collision (macOS/BSD) — fix/errno-resolver-code-collision
+- Fixes the macOS-only failure recorded in the #166 entry above.
+- Root cause: `_is_retryable_error()` merged the getaddrinfo resolver codes (`socket.EAI_*`) into the errno set used to spot transient transport failures. The two occupy different numeric namespaces. On Linux the EAI codes are negative and cannot collide with errno, but on macOS/BSD they are small positive integers that alias real errno values: EAI_AGAIN == 2 == ENOENT, EAI_FAIL == 4 == EINTR, EAI_NONAME == 8 == ENOEXEC.
+- Impact: on macOS any OSError carrying errno 2, 4 or 8 was classified as transient and retried instead of failing fast — FileNotFoundError, InterruptedError and errno 8 alike. Linux CI could not see it because its EAI codes are negative.
+- Fix: keep the namespaces separate. `_TRANSIENT_ERRNOS` holds only real errno values; resolver codes are matched only on `socket.gaierror`, whose `.errno` carries a getaddrinfo code rather than a real errno. A gaierror outside the known set still falls through to the message-hint fallback.
+- TDD: added `test_is_retryable_error_false_for_errno_colliding_with_resolver_code` (parametrized over EAI_AGAIN/EAI_NONAME/EAI_FAIL) and `test_transient_errno_set_does_not_overlap_resolver_codes` to tests/unit/page_generator/test_ai_services.py. Both failed before the fix (5 failures in the file, including the pre-existing missing_file case) and pass after.
+- Verification: `./run_tests.sh` exit 0 — 278 unit, 61 E2E, 123 Vitest/Firestore emulator.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
