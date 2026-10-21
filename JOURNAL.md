@@ -189,3 +189,11 @@
 - @grpc/grpc-js advisory #154/#155 is <1.13.6 (DIFFERENT from the earlier >=1.14.0,<1.14.5 advisory) — it catches @firebase/firestore's pinned 1.9.16. Fix: SCOPED override `"@firebase/firestore": {"@grpc/grpc-js": "1.13.6"}` so google-gax keeps 1.14.5. Verified 10/10 firestore rules runs pass — 1.13.6 works where 1.14.5 broke emulator auth (PERMISSION_DENIED). Lesson: the breakage is version-specific to 1.14.x, not "any newer grpc-js".
 - Alert #158 (braces <=3.0.3, HIGH) has NO upstream fix — 3.0.3 is the latest release and chokidar@3 pins it. Nothing actionable; leave open until braces publishes a fix.
 - Verification: ./run_tests.sh exit 0 twice; firestore.rules focused loop 10/10 with the grpc override.
+
+### 2026-10-21 — Dependabot alert #166 (hono) — fix/dependabot-hono-166
+- Alert #166 (GHSA-5r4p-p66f-jhc7 / CVE-2026-111757, medium): hono's `serveStatic` decodes the request path a second time after hono already decoded it for routing, so a crafted path is routed as one form and served as another, and middleware mounted on a static prefix never runs. Vulnerable range >=4.12.4, <4.13.11; first patched 4.13.11.
+- hono is a transitive dev dependency of firebase-tools via @modelcontextprotocol/sdk, and it is held by an exact-version `overrides` entry, so Dependabot's own updater cannot move it. Bumped the override 4.13.7 → 4.13.13 (latest release) and regenerated the lockfile; the diff is hono's version/resolved/integrity only.
+- Version compatibility checked before the bump: @modelcontextprotocol/sdk requires hono ^4.11.4 and @hono/node-server peer-depends on hono ^4, both satisfied by 4.13.13.
+- Verification: `npm ci` clean; `npm audit` no longer lists hono; Vitest + Firestore emulator suite green (17 files, 123 tests).
+- Pre-existing and unrelated: tests/unit/page_generator/test_ai_services.py::test_is_retryable_error_false_for_permanent_failures[missing_file] fails on macOS only. `socket.EAI_AGAIN` is 2 on macOS, which collides with `errno.ENOENT` (2), so `_is_retryable_error()` misclassifies FileNotFoundError as transient. Linux CI has `socket.EAI_AGAIN == -2` and is unaffected. Confirmed failing on pristine master with this change stashed; left alone here.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
