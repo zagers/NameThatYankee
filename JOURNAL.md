@@ -214,3 +214,10 @@
 - #167-#170 @modelcontextprotocol/sdk (2 high + 2 medium): fixed on this branch by bumping the override 1.31.0 → 1.32.1. All four advisories are patched in 1.32.0; 1.32.1 is the latest release. firebase-tools 15.32.1 requires the SDK at ^1.24.0, and 1.32.1's own dependency ranges (hono ^4.11.4, @hono/node-server ^1.19.9 || ^2.0.5) are identical to 1.31.0's, so the lockfile diff is version/resolved/integrity only. The Firestore emulator suite passes unchanged — 17 files, 123 tests — so the SDK bump does not disturb emulator auth the way @grpc/grpc-js 1.14.x did.
 - `npm audit` now reports only `braces` (GHSA-vfj7-8cjw-p6xm, alert #158), which has no upstream fix and stays dismissed as tolerable_risk.
 - Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
+
+### 2026-10-21 — Dependabot alerts #181/#182 (@vitest/mocker) — fix/dependabot-vitest-181
+- The dependency-graph refresh that closed #166-#180 also surfaced two new alerts for @vitest/mocker (GHSA-xp26-3454-mjgp, GHSA-qxg6-89mg-rqv8): a Windows backslash traversal bypasses the mocker's redirect allowlist fix. Vulnerable range >= 4.1.11, < 4.1.12; first patched 4.1.12.
+- vitest, @vitest/ui and @vitest/coverage-v8 were all declared at ^4.1.11, which already permits the patched 4.1.12, but the lockfile held 4.1.11. `npm update vitest @vitest/ui @vitest/coverage-v8` left the lockfile untouched — the declared caret ranges were already satisfied, so npm had nothing to update. Bumped the declared floors to ^4.1.12 instead and regenerated the lockfile.
+- The bump also pulls in what vitest 4.1.12 requires transitively: rolldown 1.2.14 → 1.2.15 (plus its platform bindings), @oxc-project/types 0.154.0 → 0.155.0, chai 6.2.2 → 6.3.0, std-env 4.2.0 → 4.3.0, tinyrainbow 3.1.1 → 3.2.0. No packages added or removed. All of it is dev/test tooling.
+- Verification: `npm ci` clean; `npm audit` reports only braces (alert #158); `./run_tests.sh` exit 0 — 278 unit, 5 integration, 61 E2E, 123 Vitest/Firestore emulator.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
