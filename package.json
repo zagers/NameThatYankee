@@ -39,9 +39,9 @@
     "form-data": "4.0.6",
     "ws": "7.5.11",
     "brace-expansion": "5.0.12",
-    "qs": "6.16.0",
-    "fast-uri": "3.1.8",
-    "ip-address": "10.7.1",
+    "qs": "6.16.2",
+    "fast-uri": "3.1.9",
+    "ip-address": "10.7.4",
     "hono": "4.13.13",
     "csv-parse": "7.0.2",
     "js-yaml": "4.3.2",
@@ -49,8 +49,21 @@
     "@hono/node-server": "2.0.11",
     "@opentelemetry/core": "2.10.0",
     "nanoid": "3.3.18",
-    "@modelcontextprotocol/sdk": "1.32.1",
+    "@modelcontextprotocol/sdk": {
+      ".": "1.32.1",
+      "body-parser": "2.4.0"
+    },
     "basic-ftp": "6.2.1",
+    "firebase-tools": {
+      "undici": "6.29.1"
+    },
+    "node-gyp": {
+      "undici": "8.12.2"
+    },
+    "jsdom": {
+      "undici": "7.30.1"
+    },
+    "zod": "4.6.6",
     "@firebase/firestore": {
       "@grpc/grpc-js": "1.13.6"
     }
