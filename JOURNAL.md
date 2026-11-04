@@ -230,3 +230,11 @@
 - Dependabot PR #176 only bumped firebase-tools' undici 6.29.0 → 6.29.1 (5 of the 25) and is superseded by this branch.
 - Verification: `npm install` and `npm ci --dry-run` clean; the lockfile resolves the versions above; `npm audit` no longer lists undici, fast-uri, ip-address, zod, or the 2.x body-parser. Residual (not part of the 25): top-level body-parser 1.20.6 remains high under the same GHSA's <1.20.9 range; a global 1.20.9 override produced an invalid Express 4 tree in testing, so it needs a separate, carefully scoped fix. Local `vitest`/`pytest` runs could not start workers on this machine (timeout under load), so CI must be the gate.
 - Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
+
+### 2026-11-04 — Dependabot alerts round 5 & 6 (#208-#215) — fix/dependabot-round6
+- PR #179 resolved #208 (@hono/node-server 2.0.11 → 2.1.6) and #212-#215 (pyasn1 0.6.4 → 0.6.5).
+- Alert #209 (body-parser high, GHSA-27r3-jxmh-p828): lockfile regressed to 1.20.6 during round 5 rebase; restored node_modules/body-parser to 1.20.9 (matches Dependabot PR #178), which satisfies express (~1.20.5) and firebase-tools (^1.19.0).
+- Alert #210 (glob medium, GHSA-3g3m-2fjr-6pw4): overridden to 14.0.2 in package.json overrides. Verified 100% API compatibility with firebase-tools' usage (glob_1.sync / glob_1.glob).
+- Alert #211 (minimatch medium, GHSA-g3hv-75wg-m249): unpatchable in minimatch < 11. Overriding to minimatch 11 breaks firebase-tools at runtime (minimatch 11 changed CommonJS exports, causing `TypeError: minimatch is not a function` in firebase-tools and superstatic). Dismissed as tolerable_risk (dev-only tool, identical to braces #158 precedent).
+- Verification: npm ci clean, npm audit high vulnerabilities now 0.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.

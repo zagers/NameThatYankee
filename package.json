@@ -54,6 +54,7 @@
       "body-parser": "2.4.0"
     },
     "basic-ftp": "6.2.1",
+    "glob": "14.0.2",
     "firebase-tools": {
       "undici": "6.29.1"
     },
