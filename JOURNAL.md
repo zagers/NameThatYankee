@@ -221,3 +221,12 @@
 - The bump also pulls in what vitest 4.1.12 requires transitively: rolldown 1.2.14 → 1.2.15 (plus its platform bindings), @oxc-project/types 0.154.0 → 0.155.0, chai 6.2.2 → 6.3.0, std-env 4.2.0 → 4.3.0, tinyrainbow 3.1.1 → 3.2.0. No packages added or removed. All of it is dev/test tooling.
 - Verification: `npm ci` clean; `npm audit` reports only braces (alert #158); `./run_tests.sh` exit 0 — 278 unit, 5 integration, 61 E2E, 123 Vitest/Firestore emulator.
 - Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
+
+### 2026-11-04 — Dependabot alerts round 4 (#183-#207) + CI Playwright fix — fix/dependabot-round4
+- 25 open dev-only transitive alerts. `undici` accounts for 18 across three majors: firebase-tools 6.29.0 → 6.29.1, jsdom 7.30.0 → 7.30.1, node-gyp 8.11.2 → 8.12.2. Remaining: fast-uri 3.1.8 → 3.1.9 (#192-#194, #186), ip-address 10.7.1 → 10.7.4 (#191), zod 4.4.3 → 4.6.6 (#199), body-parser 2.3.0 → 2.4.0 nested under @modelcontextprotocol/sdk (#189).
+- Added scoped overrides for the three undici consumers so each stays inside its parent's declared major. Converted the SDK override to an object (`".": "1.32.1"`) so body-parser could be scoped to the SDK's Express 5 without touching the top-level Express 4 body-parser.
+- Bumped qs 6.16.0 → 6.16.2: body-parser 2.4.0 requires qs ^6.16.1, and GHSA-6pq8-jhm2-2vcw covers <=6.16.0.
+- CI: `ubuntu-latest` now resolves to 26.04; Playwright 1.58.0 has no Chromium build for it, which is why Dependabot PR #176 failed. Bumped requirements.txt playwright 1.58.0 → 1.64.1 (26.04 support landed in 1.61.0).
+- Dependabot PR #176 only bumped firebase-tools' undici 6.29.0 → 6.29.1 (5 of the 25) and is superseded by this branch.
+- Verification: `npm install` and `npm ci --dry-run` clean; the lockfile resolves the versions above; `npm audit` no longer lists undici, fast-uri, ip-address, zod, or the 2.x body-parser. Residual (not part of the 25): top-level body-parser 1.20.6 remains high under the same GHSA's <1.20.9 range; a global 1.20.9 override produced an invalid Express 4 tree in testing, so it needs a separate, carefully scoped fix. Local `vitest`/`pytest` runs could not start workers on this machine (timeout under load), so CI must be the gate.
+- Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
