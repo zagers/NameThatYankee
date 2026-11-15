@@ -238,3 +238,11 @@
 - Alert #211 (minimatch medium, GHSA-g3hv-75wg-m249): unpatchable in minimatch < 11. Overriding to minimatch 11 breaks firebase-tools at runtime (minimatch 11 changed CommonJS exports, causing `TypeError: minimatch is not a function` in firebase-tools and superstatic). Dismissed as tolerable_risk (dev-only tool, identical to braces #158 precedent).
 - Verification: npm ci clean, npm audit high vulnerabilities now 0.
 - Note: `./run_tests.sh` regenerates admin_data.json; keep it out of unrelated commits.
+
+### 2026-11-14 — Dependabot alerts round 7 (#216-#226)
+- 11 open alerts across three packages:
+  - #216 & #217 basic-ftp (2 medium: GHSA-5pm8-86m8-9m6r DoS in `Client.list()` via `__proto__`, GHSA-r4jh-29pc-gfqr crash on CR/LF in password/path): patched in 6.2.4. Bumped `package.json` override 6.2.1 → 6.2.6 (latest 6.x).
+  - #219-#223 hono (1 low + 4 medium: GHSA-h7mg-cq63-vhpq, GHSA-4h7h-rv7c-7m2v, GHSA-3gg2-335m-rxc6, GHSA-4m76-xfj5-7975, GHSA-46wx-v44x-9hh2): all patched in 4.13.16. Bumped `package.json` override 4.13.13 → 4.13.18 (latest 4.x).
+  - #218, #224, #225, #226 soupsieve (2 medium + 2 high: GHSA-79v8-6449-6f96 quadratic time in `:has()`, GHSA-mmhr-3c5m-f64f / CVE-2026-126190 polynomial ReDoS in descendant combinator, GHSA-wfjw-3v3c-6x55 recursion/stack exhaustion, GHSA-x5wf-5627-2hh6 exponential ReDoS): patched in 4.0.0. Bumped `requirements.txt` 2.9.2 → 4.1.1 (latest 4.x; satisfied by beautifulsoup4 4.14.3's `soupsieve>=1.6.1`).
+- Regenerated lockfile via `npm install --package-lock-only`.
+- Verification: `npm audit` reports 0 vulnerabilities. Updated `.venv` with `soupsieve==4.1.1` and verified scraping unit tests pass.
